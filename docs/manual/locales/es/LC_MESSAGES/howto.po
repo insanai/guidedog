@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 03:38+0000\n"
+"POT-Creation-Date: 2026-11-02 04:25+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: es\n"
@@ -3047,15 +3047,11 @@ msgstr "La melodía de *Mary Had a Little Lamb*."
 #: ../../howto/songbook.rst:63
 msgid ""
 ":numref:`songbook-tune` has eight bars. The tune moves mostly by step, "
-"between the neighboring notes C, D and E, and leaps once, from E up to G "
-"in bar four. Count the beats in bar two: ``e`` and ``e`` take one beat "
-"each, and ``e2`` takes two, which makes four."
-msgstr ""
-":numref:`songbook-tune` tiene ocho compases. La melodía avanza sobre todo "
-"por grados conjuntos, entre las notas vecinas do, re y mi, y salta una "
-"sola vez: sube de mi a sol en el cuarto compás. Contemos los pulsos del "
-"segundo compás: ``e`` y ``e`` duran un pulso cada una, y ``e2`` dura dos, "
-"lo que suma cuatro."
+"between the neighboring notes C, D and E; it leaps only in bar four, from "
+"E up to G, and back down to E at the start of bar five. Count the beats "
+"in bar two: ``e`` and ``e`` take one beat each, and ``e2`` takes two, "
+"which makes four."
+msgstr ":numref:`songbook-tune` tiene ocho compases. La melodía avanza sobre todo por grados conjuntos, entre las notas vecinas do, re y mi; solo salta en el cuarto compás, cuando sube de mi a sol, y vuelve a bajar a mi al comienzo del quinto. Contemos los pulsos del segundo compás: ``e`` y ``e`` duran un pulso cada una, y ``e2`` dura dos, lo que suma cuatro."
 
 #: ../../howto/songbook.rst:67
 msgid "Add the words"
@@ -3104,20 +3100,20 @@ msgid ""
 "A singer breathes between phrases. The tune has two phrases of four bars, "
 "and ``\\breathe`` after the last note of bar four prints a comma above "
 "the staff where the singer takes a breath."
-msgstr "Quien canta respira entre una frase y otra. La melodía tiene dos frases de cuatro compases, y ``\\breathe`` después de la última nota del cuarto compás imprime una coma sobre el pentagrama en el punto donde se toma aire."
+msgstr ""
+"Quien canta respira entre una frase y otra. La melodía tiene dos frases "
+"de cuatro compases, y ``\\breathe`` después de la última nota del cuarto "
+"compás imprime una coma sobre el pentagrama en el punto donde se toma "
+"aire."
 
 #: ../../howto/songbook.rst:109
 msgid ""
 "Hale's poem has more verses, but the next, \"It followed her to school "
-"one day\", has five syllables where the first bar has four notes. Singers "
-"divide a note for the extra syllable; a score shows that with a different "
-"rhythm, so our songbook keeps the two verses that fit the tune as written."
-msgstr ""
-"El poema de Hale tiene más estrofas, pero la siguiente, «It followed her "
-"to school one day», tiene cinco sílabas donde el primer compás tiene "
-"cuatro notas. Los cantantes dividen una nota para la sílaba sobrante; una "
-"partitura lo muestra con otro ritmo, así que nuestro cancionero conserva "
-"las dos estrofas que encajan con la melodía tal como está escrita."
+"one day\", has eight syllables where the first two bars have seven notes. "
+"Singers divide a note for the extra syllable; a score shows that with a "
+"different rhythm, so our songbook keeps the two verses that fit the tune "
+"as written."
+msgstr "El poema de Hale tiene más estrofas, pero la siguiente, «It followed her to school one day», tiene ocho sílabas donde los dos primeros compases tienen siete notas. Los cantantes dividen una nota para la sílaba sobrante; una partitura lo muestra con otro ritmo, así que nuestro cancionero conserva las dos estrofas que encajan con la melodía tal como está escrita."
 
 #: ../../howto/songbook.rst:112
 msgid "Name the chords"
@@ -3156,18 +3152,13 @@ msgstr ""
 
 #: ../../howto/songbook.rst:130
 msgid ""
-"The right hand plays the tune and, below it, a second voice a third "
-"lower. Two voices on one staff go inside ``<< ... >>``, separated by "
-"``\\\\``. Guidedog draws the first voice with stems up and the second "
+"The right hand plays the tune and, below it, a second voice, mostly a "
+"third lower. Two voices on one staff go inside ``<< ... >>``, separated "
+"by ``\\\\``. Guidedog draws the first voice with stems up and the second "
 "with stems down, so a player can follow each line. The left hand plays "
-"the bass: the root and the fifth of each chord, as half notes."
-msgstr ""
-"La mano derecha toca la melodía y, por debajo, una segunda voz una "
-"tercera más grave. Dos voces en un mismo pentagrama van dentro de ``<< "
-"... >>``, separadas por ``\\\\``. Guidedog dibuja la primera voz con las "
-"plicas hacia arriba y la segunda con las plicas hacia abajo, para que el "
-"intérprete pueda seguir cada línea. La mano izquierda toca el bajo: la "
-"fundamental y la quinta de cada acorde, en blancas."
+"the bass in half notes, mostly the root and the fifth of each chord; in "
+"bar seven it rises from G to B, which leads to the final C."
+msgstr "La mano derecha toca la melodía y, por debajo, una segunda voz, casi siempre una tercera más grave. Dos voces en un mismo pentagrama van dentro de ``<< ... >>``, separadas por ``\\\\``. Guidedog dibuja la primera voz con las plicas hacia arriba y la segunda con las plicas hacia abajo, para que el intérprete pueda seguir cada línea. La mano izquierda toca el bajo en blancas, casi siempre la fundamental y la quinta de cada acorde; en el séptimo compás sube de sol a si, que conduce al do final."
 
 #: ../../howto/songbook.rst:136
 msgid ""
@@ -3209,16 +3200,8 @@ msgid ""
 "string. We give the tablature the same music as the staff, and Guidedog "
 "chooses the strings. It puts each note on the highest string that can "
 "play it, so the tune lies on the two highest strings and the bass on the "
-"two lowest, all in the first position of the left hand."
-msgstr ""
-"Bajo el pentagrama añadimos la tablatura con ``\\new TabStaff``. Sus seis "
-"líneas son las seis cuerdas de la guitarra, con la cuerda más aguda "
-"arriba, y cada número es el traste que hay que pisar en esa cuerda; ``0`` "
-"es la cuerda al aire. Damos a la tablatura la misma música que al "
-"pentagrama, y Guidedog elige las cuerdas. Pone cada nota en la cuerda más "
-"aguda que puede tocarla, de modo que la melodía queda en las dos cuerdas "
-"más agudas y el bajo en las dos más graves, todo en la primera posición "
-"de la mano izquierda."
+"three lowest, all in the first position of the left hand."
+msgstr "Bajo el pentagrama añadimos la tablatura con ``\\new TabStaff``. Sus seis líneas son las seis cuerdas de la guitarra, con la cuerda más aguda arriba, y cada número es el traste que hay que pisar en esa cuerda; ``0`` es la cuerda al aire. Damos a la tablatura la misma música que al pentagrama, y Guidedog elige las cuerdas. Pone cada nota en la cuerda más aguda que puede tocarla, de modo que la melodía queda en las dos cuerdas más agudas y el bajo en las tres más graves, todo en la primera posición de la mano izquierda."
 
 #: ../../howto/songbook.rst:167
 msgid ""
@@ -3265,12 +3248,12 @@ msgid ""
 "above the voice asks for a moderate pace of 100 quarter-note beats a "
 "minute; Guidedog prints the word with a note symbol and the rate in "
 "parentheses. The breath mark is part of the tune, so the piano and guitar "
-"staves show it too: the players lift at the end of the phrase with the "
-"singer. The tablature leaves it out. We save the score as "
+"staves and the tablature show it too: the players lift at the end of the "
+"phrase with the singer. We save the score as "
 "``scores/mary-had-a-little-lamb.ly``:"
-msgstr "La partitura completa apila las partes de arriba abajo: el cifrado de acordes, la voz con sus estrofas, el piano y la guitarra. Para escribir cada línea musical una sola vez, le damos un nombre, como ``melody = ...``, y la usamos con ``\\melody`` allí donde una parte la necesite. Una línea que empieza por ``%`` es un comentario para quien lea el archivo. ``\\tempo \"Moderato\" 4 = 100`` sobre la voz pide un tempo moderado de 100 pulsos de negra por minuto; Guidedog imprime la palabra con un símbolo de nota y la velocidad entre paréntesis. El signo de respiración forma parte de la melodía, así que los pentagramas del piano y de la guitarra también lo muestran: los instrumentistas hacen una breve pausa al final de la frase, junto con el cantante. La tablatura lo omite. Guardamos la partitura como ``scores/mary-had-a-little-lamb.ly``:"
+msgstr "La partitura completa apila las partes de arriba abajo: el cifrado de acordes, la voz con sus estrofas, el piano y la guitarra. Para escribir cada línea musical una sola vez, le damos un nombre, como ``melody = ...``, y la usamos con ``\\melody`` allí donde una parte la necesite. Una línea que empieza por ``%`` es un comentario para quien lea el archivo. ``\\tempo \"Moderato\" 4 = 100`` sobre la voz pide un tempo moderado de 100 pulsos de negra por minuto; Guidedog imprime la palabra con un símbolo de nota y la velocidad entre paréntesis. El signo de respiración forma parte de la melodía, así que los pentagramas del piano y de la guitarra, y también la tablatura, lo muestran: los instrumentistas hacen una breve pausa al final de la frase, junto con el cantante. Guardamos la partitura como ``scores/mary-had-a-little-lamb.ly``:"
 
-#: ../../howto/songbook.rst:200
+#: ../../howto/songbook.rst:199
 msgid ""
 "On the song's page, ``mary.rst``, the directive names the file instead of "
 "holding the music:"
@@ -3278,7 +3261,7 @@ msgstr ""
 "En la página de la canción, ``mary.rst``, la directiva nombra el archivo "
 "en lugar de contener la música:"
 
-#: ../../howto/songbook.rst:213
+#: ../../howto/songbook.rst:212
 msgid ""
 "A score for voice, piano and guitar with chord names and tablature, eight "
 "bars in C major."
@@ -3286,15 +3269,15 @@ msgstr ""
 "Una partitura para voz, piano y guitarra con cifrado de acordes y "
 "tablatura, ocho compases en do mayor."
 
-#: ../../howto/songbook.rst:213
+#: ../../howto/songbook.rst:212
 msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
 msgstr "*Mary Had a Little Lamb*, para voz, piano y guitarra."
 
-#: ../../howto/songbook.rst:217
+#: ../../howto/songbook.rst:216
 msgid "Build the website and the book"
 msgstr "Compilar el sitio web y el libro"
 
-#: ../../howto/songbook.rst:225
+#: ../../howto/songbook.rst:224
 msgid ""
 "Guidedog engraves each score for each output at that output's line width, "
 "so the website and the book each break the music into systems that fill "
@@ -3313,11 +3296,11 @@ msgstr ""
 "cambiamos un archivo de partitura, la siguiente compilación vuelve a "
 "tipografiarla; las partituras sin cambios se conservan."
 
-#: ../../howto/songbook.rst:230
+#: ../../howto/songbook.rst:229
 msgid "Practice"
 msgstr "Práctica"
 
-#: ../../howto/songbook.rst:233
+#: ../../howto/songbook.rst:232
 msgid ""
 "These exercises extend the songbook. Build after each change and look at "
 "the result."
@@ -3325,39 +3308,43 @@ msgstr ""
 "Estos ejercicios amplían el cancionero. Compilamos después de cada cambio "
 "y observamos el resultado."
 
-#: ../../howto/songbook.rst:236
+#: ../../howto/songbook.rst:235
 msgid ""
 "Move the song to G major: wrap the whole score in ``\\transpose c g << "
 "... >>``. The key signature, the notes, the tablature and the chord names "
 "all move up a fifth."
 msgstr ""
-"Transponer la canción a sol mayor: envolver toda la partitura en "
+"Transponemos la canción a sol mayor: envolvemos toda la partitura en "
 "``\\transpose c g << ... >>``. La armadura, las notas, la tablatura y el "
 "cifrado de acordes suben todos una quinta."
 
-#: ../../howto/songbook.rst:237
+#: ../../howto/songbook.rst:236
 msgid ""
 "Play the guitar tune higher on the neck: add ``\\2`` after each note of "
 "the first bar. A circled 2 appears over each note on the staff, and the "
 "tablature shows the new frets."
-msgstr "Tocar la melodía de la guitarra más arriba en el mástil: añadir ``\\2`` después de cada nota del primer compás. Sobre cada nota del pentagrama aparece un 2 dentro de un círculo, y la tablatura muestra los nuevos trastes."
+msgstr ""
+"Tocamos la melodía de la guitarra más arriba en el mástil: añadimos "
+"``\\2`` después de cada nota del primer compás. Sobre cada nota del "
+"pentagrama aparece un 2 dentro de un círculo, y la tablatura muestra los "
+"nuevos trastes."
 
-#: ../../howto/songbook.rst:238
+#: ../../howto/songbook.rst:237
 msgid ""
 "Add dynamics to the tune: write ``e4\\mf`` for its first note and "
 "``c1\\p`` for its last. A dynamic follows the note it belongs to."
 msgstr ""
-"Añadir matices dinámicos a la melodía: escribir ``e4\\mf`` en su primera "
-"nota y ``c1\\p`` en la última. Un matiz va después de la nota a la que "
-"pertenece."
+"Añadimos matices dinámicos a la melodía: escribimos ``e4\\mf`` en su "
+"primera nota y ``c1\\p`` en la última. Un matiz va después de la nota a "
+"la que pertenece."
 
-#: ../../howto/songbook.rst:239
+#: ../../howto/songbook.rst:238
 msgid ""
 "Write a second song in its own file and page, and refer to its figure "
 "from this page with ``:numref:``."
 msgstr ""
-"Escribir una segunda canción en su propio archivo y su propia página, y "
-"referirse a su figura desde esta página con ``:numref:``."
+"Escribimos una segunda canción en su propio archivo y su propia página, y "
+"nos referimos a su figura desde esta página con ``:numref:``."
 
 #: ../../howto/static-publishing.rst:1
 msgid "Static websites and articles"

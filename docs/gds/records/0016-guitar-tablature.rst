@@ -55,7 +55,7 @@ On a standard staff a string number prints as a circled digit, as LilyPond print
 A tab staff has six lines a staff space and a half apart, a TAB clef scaled to the staff, and bar lines and repeat dots at its height.
 Each fret number is set in the text face and centered on its string, over the middle of where a notehead would stand, so that it lines up with the standard staff above.
 The string lines break around each number instead of being covered by a background patch, so the numbers read in light and dark themes alike.
-As in LilyPond's default tablature, the staff shows no key or time signature, stems, beams, flags, dots, rests, ties, slurs, hairpins, tuplet brackets, articulations, fingerings or dynamics; tempo and rehearsal marks belong to the whole score and remain.
+As in LilyPond's default tablature, the staff shows no key or time signature, stems, beams, flags, dots, rests, ties, slurs, hairpins, tuplet brackets, articulations, fingerings or dynamics; tempo and rehearsal marks belong to the whole score and remain, and a breath mark stands above the top string, as LilyPond prints it.
 The note that continues a tie is not repeated, except at the start of a line, where its number stands in parentheses.
 Grace notes have smaller numbers.
 Voices on a tab staff share strings, so no note column moves aside.

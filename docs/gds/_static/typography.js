@@ -1232,7 +1232,9 @@
       demerits: { line: 10, flagged: 400, fitness: 3000 }
     });
     if (breaks.length < 3 || breaks.at(-1).position !== nodes.length - 1) return null;
-    if (breaks.slice(1, -1).some(b => b.ratio > 2.5 || b.ratio < -0.95)) return null;
+    // The breaker accepts only lines that shrink no further than their glue allows and
+    // stretch within its tolerance, as TeX does. A stricter check here once dropped
+    // justification for a whole paragraph over one loose line beside long inline code.
     return { p, map, text, nodes, breaks, space };
   }
 

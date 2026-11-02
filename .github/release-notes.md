@@ -3,6 +3,7 @@ Guidedog builds documentation websites, dated articles and PDF books from reStru
 Version 1.0.0-beta.10 adds guitar tablature to native LilyPond engraving and a practical songbook task.
 
 - **Guitar tablature.** `\new TabStaff` draws a six-string guitar part as tablature beside its staff, and `\1` to `\6` name a note's string. Guidedog chooses strings and frets as LilyPond does by default and draws LilyPond's default tablature: a TAB clef, fret numbers on broken string lines that read in light and dark themes, and tied notes repeated in parentheses only at the start of a line. GDS 0016 records the design.
+- **Vocal and instrumental marks.** Metronome marks print a note symbol for the beat, with the rate in parentheses after a tempo word, as LilyPond does. `\breathe` prints a breath mark above the staff and makes room for it, and string numbers print as circled digits on the staff above the tablature.
 - **Write a songbook.** A new practical task writes *Mary Had a Little Lamb* for voice, piano and guitar: the tune, two verses, chord names, a two-voice piano part, and a guitar part with tablature, explained step by step for students and built as a website and a book. Every manual edition includes it.
 - **Even typography.** Paragraphs keep justification and hyphenation when one line is loose beside long inline code, a paragraph that fits on one line only by shrinking is no longer wrapped ragged, and post lists, cards included, are typeset like the rest of the page.
 

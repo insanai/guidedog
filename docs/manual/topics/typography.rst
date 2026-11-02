@@ -44,7 +44,7 @@ Every initialized project (``guidedog quickstart``, ``guidedog ssg init``, and `
 copies ``_static/typography.js`` beside ``_static/guidedog.css`` and ``_static/guidedog.js`` so a
 project owns and can edit its scripts directly. On desktop reading measures (``40rem`` and wider),
 English prose uses paragraph-wide **Knuth-Plass line breaking** in the browser across paragraphs,
-list items, definitions, admonitions, block quotes, and footnotes, while leaving tables,
+list items, definitions, admonitions, block quotes, footnotes, and post lists, including their cards, while leaving tables,
 navigation trees, metadata headers, and figure captions ragged.
 The script measures the loaded font, builds boxes, glue, and hyphenation penalties,
 and chooses breaks for the whole block. Frank Liang's pattern method supplies English

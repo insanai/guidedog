@@ -900,8 +900,6 @@
   const excluded = [
     "table",
     ".toctree-wrapper",
-    ".postlist",
-    ".postlist-cards",
     "figure",
     "figcaption",
     "nav",
@@ -1184,7 +1182,8 @@
       if (cut) line.querySelector("code")?.classList.add("gd-code-cut-start");
       cut = codeOf(trimEnd - 1) !== null && codeOf(trimEnd - 1) === codeOf(node.offset);
       if (cut) [...line.querySelectorAll("code")].at(-1)?.classList.add("gd-code-cut-end");
-      if (i < breaks.length - 1 && choice.ratio < 0) {
+      // A line that shrinks, the last one included, must narrow its spaces to fit.
+      if (choice.ratio < 0) {
         line.style.wordSpacing = `${choice.ratio * space / 3}px`;
       }
       if (trimEnd < node.offset) {
@@ -1219,8 +1218,10 @@
     ) {
       return null;
     }
+    // Below about fifteen ems a line holds too few words to justify well. The limit
+    // follows the font, so narrow columns such as post-list cards still qualify.
     const measure = p.clientWidth;
-    if (measure < 380) return null;
+    if (measure < 15 * parseFloat(style.fontSize)) return null;
     const { map, text } = textMap(p);
     if (!map.length || !text.trim()) return null;
     const space = width(" ", fontOf({ element: p }));
@@ -1231,7 +1232,10 @@
       maxTolerance: 4,
       demerits: { line: 10, flagged: 400, fitness: 3000 }
     });
-    if (breaks.length < 3 || breaks.at(-1).position !== nodes.length - 1) return null;
+    if (breaks.length < 2 || breaks.at(-1).position !== nodes.length - 1) return null;
+    // One line that fits as it is needs nothing. One that fits only by shrinking its
+    // spaces would otherwise be wrapped, ragged, by the browser.
+    if (breaks.length === 2 && breaks[1].ratio >= 0) return null;
     // The breaker accepts only lines that shrink no further than their glue allows and
     // stretch within its tolerance, as TeX does. A stricter check here once dropped
     // justification for a whole paragraph over one loose line beside long inline code.

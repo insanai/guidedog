@@ -65,7 +65,11 @@ pub use read::{
     CONFORMANCE, SourceFrame, VERSION, read, read_inline, read_inline_with, read_with, reader,
 };
 pub use settings::{Settings, SmartQuotes, default_settings};
-pub use specs::{ArgRule, ContentRule, OptSpec, OptType, choice, equal_fold, opt};
+pub use specs::{
+    ArgRule, ContentRule, OptSpec, OptType, choice, equal_fold, find_standard_directive, opt,
+    standard_directives,
+};
 pub use tables::TableExtra;
+pub use width::column_width;
 
-pub use guidedoc_rst_inline::{Role, RoleBase, RoleCall, standard_role};
+pub use guidedoc_rst_inline::{Role, RoleBase, RoleCall, standard_role, standard_roles};

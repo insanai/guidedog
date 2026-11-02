@@ -106,6 +106,12 @@ pub fn standard_role(name: &str) -> Option<RoleBase> {
     STANDARD_ROLES.iter().find(|r| r.0 == key).map(|r| r.1)
 }
 
+/// Returns the standard interpreted text roles and their aliases, each with what it
+/// produces, in the order the reader lists them.
+pub fn standard_roles() -> impl Iterator<Item = (&'static str, RoleBase)> {
+    STANDARD_ROLES.iter().copied()
+}
+
 /// Case-folds a name as role and reference names compare.
 pub(crate) fn fold_key(name: &str) -> String {
     let mut key = String::with_capacity(name.len());

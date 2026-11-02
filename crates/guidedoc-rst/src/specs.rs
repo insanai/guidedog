@@ -2,6 +2,8 @@
 
 use guidedoc::AdmonitionKind;
 
+use crate::extension::DirectiveHandler;
+
 /// Whether a directive takes an argument.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ArgRule {
@@ -319,6 +321,34 @@ pub(crate) const DIRECTIVES: &[DirSpec] = &[
 /// Compares ASCII case-insensitively, as directive and role names are compared.
 pub fn equal_fold(a: &str, b: &str) -> bool {
     a.eq_ignore_ascii_case(b)
+}
+
+/// Returns the standard (Docutils) directives in the order the reader lists them, as
+/// the handlers the reader checks them with. The `tag` of each is its index in that
+/// order. A dialect such as the Sphinx layer may redefine some of them.
+pub fn standard_directives() -> impl Iterator<Item = DirectiveHandler<'static>> {
+    DIRECTIVES.iter().enumerate().map(|(k, s)| s.handler(k))
+}
+
+/// Returns the standard directive called `name`, compared case-insensitively, as the
+/// handler the reader checks it with; `None` for any other name.
+pub fn find_standard_directive(name: &str) -> Option<DirectiveHandler<'static>> {
+    let k = DIRECTIVES.iter().position(|s| equal_fold(s.name, name))?;
+    Some(DIRECTIVES[k].handler(k))
+}
+
+impl DirSpec {
+    /// The specification as a handler with tag `tag`.
+    fn handler(&self, tag: usize) -> DirectiveHandler<'static> {
+        DirectiveHandler {
+            name: self.name,
+            arg: self.arg,
+            final_ws: self.final_ws,
+            content: self.content,
+            options: self.options,
+            tag,
+        }
+    }
 }
 
 /// Returns the standard directive called `name`.

@@ -59,8 +59,10 @@ pub(crate) fn char_columns(r: char) -> usize {
     }
 }
 
-/// The display width of `s` in columns.
-pub(crate) fn column_width(s: &str) -> usize {
+/// Returns the display width of `s` in columns, as Docutils measures a section title
+/// against its underline: East Asian wide and fullwidth characters count two columns,
+/// combining marks none, every other character one.
+pub fn column_width(s: &str) -> usize {
     s.chars().map(char_columns).sum()
 }
 

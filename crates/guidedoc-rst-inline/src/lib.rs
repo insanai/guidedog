@@ -53,7 +53,7 @@ use guidedoc::{Fail, LineView, ReadContext, SourceId};
 pub use extension::{NoRoleHook, RoleCall, RoleHook, unescape};
 pub use messages::MESSAGES;
 pub use options::{Options, SmartQuotes};
-pub use roles::{Role, RoleBase, standard_role};
+pub use roles::{Role, RoleBase, standard_role, standard_roles};
 
 /// One line of inline text: a view of source text and the source offset of its first
 /// byte. Lines are passed with tabs unexpanded so spans stay exact; resolution expands

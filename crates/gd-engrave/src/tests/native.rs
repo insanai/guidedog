@@ -1045,3 +1045,18 @@ fn metronome_marks_draw_a_note_symbol() {
     assert!(run.glyphs.len() >= "Allegro(=60)".len() + 2, "{}", run.glyphs.len());
 }
 
+#[test]
+fn breath_marks_stand_above_the_staff_and_make_room() {
+    let plain = draw(r"{ \time 4/4 c''2 d''2 | }", 350.0);
+    let breathed = draw(r"{ \time 4/4 c''2 \breathe d''2 | }", 350.0);
+    let commas = marks_of(&breathed, &[Role::Articulation]);
+    assert_eq!(commas.len(), 1, "{commas:?}");
+    let lines = marks_of(&breathed, &[Role::Staff]);
+    let top = lines.iter().map(|line| line.top).fold(f64::MAX, f64::min);
+    assert!(commas[0].bottom <= top + 0.5, "{commas:?} above {top}");
+    // The comma stands between the two notes, and the second note moves right for it.
+    let heads = marks_of(&breathed, &[Role::Notehead]);
+    assert!(heads[0].right < commas[0].left && commas[0].right < heads[1].left, "{heads:?}");
+    let before = marks_of(&plain, &[Role::Notehead]);
+    assert!(heads[1].left - heads[0].left > before[1].left - before[0].left, "{before:?}");
+}

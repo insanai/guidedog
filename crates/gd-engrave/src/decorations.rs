@@ -169,6 +169,18 @@ impl Draw<'_, '_, '_, '_, '_> {
                 };
                 self.markup(markup, style, at, (size, space), mark_role)?;
             }
+            AnnotationKind::Breath => {
+                // The comma stands just above the top line after the note; `at` is five
+                // spaces from the middle of the staff.
+                let y = at.y + 2.5 * space;
+                self.glyph(
+                    "breathMarkComma",
+                    at.x + BREATH_X * space,
+                    y,
+                    space,
+                    Role::Articulation,
+                )?;
+            }
             AnnotationKind::Dynamic(text) => self.dynamic(text, at, space)?,
             AnnotationKind::Articulation(name) => self.articulation(name, up, at, space)?,
             AnnotationKind::Fingering(number) => {
@@ -327,6 +339,10 @@ pub(crate) fn dynamic_glyph(character: char) -> Option<&'static str> {
         _ => return None,
     })
 }
+
+/// Where a breathing sign stands after its note's column, in staff spaces: past a
+/// notehead and a little air.
+pub(crate) const BREATH_X: f64 = 1.7;
 
 fn mark_above(mark: &gd_score::Annotation, stem_up: bool, voice: gd_score::Direction) -> bool {
     use gd_score::Direction;

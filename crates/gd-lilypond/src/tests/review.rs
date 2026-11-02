@@ -737,3 +737,13 @@ fn songbook_lesson_keeps_the_tune_verses_and_parts() {
         assert_eq!(verse.syllables.len(), pitches.len());
     }
 }
+
+#[test]
+fn breathe_follows_its_note_and_needs_one() {
+    let loaded = read_voices(r"{ c'2 \breathe d'2 }").unwrap();
+    let first = &loaded.score.events[0];
+    assert!(first.marks.iter().any(|m| m.kind == AnnotationKind::Breath));
+    assert!(loaded.score.events[1].marks.is_empty());
+    let alone = read_voices(r"{ \breathe c'1 }").unwrap_err();
+    assert!(alone.error.message.contains("breath mark needs"), "{}", alone.error.message);
+}

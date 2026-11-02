@@ -401,6 +401,8 @@ pub struct Annotation {
 pub enum AnnotationKind {
     /// A named SMuFL articulation.
     Articulation(String),
+    /// A breathing sign after the note (`\breathe`).
+    Breath,
     /// A finger number in 1..=5.
     Fingering(u8),
     /// A dynamic such as mf or sfz.

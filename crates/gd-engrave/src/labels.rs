@@ -8,6 +8,31 @@ use crate::Fonts;
 use crate::limits::charge;
 use crate::rods::{Bands, add_rect};
 
+/// Adds the bands of a markup mark in its role's style and size.
+fn markup_bands(
+    bands: &mut Bands,
+    (markup, role): (&gd_score::Markup, MarkupRole),
+    prefix: f64,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+    options: &mut crate::Options<'_>,
+) -> Result<(), Error> {
+    let (style, size) = match role {
+        MarkupRole::Script => (TextStyle::Regular, 2.4),
+        MarkupRole::Tempo | MarkupRole::Rehearsal => (TextStyle::Bold, 2.5),
+    };
+    let mut warnings = Vec::new();
+    let mut ctx = crate::markup::Context {
+        fonts,
+        space: 1.0,
+        warnings: &mut warnings,
+        work,
+        reserve: &mut options.reserve,
+    };
+    let run = crate::markup::shape(&mut ctx, markup, size, style)?;
+    run_bands(bands, &run, (prefix, false, false), work)
+}
+
 pub(crate) fn event(
     bands: &mut Bands,
     prefix: f64,
@@ -56,20 +81,14 @@ pub(crate) fn event(
                 )?;
             }
             AnnotationKind::Markup(markup, role) => {
-                let (style, size) = match role {
-                    MarkupRole::Script => (TextStyle::Regular, 2.4),
-                    MarkupRole::Tempo | MarkupRole::Rehearsal => (TextStyle::Bold, 2.5),
-                };
-                let mut warnings = Vec::new();
-                let mut ctx = crate::markup::Context {
-                    fonts,
-                    space: 1.0,
-                    warnings: &mut warnings,
-                    work,
-                    reserve: &mut options.reserve,
-                };
-                let run = crate::markup::shape(&mut ctx, markup, size, style)?;
-                run_bands(bands, &run, (prefix, false, false), work)?;
+                markup_bands(bands, (markup, *role), prefix, fonts, work, options)?;
+            }
+            AnnotationKind::Breath => {
+                // A breathing sign takes its own room after the note, as LilyPond gives it
+                // a column of its own, so the next note always moves aside.
+                let x = prefix + crate::decorations::BREATH_X;
+                let rect = crate::Rect { left: x - 0.2, right: x + 1.0, top: -4.0, bottom: 4.0 };
+                add_rect(bands, rect, work)?;
             }
             AnnotationKind::Articulation(_) | AnnotationKind::Fingering(_) => {}
         }

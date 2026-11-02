@@ -112,6 +112,7 @@ pub const COMMANDS: &[Command] = &[
     Command { name: "voiceThree", phase: 2, status: CommandStatus::Implemented },
     Command { name: "voiceFour", phase: 2, status: CommandStatus::Implemented },
     Command { name: "oneVoice", phase: 2, status: CommandStatus::Implemented },
+    Command { name: "breathe", phase: 2, status: CommandStatus::Implemented },
     Command { name: "shiftOn", phase: 2, status: CommandStatus::Implemented },
     Command { name: "shiftOnn", phase: 2, status: CommandStatus::Implemented },
     Command { name: "shiftOnnn", phase: 2, status: CommandStatus::Implemented },

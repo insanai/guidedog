@@ -278,6 +278,16 @@ impl Reader<'_> {
             self.annotate(state, Annotation { kind, direction: Direction::Auto }, span)?;
             return Ok(true);
         }
+        if name == "breathe" {
+            // LilyPond's breathing sign follows the note or rest before it.
+            if state.last.is_none() {
+                return Err(syntax_error(span, "A breath mark needs a preceding note or rest.")
+                    .hint("Write `\\breathe` after the note it follows, as in `c'2 \\breathe`."));
+            }
+            let mark = Annotation { kind: AnnotationKind::Breath, direction: Direction::Up };
+            self.annotate(state, mark, span)?;
+            return Ok(true);
+        }
         if is_string_number(name) {
             self.set_string(state, string_number(name, span)?, span)?;
             return Ok(true);

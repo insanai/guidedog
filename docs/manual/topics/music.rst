@@ -150,7 +150,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Rhythm and stems
      - ``\tuplet 3/2``, ``\times 2/3``, manual ``[`` and ``]`` beams, ``\autoBeamOn``, ``\autoBeamOff``, ``\stemUp``, ``\stemDown``, ``\stemNeutral``.
    * - Expression
-     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, slur/tie/dynamic direction commands, literal scripts and structured ``\markup``.
+     - Articulations, fingerings 1 through 5, dynamics from ``\pppp`` through ``\ffff``, ``\<``, ``\>``, ``\!``, ``\breathe``, slur/tie/dynamic direction commands, literal scripts and structured ``\markup``.
    * - Structure
      - Assignments, variable references, lexical ``\include``, ``\score``, ``\new Staff``, ``\new Voice``, ``PianoStaff``, ``GrandStaff``, ``StaffGroup``, ``ChoirStaff``.
    * - Voices and lyrics
@@ -160,7 +160,7 @@ A tilde ties equal pitches; parentheses make slurs, and ``\(`` with ``\)`` makes
    * - Grace and repetition
      - ``\grace``, ``\acciaccatura``, ``\appoggiatura``, ``\afterGrace``, ``\repeat volta``, ``\alternative``, ``\volta``, ``\fine``, ``\section``, ``\repeat unfold``, ``\compressEmptyMeasures``, ``\compressFullBarRests``.
    * - Labels and breaks
-     - ``\tempo``, ``\mark``, ``\mark \default``, ``\chords``, ``\new ChordNames \chordmode``, ``\break``, ``\noBreak``.
+     - ``\tempo`` with text, a metronome mark or both, ``\mark``, ``\mark \default``, ``\chords``, ``\new ChordNames \chordmode``, ``\break``, ``\noBreak``.
 
 The reader accepts version declarations, ignored header metadata and empty layout or MIDI blocks.
 It refuses Scheme, music functions, arbitrary property changes, overrides and unsupported commands with a placed diagnostic.
@@ -174,12 +174,23 @@ We attach articulations and fingerings after a note: ``-.`` is staccato, ``->`` 
 Dynamics set the intensity, and a hairpin continues until ``\!`` or the next dynamic.
 We place a small grace group before a main note with ``\grace``; ``\acciaccatura`` adds a slash, while ``\afterGrace`` places the group after its main note.
 Grace time does not extend the measure.
+``\tempo "Andante" 4 = 88`` prints the text and, in parentheses, a note symbol for the beat with the rate, as LilyPond prints "Andante (quarter note = 88)"; ``\tempo 4 = 88`` prints the metronome mark alone.
+``\breathe`` after a note prints a breath mark, a comma above the staff, and makes room for it before the next note.
 
 .. code-block:: lilypond
 
    \relative c'' {
      \tempo "Andante" 4 = 88
-     \grace { d16 e } f4-1-. g-> a\p\< b | c1\f |
+     \grace { d16 e } f4-1-. g-> a\p\< b \breathe | c1\f |
+   }
+
+.. lilypond::
+   :caption: A tempo with a metronome mark, grace notes, articulations, dynamics and a breath mark.
+   :alt: Andante, quarter note equals 88; grace notes before an F with a fingering and staccato, an accented G, A and B under a crescendo, a breath mark, then a loud whole-note C.
+
+   \relative c'' {
+     \tempo "Andante" 4 = 88
+     \grace { d16 e } f4-1-. g-> a\p\< b \breathe | c1\f |
    }
 
 We write a volta repeat once and give each ending in ``\alternative``; ``\volta 1,2 { ... }`` labels combined endings, and ``\fine`` or ``\section`` marks a structural double bar.
@@ -293,6 +304,7 @@ We write the same music for the staff and the tablature; guitar music sounds an 
 
 Each note goes on the highest string that can play it, as LilyPond chooses by default: notes of a chord take the strings from the highest note down, each at fret 0 through 24.
 A string number after a note, such as ``c'4\2``, names the string instead; inside a chord each note takes its own, as in ``<c\5 e\4>2``.
+On the staff above, each string number prints as a circled digit over its note, or under it in a voice with downward stems.
 A note that no free string can play, such as a C below the low E string, is refused with a placed diagnostic.
 
 The tab staff shows strings, fret numbers and bar lines with a TAB clef, as LilyPond's default tablature does.

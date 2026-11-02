@@ -89,7 +89,7 @@ Guidedog places the syllables under the notes of that voice in order, and puts t
      \new Staff \with { instrumentName = "Voice" } {
        \new Voice = "tune" \fixed c' {
          \key c \major \time 4/4
-         e4 d c d | e e e2 | d4 d d2 | e4 g g2 |
+         e4 d c d | e e e2 | d4 d d2 | e4 g g2 \breathe |
          e4 d c d | e e e e | d d e d | c1 \bar "|."
        }
      }
@@ -102,6 +102,9 @@ Guidedog places the syllables under the notes of that voice in order, and puts t
        ev -- ery -- where that Ma -- ry went, the lamb was sure to go.
      }
    >>
+
+A singer breathes between phrases.
+The tune has two phrases of four bars, and ``\breathe`` after the last note of bar four prints a comma above the staff where the singer takes a breath.
 
 Hale's poem has more verses, but the next, "It followed her to school one day", has five syllables where the first bar has four notes.
 Singers divide a note for the extra syllable; a score shows that with a different rhythm, so our songbook keeps the two verses that fit the tune as written.
@@ -137,7 +140,7 @@ The left hand plays the bass: the root and the fifth of each chord, as half note
    \new PianoStaff \with { instrumentName = "Piano" } <<
      \new Staff \fixed c' {
        \key c \major \time 4/4
-       << { e4 d c d | e e e2 | d4 d d2 | e4 g g2 |
+       << { e4 d c d | e e e2 | d4 d d2 | e4 g g2 \breathe |
             e4 d c d | e e e e | d d e d | c1 \bar "|." }
           \\
           { c4 b, a, b, | c c c2 | b,4 b, b,2 | c4 e e2 |
@@ -167,7 +170,7 @@ It puts each note on the highest string that can play it, so the tune lies on th
 
    tune = \fixed c' {
      \key c \major \time 4/4
-     e4 d c d | e e e2 | d4 d d2 | e4 g g2 |
+     e4 d c d | e e e2 | d4 d d2 | e4 g g2 \breathe |
      e4 d c d | e e e e | d d e d | c1 \bar "|."
    }
    bass = \fixed c { c2 g, | c2 g, | g,2 d | c2 g, | c2 g, | c2 g, | g,2 b, | c1 }
@@ -186,6 +189,9 @@ Combine the parts in one score
 The complete score stacks the parts from top to bottom: chord names, the voice with its verses, the piano and the guitar.
 To write each line of music once, we give it a name, such as ``melody = ...``, and use it with ``\melody`` wherever a part needs it.
 A line starting with ``%`` is a comment for the reader of the file.
+``\tempo "Moderato" 4 = 100`` above the voice asks for a moderate pace of 100 quarter-note beats a minute; Guidedog prints the word with a note symbol and the rate in parentheses.
+The breath mark is part of the tune, so the piano and guitar staves show it too: the players lift at the end of the phrase with the singer.
+The tablature leaves it out.
 We save the score as ``scores/mary-had-a-little-lamb.ly``:
 
 .. literalinclude:: scores/mary-had-a-little-lamb.ly
@@ -228,6 +234,6 @@ These exercises extend the songbook.
 Build after each change and look at the result.
 
 #. Move the song to G major: wrap the whole score in ``\transpose c g << ... >>``. The key signature, the notes, the tablature and the chord names all move up a fifth.
-#. Play the guitar tune higher on the neck: add ``\2`` after each note of the first bar, and read the new frets in the tablature.
+#. Play the guitar tune higher on the neck: add ``\2`` after each note of the first bar. A circled 2 appears over each note on the staff, and the tablature shows the new frets.
 #. Add dynamics to the tune: write ``e4\mf`` for its first note and ``c1\p`` for its last. A dynamic follows the note it belongs to.
 #. Write a second song in its own file and page, and refer to its figure from this page with ``:numref:``.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 02:37+0000\n"
+"POT-Creation-Date: 2026-11-02 03:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -1470,110 +1470,114 @@ msgid "The vocal part with two verses."
 msgstr ""
 
 #: ../../howto/songbook.rst:106
-msgid "Hale's poem has more verses, but the next, \"It followed her to school one day\", has five syllables where the first bar has four notes. Singers divide a note for the extra syllable; a score shows that with a different rhythm, so our songbook keeps the two verses that fit the tune as written."
+msgid "A singer breathes between phrases. The tune has two phrases of four bars, and ``\\breathe`` after the last note of bar four prints a comma above the staff where the singer takes a breath."
 msgstr ""
 
 #: ../../howto/songbook.rst:109
-msgid "Name the chords"
+msgid "Hale's poem has more verses, but the next, \"It followed her to school one day\", has five syllables where the first bar has four notes. Singers divide a note for the extra syllable; a score shows that with a different rhythm, so our songbook keeps the two verses that fit the tune as written."
 msgstr ""
 
 #: ../../howto/songbook.rst:112
+msgid "Name the chords"
+msgstr ""
+
+#: ../../howto/songbook.rst:115
 msgid "Guitarists and pianists who accompany a singer read chord names above the staff. We write them in ``\\chordmode``: ``c1`` is a C major chord lasting a whole bar, ``g1`` a G major chord, and ``g:7`` a G seventh chord. The song needs only these three chords: C under the notes C, E and G, and G or G7 under D and B. A ``\\new ChordNames`` context draws the names above the next staff:"
 msgstr ""
 
-#: ../../howto/songbook.rst:121
+#: ../../howto/songbook.rst:124
 msgid "Write the piano part"
 msgstr ""
 
-#: ../../howto/songbook.rst:124
+#: ../../howto/songbook.rst:127
 msgid "A piano part has two staves joined by a brace: ``\\new PianoStaff``. The upper staff is for the right hand, and the lower staff, with ``\\clef bass``, for the left hand."
 msgstr ""
 
-#: ../../howto/songbook.rst:127
+#: ../../howto/songbook.rst:130
 msgid "The right hand plays the tune and, below it, a second voice a third lower. Two voices on one staff go inside ``<< ... >>``, separated by ``\\\\``. Guidedog draws the first voice with stems up and the second with stems down, so a player can follow each line. The left hand plays the bass: the root and the fifth of each chord, as half notes."
 msgstr ""
 
-#: ../../howto/songbook.rst:133
+#: ../../howto/songbook.rst:136
 msgid "Two piano staves; the right hand plays the tune with a second voice a third below, and the left hand plays half notes on C and G."
 msgstr ""
 
-#: ../../howto/songbook.rst:133
+#: ../../howto/songbook.rst:136
 msgid "The piano part: tune and harmony in the right hand, bass in the left."
 msgstr ""
 
-#: ../../howto/songbook.rst:152
+#: ../../howto/songbook.rst:155
 msgid "Write the guitar part and its tablature"
 msgstr ""
 
-#: ../../howto/songbook.rst:155
+#: ../../howto/songbook.rst:158
 msgid "Guitar music is written an octave above the sound, on a staff with ``\\clef \"treble_8\"``; the small 8 under the clef says so. Our guitar part plays two voices on one staff, as a fingerstyle player does: the tune with stems up, and the bass with stems down."
 msgstr ""
 
-#: ../../howto/songbook.rst:158
+#: ../../howto/songbook.rst:161
 msgid "Under the staff we add tablature with ``\\new TabStaff``. Its six lines are the six strings of the guitar, with the highest string at the top, and each number is the fret to press on that string; ``0`` is the open string. We give the tablature the same music as the staff, and Guidedog chooses the strings. It puts each note on the highest string that can play it, so the tune lies on the two highest strings and the bass on the two lowest, all in the first position of the left hand."
 msgstr ""
 
-#: ../../howto/songbook.rst:164
+#: ../../howto/songbook.rst:167
 msgid "A guitar staff with the tune and a bass, above tablature; the first bar is frets 0, 3, 1 and 3 on the high strings with 3 and 3 on the low strings."
 msgstr ""
 
-#: ../../howto/songbook.rst:164
+#: ../../howto/songbook.rst:167
 msgid "The guitar part in standard notation and tablature."
 msgstr ""
 
-#: ../../howto/songbook.rst:179
+#: ../../howto/songbook.rst:182
 msgid "In the first bar of :numref:`songbook-guitar` the tune's E is the open first string, D the third fret of the second string, and C its first fret; the bass C is the third fret of the fifth string, and G the third fret of the sixth. To play a note on another string, we add a string number after it: ``e4\\2`` puts the E on the second string, at the fifth fret. The tablature leaves out the rhythm, which the staff above shows."
 msgstr ""
 
-#: ../../howto/songbook.rst:183
+#: ../../howto/songbook.rst:186
 msgid "Combine the parts in one score"
 msgstr ""
 
-#: ../../howto/songbook.rst:186
-msgid "The complete score stacks the parts from top to bottom: chord names, the voice with its verses, the piano and the guitar. To write each line of music once, we give it a name, such as ``melody = ...``, and use it with ``\\melody`` wherever a part needs it. A line starting with ``%`` is a comment for the reader of the file. We save the score as ``scores/mary-had-a-little-lamb.ly``:"
+#: ../../howto/songbook.rst:189
+msgid "The complete score stacks the parts from top to bottom: chord names, the voice with its verses, the piano and the guitar. To write each line of music once, we give it a name, such as ``melody = ...``, and use it with ``\\melody`` wherever a part needs it. A line starting with ``%`` is a comment for the reader of the file. ``\\tempo \"Moderato\" 4 = 100`` above the voice asks for a moderate pace of 100 quarter-note beats a minute; Guidedog prints the word with a note symbol and the rate in parentheses. The breath mark is part of the tune, so the piano and guitar staves show it too: the players lift at the end of the phrase with the singer. The tablature leaves it out. We save the score as ``scores/mary-had-a-little-lamb.ly``:"
 msgstr ""
 
-#: ../../howto/songbook.rst:194
+#: ../../howto/songbook.rst:200
 msgid "On the song's page, ``mary.rst``, the directive names the file instead of holding the music:"
 msgstr ""
 
-#: ../../howto/songbook.rst:207
+#: ../../howto/songbook.rst:213
 msgid "A score for voice, piano and guitar with chord names and tablature, eight bars in C major."
 msgstr ""
 
-#: ../../howto/songbook.rst:207
+#: ../../howto/songbook.rst:213
 msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
 msgstr ""
 
-#: ../../howto/songbook.rst:211
+#: ../../howto/songbook.rst:217
 msgid "Build the website and the book"
 msgstr ""
 
-#: ../../howto/songbook.rst:219
+#: ../../howto/songbook.rst:225
 msgid "Guidedog engraves each score for each output at that output's line width, so the website and the book each break the music into systems that fill their lines. On a narrow phone screen, the website shows an edition engraved for the narrow width. In the book, a long score breaks between systems across pages, with its caption after the last system. When we change a score file, the next build engraves it again; unchanged scores are kept."
 msgstr ""
 
-#: ../../howto/songbook.rst:224
+#: ../../howto/songbook.rst:230
 msgid "Practice"
 msgstr ""
 
-#: ../../howto/songbook.rst:227
+#: ../../howto/songbook.rst:233
 msgid "These exercises extend the songbook. Build after each change and look at the result."
 msgstr ""
 
-#: ../../howto/songbook.rst:230
+#: ../../howto/songbook.rst:236
 msgid "Move the song to G major: wrap the whole score in ``\\transpose c g << ... >>``. The key signature, the notes, the tablature and the chord names all move up a fifth."
 msgstr ""
 
-#: ../../howto/songbook.rst:231
-msgid "Play the guitar tune higher on the neck: add ``\\2`` after each note of the first bar, and read the new frets in the tablature."
+#: ../../howto/songbook.rst:237
+msgid "Play the guitar tune higher on the neck: add ``\\2`` after each note of the first bar. A circled 2 appears over each note on the staff, and the tablature shows the new frets."
 msgstr ""
 
-#: ../../howto/songbook.rst:232
+#: ../../howto/songbook.rst:238
 msgid "Add dynamics to the tune: write ``e4\\mf`` for its first note and ``c1\\p`` for its last. A dynamic follows the note it belongs to."
 msgstr ""
 
-#: ../../howto/songbook.rst:233
+#: ../../howto/songbook.rst:239
 msgid "Write a second song in its own file and page, and refer to its figure from this page with ``:numref:``."
 msgstr ""
 

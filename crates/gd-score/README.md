@@ -1,6 +1,6 @@
 # gd-score
 
-Exact musical time, spelled pitches and a flat notation model for GDS 0015.
+Exact musical time, spelled pitches, guitar tablature string placement and a flat notation model for GDS 0015 and GDS 0016.
 This crate has no dependencies and performs no file access or engraving.
 
 We construct `Ratio` with `Ratio::new`, use its checked arithmetic for musical time, and call `check_score` before engraving a programmatically constructed `Score`.

@@ -1,6 +1,6 @@
 # gd-lilypond
 
-A bounded reader for the Guidedog LilyPond profile in GDS 0015.
+A bounded reader for the Guidedog LilyPond profile in GDS 0015 and GDS 0016.
 The library performs no file access and executes no Scheme or external program.
 
 We use `load_score(source, name, &mut Options::default())` for the common case.
@@ -9,7 +9,7 @@ We use `load_score(source, name, &mut Options::default())` for the common case.
 Built-in language includes select note names without reading files.
 Failures retain the files read so that `error_report` can place the original span.
 
-The reader covers all three profile phases, including exact tuplets, relative and fixed pitches, spelled transposition, staves and voices, lyrics, grace notes, structured `\markup`, modern `\volta`/`\fine`/`\section` repeats and chord names.
+The reader covers all three profile phases, including exact tuplets, relative and fixed pitches, spelled transposition, staves and voices, guitar tablature (`TabStaff`, `TabVoice` and `\1` through `\6` string numbers), breath marks (`\breathe`), metronome note symbols, lyrics, grace notes, structured `\markup`, modern `\volta`/`\fine`/`\section` repeats and chord names.
 The command table distinguishes implemented notation, ignored metadata and refused engraver programming.
 Source, nesting, includes, events and work have explicit limits.
 Engraving and image export belong to the separate `gd-engrave` adapter.

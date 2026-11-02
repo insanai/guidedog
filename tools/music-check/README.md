@@ -1,6 +1,6 @@
 # Native music qualification
 
-We run `cargo run --locked -p music-check` to compare all 63 scores in `tests/integration/data/music` with their golden SVG and PNG output.
+We run `cargo run --locked -p music-check` to compare all 66 scores in `tests/integration/data/music` with their golden SVG and PNG output.
 We first run `cargo xtask fetch-fonts --music` to download the single Noto Serif CJK SC regular face used by the corpus.
 Both the download task and the corpus loader verify its pinned SHA-256.
 CI and every release-platform job fetch it before qualification, caching it by the font list's digest.
@@ -30,3 +30,4 @@ Release builds run the same corpus on all five native release platforms before p
 
 Scores 59-62 qualify third and fourth voices, including dense accidentals and dots, flags, mixed-duration rests, named voices, lyrics and ties across a system break.
 Score 63 is the manual's four-bar Beethoven Joy theme, transposed to C major; a reader regression checks every pitch and exact duration against the instrumental opening.
+Scores 64-66 qualify six-line guitar tablature (`TabStaff` and `TabVoice`), the songbook's *Mary Had a Little Lamb* arrangement for voice, piano and guitar, metronome note symbols, breath marks and circled string numbers.

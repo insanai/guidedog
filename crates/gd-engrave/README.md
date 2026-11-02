@@ -1,6 +1,6 @@
 # gd-engrave
 
-Native music geometry and standalone SVG output for GDS 0015.
+Native music geometry and standalone SVG output for GDS 0015 and GDS 0016.
 The crate borrows a `gd-score::Score` and explicit immutable font tables.
 It performs no file access, runs no program and has no global font registry.
 
@@ -18,7 +18,7 @@ Bravura 1.482 and its SMuFL metadata are embedded unmodified from `third_party/b
 The build checks their recorded digests.
 Text faces come from the caller, with explicit regular, bold, italic and bold-italic fallback lists.
 
-The corpus tool (`cargo run -p music-check`) checks 63 outlined SVGs, tolerant PNG pixels, actual role-ink contacts, primary beam quants and tie apexes across standard and compact staff sizes.
+The corpus tool (`cargo run -p music-check`) checks 66 outlined SVGs, tolerant PNG pixels, actual role-ink contacts, primary beam quants and tie apexes across standard and compact staff sizes.
 The reader and engraver have separate finite work limits; text outline growth, temporary shaping and retained worker capacities consult the caller's reservation before allocation.
 Cross-system curves, lyric extenders and hairpins keep their continuation geometry, and `System::width` records the actual ink frame for per-system PNG and SVG export.
 
@@ -28,4 +28,4 @@ The host connects these callbacks to `Ledger::charge` and `Ledger::discharge`.
 Retained workspace capacities are included for every engraving because a reused worker can receive a fresh ledger.
 
 Three- and four-voice columns use a bounded placement against the other heads, stems and flags, with rightward shifts for voice three, leftward shifts for voice four, and explicit `\shiftOn`, `\shiftOnn`, `\shiftOnnn` and `\shiftOff` column-shift levels (`Event::column_shift`). Dynamics and outside marks placed on the same beat by multiple voices stack outward without overlap.
-The corpus includes dense unisons and seconds, mixed rests, named voices with lyrics and system-crossing ties, and a four-bar Beethoven teaching excerpt.
+The corpus includes dense unisons and seconds, mixed rests, named voices with lyrics and system-crossing ties, a four-bar Beethoven teaching excerpt, six-line guitar tablature with broken string lines, circled string numbers, breath marks and metronome note symbols.

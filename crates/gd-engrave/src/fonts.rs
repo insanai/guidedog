@@ -485,4 +485,5 @@ pub(crate) const GLYPHS: &[(&str, u32)] = &[
     ("keyboardPedalUp", 0xe655),
     ("timeSigCommon", 0xe08a),
     ("timeSigCutCommon", 0xe08b),
+    ("csymMajorSeventh", 0xe873),
 ];

@@ -224,8 +224,9 @@ pub enum EventKind {
     Bar(BarStyle),
     /// A forced or forbidden system break.
     Break(BreakRule),
-    /// A chord-name symbol at this moment.
-    ChordName(String, Duration),
+    /// A chord-name symbol at this moment, as formatted markup such as a root, a quality
+    /// and a raised extension.
+    ChordName(Markup, Duration),
 }
 
 impl EventKind {

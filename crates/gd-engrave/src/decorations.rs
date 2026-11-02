@@ -22,11 +22,11 @@ impl Draw<'_, '_, '_, '_, '_> {
                 let x =
                     request.positions[index] + if line_start { 0.0 } else { info.prefix * space };
                 if let EventKind::ChordName(name, _) = &event.kind {
-                    self.text(
+                    self.markup(
                         name,
                         TextStyle::Regular,
                         Point { x, y: middle - 4.0 * space },
-                        2.5 * space,
+                        (2.5 * space, space),
                         Role::ChordName,
                     )?;
                 }

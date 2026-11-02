@@ -45,7 +45,7 @@ fn counts(score: &Score, work: &mut usize) -> Result<(usize, usize), Error> {
             heads += chord.notes.len();
         }
         if let EventKind::ChordName(name, _) = &event.kind {
-            text = text.max(name.len());
+            text = text.max(name.approx_bytes());
         }
         for annotation in &event.marks {
             match &annotation.kind {

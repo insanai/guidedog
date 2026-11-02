@@ -21,6 +21,19 @@ fn markup_bands(
         MarkupRole::Script => (TextStyle::Regular, 2.4),
         MarkupRole::Tempo | MarkupRole::Rehearsal => (TextStyle::Bold, 2.5),
     };
+    let run = shape_markup(markup, style, size, fonts, work, options)?;
+    run_bands(bands, &run, (prefix, false, false), work)
+}
+
+/// Shapes `markup` at `size` staff spaces for collision bands; warnings belong to drawing.
+fn shape_markup(
+    markup: &gd_score::Markup,
+    style: TextStyle,
+    size: f64,
+    fonts: &Fonts<'_>,
+    work: &mut usize,
+    options: &mut crate::Options<'_>,
+) -> Result<crate::TextRun, Error> {
     let mut warnings = Vec::new();
     let mut ctx = crate::markup::Context {
         fonts,
@@ -29,8 +42,7 @@ fn markup_bands(
         work,
         reserve: &mut options.reserve,
     };
-    let run = crate::markup::shape(&mut ctx, markup, size, style)?;
-    run_bands(bands, &run, (prefix, false, false), work)
+    crate::markup::shape(&mut ctx, markup, size, style)
 }
 
 pub(crate) fn event(
@@ -94,16 +106,9 @@ pub(crate) fn event(
             AnnotationKind::Articulation(_) | AnnotationKind::Fingering(_) => {}
         }
     }
-    if let EventKind::ChordName(text, _) = &event.kind {
-        text_bands(
-            bands,
-            fonts,
-            text,
-            TextStyle::Regular,
-            (prefix, 2.5, false, false),
-            work,
-            &mut options.reserve,
-        )?;
+    if let EventKind::ChordName(name, _) = &event.kind {
+        let run = shape_markup(name, TextStyle::Regular, 2.5, fonts, work, options)?;
+        run_bands(bands, &run, (prefix, false, false), work)?;
     }
     Ok(())
 }

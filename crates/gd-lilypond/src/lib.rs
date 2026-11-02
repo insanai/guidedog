@@ -4,6 +4,7 @@
 #![forbid(unsafe_code)]
 
 mod bindings;
+mod chord_names;
 mod commands;
 mod contexts;
 mod cursor;

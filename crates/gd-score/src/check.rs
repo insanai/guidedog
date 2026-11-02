@@ -166,13 +166,13 @@ fn check_event(event: &Event) -> Result<(), Error> {
             key.alterations()?;
         }
         EventKind::Time(meter) => check_meter(meter)?,
+        EventKind::ChordName(markup, _) => markup.check(0)?,
         EventKind::Rest(_)
         | EventKind::Skip(_)
         | EventKind::MeasureRest(_)
         | EventKind::Clef(_)
         | EventKind::Bar(_)
-        | EventKind::Break(_)
-        | EventKind::ChordName(_, _) => {}
+        | EventKind::Break(_) => {}
     }
     Ok(())
 }

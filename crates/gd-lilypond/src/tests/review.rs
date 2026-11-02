@@ -202,7 +202,7 @@ fn musical_semantics_transpose_chords_keys_and_relative_q() {
         .events
         .iter()
         .filter_map(|e| match &e.kind {
-            EventKind::ChordName(name, _) => Some(name.as_str()),
+            EventKind::ChordName(name, _) => Some(name.plain_text()),
             _ => None,
         })
         .collect();
@@ -762,4 +762,19 @@ fn time_signature_style_commands_set_the_style_of_later_meters() {
         styles(r"{ c'1 \numericTimeSignature c'1 \time 4/4 c'1 \defaultTimeSignature c'1 }"),
         [MeterStyle::Symbol, MeterStyle::Symbol, MeterStyle::Numbers, MeterStyle::Numbers]
     );
+}
+
+#[test]
+fn a_chord_quality_is_one_unspaced_run_of_tokens() {
+    let loaded = load(r"<< \chords { c1:7sus4 d:m7.5- e:7 f } \new Staff { c'1 d' e' f' } >>");
+    let names: Vec<_> = loaded
+        .score
+        .events
+        .iter()
+        .filter_map(|e| match &e.kind {
+            EventKind::ChordName(name, _) => Some(name.plain_text()),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(names, ["C7 sus4", "D\u{f8}", "E7", "F"]);
 }

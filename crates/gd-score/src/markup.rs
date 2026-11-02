@@ -191,6 +191,7 @@ impl Markup {
                 "accidentalNatural" => "♮",
                 "accidentalDoubleFlat" => "bb",
                 "accidentalDoubleSharp" => "##",
+                "csymMajorSeventh" => "maj7",
                 _ => "",
             }),
             Self::Space { horizontal, .. } => {

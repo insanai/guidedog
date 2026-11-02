@@ -1,6 +1,6 @@
 use gd_score::{
-    Annotation, AnnotationKind, BarStyle, Direction, Duration, EventId, EventKind, NoteRef,
-    SpannerKind, TextStyle,
+    Annotation, AnnotationKind, BarStyle, Direction, Duration, EventId, EventKind, Markup,
+    NoteRef, SpannerKind, TextStyle,
 };
 
 use crate::cursor::Cursor;
@@ -224,7 +224,7 @@ impl Reader<'_> {
         inner: &mut Cursor<'_>,
         state: &mut State,
         span: Span,
-    ) -> Result<(String, Duration), Error> {
+    ) -> Result<(Markup, Duration), Error> {
         let mut root = self.raw_pitch(word, inner, state, span)?.pitch;
         for (from, to) in state.transpositions.iter().rev() {
             root = root.transpose_tonic(*from, *to).map_err(|e| e.or_at(span))?;
@@ -233,31 +233,37 @@ impl Reader<'_> {
         state.duration = written;
         let scale = written.scale.checked_mul(state.scale).map_err(|e| e.or_at(span))?;
         let duration = Duration { scale, ..written };
-        let mut text = pitch_name(root);
-        if inner.symbol(':') {
-            let quality = self.read_chord_quality(inner, span)?;
-            text.push_str(&quality);
-        }
+        let quality =
+            if inner.symbol(':') { self.read_chord_quality(inner, span)? } else { String::new() };
+        let mut bass = None;
         if inner.symbol('/') {
             let bass_node = inner.next()?;
             let ExprKind::Atom(TokenKind::Word(bass_word)) = &bass_node.kind else {
                 return Err(syntax_error(bass_node.span, "Expected a chord bass pitch."));
             };
-            let mut bass = self.raw_pitch(bass_word, inner, state, bass_node.span)?.pitch;
+            let mut pitch = self.raw_pitch(bass_word, inner, state, bass_node.span)?.pitch;
             for (from, to) in state.transpositions.iter().rev() {
-                bass = bass.transpose_tonic(*from, *to).map_err(|e| e.or_at(bass_node.span))?;
+                pitch = pitch.transpose_tonic(*from, *to).map_err(|e| e.or_at(bass_node.span))?;
             }
-            text.push('/');
-            text.push_str(&pitch_name(bass));
+            bass = Some(pitch);
         }
-        Ok((text, duration))
+        let markup = crate::chord_names::chord_markup(root, &quality, bass)
+            .ok_or_else(|| unsupported(span, &format!("chord quality {quality}")))?;
+        self.memory.take(markup.approx_bytes(), span)?;
+        Ok((markup, duration))
     }
 
     fn read_chord_quality(&self, inner: &mut Cursor<'_>, span: Span) -> Result<String, Error> {
         let mut quality = String::new();
+        let mut end = None;
         while let Some(part) = inner.peek() {
+            // A quality is one unspaced run of tokens, such as `7sus4` or `m7.5-`; a token
+            // after a space belongs to the next chord.
+            if end.is_some_and(|end| part.span.start != end) {
+                break;
+            }
             match &part.kind {
-                ExprKind::Atom(TokenKind::Word(word)) if quality.is_empty() => {
+                ExprKind::Atom(TokenKind::Word(word)) => {
                     self.memory.take(word.len() + 32, part.span)?;
                     quality.push_str(word);
                 }
@@ -270,39 +276,15 @@ impl Reader<'_> {
                 }
                 _ => break,
             }
+            end = Some(part.span.end);
             inner.at += 1;
         }
-        if !CHORD_QUALITIES.contains(&quality.as_str()) {
-            return Err(unsupported(span, &format!("chord quality {quality}")));
+        if quality.is_empty() {
+            return Err(unsupported(span, "chord quality"));
         }
         Ok(quality)
     }
 }
-
-fn pitch_name(pitch: gd_score::Pitch) -> String {
-    let letter = match pitch.step {
-        gd_score::Step::C => 'C',
-        gd_score::Step::D => 'D',
-        gd_score::Step::E => 'E',
-        gd_score::Step::F => 'F',
-        gd_score::Step::G => 'G',
-        gd_score::Step::A => 'A',
-        gd_score::Step::B => 'B',
-    };
-    let suffix = match pitch.alter {
-        gd_score::Alter::DoubleFlat => "bb",
-        gd_score::Alter::Flat => "b",
-        gd_score::Alter::Natural => "",
-        gd_score::Alter::Sharp => "#",
-        gd_score::Alter::DoubleSharp => "##",
-    };
-    format!("{letter}{suffix}")
-}
-
-const CHORD_QUALITIES: &[&str] = &[
-    "m", "min", "maj", "dim", "aug", "sus2", "sus4", "5", "6", "7", "9", "11", "13", "m7", "min7",
-    "maj7", "dim7", "m7.5-", "7+", "7.5+", "7.5-", "sus", "7sus4",
-];
 
 fn read_volta_numbers(cursor: &mut Cursor<'_>, count: u16, span: Span) -> Result<String, Error> {
     let mut nums = Vec::new();

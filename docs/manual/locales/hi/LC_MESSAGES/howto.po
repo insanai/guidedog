@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 02:37+0000\n"
+"POT-Creation-Date: 2026-11-02 03:38+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -2868,7 +2868,16 @@ msgid ""
 "Lamb*: the tune is a traditional American melody, and the words are by "
 "Sarah Josepha Hale, published in 1830; both are in the public domain. "
 ":doc:`../topics/music` describes every notation command we use."
-msgstr "हम Guidedog में एक गीत-पुस्तिका रख सकते हैं: व्याख्याएँ RST या Markdown में, उनके पास पाठ के रूप में संगीत, और एक कमांड जो वेबसाइट और छपी पुस्तक दोनों के लिए स्वरलेखों की स्वरलिपि टाइपसेट करता है। इस काम में हम गायन, पियानो और गिटार के लिए एक पूरा गीत लिखते हैं, जिसमें बोल, कॉर्ड नाम और गिटार टैबलेचर होंगे, और विद्यार्थियों के लिए हर भाग समझाते हैं। हम *Mary Had a Little Lamb* लेते हैं: इसकी धुन एक पारंपरिक अमेरिकी धुन है, और इसके बोल Sarah Josepha Hale ने लिखे, जो 1830 में प्रकाशित हुए; दोनों सार्वजनिक क्षेत्र (पब्लिक डोमेन) में हैं। :doc:`../topics/music` में वे सभी संकेतन कमांड वर्णित हैं जिनका हम उपयोग करते हैं।"
+msgstr ""
+"हम Guidedog में एक गीत-पुस्तिका रख सकते हैं: व्याख्याएँ RST या Markdown "
+"में, उनके पास पाठ के रूप में संगीत, और एक कमांड जो वेबसाइट और छपी पुस्तक "
+"दोनों के लिए स्वरलेखों की स्वरलिपि टाइपसेट करता है। इस काम में हम गायन, "
+"पियानो और गिटार के लिए एक पूरा गीत लिखते हैं, जिसमें बोल, कॉर्ड नाम और "
+"गिटार टैबलेचर होंगे, और विद्यार्थियों के लिए हर भाग समझाते हैं। हम *Mary "
+"Had a Little Lamb* लेते हैं: इसकी धुन एक पारंपरिक अमेरिकी धुन है, और इसके "
+"बोल Sarah Josepha Hale ने लिखे, जो 1830 में प्रकाशित हुए; दोनों सार्वजनिक "
+"क्षेत्र (पब्लिक डोमेन) में हैं। :doc:`../topics/music` में वे सभी संकेतन "
+"कमांड वर्णित हैं जिनका हम उपयोग करते हैं।"
 
 #: ../../howto/songbook.rst:9
 msgid "Start the project"
@@ -2885,13 +2894,20 @@ msgid ""
 "easy to reuse on several pages, to compare in version control, and to "
 "open in LilyPond itself. We list the song's page in the ``toctree`` of "
 "``index.rst``:"
-msgstr "हर गीत को एक पेज मिलता है, और हर स्वरलेख को ``scores`` में एक ``.ly`` फ़ाइल। पेज संगीत को समझाता है; फ़ाइल संगीत को रखती है। अपनी अलग फ़ाइल में रखे स्वरलेख को कई पेजों पर दोबारा उपयोग करना, संस्करण नियंत्रण में उसकी तुलना करना और उसे स्वयं LilyPond में खोलना आसान होता है। हम गीत का पेज ``index.rst`` के ``toctree`` में जोड़ते हैं:"
+msgstr ""
+"हर गीत को एक पेज मिलता है, और हर स्वरलेख को ``scores`` में एक ``.ly`` "
+"फ़ाइल। पेज संगीत को समझाता है; फ़ाइल संगीत को रखती है। अपनी अलग फ़ाइल में "
+"रखे स्वरलेख को कई पेजों पर दोबारा उपयोग करना, संस्करण नियंत्रण में उसकी "
+"तुलना करना और उसे स्वयं LilyPond में खोलना आसान होता है। हम गीत का पेज "
+"``index.rst`` के ``toctree`` में जोड़ते हैं:"
 
 #: ../../howto/songbook.rst:33
 msgid ""
 "We number the figures so that the text can refer to them, with this line "
 "in ``conf.toml``:"
-msgstr "हम चित्रों को क्रमांकित करते हैं ताकि पाठ उनका संदर्भ दे सके; इसके लिए ``conf.toml`` में यह पंक्ति लिखते हैं:"
+msgstr ""
+"हम चित्रों को क्रमांकित करते हैं ताकि पाठ उनका संदर्भ दे सके; इसके लिए "
+"``conf.toml`` में यह पंक्ति लिखते हैं:"
 
 #: ../../howto/songbook.rst:39
 msgid "Write the tune"
@@ -2903,7 +2919,11 @@ msgid ""
 "``\\fixed c' { ... }``, where a letter is a pitch in the octave of middle "
 "C: ``c`` is middle C, ``d`` the D above it, and so on up to ``b``. An "
 "apostrophe raises a pitch by an octave, and a comma lowers it."
-msgstr "धुन स्वरों का एक क्रम है, और हर स्वर की एक अवधि होती है। हम इसे ``\\fixed c' { ... }`` के भीतर लिखते हैं, जहाँ हर अक्षर मध्य C वाले सप्तक का एक स्वर है: ``c`` मध्य C है, ``d`` उसके ऊपर का D, और इसी तरह ``b`` तक। अपोस्ट्रॉफ़ स्वर को एक सप्तक ऊपर करता है, और अल्पविराम एक सप्तक नीचे।"
+msgstr ""
+"धुन स्वरों का एक क्रम है, और हर स्वर की एक अवधि होती है। हम इसे ``\\fixed "
+"c' { ... }`` के भीतर लिखते हैं, जहाँ हर अक्षर मध्य C वाले सप्तक का एक "
+"स्वर है: ``c`` मध्य C है, ``d`` उसके ऊपर का D, और इसी तरह ``b`` तक। "
+"अपोस्ट्रॉफ़ स्वर को एक सप्तक ऊपर करता है, और अल्पविराम एक सप्तक नीचे।"
 
 #: ../../howto/songbook.rst:46
 msgid ""
@@ -2915,13 +2935,23 @@ msgid ""
 "each bar. A vertical bar ``|`` marks the end of a bar; Guidedog checks "
 "that each bar holds exactly four beats. ``\\bar \"|.\"`` draws the final "
 "double bar."
-msgstr "स्वर के बाद की संख्या उसकी अवधि है: ``1`` चार मात्राओं का होल नोट (पूरा नोट) है, ``2`` दो मात्राओं का हाफ़ नोट, और ``4`` एक मात्रा का क्वार्टर नोट। बिना संख्या वाला स्वर पिछले स्वर की अवधि ही रखता है। ``\\key c \\major`` सुर-क्षेत्र (की) बताता है, यानी C मेजर, जिसमें कोई शार्प या फ़्लैट नहीं होता, और ``\\time 4/4`` टाइम सिग्नेचर बताता है: हर बार में क्वार्टर नोट की चार मात्राएँ। खड़ी रेखा ``|`` बार का अंत चिह्नित करती है; Guidedog जाँचता है कि हर बार में ठीक चार मात्राएँ हों। ``\\bar \"|.\"`` अंतिम डबल बार बनाता है।"
+msgstr ""
+"स्वर के बाद की संख्या उसकी अवधि है: ``1`` चार मात्राओं का होल नोट (पूरा "
+"नोट) है, ``2`` दो मात्राओं का हाफ़ नोट, और ``4`` एक मात्रा का क्वार्टर "
+"नोट। बिना संख्या वाला स्वर पिछले स्वर की अवधि ही रखता है। ``\\key c "
+"\\major`` सुर-क्षेत्र (की) बताता है, यानी C मेजर, जिसमें कोई शार्प या "
+"फ़्लैट नहीं होता, और ``\\time 4/4`` टाइम सिग्नेचर बताता है: हर बार में "
+"क्वार्टर नोट की चार मात्राएँ। खड़ी रेखा ``|`` बार का अंत चिह्नित करती है; "
+"Guidedog जाँचता है कि हर बार में ठीक चार मात्राएँ हों। ``\\bar \"|.\"`` "
+"अंतिम डबल बार बनाता है।"
 
 #: ../../howto/songbook.rst:53
 msgid ""
 "Eight bars in C major and four-four time, starting E, D, C, D, and ending "
 "on a whole-note C."
-msgstr "C मेजर और चार-चौथाई ताल (4/4 टाइम) में आठ बार, जो E, D, C, D से शुरू होकर होल नोट C पर समाप्त होते हैं।"
+msgstr ""
+"C मेजर और चार-चौथाई ताल (4/4 टाइम) में आठ बार, जो E, D, C, D से शुरू होकर "
+"होल नोट C पर समाप्त होते हैं।"
 
 #: ../../howto/songbook.rst:53
 msgid "The tune of *Mary Had a Little Lamb*."
@@ -2933,7 +2963,11 @@ msgid ""
 "between the neighboring notes C, D and E, and leaps once, from E up to G "
 "in bar four. Count the beats in bar two: ``e`` and ``e`` take one beat "
 "each, and ``e2`` takes two, which makes four."
-msgstr ":numref:`songbook-tune` में आठ बार हैं। धुन ज़्यादातर पास-पास के स्वरों C, D और E के बीच क्रम से चलती है, और केवल एक बार छलाँग लगाती है: चौथे बार में E से ऊपर G तक। दूसरे बार की मात्राएँ गिनें: ``e`` और ``e`` एक-एक मात्रा लेते हैं, और ``e2`` दो, यानी कुल चार।"
+msgstr ""
+":numref:`songbook-tune` में आठ बार हैं। धुन ज़्यादातर पास-पास के स्वरों "
+"C, D और E के बीच क्रम से चलती है, और केवल एक बार छलाँग लगाती है: चौथे बार "
+"में E से ऊपर G तक। दूसरे बार की मात्राएँ गिनें: ``e`` और ``e`` एक-एक "
+"मात्रा लेते हैं, और ``e2`` दो, यानी कुल चार।"
 
 #: ../../howto/songbook.rst:67
 msgid "Add the words"
@@ -2946,7 +2980,12 @@ msgid ""
 "Two hyphens, ``--``, join the syllables of one word, and Guidedog draws a "
 "short hyphen between them. The tune has 26 notes, so each verse needs "
 "exactly 26 syllables:"
-msgstr "गायक बोल नोटों के नीचे पढ़ता है, हर नोट के नीचे एक शब्दांश। हम बोल ``\\lyricmode`` में लिखते हैं, शब्दांशों के बीच रिक्त स्थान रखकर। दो हाइफ़न, ``--``, एक शब्द के शब्दांशों को जोड़ते हैं, और Guidedog उनके बीच एक छोटा हाइफ़न बनाता है। धुन में 26 नोट हैं, इसलिए हर अंतरे में ठीक 26 शब्दांश चाहिए:"
+msgstr ""
+"गायक बोल नोटों के नीचे पढ़ता है, हर नोट के नीचे एक शब्दांश। हम बोल "
+"``\\lyricmode`` में लिखते हैं, शब्दांशों के बीच रिक्त स्थान रखकर। दो "
+"हाइफ़न, ``--``, एक शब्द के शब्दांशों को जोड़ते हैं, और Guidedog उनके बीच "
+"एक छोटा हाइफ़न बनाता है। धुन में 26 नोट हैं, इसलिए हर अंतरे में ठीक 26 "
+"शब्दांश चाहिए:"
 
 #: ../../howto/songbook.rst:80
 msgid ""
@@ -2954,13 +2993,19 @@ msgid ""
 "= \"tune\"``, and give each verse its own ``\\new Lyrics \\lyricsto "
 "\"tune\"``. Guidedog places the syllables under the notes of that voice "
 "in order, and puts the verses one below the other."
-msgstr "बोल जोड़ने के लिए हम धुन गाने वाले स्वर-भाग (वॉइस) को नाम देते हैं, ``\\new Voice = \"tune\"``, और हर अंतरे को उसका अपना ``\\new Lyrics \\lyricsto \"tune\"`` देते हैं। Guidedog उस स्वर-भाग के नोटों के नीचे शब्दांश क्रम से रखता है, और अंतरों को एक के नीचे एक रखता है।"
+msgstr ""
+"बोल जोड़ने के लिए हम धुन गाने वाले स्वर-भाग (वॉइस) को नाम देते हैं, "
+"``\\new Voice = \"tune\"``, और हर अंतरे को उसका अपना ``\\new Lyrics "
+"\\lyricsto \"tune\"`` देते हैं। Guidedog उस स्वर-भाग के नोटों के नीचे "
+"शब्दांश क्रम से रखता है, और अंतरों को एक के नीचे एक रखता है।"
 
 #: ../../howto/songbook.rst:84
 msgid ""
 "The tune on one staff with two lines of words below: Mary had a little "
 "lamb, and Everywhere that Mary went."
-msgstr "एक स्टाफ़ पर धुन और उसके नीचे बोलों की दो पंक्तियाँ: Mary had a little lamb, और Everywhere that Mary went।"
+msgstr ""
+"एक स्टाफ़ पर धुन और उसके नीचे बोलों की दो पंक्तियाँ: Mary had a little "
+"lamb, और Everywhere that Mary went।"
 
 #: ../../howto/songbook.rst:84
 msgid "The vocal part with two verses."
@@ -2968,17 +3013,29 @@ msgstr "दो अंतरों वाला गायन भाग।"
 
 #: ../../howto/songbook.rst:106
 msgid ""
+"A singer breathes between phrases. The tune has two phrases of four bars, "
+"and ``\\breathe`` after the last note of bar four prints a comma above "
+"the staff where the singer takes a breath."
+msgstr "गायक वाक्यांशों (फ़्रेज़) के बीच साँस लेता है। धुन में चार-चार बार के दो वाक्यांश हैं, और चौथे बार के अंतिम नोट के बाद ``\\breathe`` स्टाफ़ के ऊपर एक अल्पविराम छापता है, जहाँ गायक साँस लेता है।"
+
+#: ../../howto/songbook.rst:109
+msgid ""
 "Hale's poem has more verses, but the next, \"It followed her to school "
 "one day\", has five syllables where the first bar has four notes. Singers "
 "divide a note for the extra syllable; a score shows that with a different "
 "rhythm, so our songbook keeps the two verses that fit the tune as written."
-msgstr "Hale की कविता में और भी अंतरे हैं, पर अगले अंतरे, \"It followed her to school one day\", में पाँच शब्दांश हैं, जबकि पहले बार में चार नोट हैं। गायक अतिरिक्त शब्दांश के लिए एक नोट को बाँट लेते हैं; स्वरलेख इसे अलग लय से दिखाता है, इसलिए हमारी गीत-पुस्तिका वही दो अंतरे रखती है जो लिखी हुई धुन में ठीक बैठते हैं।"
+msgstr ""
+"Hale की कविता में और भी अंतरे हैं, पर अगले अंतरे, \"It followed her to "
+"school one day\", में पाँच शब्दांश हैं, जबकि पहले बार में चार नोट हैं। "
+"गायक अतिरिक्त शब्दांश के लिए एक नोट को बाँट लेते हैं; स्वरलेख इसे अलग लय "
+"से दिखाता है, इसलिए हमारी गीत-पुस्तिका वही दो अंतरे रखती है जो लिखी हुई "
+"धुन में ठीक बैठते हैं।"
 
-#: ../../howto/songbook.rst:109
+#: ../../howto/songbook.rst:112
 msgid "Name the chords"
 msgstr "कॉर्ड के नाम लिखें"
 
-#: ../../howto/songbook.rst:112
+#: ../../howto/songbook.rst:115
 msgid ""
 "Guitarists and pianists who accompany a singer read chord names above the "
 "staff. We write them in ``\\chordmode``: ``c1`` is a C major chord "
@@ -2986,52 +3043,74 @@ msgid ""
 "chord. The song needs only these three chords: C under the notes C, E and "
 "G, and G or G7 under D and B. A ``\\new ChordNames`` context draws the "
 "names above the next staff:"
-msgstr "गायक की संगत करने वाले गिटारवादक और पियानोवादक स्टाफ़ के ऊपर कॉर्ड नाम पढ़ते हैं। हम उन्हें ``\\chordmode`` में लिखते हैं: ``c1`` पूरे बार तक चलने वाला C मेजर कॉर्ड है, ``g1`` G मेजर कॉर्ड, और ``g:7`` G सेवन्थ कॉर्ड। गीत को केवल इन तीन कॉर्ड की ज़रूरत है: C, E और G नोटों के नीचे C, और D तथा B के नीचे G या G7। ``\\new ChordNames`` संदर्भ अगले स्टाफ़ के ऊपर कॉर्ड नाम बनाता है:"
+msgstr ""
+"गायक की संगत करने वाले गिटारवादक और पियानोवादक स्टाफ़ के ऊपर कॉर्ड नाम "
+"पढ़ते हैं। हम उन्हें ``\\chordmode`` में लिखते हैं: ``c1`` पूरे बार तक "
+"चलने वाला C मेजर कॉर्ड है, ``g1`` G मेजर कॉर्ड, और ``g:7`` G सेवन्थ "
+"कॉर्ड। गीत को केवल इन तीन कॉर्ड की ज़रूरत है: C, E और G नोटों के नीचे C, "
+"और D तथा B के नीचे G या G7। ``\\new ChordNames`` संदर्भ अगले स्टाफ़ के "
+"ऊपर कॉर्ड नाम बनाता है:"
 
-#: ../../howto/songbook.rst:121
+#: ../../howto/songbook.rst:124
 msgid "Write the piano part"
 msgstr "पियानो भाग लिखें"
 
-#: ../../howto/songbook.rst:124
+#: ../../howto/songbook.rst:127
 msgid ""
 "A piano part has two staves joined by a brace: ``\\new PianoStaff``. The "
 "upper staff is for the right hand, and the lower staff, with ``\\clef "
 "bass``, for the left hand."
-msgstr "पियानो भाग में ब्रेस (मझले कोष्ठक) से जुड़े दो स्टाफ़ होते हैं: ``\\new PianoStaff``। ऊपरी स्टाफ़ दाएँ हाथ के लिए है, और ``\\clef bass`` वाला निचला स्टाफ़ बाएँ हाथ के लिए।"
+msgstr ""
+"पियानो भाग में ब्रेस (मझले कोष्ठक) से जुड़े दो स्टाफ़ होते हैं: ``\\new "
+"PianoStaff``। ऊपरी स्टाफ़ दाएँ हाथ के लिए है, और ``\\clef bass`` वाला "
+"निचला स्टाफ़ बाएँ हाथ के लिए।"
 
-#: ../../howto/songbook.rst:127
+#: ../../howto/songbook.rst:130
 msgid ""
 "The right hand plays the tune and, below it, a second voice a third "
 "lower. Two voices on one staff go inside ``<< ... >>``, separated by "
 "``\\\\``. Guidedog draws the first voice with stems up and the second "
 "with stems down, so a player can follow each line. The left hand plays "
 "the bass: the root and the fifth of each chord, as half notes."
-msgstr "दायाँ हाथ धुन बजाता है, और उसके नीचे धुन से एक थर्ड नीचे चलने वाली दूसरी वॉइस भी। एक स्टाफ़ पर दो वॉइस ``<< ... >>`` के भीतर लिखी जाती हैं और ``\\\\`` से अलग की जाती हैं। Guidedog पहली वॉइस की स्टेम (डंडियाँ) ऊपर और दूसरी की नीचे बनाता है, ताकि वादक हर पंक्ति का अनुसरण कर सके। बायाँ हाथ बास बजाता है: हर कॉर्ड का मूल स्वर (रूट) और पंचम (फ़िफ़्थ), हाफ़ नोट के रूप में।"
+msgstr ""
+"दायाँ हाथ धुन बजाता है, और उसके नीचे धुन से एक थर्ड नीचे चलने वाली दूसरी "
+"वॉइस भी। एक स्टाफ़ पर दो वॉइस ``<< ... >>`` के भीतर लिखी जाती हैं और "
+"``\\\\`` से अलग की जाती हैं। Guidedog पहली वॉइस की स्टेम (डंडियाँ) ऊपर और "
+"दूसरी की नीचे बनाता है, ताकि वादक हर पंक्ति का अनुसरण कर सके। बायाँ हाथ "
+"बास बजाता है: हर कॉर्ड का मूल स्वर (रूट) और पंचम (फ़िफ़्थ), हाफ़ नोट के "
+"रूप में।"
 
-#: ../../howto/songbook.rst:133
+#: ../../howto/songbook.rst:136
 msgid ""
 "Two piano staves; the right hand plays the tune with a second voice a "
 "third below, and the left hand plays half notes on C and G."
-msgstr "पियानो के दो स्टाफ़; दायाँ हाथ धुन और उससे एक थर्ड नीचे दूसरी वॉइस बजाता है, और बायाँ हाथ C और G पर हाफ़ नोट बजाता है।"
+msgstr ""
+"पियानो के दो स्टाफ़; दायाँ हाथ धुन और उससे एक थर्ड नीचे दूसरी वॉइस बजाता "
+"है, और बायाँ हाथ C और G पर हाफ़ नोट बजाता है।"
 
-#: ../../howto/songbook.rst:133
+#: ../../howto/songbook.rst:136
 msgid ""
 "The piano part: tune and harmony in the right hand, bass in the left."
-msgstr "पियानो भाग: दाएँ हाथ में धुन और स्वर-संगति (हार्मनी), बाएँ हाथ में बास।"
+msgstr ""
+"पियानो भाग: दाएँ हाथ में धुन और स्वर-संगति (हार्मनी), बाएँ हाथ में बास।"
 
-#: ../../howto/songbook.rst:152
+#: ../../howto/songbook.rst:155
 msgid "Write the guitar part and its tablature"
 msgstr "गिटार भाग और उसका टैबलेचर लिखें"
 
-#: ../../howto/songbook.rst:155
+#: ../../howto/songbook.rst:158
 msgid ""
 "Guitar music is written an octave above the sound, on a staff with "
 "``\\clef \"treble_8\"``; the small 8 under the clef says so. Our guitar "
 "part plays two voices on one staff, as a fingerstyle player does: the "
 "tune with stems up, and the bass with stems down."
-msgstr "गिटार का संगीत उसकी ध्वनि से एक सप्तक ऊपर लिखा जाता है, ``\\clef \"treble_8\"`` वाले स्टाफ़ पर; क्लेफ़ के नीचे का छोटा 8 यही बताता है। हमारा गिटार भाग एक स्टाफ़ पर दो वॉइस बजाता है, जैसे फ़िंगरस्टाइल वादक बजाता है: धुन की स्टेम ऊपर, और बास की स्टेम नीचे।"
+msgstr ""
+"गिटार का संगीत उसकी ध्वनि से एक सप्तक ऊपर लिखा जाता है, ``\\clef "
+"\"treble_8\"`` वाले स्टाफ़ पर; क्लेफ़ के नीचे का छोटा 8 यही बताता है। "
+"हमारा गिटार भाग एक स्टाफ़ पर दो वॉइस बजाता है, जैसे फ़िंगरस्टाइल वादक "
+"बजाता है: धुन की स्टेम ऊपर, और बास की स्टेम नीचे।"
 
-#: ../../howto/songbook.rst:158
+#: ../../howto/songbook.rst:161
 msgid ""
 "Under the staff we add tablature with ``\\new TabStaff``. Its six lines "
 "are the six strings of the guitar, with the highest string at the top, "
@@ -3040,20 +3119,29 @@ msgid ""
 "chooses the strings. It puts each note on the highest string that can "
 "play it, so the tune lies on the two highest strings and the bass on the "
 "two lowest, all in the first position of the left hand."
-msgstr "स्टाफ़ के नीचे हम ``\\new TabStaff`` से टैबलेचर जोड़ते हैं। इसकी छह रेखाएँ गिटार के छह तार हैं, और सबसे ऊँचे सुर वाला तार सबसे ऊपर रहता है; हर संख्या बताती है कि उस तार पर कौन-सा फ़्रेट दबाना है, और ``0`` खुला तार है। हम टैबलेचर को वही संगीत देते हैं जो स्टाफ़ को, और तार Guidedog चुनता है। वह हर नोट को सबसे ऊँचे सुर वाले उस तार पर रखता है जो उसे बजा सकता है, इसलिए धुन दो सबसे ऊँचे तारों पर आती है और बास दो सबसे निचले तारों पर, और सब कुछ बाएँ हाथ की पहली पोज़िशन में रहता है।"
+msgstr ""
+"स्टाफ़ के नीचे हम ``\\new TabStaff`` से टैबलेचर जोड़ते हैं। इसकी छह "
+"रेखाएँ गिटार के छह तार हैं, और सबसे ऊँचे सुर वाला तार सबसे ऊपर रहता है; "
+"हर संख्या बताती है कि उस तार पर कौन-सा फ़्रेट दबाना है, और ``0`` खुला तार "
+"है। हम टैबलेचर को वही संगीत देते हैं जो स्टाफ़ को, और तार Guidedog चुनता "
+"है। वह हर नोट को सबसे ऊँचे सुर वाले उस तार पर रखता है जो उसे बजा सकता है, "
+"इसलिए धुन दो सबसे ऊँचे तारों पर आती है और बास दो सबसे निचले तारों पर, और "
+"सब कुछ बाएँ हाथ की पहली पोज़िशन में रहता है।"
 
-#: ../../howto/songbook.rst:164
+#: ../../howto/songbook.rst:167
 msgid ""
 "A guitar staff with the tune and a bass, above tablature; the first bar "
 "is frets 0, 3, 1 and 3 on the high strings with 3 and 3 on the low "
 "strings."
-msgstr "धुन और बास वाला गिटार स्टाफ़, उसके नीचे टैबलेचर; पहले बार में ऊँचे तारों पर फ़्रेट 0, 3, 1 और 3 हैं, और निचले तारों पर 3 और 3।"
+msgstr ""
+"धुन और बास वाला गिटार स्टाफ़, उसके नीचे टैबलेचर; पहले बार में ऊँचे तारों "
+"पर फ़्रेट 0, 3, 1 और 3 हैं, और निचले तारों पर 3 और 3।"
 
-#: ../../howto/songbook.rst:164
+#: ../../howto/songbook.rst:167
 msgid "The guitar part in standard notation and tablature."
 msgstr "मानक संकेतन और टैबलेचर में गिटार भाग।"
 
-#: ../../howto/songbook.rst:179
+#: ../../howto/songbook.rst:182
 msgid ""
 "In the first bar of :numref:`songbook-guitar` the tune's E is the open "
 "first string, D the third fret of the second string, and C its first "
@@ -3061,43 +3149,58 @@ msgid ""
 "fret of the sixth. To play a note on another string, we add a string "
 "number after it: ``e4\\2`` puts the E on the second string, at the fifth "
 "fret. The tablature leaves out the rhythm, which the staff above shows."
-msgstr ":numref:`songbook-guitar` के पहले बार में धुन का E खुला पहला तार है, D दूसरे तार का तीसरा फ़्रेट, और C उसी तार का पहला फ़्रेट; बास का C पाँचवें तार का तीसरा फ़्रेट है, और G छठे तार का तीसरा फ़्रेट। किसी नोट को किसी और तार पर बजाने के लिए हम उसके बाद तार-संख्या लिखते हैं: ``e4\\2`` E को दूसरे तार पर, पाँचवें फ़्रेट पर रखता है। टैबलेचर लय नहीं दिखाता; लय ऊपर का स्टाफ़ दिखाता है।"
+msgstr ""
+":numref:`songbook-guitar` के पहले बार में धुन का E खुला पहला तार है, D "
+"दूसरे तार का तीसरा फ़्रेट, और C उसी तार का पहला फ़्रेट; बास का C पाँचवें "
+"तार का तीसरा फ़्रेट है, और G छठे तार का तीसरा फ़्रेट। किसी नोट को किसी और "
+"तार पर बजाने के लिए हम उसके बाद तार-संख्या लिखते हैं: ``e4\\2`` E को "
+"दूसरे तार पर, पाँचवें फ़्रेट पर रखता है। टैबलेचर लय नहीं दिखाता; लय ऊपर "
+"का स्टाफ़ दिखाता है।"
 
-#: ../../howto/songbook.rst:183
+#: ../../howto/songbook.rst:186
 msgid "Combine the parts in one score"
 msgstr "सभी भागों को एक स्वरलेख में जोड़ें"
 
-#: ../../howto/songbook.rst:186
+#: ../../howto/songbook.rst:189
 msgid ""
 "The complete score stacks the parts from top to bottom: chord names, the "
 "voice with its verses, the piano and the guitar. To write each line of "
 "music once, we give it a name, such as ``melody = ...``, and use it with "
 "``\\melody`` wherever a part needs it. A line starting with ``%`` is a "
-"comment for the reader of the file. We save the score as "
+"comment for the reader of the file. ``\\tempo \"Moderato\" 4 = 100`` "
+"above the voice asks for a moderate pace of 100 quarter-note beats a "
+"minute; Guidedog prints the word with a note symbol and the rate in "
+"parentheses. The breath mark is part of the tune, so the piano and guitar "
+"staves show it too: the players lift at the end of the phrase with the "
+"singer. The tablature leaves it out. We save the score as "
 "``scores/mary-had-a-little-lamb.ly``:"
-msgstr "पूरा स्वरलेख भागों को ऊपर से नीचे इस क्रम में रखता है: कॉर्ड नाम, अंतरों सहित गायन भाग, पियानो और गिटार। संगीत की हर पंक्ति को एक ही बार लिखने के लिए हम उसे एक नाम देते हैं, जैसे ``melody = ...``, और जहाँ भी किसी भाग को उसकी ज़रूरत हो, वहाँ ``\\melody`` से उसका उपयोग करते हैं। ``%`` से शुरू होने वाली पंक्ति फ़ाइल पढ़ने वाले के लिए टिप्पणी है। हम स्वरलेख को ``scores/mary-had-a-little-lamb.ly`` के रूप में सहेजते हैं:"
+msgstr "पूरा स्वरलेख भागों को ऊपर से नीचे इस क्रम में रखता है: कॉर्ड नाम, अंतरों सहित गायन भाग, पियानो और गिटार। संगीत की हर पंक्ति को एक ही बार लिखने के लिए हम उसे एक नाम देते हैं, जैसे ``melody = ...``, और जहाँ भी किसी भाग को उसकी ज़रूरत हो, वहाँ ``\\melody`` से उसका उपयोग करते हैं। ``%`` से शुरू होने वाली पंक्ति फ़ाइल पढ़ने वाले के लिए टिप्पणी है। गायन भाग के ऊपर ``\\tempo \"Moderato\" 4 = 100`` मध्यम गति माँगता है: प्रति मिनट क्वार्टर नोट की 100 मात्राएँ; Guidedog यह शब्द छापता है और उसके साथ कोष्ठक में नोट चिह्न और गति। श्वास चिह्न धुन का हिस्सा है, इसलिए पियानो और गिटार के स्टाफ़ भी इसे दिखाते हैं: वाक्यांश के अंत में वादक भी गायक के साथ क्षण भर रुकते हैं। टैबलेचर इसे नहीं दिखाता। हम स्वरलेख को ``scores/mary-had-a-little-lamb.ly`` के रूप में सहेजते हैं:"
 
-#: ../../howto/songbook.rst:194
+#: ../../howto/songbook.rst:200
 msgid ""
 "On the song's page, ``mary.rst``, the directive names the file instead of "
 "holding the music:"
-msgstr "गीत के पेज ``mary.rst`` पर निर्देश संगीत रखने के बजाय फ़ाइल का नाम देता है:"
+msgstr ""
+"गीत के पेज ``mary.rst`` पर निर्देश संगीत रखने के बजाय फ़ाइल का नाम देता "
+"है:"
 
-#: ../../howto/songbook.rst:207
+#: ../../howto/songbook.rst:213
 msgid ""
 "A score for voice, piano and guitar with chord names and tablature, eight "
 "bars in C major."
-msgstr "कॉर्ड नामों और टैबलेचर सहित गायन, पियानो और गिटार के लिए स्वरलेख, C मेजर में आठ बार।"
+msgstr ""
+"कॉर्ड नामों और टैबलेचर सहित गायन, पियानो और गिटार के लिए स्वरलेख, C मेजर "
+"में आठ बार।"
 
-#: ../../howto/songbook.rst:207
+#: ../../howto/songbook.rst:213
 msgid "*Mary Had a Little Lamb*, for voice, piano and guitar."
 msgstr "*Mary Had a Little Lamb*, गायन, पियानो और गिटार के लिए।"
 
-#: ../../howto/songbook.rst:211
+#: ../../howto/songbook.rst:217
 msgid "Build the website and the book"
 msgstr "वेबसाइट और पुस्तक बिल्ड करें"
 
-#: ../../howto/songbook.rst:219
+#: ../../howto/songbook.rst:225
 msgid ""
 "Guidedog engraves each score for each output at that output's line width, "
 "so the website and the book each break the music into systems that fill "
@@ -3106,42 +3209,61 @@ msgid ""
 "systems across pages, with its caption after the last system. When we "
 "change a score file, the next build engraves it again; unchanged scores "
 "are kept."
-msgstr "Guidedog हर स्वरलेख की स्वरलिपि हर आउटपुट के लिए उसी आउटपुट की पंक्ति-चौड़ाई पर टाइपसेट करता है, इसलिए वेबसाइट और पुस्तक दोनों संगीत को ऐसे सिस्टमों में बाँटते हैं जो उनकी पंक्तियाँ भर दें। फ़ोन की संकरी स्क्रीन पर वेबसाइट संकरी चौड़ाई के लिए टाइपसेट किया गया संस्करण दिखाती है। पुस्तक में लंबा स्वरलेख सिस्टमों के बीच पृष्ठ बदलता है, और उसका चित्र-विवरण अंतिम सिस्टम के बाद आता है। जब हम कोई स्वरलेख फ़ाइल बदलते हैं, तो अगला बिल्ड उसका स्वरांकन फिर से करता है; अपरिवर्तित स्वरलेख वैसे ही रखे जाते हैं।"
+msgstr ""
+"Guidedog हर स्वरलेख की स्वरलिपि हर आउटपुट के लिए उसी आउटपुट की "
+"पंक्ति-चौड़ाई पर टाइपसेट करता है, इसलिए वेबसाइट और पुस्तक दोनों संगीत को "
+"ऐसे सिस्टमों में बाँटते हैं जो उनकी पंक्तियाँ भर दें। फ़ोन की संकरी "
+"स्क्रीन पर वेबसाइट संकरी चौड़ाई के लिए टाइपसेट किया गया संस्करण दिखाती "
+"है। पुस्तक में लंबा स्वरलेख सिस्टमों के बीच पृष्ठ बदलता है, और उसका "
+"चित्र-विवरण अंतिम सिस्टम के बाद आता है। जब हम कोई स्वरलेख फ़ाइल बदलते "
+"हैं, तो अगला बिल्ड उसका स्वरांकन फिर से करता है; अपरिवर्तित स्वरलेख वैसे "
+"ही रखे जाते हैं।"
 
-#: ../../howto/songbook.rst:224
+#: ../../howto/songbook.rst:230
 msgid "Practice"
 msgstr "अभ्यास"
 
-#: ../../howto/songbook.rst:227
+#: ../../howto/songbook.rst:233
 msgid ""
 "These exercises extend the songbook. Build after each change and look at "
 "the result."
-msgstr "ये अभ्यास गीत-पुस्तिका को आगे बढ़ाते हैं। हर बदलाव के बाद बिल्ड करें और परिणाम देखें।"
+msgstr ""
+"ये अभ्यास गीत-पुस्तिका को आगे बढ़ाते हैं। हर बदलाव के बाद बिल्ड करें और "
+"परिणाम देखें।"
 
-#: ../../howto/songbook.rst:230
+#: ../../howto/songbook.rst:236
 msgid ""
 "Move the song to G major: wrap the whole score in ``\\transpose c g << "
 "... >>``. The key signature, the notes, the tablature and the chord names "
 "all move up a fifth."
-msgstr "गीत को G मेजर में ले जाएँ: पूरे स्वरलेख को ``\\transpose c g << ... >>`` में लपेटें। की-सिग्नेचर, नोट, टैबलेचर और कॉर्ड नाम, सब एक पंचम (फ़िफ़्थ) ऊपर चले जाते हैं।"
+msgstr ""
+"गीत को G मेजर में ले जाएँ: पूरे स्वरलेख को ``\\transpose c g << ... >>`` "
+"में लपेटें। की-सिग्नेचर, नोट, टैबलेचर और कॉर्ड नाम, सब एक पंचम (फ़िफ़्थ) "
+"ऊपर चले जाते हैं।"
 
-#: ../../howto/songbook.rst:231
+#: ../../howto/songbook.rst:237
 msgid ""
 "Play the guitar tune higher on the neck: add ``\\2`` after each note of "
-"the first bar, and read the new frets in the tablature."
-msgstr "गिटार की धुन नेक पर ऊँची पोज़िशन में बजाएँ: पहले बार के हर नोट के बाद ``\\2`` जोड़ें, और टैबलेचर में नए फ़्रेट पढ़ें।"
+"the first bar. A circled 2 appears over each note on the staff, and the "
+"tablature shows the new frets."
+msgstr "गिटार की धुन नेक पर ऊँची पोज़िशन में बजाएँ: पहले बार के हर नोट के बाद ``\\2`` जोड़ें। स्टाफ़ पर हर नोट के ऊपर गोले में 2 दिखता है, और टैबलेचर नए फ़्रेट दिखाता है।"
 
-#: ../../howto/songbook.rst:232
+#: ../../howto/songbook.rst:238
 msgid ""
 "Add dynamics to the tune: write ``e4\\mf`` for its first note and "
 "``c1\\p`` for its last. A dynamic follows the note it belongs to."
-msgstr "धुन में डायनेमिक्स (तीव्रता-चिह्न) जोड़ें: उसके पहले नोट के लिए ``e4\\mf`` और अंतिम नोट के लिए ``c1\\p`` लिखें। डायनेमिक चिह्न उसी नोट के बाद लिखा जाता है जिससे वह जुड़ा है।"
+msgstr ""
+"धुन में डायनेमिक्स (तीव्रता-चिह्न) जोड़ें: उसके पहले नोट के लिए "
+"``e4\\mf`` और अंतिम नोट के लिए ``c1\\p`` लिखें। डायनेमिक चिह्न उसी नोट के "
+"बाद लिखा जाता है जिससे वह जुड़ा है।"
 
-#: ../../howto/songbook.rst:233
+#: ../../howto/songbook.rst:239
 msgid ""
 "Write a second song in its own file and page, and refer to its figure "
 "from this page with ``:numref:``."
-msgstr "एक दूसरा गीत उसकी अपनी फ़ाइल और पेज में लिखें, और इस पेज से ``:numref:`` द्वारा उसके चित्र का संदर्भ दें।"
+msgstr ""
+"एक दूसरा गीत उसकी अपनी फ़ाइल और पेज में लिखें, और इस पेज से ``:numref:`` "
+"द्वारा उसके चित्र का संदर्भ दें।"
 
 #: ../../howto/static-publishing.rst:1
 msgid "Static websites and articles"

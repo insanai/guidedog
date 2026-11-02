@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 02:37+0000\n"
+"POT-Creation-Date: 2026-11-02 03:38+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -1364,12 +1364,9 @@ msgstr "अभिव्यक्ति"
 #: ../../topics/music.rst:153
 msgid ""
 "Articulations, fingerings 1 through 5, dynamics from ``\\pppp`` through "
-"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, slur/tie/dynamic direction "
-"commands, literal scripts and structured ``\\markup``."
-msgstr ""
-"आर्टिकुलेशन, 1 से 5 तक उँगली क्रम, ``\\pppp`` से ``\\ffff`` तक डायनेमिक्स "
-"(तीव्रता-चिह्न), ``\\<``, ``\\>``, ``\\!``, स्लर/टाई/डायनेमिक दिशा कमांड, "
-"शाब्दिक पाठ निर्देश और संरचित ``\\markup``।"
+"``\\ffff``, ``\\<``, ``\\>``, ``\\!``, ``\\breathe``, slur/tie/dynamic "
+"direction commands, literal scripts and structured ``\\markup``."
+msgstr "आर्टिकुलेशन, 1 से 5 तक उँगली क्रम, ``\\pppp`` से ``\\ffff`` तक डायनेमिक्स (तीव्रता-चिह्न), ``\\<``, ``\\>``, ``\\!``, ``\\breathe``, स्लर/टाई/डायनेमिक दिशा कमांड, शाब्दिक पाठ निर्देश और संरचित ``\\markup``।"
 
 #: ../../topics/music.rst:154
 msgid "Structure"
@@ -1407,7 +1404,9 @@ msgstr "गिटार टैबलेचर"
 msgid ""
 "``\\new TabStaff``, ``\\new TabVoice`` and string numbers ``\\1`` through "
 "``\\6``, for a six-string guitar in standard tuning."
-msgstr "``\\new TabStaff``, ``\\new TabVoice`` और ``\\1`` से ``\\6`` तक तार-संख्याएँ, मानक ट्यूनिंग वाले छह तार के गिटार के लिए।"
+msgstr ""
+"``\\new TabStaff``, ``\\new TabVoice`` और ``\\1`` से ``\\6`` तक "
+"तार-संख्याएँ, मानक ट्यूनिंग वाले छह तार के गिटार के लिए।"
 
 #: ../../topics/music.rst:160
 msgid "Grace and repetition"
@@ -1431,11 +1430,10 @@ msgstr "लेबल और पंक्ति-विराम"
 
 #: ../../topics/music.rst:163
 msgid ""
-"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new "
-"ChordNames \\chordmode``, ``\\break``, ``\\noBreak``."
-msgstr ""
-"``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new "
-"ChordNames \\chordmode``, ``\\break``, ``\\noBreak``।"
+"``\\tempo`` with text, a metronome mark or both, ``\\mark``, ``\\mark "
+"\\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, "
+"``\\noBreak``."
+msgstr "पाठ, मेट्रोनोम चिह्न या दोनों के साथ ``\\tempo``, ``\\mark``, ``\\mark \\default``, ``\\chords``, ``\\new ChordNames \\chordmode``, ``\\break``, ``\\noBreak``।"
 
 #: ../../topics/music.rst:165
 msgid ""
@@ -1465,17 +1463,28 @@ msgid ""
 "the intensity, and a hairpin continues until ``\\!`` or the next dynamic. "
 "We place a small grace group before a main note with ``\\grace``; "
 "``\\acciaccatura`` adds a slash, while ``\\afterGrace`` places the group "
-"after its main note. Grace time does not extend the measure."
-msgstr ""
-"हम नोट के बाद आर्टिकुलेशन और उँगली क्रम जोड़ते हैं: ``-.`` स्टैकाटो है, "
-"``->`` एक्सेंट (बल-चिह्न) है और ``-1`` पहली उँगली चुनता है। डायनेमिक्स "
-"(तीव्रता-चिह्न) ध्वनि की प्रबलता तय करते हैं और हेयरपिन ``\\!`` या अगले "
-"डायनेमिक चिह्न तक चलता है। ``\\grace`` से मुख्य नोट के पहले छोटा "
-"ग्रेस-नोट समूह रखते हैं; ``\\acciaccatura`` तिरछी रेखा जोड़ता है और "
-"``\\afterGrace`` समूह को मुख्य नोट के बाद रखता है। ग्रेस नोट्स का समय "
-"मेज़र (बार) की लंबाई नहीं बढ़ाता।"
+"after its main note. Grace time does not extend the measure. ``\\tempo "
+"\"Andante\" 4 = 88`` prints the text and, in parentheses, a note symbol "
+"for the beat with the rate, as LilyPond prints \"Andante (quarter note = "
+"88)\"; ``\\tempo 4 = 88`` prints the metronome mark alone. ``\\breathe`` "
+"after a note prints a breath mark, a comma above the staff, and makes "
+"room for it before the next note."
+msgstr "हम नोट के बाद आर्टिकुलेशन और उँगली क्रम जोड़ते हैं: ``-.`` स्टैकाटो है, ``->`` एक्सेंट (बल-चिह्न) है और ``-1`` पहली उँगली चुनता है। डायनेमिक्स (तीव्रता-चिह्न) ध्वनि की प्रबलता तय करते हैं और हेयरपिन ``\\!`` या अगले डायनेमिक चिह्न तक चलता है। ``\\grace`` से मुख्य नोट के पहले छोटा ग्रेस-नोट समूह रखते हैं; ``\\acciaccatura`` तिरछी रेखा जोड़ता है और ``\\afterGrace`` समूह को मुख्य नोट के बाद रखता है। ग्रेस नोट्स का समय मेज़र (बार) की लंबाई नहीं बढ़ाता। ``\\tempo \"Andante\" 4 = 88`` पाठ छापता है और उसके बाद कोष्ठक में मात्रा का नोट चिह्न और गति, जैसे LilyPond \"Andante (क्वार्टर नोट = 88)\" छापता है; ``\\tempo 4 = 88`` केवल मेट्रोनोम चिह्न छापता है। नोट के बाद ``\\breathe`` श्वास चिह्न छापता है, यानी स्टाफ़ के ऊपर एक अल्पविराम, और अगले नोट से पहले उसके लिए जगह छोड़ता है।"
 
-#: ../../topics/music.rst:185
+#: ../../topics/music.rst:188
+msgid ""
+"Andante, quarter note equals 88; grace notes before an F with a fingering "
+"and staccato, an accented G, A and B under a crescendo, a breath mark, "
+"then a loud whole-note C."
+msgstr "Andante, क्वार्टर नोट बराबर 88; उँगली क्रम और स्टैकाटो वाले F से पहले ग्रेस नोट, एक्सेंट वाला G, क्रेसेंडो के नीचे A और B, एक श्वास चिह्न, फिर ज़ोर से बजने वाला होल नोट C।"
+
+#: ../../topics/music.rst:188
+msgid ""
+"A tempo with a metronome mark, grace notes, articulations, dynamics and a "
+"breath mark."
+msgstr "मेट्रोनोम चिह्न सहित टेम्पो, ग्रेस नोट, आर्टिकुलेशन, डायनेमिक्स और श्वास चिह्न।"
+
+#: ../../topics/music.rst:196
 msgid ""
 "We write a volta repeat once and give each ending in ``\\alternative``; "
 "``\\volta 1,2 { ... }`` labels combined endings, and ``\\fine`` or "
@@ -1496,11 +1505,11 @@ msgstr ""
 "अलग ``\\new ChordNames \\chordmode`` संदर्भ में लिखे जाते हैं, जैसे "
 "``c1:maj7``, ``d:m7`` और ``g:7``।"
 
-#: ../../topics/music.rst:197
+#: ../../topics/music.rst:208
 msgid "Format text with ``\\markup``"
 msgstr "``\\markup`` से पाठ का स्वरूपण"
 
-#: ../../topics/music.rst:200
+#: ../../topics/music.rst:211
 msgid ""
 "Scripts, ``\\tempo``, ``\\mark`` and instrument names accept a bounded "
 "LilyPond 2.24 ``\\markup`` subset. Commands nest freely within the "
@@ -1513,23 +1522,23 @@ msgstr ""
 "मार्कअप चर वहाँ विस्तार पाते हैं जहाँ मार्कअप ब्लॉक पाठ की अपेक्षा रखता "
 "है।"
 
-#: ../../topics/music.rst:203
+#: ../../topics/music.rst:214
 msgid "Supported ``\\markup`` commands"
 msgstr "समर्थित ``\\markup`` कमांड"
 
-#: ../../topics/music.rst:207
+#: ../../topics/music.rst:218
 msgid "Group"
 msgstr "समूह"
 
-#: ../../topics/music.rst:208
+#: ../../topics/music.rst:219
 msgid "Commands"
 msgstr "कमांड"
 
-#: ../../topics/music.rst:209
+#: ../../topics/music.rst:220
 msgid "Lists and columns"
 msgstr "सूचियाँ और स्तंभ"
 
-#: ../../topics/music.rst:210
+#: ../../topics/music.rst:221
 msgid ""
 "``\\line``, ``\\concat``, ``\\column``, ``\\left-column``, "
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` and markup "
@@ -1539,11 +1548,11 @@ msgstr ""
 "``\\center-column``, ``\\right-column``, ``\\dir-column`` और मार्कअप चर "
 "संदर्भ (जैसे ``\\codaMark``)।"
 
-#: ../../topics/music.rst:211
+#: ../../topics/music.rst:222
 msgid "Style and case"
 msgstr "शैली और अक्षर-रूप"
 
-#: ../../topics/music.rst:212
+#: ../../topics/music.rst:223
 msgid ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` and ``\\super``."
@@ -1551,11 +1560,11 @@ msgstr ""
 "``\\bold``, ``\\italic``, ``\\upright``, ``\\normal-text``, ``\\caps``, "
 "``\\smallCaps``, ``\\sub`` और ``\\super``।"
 
-#: ../../topics/music.rst:213
+#: ../../topics/music.rst:224
 msgid "Size"
 msgstr "आकार"
 
-#: ../../topics/music.rst:214
+#: ../../topics/music.rst:225
 msgid ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` and ``\\abs-fontsize #pt``."
@@ -1563,11 +1572,11 @@ msgstr ""
 "``\\teeny``, ``\\tiny``, ``\\small``, ``\\smaller``, ``\\large``, "
 "``\\larger``, ``\\huge``, ``\\fontsize #n`` और ``\\abs-fontsize #pt``।"
 
-#: ../../topics/music.rst:215
+#: ../../topics/music.rst:226
 msgid "Enclosures and spacing"
 msgstr "घेरे और अंतराल"
 
-#: ../../topics/music.rst:216
+#: ../../topics/music.rst:227
 msgid ""
 "``\\box``, ``\\rounded-box``, ``\\circle``, ``\\underline``, "
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
@@ -1577,11 +1586,11 @@ msgstr ""
 "``\\parenthesize``, ``\\bracket``, ``\\hspace #n``, ``\\vspace #n``, "
 "``\\raise #n`` और ``\\lower #n``।"
 
-#: ../../topics/music.rst:217
+#: ../../topics/music.rst:228
 msgid "Music symbols"
 msgstr "संगीत चिह्न"
 
-#: ../../topics/music.rst:218
+#: ../../topics/music.rst:229
 msgid ""
 "``\\sharp``, ``\\natural``, ``\\flat``, ``\\doublesharp``, "
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
@@ -1591,7 +1600,7 @@ msgstr ""
 "``\\doubleflat``, ``\\fermata``, ``\\segno``, ``\\coda``, ``\\varcoda``, "
 "``\\dynamic`` तथा मैप किए गए Feta ग्लिफ़ नामों के लिए ``\\musicglyph``।"
 
-#: ../../topics/music.rst:229
+#: ../../topics/music.rst:240
 msgid ""
 "Markup commands that run Scheme, alter layout properties, draw arbitrary "
 "paths or embed nested scores (such as ``\\score``, ``\\override``, "
@@ -1603,11 +1612,11 @@ msgstr ""
 "``\\postscript``, ``\\draw-line``, ``\\path``, ``\\epsfile`` और "
 "``\\markuplist``) स्थान-सहित निदान के साथ अस्वीकार किए जाते हैं।"
 
-#: ../../topics/music.rst:231
+#: ../../topics/music.rst:242
 msgid "Combine staves and lyrics"
 msgstr "स्टाफ़ (स्वर-पंक्तियाँ) और बोल जोड़ना"
 
-#: ../../topics/music.rst:234
+#: ../../topics/music.rst:245
 msgid ""
 "We use simultaneous contexts for a score with several staves. Staves and "
 "staff groups accept ``instrumentName`` and ``shortInstrumentName`` in a "
@@ -1656,7 +1665,7 @@ msgstr ""
 "के बोल किसी नामित वॉइस से जुड़ते हैं, और अलग ``\\lyricsto`` अभिव्यक्तियाँ "
 "अलग अंतरे (पद) बनाती हैं।"
 
-#: ../../topics/music.rst:247
+#: ../../topics/music.rst:258
 msgid ""
 "We can override stems with ``\\stemUp``, ``\\stemDown`` and "
 "``\\stemNeutral`` without changing the voice's column policy."
@@ -1664,7 +1673,7 @@ msgstr ""
 "हम वॉइस की स्तंभ नीति बदले बिना ``\\stemUp``, ``\\stemDown`` और "
 "``\\stemNeutral`` से स्टेम (डंडी) की दिशा बदल सकते हैं।"
 
-#: ../../topics/music.rst:259
+#: ../../topics/music.rst:270
 msgid ""
 "Two piano staves; the upper staff has four quarter notes and the words "
 "Sing a short song, while the bass holds C."
@@ -1672,15 +1681,15 @@ msgstr ""
 "पियानो के दो स्टाफ़; ऊपरी स्टाफ़ पर चार क्वार्टर नोट और Sing a short song "
 "शब्द हैं, जबकि बास स्टाफ़ C बनाए रखता है।"
 
-#: ../../topics/music.rst:259
+#: ../../topics/music.rst:270
 msgid "A named melody with a verse and a bass staff."
 msgstr "एक अंतरे और बास स्टाफ़ वाली नामित धुन।"
 
-#: ../../topics/music.rst:269
+#: ../../topics/music.rst:280
 msgid "Write guitar tablature"
 msgstr "गिटार टैबलेचर लिखना"
 
-#: ../../topics/music.rst:272
+#: ../../topics/music.rst:283
 msgid ""
 "A guitar part usually pairs a staff with tablature. ``\\new TabStaff`` "
 "draws six lines, one for each string of a guitar in standard tuning, with "
@@ -1688,30 +1697,40 @@ msgid ""
 "note. We write the same music for the staff and the tablature; guitar "
 "music sounds an octave below its written pitch, so the staff uses "
 "``\\clef \"treble_8\"``."
-msgstr "गिटार भाग में आम तौर पर स्टाफ़ के साथ टैबलेचर होता है। ``\\new TabStaff`` छह रेखाएँ बनाता है, मानक ट्यूनिंग वाले गिटार के हर तार के लिए एक, जिनमें सबसे ऊँचे सुर वाला तार सबसे ऊपर रहता है, और हर नोट के लिए किसी तार पर एक फ़्रेट संख्या लिखता है। हम स्टाफ़ और टैबलेचर के लिए एक ही संगीत लिखते हैं; गिटार का संगीत अपनी लिखी पिच से एक सप्तक नीचे बजता है, इसलिए स्टाफ़ ``\\clef \"treble_8\"`` का उपयोग करता है।"
+msgstr ""
+"गिटार भाग में आम तौर पर स्टाफ़ के साथ टैबलेचर होता है। ``\\new TabStaff`` "
+"छह रेखाएँ बनाता है, मानक ट्यूनिंग वाले गिटार के हर तार के लिए एक, जिनमें "
+"सबसे ऊँचे सुर वाला तार सबसे ऊपर रहता है, और हर नोट के लिए किसी तार पर एक "
+"फ़्रेट संख्या लिखता है। हम स्टाफ़ और टैबलेचर के लिए एक ही संगीत लिखते "
+"हैं; गिटार का संगीत अपनी लिखी पिच से एक सप्तक नीचे बजता है, इसलिए स्टाफ़ "
+"``\\clef \"treble_8\"`` का उपयोग करता है।"
 
-#: ../../topics/music.rst:285
+#: ../../topics/music.rst:296
 msgid ""
 "A guitar staff above six-line tablature; the notes E, D, C, D are played "
 "on frets 2, 0, 3 and 0, then a C major chord and two notes on the second "
 "string."
-msgstr "छह रेखाओं वाले टैबलेचर के ऊपर गिटार स्टाफ़; नोट E, D, C, D फ़्रेट 2, 0, 3 और 0 पर बजते हैं, फिर एक C मेजर कॉर्ड और दूसरे तार पर दो नोट।"
+msgstr ""
+"छह रेखाओं वाले टैबलेचर के ऊपर गिटार स्टाफ़; नोट E, D, C, D फ़्रेट 2, 0, 3 "
+"और 0 पर बजते हैं, फिर एक C मेजर कॉर्ड और दूसरे तार पर दो नोट।"
 
-#: ../../topics/music.rst:285
+#: ../../topics/music.rst:296
 msgid "A guitar part in standard notation and tablature."
 msgstr "मानक संकेतन और टैबलेचर में एक गिटार भाग।"
 
-#: ../../topics/music.rst:294
+#: ../../topics/music.rst:305
 msgid ""
 "Each note goes on the highest string that can play it, as LilyPond "
 "chooses by default: notes of a chord take the strings from the highest "
 "note down, each at fret 0 through 24. A string number after a note, such "
 "as ``c'4\\2``, names the string instead; inside a chord each note takes "
-"its own, as in ``<c\\5 e\\4>2``. A note that no free string can play, "
-"such as a C below the low E string, is refused with a placed diagnostic."
-msgstr "हर नोट सबसे ऊँचे सुर वाले उस तार पर जाता है जो उसे बजा सकता है, जैसा LilyPond डिफ़ॉल्ट रूप से चुनता है: कॉर्ड के नोट सबसे ऊँचे नोट से नीचे की ओर तार लेते हैं, और हर नोट फ़्रेट 0 से 24 के बीच बजता है। नोट के बाद लिखी तार-संख्या, जैसे ``c'4\\2``, इसके बजाय तार तय करती है; कॉर्ड के भीतर हर नोट अपनी तार-संख्या लेता है, जैसे ``<c\\5 e\\4>2`` में। जिस नोट को कोई अप्रयुक्त तार नहीं बजा सकता, जैसे निचले E तार से नीचे का C, उसे स्रोत-स्थान वाले निदान के साथ अस्वीकार किया जाता है।"
+"its own, as in ``<c\\5 e\\4>2``. On the staff above, each string number "
+"prints as a circled digit over its note, or under it in a voice with "
+"downward stems. A note that no free string can play, such as a C below "
+"the low E string, is refused with a placed diagnostic."
+msgstr "हर नोट सबसे ऊँचे सुर वाले उस तार पर जाता है जो उसे बजा सकता है, जैसा LilyPond डिफ़ॉल्ट रूप से चुनता है: कॉर्ड के नोट सबसे ऊँचे नोट से नीचे की ओर तार लेते हैं, और हर नोट फ़्रेट 0 से 24 के बीच बजता है। नोट के बाद लिखी तार-संख्या, जैसे ``c'4\\2``, इसके बजाय तार तय करती है; कॉर्ड के भीतर हर नोट अपनी तार-संख्या लेता है, जैसे ``<c\\5 e\\4>2`` में। ऊपर के स्टाफ़ पर हर तार-संख्या अपने नोट के ऊपर गोले में अंक के रूप में छपती है, या नीचे की ओर स्टेम वाले स्वर-भाग में नोट के नीचे। जिस नोट को कोई अप्रयुक्त तार नहीं बजा सकता, जैसे निचले E तार से नीचे का C, उसे स्रोत-स्थान वाले निदान के साथ अस्वीकार किया जाता है।"
 
-#: ../../topics/music.rst:298
+#: ../../topics/music.rst:310
 msgid ""
 "The tab staff shows strings, fret numbers and bar lines with a TAB clef, "
 "as LilyPond's default tablature does. It omits key and time signatures, "
@@ -1722,13 +1741,22 @@ msgid ""
 "tunings and instruments, rhythm in the tab staff and fret diagrams are "
 "outside the profile. :doc:`../howto/songbook` writes a complete song for "
 "voice, piano and guitar."
-msgstr "टैब स्टाफ़ TAB क्लेफ़ के साथ तार, फ़्रेट संख्याएँ और बार-रेखाएँ दिखाता है, जैसे LilyPond का डिफ़ॉल्ट टैबलेचर दिखाता है। वह की-सिग्नेचर और टाइम सिग्नेचर, स्टेम, बीम, विराम, टाई, स्लर और स्क्रिप्ट चिह्न छोड़ देता है; इन्हें ऊपर का स्टाफ़ दिखाता है। टाई से जुड़ा नोट दोहराया नहीं जाता, सिवाय पंक्ति की शुरुआत के, जहाँ उसकी फ़्रेट संख्या कोष्ठक में लिखी जाती है। ``\\new TabVoice`` टैब स्टाफ़ की एक वॉइस रखता है, और टैब स्टाफ़ की सभी वॉइस उसके तार साझा करती हैं। दूसरी ट्यूनिंग और दूसरे वाद्य, टैब स्टाफ़ में लय, और फ़्रेट आरेख इस प्रोफ़ाइल के बाहर हैं। :doc:`../howto/songbook` में गायन, पियानो और गिटार के लिए एक पूरा गीत लिखा गया है।"
+msgstr ""
+"टैब स्टाफ़ TAB क्लेफ़ के साथ तार, फ़्रेट संख्याएँ और बार-रेखाएँ दिखाता "
+"है, जैसे LilyPond का डिफ़ॉल्ट टैबलेचर दिखाता है। वह की-सिग्नेचर और टाइम "
+"सिग्नेचर, स्टेम, बीम, विराम, टाई, स्लर और स्क्रिप्ट चिह्न छोड़ देता है; "
+"इन्हें ऊपर का स्टाफ़ दिखाता है। टाई से जुड़ा नोट दोहराया नहीं जाता, सिवाय "
+"पंक्ति की शुरुआत के, जहाँ उसकी फ़्रेट संख्या कोष्ठक में लिखी जाती है। "
+"``\\new TabVoice`` टैब स्टाफ़ की एक वॉइस रखता है, और टैब स्टाफ़ की सभी "
+"वॉइस उसके तार साझा करती हैं। दूसरी ट्यूनिंग और दूसरे वाद्य, टैब स्टाफ़ "
+"में लय, और फ़्रेट आरेख इस प्रोफ़ाइल के बाहर हैं। :doc:`../howto/songbook` "
+"में गायन, पियानो और गिटार के लिए एक पूरा गीत लिखा गया है।"
 
-#: ../../topics/music.rst:305
+#: ../../topics/music.rst:317
 msgid "Read local files"
 msgstr "स्थानीय फ़ाइलें पढ़ना"
 
-#: ../../topics/music.rst:308
+#: ../../topics/music.rst:320
 msgid ""
 "A directive can name a local file instead of containing an inline body. "
 "We use exactly one source form."
@@ -1736,7 +1764,7 @@ msgstr ""
 "निर्देश इनलाइन मुख्य भाग के बजाय स्थानीय फ़ाइल का नाम दे सकता है। हम "
 "स्रोत का ठीक एक रूप उपयोग करते हैं।"
 
-#: ../../topics/music.rst:317
+#: ../../topics/music.rst:329
 msgid ""
 "Nested ``\\include`` paths resolve beside the including file, then "
 "through the source directory and configured ``include_roots``. Resolved "
@@ -1753,7 +1781,7 @@ msgstr ""
 "चुनी पाठ-फ़ॉन्ट फ़ाइलें उनकी सामग्री से ट्रैक करता है। निर्भरता बदलने पर "
 "चित्र फिर बनता है। समान आउटपुट बाइट वही ऐसेट नाम रखते हैं।"
 
-#: ../../topics/music.rst:323
+#: ../../topics/music.rst:335
 msgid ""
 "``--untrusted`` permits inline notation because the reader runs no "
 "program or Scheme code. It refuses file arguments and filesystem includes "
@@ -1773,37 +1801,37 @@ msgstr ""
 "नाम बताता है। चित्र विफल होने पर चेतावनी के साथ स्रोत कोड बना रहता है; "
 "``-W`` प्रकाशन रोककर पिछला आउटपुट सुरक्षित रखता है।"
 
-#: ../../topics/music.rst:328
+#: ../../topics/music.rst:340
 msgid "Set size and output"
 msgstr "आकार और आउटपुट तय करना"
 
-#: ../../topics/music.rst:331
+#: ../../topics/music.rst:343
 msgid "Directive options"
 msgstr "निर्देश के विकल्प"
 
-#: ../../topics/music.rst:335
+#: ../../topics/music.rst:347
 msgid "Option"
 msgstr "विकल्प"
 
-#: ../../topics/music.rst:336
+#: ../../topics/music.rst:348
 msgid "Meaning"
 msgstr "अर्थ"
 
-#: ../../topics/music.rst:337
+#: ../../topics/music.rst:349
 msgid "``alt``"
 msgstr "``alt``"
 
-#: ../../topics/music.rst:338
+#: ../../topics/music.rst:350
 msgid ""
 "Musical description for the image; otherwise the build constructs a "
 "localized summary."
 msgstr "चित्र का संगीतमय विवरण; न होने पर बिल्ड स्थानीयकृत सारांश बनाता है।"
 
-#: ../../topics/music.rst:339
+#: ../../topics/music.rst:351
 msgid "``caption``, ``name``, ``class``, ``align``"
 msgstr "``caption``, ``name``, ``class``, ``align``"
 
-#: ../../topics/music.rst:340
+#: ../../topics/music.rst:352
 msgid ""
 "Figure caption, reference target, CSS classes and image alignment, "
 "following the diagram directives."
@@ -1811,19 +1839,19 @@ msgstr ""
 "चित्र-विवरण, संदर्भ लक्ष्य, CSS क्लास और चित्र संरेखण, आरेख निर्देशों के "
 "समान।"
 
-#: ../../topics/music.rst:341
+#: ../../topics/music.rst:353
 msgid "``format``"
 msgstr "``format``"
 
-#: ../../topics/music.rst:342
+#: ../../topics/music.rst:354
 msgid "``svg`` by default, or ``png`` at 144 pixels per inch."
 msgstr "डिफ़ॉल्ट ``svg``, या प्रति इंच 144 पिक्सेल वाला ``png``।"
 
-#: ../../topics/music.rst:343
+#: ../../topics/music.rst:355
 msgid "``staff-size``"
 msgstr "``staff-size``"
 
-#: ../../topics/music.rst:344
+#: ../../topics/music.rst:356
 msgid ""
 "Height of a five-line staff, from 10 through 40 points; the default is 18 "
 "points."
@@ -1831,11 +1859,11 @@ msgstr ""
 "पाँच रेखाओं वाले स्टाफ़ (स्वर-पंक्ति) की ऊँचाई, 10 से 40 पॉइंट तक; "
 "डिफ़ॉल्ट 18 पॉइंट है।"
 
-#: ../../topics/music.rst:345
+#: ../../topics/music.rst:357
 msgid "``width``"
 msgstr "``width``"
 
-#: ../../topics/music.rst:346
+#: ../../topics/music.rst:358
 msgid ""
 "Available system width, in ``pt``, ``pc``, ``mm``, ``cm``, ``Q``, ``in``, "
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` or a percentage of the builder's "
@@ -1845,11 +1873,11 @@ msgstr ""
 "``px``, ``em``, ``rem``, ``ex``, ``ch`` या बिल्डर की डिफ़ॉल्ट चौड़ाई के "
 "प्रतिशत में।"
 
-#: ../../topics/music.rst:347
+#: ../../topics/music.rst:359
 msgid "``justify``"
 msgstr "``justify``"
 
-#: ../../topics/music.rst:348
+#: ../../topics/music.rst:360
 msgid ""
 "``auto`` keeps a short final system at its natural width; ``all`` "
 "stretches every system; ``none`` avoids stretching."
@@ -1857,7 +1885,7 @@ msgstr ""
 "``auto`` छोटे अंतिम सिस्टम को प्राकृतिक चौड़ाई पर रखता है; ``all`` हर "
 "सिस्टम खींचता है; ``none`` खींचने से बचता है।"
 
-#: ../../topics/music.rst:350
+#: ../../topics/music.rst:362
 msgid ""
 "The project defaults are ``lilypond_staff_size``, ``lilypond_html_width`` "
 "and ``lilypond_pdf_width``. Their numeric values are typographic points. "
@@ -1867,7 +1895,7 @@ msgstr ""
 "``lilypond_pdf_width`` हैं। इनके संख्यात्मक मान मुद्रण पॉइंट हैं। सेटिंग "
 "अनुबंध के लिए :doc:`../reference/configuration` देखें।"
 
-#: ../../topics/music.rst:354
+#: ../../topics/music.rst:366
 msgid ""
 "When a drawing is wider than 225 points, HTML also receives a narrow "
 "edition engraved at 225 points with a staff height no greater than 14 "
@@ -1884,7 +1912,7 @@ msgstr ""
 "स्क्रीन के अनुसार छोटा होता है। SVG की स्याही पृष्ठ की रंग योजना के "
 "अनुसार बदलती है; PNG डार्क मोड में हल्का पृष्ठभूमि पैनल रखता है।"
 
-#: ../../topics/music.rst:360
+#: ../../topics/music.rst:372
 msgid ""
 "PDF derives its measure from ``pdf_paper_size`` (``a4`` or ``letter``; "
 "any other value renders as A4) and the selected template's horizontal "
@@ -1907,11 +1935,11 @@ msgstr ""
 "साथ फ़िट होने के लिए छोटा हो जाता है। कई सिस्टम वाला स्वरलेख सिस्टमों के "
 "बीच PDF पृष्ठ बदल सकता है, और उसका कैप्शन अंतिम सिस्टम के बाद आता है।"
 
-#: ../../topics/music.rst:367
+#: ../../topics/music.rst:379
 msgid "Fonts, limits and references"
 msgstr "फ़ॉन्ट, सीमाएँ और संदर्भ"
 
-#: ../../topics/music.rst:370
+#: ../../topics/music.rst:382
 msgid ""
 "Music uses the unmodified Bravura 1.482 font and SMuFL metadata under the "
 "SIL Open Font License. Text follows ``pdf_fonts`` and ``pdf_font_paths``, "
@@ -1927,7 +1955,7 @@ msgstr ""
 "फ़ॉन्ट इंस्टॉल करना आवश्यक नहीं है। PNG निर्यात को अंतर्निहित रेंडरर "
 "चाहिए; उसके बिना भी SVG स्वरांकन उपलब्ध रहता है।"
 
-#: ../../topics/music.rst:375
+#: ../../topics/music.rst:387
 msgid ""
 "For CJK lyrics, we include a suitable CJK text face through "
 "``pdf_font_paths``. When building this repository, ``cargo xtask "
@@ -1941,7 +1969,7 @@ msgstr ""
 "संस्करण ``docs/shared/fonts`` में स्थापित करता है। हम अपनी परियोजना में "
 "इस निर्देशिका को फ़ॉन्ट पथ के रूप में उपयोग कर सकते हैं।"
 
-#: ../../topics/music.rst:379
+#: ../../topics/music.rst:391
 msgid ""
 "One example accepts at most 256 KiB of source including includes, 32 "
 "included files, depth 64, 20,000 events, 24 staves, four voices sounding "
@@ -1961,7 +1989,7 @@ msgstr ""
 "करोड़ पिक्सेल और किसी भी भुजा पर 16,384 पिक्सेल है। सीमा पार होने पर "
 "निदान संदेश स्रोत की पहचान करता है और उदाहरण को बाँटने का सुझाव देता है।"
 
-#: ../../topics/music.rst:386
+#: ../../topics/music.rst:398
 msgid ""
 "For notation syntax, we consult the `LilyPond 2.24 notation reference "
 "<https://lilypond.org/doc/v2.24/Documentation/notation/>`_. For glyph "

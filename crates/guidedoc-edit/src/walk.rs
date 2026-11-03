@@ -346,11 +346,7 @@ impl<'d, 't> Walker<'d, 't> {
                     vec![Span::new(from, from + kept.len())]
                 }
             } else {
-                let first = skip_ws(text, span.start + 2, line_end_trimmed(text, span.start));
-                text_lines(text, Span::new(first, span.end), 0)
-                    .into_iter()
-                    .filter(|s| !s.is_empty())
-                    .collect()
+                comment_lines(text, span)
             };
         Draft { content, ..Draft::leaf(BlockKind::Comment, span) }
     }
@@ -493,6 +489,28 @@ pub(crate) fn text_lines(text: &str, span: Span, quotes: usize) -> Vec<Span> {
         let from =
             if i == 0 { span.start.max(start) } else { strip_prefix(text, start, end, quotes) };
         out.push(Span::new(from.min(end), end));
+    }
+    out
+}
+
+/// The text lines of an RST comment (`..` and indented lines) or a MyST comment (`%`
+/// starting every line), without their markers and the spaces after them; empty lines
+/// are left out.
+fn comment_lines(text: &str, span: Span) -> Vec<Span> {
+    let raw = span.text(text);
+    let percent = raw.starts_with('%');
+    let marker = if raw.starts_with("..") { 2 } else { usize::from(percent) };
+    let mut out = Vec::new();
+    for (i, start) in line_starts(text, span).into_iter().enumerate() {
+        let end = line_end_trimmed(text, start).min(span.end);
+        let mut from = if i == 0 { span.start + marker } else { skip_ws(text, start, end) };
+        if i > 0 && percent && text[from.min(end)..end].starts_with('%') {
+            from += 1;
+        }
+        let from = skip_ws(text, from.min(end), end);
+        if from < end {
+            out.push(Span::new(from, end));
+        }
     }
     out
 }

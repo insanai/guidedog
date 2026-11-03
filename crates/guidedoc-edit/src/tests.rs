@@ -3,6 +3,7 @@
 mod edit_markdown;
 mod edit_rst;
 mod map;
+mod review;
 
 use crate::{
     BlockId, BlockKind, Format, MapOptions, Operation, SourceMap, apply_operation, load_source_map,

@@ -81,7 +81,10 @@ pub(crate) fn replace_text(cx: &Cx<'_>, id: BlockId, new: &str) -> Result<Plan, 
     let last = block.content[block.content.len() - 1];
     let prefix = &cx.text[line_start(cx.text, first.start)..first.start];
     let code = matches!(block.kind, BlockKind::LiteralBlock | BlockKind::Directive);
-    let indent = if code { prefix.to_string() } else { continuation(prefix, cx.markdown()) };
+    // Every line of a MyST comment starts with `%`, so the prefix is written again.
+    let percent = block.kind == BlockKind::Comment && prefix.trim_start().starts_with('%');
+    let indent =
+        if code || percent { prefix.to_string() } else { continuation(prefix, cx.markdown()) };
     let mut edits = Vec::new();
     let title = block.kind == BlockKind::Title && cx.map.format == Format::Rst;
     let insert = indent_lines(&new, &indent);

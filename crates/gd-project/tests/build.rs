@@ -230,3 +230,20 @@ fn clean_empties_the_build_folder() {
     assert_eq!(std::fs::read_dir(dir.path("_build")).unwrap().count(), 0);
     gd_project::clean(&project).unwrap();
 }
+
+/// A preview's pages carry the source span of every block; other builds' do not.
+#[test]
+fn preview_pages_carry_source_positions() {
+    let dir = demo("positions");
+    let project = load(&dir.0);
+    assert_built(&build(&project, BuilderKind::Html));
+    assert!(!dir.read("_build/html/guide.html").contains("data-gd-source"));
+    let preview = BuildOptions { preview: true, ..BuildOptions::default() };
+    assert_built(&gd_project::build(&project, BuilderKind::Html, &preview));
+    let page = dir.read("_build/html/guide.html");
+    let text = dir.read("guide.rst");
+    let start = text.find("Some").unwrap();
+    let end = start + "Some *text*. See :ref:`usage`.".len();
+    assert!(page.contains(&format!("<p data-gd-source=\"guide.rst:{start}-{end}\">")), "{page}");
+    assert!(dir.read("_build/html/notes.html").contains("data-gd-source=\"notes.md:"));
+}

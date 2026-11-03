@@ -99,9 +99,9 @@ pub fn source_location(
 }
 
 /// The renderer settings a page uses for an output: language, permalinks, section
-/// number suffix, MathJax's delimiters in HTML, and in the book and singlehtml the
-/// document's key before every anchor. The caller adds the highlighter and the
-/// translated labels.
+/// number suffix, MathJax's delimiters and in a preview source positions in HTML, and
+/// in the book and singlehtml the document's key before every anchor. The caller adds
+/// the highlighter and the translated labels.
 pub fn render_options<'b>(
     view: &BuildView<'b>,
     doc: DocId,
@@ -127,6 +127,10 @@ pub fn render_options<'b>(
         options.math = MathStyle::Sphinx; // for MathJax, as sphinx.ext.mathjax writes it.
         options.math_inline = pair(&config.mathjax.inline);
         options.math_display = pair(&config.mathjax.display);
+        // A preview maps a click back to the source (GDS 0017).
+        if view.options.preview {
+            options.source_positions = Some(config.source_dir.to_str().unwrap_or(""));
+        }
     }
     options
 }

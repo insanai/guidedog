@@ -300,14 +300,17 @@ fn write(
         plugins: &parts.plugins,
         budget: &s.budget,
         roots: &roots,
-        settings: gd_env::output_settings(
-            s.project.settings,
-            s.kind,
-            &options.tags,
-            options.nitpicky,
-            options.untrusted,
-            &parts.limits,
-            parts.plugins.digest(),
+        settings: with_preview(
+            gd_env::output_settings(
+                s.project.settings,
+                s.kind,
+                &options.tags,
+                options.nitpicky,
+                options.untrusted,
+                &parts.limits,
+                parts.plugins.digest(),
+            ),
+            options.preview,
         ),
     };
     let ctx = read_context(s, parts);
@@ -328,6 +331,17 @@ fn write(
         log.result.written = 1;
     }
     written
+}
+
+/// The output settings of a preview differ from a build's: a preview's pages carry
+/// source positions, so no page of one is reused for the other.
+fn with_preview(settings: Digest, preview: bool) -> Digest {
+    if !preview {
+        return settings;
+    }
+    let mut d = gd_env::Digester::new();
+    d.digest(&settings).text("preview");
+    d.finish()
 }
 
 /// Reads a document again whose cached object is stale, for the gettext builder.

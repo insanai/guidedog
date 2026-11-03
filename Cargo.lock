@@ -652,9 +652,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "gd-capabilities"
+version = "1.0.0-beta.10"
+dependencies = [
+ "gd-conf",
+ "gd-env",
+ "gd-json",
+ "gd-plugins",
+ "gd-read",
+ "gd-report",
+ "guidedoc",
+ "guidedoc-commonmark",
+ "guidedoc-defaults",
+ "guidedoc-edit",
+ "guidedoc-rst",
+ "guidedoc-sphinx",
+]
+
+[[package]]
 name = "gd-cli"
 version = "1.0.0-beta.10"
 dependencies = [
+ "gd-capabilities",
  "gd-clock",
  "gd-conf",
  "gd-env",
@@ -663,6 +682,7 @@ dependencies = [
  "gd-host",
  "gd-i18n",
  "gd-intl",
+ "gd-json",
  "gd-migrate",
  "gd-plugins",
  "gd-project",

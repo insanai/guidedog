@@ -70,6 +70,7 @@ const LAYERS: &[(&str, u8)] = &[
     ("gd-pages", 4),
     ("gd-ssg", 4),
     ("gd-project", 4),
+    ("gd-capabilities", 4),
     // 5: the command line.
     ("gd-cli", 5),
     // 6: programs, examples, tools and tests.

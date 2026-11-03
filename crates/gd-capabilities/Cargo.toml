@@ -1,0 +1,29 @@
+[package]
+name = "gd-capabilities"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+description = "What the linked Guidedog supports, read from its registries."
+
+[dependencies]
+guidedoc = { workspace = true }
+# The registry of every reader and renderer linked in.
+guidedoc-defaults = { workspace = true }
+guidedoc-rst = { workspace = true }
+guidedoc-sphinx = { workspace = true }
+guidedoc-commonmark = { workspace = true }
+guidedoc-edit = { workspace = true }
+gd-conf = { workspace = true }
+gd-env = { workspace = true }
+gd-plugins = { workspace = true }
+# The Sphinx layer's configuration of a project, as builds make it.
+gd-read = { workspace = true }
+gd-report = { workspace = true }
+
+[dev-dependencies]
+gd-json = { workspace = true }
+
+[lints]
+workspace = true

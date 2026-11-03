@@ -92,7 +92,8 @@ pub struct BuilderCapability {
     /// `guidedog serve` can rebuild and serve it live.
     pub serve: bool,
     /// A preview build's output carries source positions: `data-gd-source` attributes
-    /// on HTML blocks (`guidedoc_html::SOURCE_ATTRIBUTE`), or a PDF's page map.
+    /// on HTML blocks (`guidedoc_html::SOURCE_ATTRIBUTE`), or a page map beside each PDF
+    /// (`<file>.sourcemap.json`, complete with the embedded Typst compiler).
     pub output_source_map: bool,
     /// Its output folder holds a dependency manifest (`gd-dependencies.json`).
     pub dependency_manifest: bool,
@@ -287,7 +288,7 @@ fn builders() -> Vec<BuilderCapability> {
                 format,
                 preview: viewed,
                 serve: b == gd_env::BuilderKind::Html,
-                output_source_map: b.is_html(),
+                output_source_map: b.is_html() || b == gd_env::BuilderKind::Pdf,
                 dependency_manifest: gd_project::writes_dependencies(b),
             }
         })

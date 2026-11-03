@@ -11,7 +11,7 @@ commands may offer no hooks (`Hooks::NONE`). Protocol and design details:
 
 ```toml
 [dependencies]
-gd-plugins = "1.0.0-beta.11"
+gd-plugins = "1.0.0-beta.12"
 ```
 
 We write a build plugin that runs as its own program and upper-cases every source:

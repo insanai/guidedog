@@ -1,0 +1,28 @@
+:date: 2026-11-03
+:author: Guidedog contributors
+:category: releases
+:tags: rust, editors, publishing
+:summary: Separate build confinement from output content rules, use project Typst in confined builds, and prefer WebP for pages.
+:pdf: article
+
+Guidedog 1.0.0-beta.12
+======================
+
+Applications such as Nisaba can now choose what a build may reach separately from what reaches its output.
+Confinement controls readable folders, the network, plugins, graph files and music files.
+Content rules control raw markup and unsafe URLs.
+
+.. more::
+
+The project settings ``raw_content`` and ``unsafe_urls`` each accept ``"allow"`` or ``"omit"``.
+A library caller can impose its own rules or supply defaults for rules the project leaves unset.
+``--untrusted`` still applies strict confinement and omits both kinds of content.
+
+Confined builds now render Typst diagrams and use project templates and preambles inside their readable folders.
+They always use the embedded compiler, ignore configured external Typst programs and download no packages.
+Local intersphinx inventories must also lie inside the readable folders.
+
+An image written as ``name.*`` now prefers WebP over JPEG in HTML pages.
+The PDF book still prefers JPEG, which Typst stores without decoding, so one project can supply an image suited to each output.
+
+`GDS 0018 <https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html>`_ records the design and its library interfaces.

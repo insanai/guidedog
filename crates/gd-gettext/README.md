@@ -8,7 +8,7 @@ independent of every other workspace crate. For large catalogs, see [docs/manual
 
 ```toml
 [dependencies]
-gd-gettext = "1.0.0-beta.11"
+gd-gettext = "1.0.0-beta.12"
 ```
 
 We look up translations in a catalog:

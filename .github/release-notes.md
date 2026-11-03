@@ -1,14 +1,13 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.11 gives editors the interfaces they need to edit Guidedog projects visually beside the source.
+Version 1.0.0-beta.12 lets applications such as Nisaba choose what a build may reach separately from what reaches its output.
 
-- **Editable source maps.** The new reusable crate `guidedoc-edit` maps a reStructuredText or Markdown document, read with Guidedog's own Sphinx and MyST readers, to blocks with the spans of their markup and their editable text. Its operations replace text, insert, delete and move blocks, set directive options and add list items as minimal edits, and refuse any edit whose result would not read back as intended.
-- **Previews that point back to the source.** Preview builds mark each HTML block with its byte span in the source file, and write a page map beside each PDF that places every block on its page.
-- **Dependency manifests.** Every HTML, PDF and text build writes `gd-dependencies.json`: the files each page and book was made from, so an editor rebuilds only what a change affects.
-- **Capability reports.** `guidedog capabilities --json` lists the formats, builders, directives, roles, extensions and plugins this executable supports, from the code it links.
-- **Fixes.** A document whose included file is created later is read again; Graphviz 2.42 no longer carries text from one diagram into the next; and `gd-pages` tells a branch that moved from other refusals and makes its pack writer public.
+- **Confinement and content rules.** Library callers can choose readable folders, network access, linked plugins, graph files and music files independently of raw content and unsafe URLs. The new `raw_content` and `unsafe_urls` project settings each accept `"allow"` or `"omit"`; a caller can impose its own rules or supply defaults.
+- **Project Typst in confined builds.** `--untrusted` now renders Typst diagrams and uses project templates and preambles inside the readable folders. Confined builds always use the embedded compiler, ignore configured external Typst programs and download no packages. Raw content, unsafe URLs, native plugins and graph/music file access remain restricted by `--untrusted`.
+- **Images suited to each output.** An image written as `name.*` prefers WebP over JPEG in HTML pages. PDF books continue to prefer JPEG, which Typst can store without decoding.
+- **Confined inventories.** Local intersphinx inventories outside the readable folders are no longer read by a confined build, including one allowed to use the network.
 
-The [command reference](https://insanai.github.io/guidedog/manual/reference/cli.html#guidedog-capabilities), [GDS 0017](https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.11/CHANGELOG.md) describe the behavior and limits.
+The [configuration reference](https://insanai.github.io/guidedog/manual/reference/configuration.html), [GDS 0018](https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.12/CHANGELOG.md) describe the API changes, behavior and limits.
 
 ## Downloads
 
@@ -19,7 +18,7 @@ The [command reference](https://insanai.github.io/guidedog/manual/reference/cli.
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.11-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.12-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

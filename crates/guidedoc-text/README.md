@@ -8,9 +8,9 @@ grid tables with spans, and `Note:` admonitions.
 
 ```toml
 [dependencies]
-guidedoc-text = "1.0.0-beta.11"
-guidedoc = "1.0.0-beta.11"
-guidedoc-commonmark = "1.0.0-beta.11"
+guidedoc-text = "1.0.0-beta.12"
+guidedoc = "1.0.0-beta.12"
+guidedoc-commonmark = "1.0.0-beta.12"
 ```
 
 We render CommonMark as plain text:

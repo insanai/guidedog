@@ -501,7 +501,7 @@ Historical checkpoint on 29 September 2026: phases 1 and 2 were complete; phase 
 complete for CommonMark and native Typst and partial for RST; phase 4 was implemented
 except the native Typst chapter contract; and phase 5's single binary worked on macOS and
 Linux while Windows runtime, worker isolation, and font-license review remained (see
-*Decisions still requiring implementation evidence* below for the current ``1.0.0-beta.11``
+*Decisions still requiring implementation evidence* below for the current ``1.0.0-beta.12``
 state).
 
 

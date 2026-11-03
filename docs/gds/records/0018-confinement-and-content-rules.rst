@@ -1,6 +1,6 @@
 :gds-number: 0018
 :gds-title: Confinement and content rules
-:gds-state: discussion
+:gds-state: accepted
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-03
@@ -212,3 +212,10 @@ References
 
    2026-11-03: prediscussion -> discussion. Assigned a permanent number and
    opened for discussion.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-03: discussion -> accepted. The maintainer requested merging the
+   implemented Nisaba branch and releasing it in 1.0.0-beta.12.

@@ -8,7 +8,7 @@ blocks in HTML sites and PDF books (the `guidedoc` adapter lives in `guidedoc-de
 
 ```toml
 [dependencies]
-gd-highlight = "1.0.0-beta.11"
+gd-highlight = "1.0.0-beta.12"
 ```
 
 We highlight code as HTML spans with Pygments' classes:

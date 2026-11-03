@@ -10,8 +10,8 @@ cross-references, numbering) is left to the project host.
 
 ```toml
 [dependencies]
-guidedoc-sphinx = "1.0.0-beta.11"
-guidedoc = "1.0.0-beta.11"
+guidedoc-sphinx = "1.0.0-beta.12"
+guidedoc = "1.0.0-beta.12"
 ```
 
 We read a page with a Sphinx directive and print its tree:

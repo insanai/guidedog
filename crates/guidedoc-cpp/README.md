@@ -10,7 +10,7 @@ nothing of documents. `guidedoc-sphinx` turns its plain data into nodes (signatu
 
 ```toml
 [dependencies]
-guidedoc-cpp = "1.0.0-beta.11"
+guidedoc-cpp = "1.0.0-beta.12"
 ```
 
 We parse a `cpp:function` signature and read its Sphinx id:

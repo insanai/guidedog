@@ -65,6 +65,6 @@ Discussion registry
      - discussion
    * - 0018
      - :doc:`records/0018-confinement-and-content-rules`
-     - discussion
+     - accepted
 
 .. gds-generated-end

@@ -217,6 +217,12 @@ pub fn uses_embedded(program: &str) -> bool {
     EMBEDDED && (program.is_empty() || program == "typst")
 }
 
+/// Returns the embedded compiler when this build links one; `None` otherwise. A
+/// confined build uses it and never an installed program, whatever `typst` says.
+pub fn embedded_backend() -> Option<Backend> {
+    EMBEDDED.then_some(Backend::Embedded)
+}
+
 /// Returns the embedded compiler when this build links one and `program` is `""` or
 /// `"typst"`; otherwise finds the program and asks for its version. `None` when no program
 /// is found.

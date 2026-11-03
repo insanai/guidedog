@@ -140,7 +140,8 @@ impl Generation {
     /// it with [`Unit::finish`]; a unit dropped unfinished counts as failed, and a
     /// generation with a failed unit is not published.
     pub fn unit(&mut self, key: &str) -> Unit<'_> {
-        Unit { generation: self, key: key.to_string(), files: Vec::new(), done: false }
+        let key = key.to_string();
+        Unit { generation: self, key, files: Vec::new(), copied: Vec::new(), done: false }
     }
 
     /// How many units could not be written.
@@ -327,6 +328,8 @@ pub struct Unit<'g> {
     generation: &'g mut Generation,
     key: String,
     files: Vec<String>,
+    /// The files it copied, which the record lists among the files it read.
+    copied: Vec<PathBuf>,
     done: bool,
 }
 
@@ -357,11 +360,14 @@ impl Unit<'_> {
         self.emit(rel, text.as_bytes())
     }
 
-    /// Copies the file `from` into the unit at `rel`, read within `budget`.
+    /// Copies the file `from` into the unit at `rel`, read within `budget`. The unit's
+    /// record lists `from` among the files it read.
     pub fn emit_copy(&mut self, from: &Path, rel: &str, budget: &Budget) -> Result<(), Problem> {
         let ledger = Ledger::new(budget);
         let data = gd_host::read_file(from, Some(&ledger), usize::MAX)?;
-        self.emit(rel, &data)
+        self.emit(rel, &data)?;
+        self.copied.push(from.to_path_buf());
+        Ok(())
     }
 
     /// Copies the folder `from` into the unit at `rel`, leaving out hidden names. A
@@ -460,13 +466,17 @@ impl Unit<'_> {
     /// Records the unit as written, with its record.
     pub fn finish(mut self, record: UnitRecord) {
         self.done = true;
+        let mut files_read = record.files_read;
+        files_read.append(&mut self.copied);
+        files_read.sort();
+        files_read.dedup();
         let unit = OutputRecord {
             inputs: record.inputs,
             files: std::mem::take(&mut self.files),
             assets: record.assets,
             lookups: record.lookups,
             reports: record.reports,
-            files_read: record.files_read,
+            files_read,
         };
         if self.key == SITE_UNIT {
             self.generation.site_written = true;

@@ -121,6 +121,8 @@ pub(crate) struct MystState {
     pub slug_next: usize,
     /// Links to heading anchors: link row and slug index.
     pub anchors: Vec<(u32, usize)>,
+    /// Next element after a target/comment run, indexed by node position.
+    pub target_destinations: Vec<Option<NodeId>>,
     /// amsmath equations numbered so far.
     pub equations: usize,
     /// Words of text, for the wordcount substitutions.
@@ -150,6 +152,7 @@ impl MystState {
         self.slug_bases.clear();
         self.slug_next = 0;
         self.anchors.clear();
+        self.target_destinations.clear();
         self.equations = 0;
         self.words = 0;
         self.sub_refs.clear();

@@ -9,6 +9,7 @@ beside it.
 
 ## 1.0.0-beta.12 - 2026-11-03
 
+- Resolve long runs of MyST labels in linear time by indexing the next content element once, while preserving comment skipping and unresolved trailing labels.
 - Separate what a build may reach from what reaches its output (GDS 0018). `gd_env::BuildOptions` gains `confinement: Confinement` (`reads: ReadScope`, `network`, `plugins: PluginAccess`, `graph_files`, `music_files`), and `content` and `content_defaults: ContentRules` for raw content and unsafe URLs. `untrusted: true` still sets both to their strict values, so `--untrusted` keeps its meaning.
 - Add the conf.toml settings `raw_content` and `unsafe_urls`, each `"allow"` (the default, as in Sphinx) or `"omit"`. `--untrusted` omits both, whatever conf.toml says. A library caller reads them from `Config::content` and may impose its own rules or supply defaults for those the project leaves unset.
 - Add `gd_conf::confine(config, roots, linked_plugins)`: it confines a build to the source folder and the given folders, also resets `typst` to the embedded compiler and drops plugins from the machine registry, and returns a warning for each dropped setting. `confine_untrusted` is `confine` with no other folder. `gd_conf::drop_machine_plugins` and `gd_typst::embedded_backend` are new, `gd_project::content_policy` turns content rules into an engine policy, and `PluginStart::untrusted` becomes `access: PluginAccess`.

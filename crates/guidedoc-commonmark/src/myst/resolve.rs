@@ -36,6 +36,7 @@ fn name_key(kind: NodeKind, text: &str) -> String {
 pub(crate) fn resolve_document(h: &mut Host<'_, '_>) -> Result<(), Fail> {
     let names = index_names(h);
     number_notes(h);
+    index_target_destinations(h)?;
     let count = h.b().snap.nodes.len();
     for i in 1..count {
         let id = NodeId::from_index(i);
@@ -132,16 +133,31 @@ fn resolve_target(h: &mut Host<'_, '_>, id: NodeId) {
     if info.kind != LinkKind::Unresolved || info.destination.len > 0 || info.name.len > 0 {
         return;
     }
-    let mut i = node_end(h, id);
-    while i < h.b().snap.nodes.len() {
-        let next = NodeId::from_index(i);
-        let k = h.b().snap.nodes[next].kind;
-        if k != NodeKind::Target && k != NodeKind::Comment {
-            let b = h.b();
-            b.resolve_link(row as u32, next, LinkKind::Internal, Text::default());
-            b.snap.nodes[next].flags.insert(NodeFlags::REFERENCED);
-            return;
-        }
-        i = node_end(h, next);
+    let end = node_end(h, id);
+    if let Some(next) = h.ms.target_destinations[end] {
+        let b = h.b();
+        b.resolve_link(row as u32, next, LinkKind::Internal, Text::default());
+        b.snap.nodes[next].flags.insert(NodeFlags::REFERENCED);
     }
+}
+
+/// Skips each target/comment subtree once; a long run must not be scanned per label.
+fn index_target_destinations(h: &mut Host<'_, '_>) -> Result<(), Fail> {
+    let count = h.b().snap.nodes.len();
+    h.ms.target_destinations.clear();
+    h.ms.target_destinations
+        .try_reserve(count + 1)
+        .map_err(|_| Fail::capacity(guidedoc::Region::Scratch, (count + 1) as u64, true))?;
+    h.ms.target_destinations.resize(count + 1, None);
+    for i in (1..count).rev() {
+        let id = NodeId::from_index(i);
+        h.ms.target_destinations[i] =
+            if matches!(h.b().snap.nodes[id].kind, NodeKind::Target | NodeKind::Comment) {
+                let end = node_end(h, id);
+                h.ms.target_destinations[end]
+            } else {
+                Some(id)
+            };
+    }
+    Ok(())
 }

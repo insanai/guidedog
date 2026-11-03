@@ -423,3 +423,14 @@ fn reader_ids_name_their_profiles() {
         Err((guidedoc::Status::InvalidInput, "core.read.settings_type"))
     );
 }
+
+#[test]
+fn target_runs_skip_comments_and_leave_trailing_labels_unresolved() {
+    expect_myst(
+        "(a)=\n% skipped\n(b)=\ntext\n\n(c)=\n",
+        "document\n  target \"a\" link=internal ->4\n  comment \"skipped\"\n  \
+         target \"b\" link=internal ->4\n  paragraph +referenced\n    text \"text\"\n  \
+         target \"c\" link=unresolved\n",
+        &Settings::default(),
+    );
+}

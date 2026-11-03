@@ -25,4 +25,6 @@ Local intersphinx inventories must also lie inside the readable folders.
 An image written as ``name.*`` now prefers WebP over JPEG in HTML pages.
 The PDF book still prefers JPEG, which Typst stores without decoding, so one project can supply an image suited to each output.
 
+Long runs of MyST labels now resolve without scanning the remaining labels for every target.
+
 `GDS 0018 <https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html>`_ records the design and its library interfaces.

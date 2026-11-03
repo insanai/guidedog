@@ -112,15 +112,29 @@ fn file_sources_resolve_beside_the_file_and_text_never_compiles() {
     has(&both(&failure), "diagram:1:");
 }
 
+/// `--untrusted` confines what a build reads, not the Typst a project wrote: the
+/// embedded compiler draws the diagram, while raw content is still left out.
 #[test]
-fn untrusted_sources_are_retained_without_compilation() {
+fn untrusted_builds_draw_diagrams_and_omit_raw_content() {
     let dir = setup("typst-untrusted");
+    dir.write(
+        "index.rst",
+        concat!(
+            "Drawing\n=======\n\n.. typst-diagram::\n\n   #circle(radius: 8pt)\n\n",
+            ".. raw:: html\n\n   <b id=\"raw\">raw</b>\n",
+        ),
+    );
+    let output = build(&dir.path, 0, &["html", "--untrusted"]);
+    lacks(&both(&output), "build.typst-diagram");
+    let html = dir.read("_build/html/index.html");
+    let url = diagram_url(&html, "svg");
+    has(&dir.read(&format!("_build/html/{url}")), "<svg");
+    lacks(&html, "id=\"raw\"");
+    // A diagram that fails still keeps its source visible.
     dir.write("index.rst", "Drawing\n=======\n\n.. typst-diagram::\n\n   #unknown()\n");
     let output = build(&dir.path, 0, &["html", "--untrusted"]);
-    has(&both(&output), "disabled in --untrusted");
-    let html = dir.read("_build/html/index.html");
-    has(&html, "unknown");
-    lacks(&html, "_images/typst-");
+    has(&both(&output), "TYPST DIAGRAM NOT DRAWN");
+    has(&dir.read("_build/html/index.html"), "unknown");
 }
 
 #[test]

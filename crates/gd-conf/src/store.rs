@@ -86,6 +86,15 @@ fn wrong(path: &str, v: &Value, name: &str, expected: &str) -> Problem {
     )
 }
 
+/// Reads a content rule: `"allow"` or `"omit"`.
+fn content_rule(v: &Value, path: &str, name: &str) -> Result<crate::ContentRule, Problem> {
+    let rule = match &v.data {
+        Data::String(s) => crate::ContentRule::from_name(s),
+        _ => None,
+    };
+    rule.ok_or_else(|| wrong(path, v, name, "\"allow\" or \"omit\""))
+}
+
 /// Stores one value by its setting's kind.
 pub(crate) fn store(
     config: &mut Config,
@@ -156,6 +165,7 @@ pub(crate) fn store(
         Store::FlagOrList(field) => flag_or_list(v, path, name).map(|x| *field(config) = x),
         Store::StringLists(field) => string_lists(v, path, name).map(|x| *field(config) = x),
         Store::OptionalNumber(field) => number(v, path, name).map(|x| *field(config) = Some(x)),
+        Store::ContentRule(field) => content_rule(v, path, name).map(|x| *field(config) = Some(x)),
     }
 }
 

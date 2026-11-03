@@ -59,7 +59,7 @@ gd-conf
    (``SiteConfig``), loading (``load_config``, ``find_project``), ``-D`` overrides
    (``apply_override``), the checks Sphinx makes when it starts (``check_config``), the
    settings table gd-migrate converts ``conf.py`` with (``SETTINGS``, ``find_setting``,
-   ``suggestion``), trust (``readable_roots``, ``confine_untrusted``), and ``Digest``.
+   ``suggestion``), trust (``readable_roots``, ``confine``, ``confine_untrusted``, ``drop_machine_plugins``), the content rules (``ContentRule``, ``ContentRules``), and ``Digest``.
 gd-theme
    Built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``,
    ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``), CSS/JS assets
@@ -97,7 +97,7 @@ gd-intl, gd-i18n
    Catalogs, the interface translator, the gettext builder; the translation pass.
 gd-project
    The coordinator and public surface: ``Project``, ``LoadOptions``, ``load``,
-   ``build``, ``clean``, ``watch_roots``, ``build_limits`` and the trusted and
+   ``build``, ``clean``, ``watch_roots``, ``build_limits``, ``content_policy`` and the trusted and
    untrusted policies.
 gd-ssg
    The linked static publishing plugin (``guidedog ssg``): site presets, surgical
@@ -149,9 +149,9 @@ in a single ``match``.
 S5: plugins
 ~~~~~~~~~~~
 
-``PluginRun::start(PluginStart { config, linked, kind, untrusted })`` looks each
-selected ID up in the linked registry first, then in the machine registry; an
-``--untrusted`` build refuses any (``plugins.untrusted``); at most 64. One
+``PluginRun::start(PluginStart { config, linked, kind, access })`` looks each
+selected ID up in the linked registry first, then, with ``PluginAccess::Any``, in the machine registry; ``PluginAccess::None`` (an
+``--untrusted`` build) refuses any (``plugins.untrusted``); at most 64. One
 ``Mutex<PluginSession>`` per plugin per build; ``process_source`` is called by gd-read,
 ``process_html`` and ``assets`` by gd-site (HTML builders only). ``digest()`` (identity,
 cache key, configuration and dependency files, assets) joins the reading and output
@@ -172,9 +172,9 @@ checks the engine registry (``core.registry.invalid``; ``None`` is
 warnings, settings, registry, plugins }`` is plain data. ``build(&project, kind,
 &options) -> BuildResult`` never fails outright; it runs, in order:
 
-1. ``confine_untrusted`` on its own copy of the configuration (``--untrusted``); ``output_paths`` and ``Generation::begin``, which settles an interrupted commit first; ``build_limits`` (``build.stack``); ``PluginRun::start``.
+1. The confinement (``BuildOptions::effective_confinement``) on its own copy of the configuration: ``plugins.untrusted`` when no plugin may start, ``gd_conf::confine`` for a ``ReadScope::Within`` build, ``drop_machine_plugins`` for ``PluginAccess::Linked``, and ``pdf_packages = "offline"`` without the network; ``output_paths`` and ``Generation::begin``, which settles an interrupted commit first; ``build_limits`` (``build.stack``); ``PluginRun::start``.
 2. ``discover``, ``contents_root``, ``api_sources`` and ``with_generated``: the sources.
-3. ``load_intl`` and, except for gettext, ``localize_config``; ``build_dates`` (from ``options.now`` or the clock); ``load_intersphinx`` (no network when untrusted). The build stage becomes Reading.
+3. ``load_intl`` and, except for gettext, ``localize_config``; ``build_dates`` (from ``options.now`` or the clock); ``load_intersphinx`` (no network and confined local inventories when the confinement says so). The build stage becomes Reading.
 4. ``build_settings`` (reading settings, translations, trust, limits, plugins); ``load_environment`` and ``read_documents``; the documents' reports join the build's. Unless ``options.preview`` is set, the publication clock filter partitions ``env.docs`` into eligible ``docs`` and withheld ``ineligible_docs`` against ``now``.
 5. ``resolve``; the stage becomes Writing. A ``BuildView`` with ``output_settings``, and one ``match`` on ``BuilderKind``: ``SiteBuilder`` (html, dirhtml, singlehtml), ``PdfBuilder``, ``TextBuilder``, ``DummyBuilder``, ``CoverageBuilder``, ``GettextBuilder`` (with ``reread_document`` as its ``Reread``).
 6. ``suppress_warnings``; then a build with an unread document (``build.read``) or, with ``-W``, any warning or error (``build.warnings``) abandons its generation; any other commits it. ``published`` and ``unsettled`` come from the commit.

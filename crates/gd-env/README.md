@@ -12,7 +12,7 @@ let store = gd_env::ObjectStore::new(gd_env::doctrees_dir(&config));
 let object = store.save_object("guide/intro", document)?;  // objects/guide/intro.<16>.gdo
 let doc = store.load_object(&mut ws, &object, &limits)?;   // Err(ObjectError { stale, .. })
 let run = gd_env::PluginRun::start(gd_env::PluginStart {
-    config: &config, linked: &registry, kind, untrusted })?; // stops on Drop
+    config: &config, linked: &registry, kind, access })?;  // stops on Drop
 let text = run.process_source(&source, &config.language, &text)?;
 ```
 
@@ -28,6 +28,7 @@ let text = run.process_source(&source, &config.language, &text)?;
 | `Asset`, `Rendered { body, assets, trace, reports, failed }`, `UiText`, `EnglishUi` | rendering |
 | `reading_settings`, `build_settings`, `output_settings`, `executable_stamp`, `file_digest` | digests |
 | `PluginRun`, `PluginStart`, `host_problem`, `assets_url` | build plugins |
+| `Confinement { reads, network, plugins, graph_files, music_files }` (`TRUSTED`, `STRICT`, `is_confined`), `ReadScope`, `PluginAccess`, `BuildOptions::effective_confinement`, `BuildOptions::content_rules`, `trust_digest`, `ContentRule`, `ContentRules` | what a build trusts (GDS 0018) |
 | `ObjectBuilder`, `ObjectReader`, `read_record`, `report_to_json`, `report_from_json` | JSON records |
 
 ## Design notes

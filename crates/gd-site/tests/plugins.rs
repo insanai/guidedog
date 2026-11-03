@@ -49,7 +49,7 @@ fn pages_pass_through_html_hooks_and_assets_are_written() {
         config: &p.config,
         linked: &linked,
         kind: BuilderKind::Html,
-        untrusted: false,
+        access: gd_env::PluginAccess::Any,
     };
     p.plugins = PluginRun::start(start).unwrap();
     p.build(BuilderKind::Html).unwrap();

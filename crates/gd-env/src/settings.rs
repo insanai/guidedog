@@ -218,36 +218,37 @@ fn apidoc_settings(d: &mut Digester, c: &Config) {
 
 /// The digest the environment is saved with: [`reading_settings`] and what the build
 /// adds to it, the translations (`intl`, gd-intl's digest of the language, catalogs and
-/// labels), trust, the engine limits, and the build plugins (`PluginRun::digest`).
+/// labels), trust ([`crate::trust_digest`]), the engine limits, and the build plugins
+/// (`PluginRun::digest`).
 pub fn build_settings(
     reading: Digest,
     intl: Digest,
-    untrusted: bool,
+    trust: Digest,
     limits: &Limits,
     plugins: Digest,
 ) -> Digest {
     let mut d = Digester::new();
-    d.digest(&reading).digest(&intl).flag(untrusted).text(&format!("{limits:?}"));
+    d.digest(&reading).digest(&intl).digest(&trust).text(&format!("{limits:?}"));
     d.digest(&plugins).finish()
 }
 
 /// What changes every output of a builder: the whole of conf.toml and `-D`
 /// (`gd_conf::Loaded::settings`), the builder, the `-t` tags `only` tests (sorted),
-/// whether every reference must resolve (`-n`), trust, the limits, the executable, and
-/// the build plugins.
+/// whether every reference must resolve (`-n`), trust ([`crate::trust_digest`]), the
+/// limits, the executable, and the build plugins.
 pub fn output_settings(
     project: Digest,
     kind: BuilderKind,
     tags: &[String],
     nitpicky: bool,
-    untrusted: bool,
+    trust: Digest,
     limits: &Limits,
     plugins: Digest,
 ) -> Digest {
     let mut sorted = tags.to_vec();
     sorted.sort();
     let mut d = Digester::new();
-    d.digest(&project).text(kind.name()).texts(&sorted).flag(nitpicky).flag(untrusted);
+    d.digest(&project).text(kind.name()).texts(&sorted).flag(nitpicky).digest(&trust);
     d.text(&format!("{limits:?}")).text(executable_stamp()).digest(&plugins).finish()
 }
 

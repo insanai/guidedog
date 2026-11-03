@@ -78,6 +78,8 @@ pub(crate) enum Store {
     FlagOrList(fn(&mut Config) -> &mut FlagOrList),
     StringLists(fn(&mut Config) -> &mut BTreeMap<String, Vec<String>>),
     OptionalNumber(fn(&mut Config) -> &mut Option<f64>),
+    /// A content rule, `"allow"` or `"omit"`, that may be unset.
+    ContentRule(fn(&mut Config) -> &mut Option<crate::ContentRule>),
     /// The kind's own reader (`custom.rs`).
     Custom,
 }
@@ -123,6 +125,13 @@ const fn table(
 
 const fn json(name: &'static str, field: fn(&mut Config) -> &mut String) -> Setting {
     Setting { name, kind: SettingKind::Json, store: Store::String(field) }
+}
+
+const fn rule(
+    name: &'static str,
+    field: fn(&mut Config) -> &mut Option<crate::ContentRule>,
+) -> Setting {
+    Setting { name, kind: SettingKind::String, store: Store::ContentRule(field) }
 }
 
 const fn custom(name: &'static str, kind: SettingKind) -> Setting {
@@ -172,6 +181,8 @@ pub static SETTINGS: &[Setting] = &[
     list("plugins", |c| &mut c.plugins.ids),
     table("plugin_configs", |c| &mut c.plugins.configs),
     int("plugin_timeout", |c| &mut c.plugins.timeout),
+    rule("raw_content", |c| &mut c.content.raw),
+    rule("unsafe_urls", |c| &mut c.content.unsafe_urls),
     text("rst_prolog", |c| &mut c.rst_prolog),
     text("rst_epilog", |c| &mut c.rst_epilog),
     text("default_role", |c| &mut c.default_role),

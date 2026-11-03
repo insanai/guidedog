@@ -258,8 +258,9 @@ pub struct ImageFile {
 }
 
 /// The order in which an image written as `name.*` picks its file in pages: vector
-/// first, as Sphinx's HTML builders list `supported_image_types`.
-const PAGE_IMAGE_TYPES: [&str; 5] = ["svg", "png", "gif", "jpg", "jpeg"];
+/// first, as Sphinx's HTML builders list `supported_image_types`, with WebP ahead of
+/// JPEG, so a project can give pages WebP and the book (which has no WebP) JPEG.
+const PAGE_IMAGE_TYPES: [&str; 6] = ["svg", "png", "gif", "webp", "jpg", "jpeg"];
 
 /// The same in the book: what Typst reads.
 const BOOK_IMAGE_TYPES: [&str; 5] = ["svg", "png", "jpg", "jpeg", "gif"];

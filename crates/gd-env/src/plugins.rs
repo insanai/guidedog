@@ -20,6 +20,7 @@ use gd_plugins::{
 
 use crate::builder::BuilderKind;
 use crate::discover::{SourceFile, SourceKind};
+use crate::trust::PluginAccess;
 
 /// One build's plugin sessions, started in the order `plugins` lists them.
 #[derive(Debug, Default)]
@@ -39,16 +40,17 @@ pub struct PluginStart<'a> {
     pub linked: &'a Registry,
     /// The builder: HTML builders also collect assets.
     pub kind: BuilderKind,
-    /// An `--untrusted` build starts no native code.
-    pub untrusted: bool,
+    /// Which plugins may start: an `--untrusted` build starts none.
+    pub access: PluginAccess,
 }
 
 impl PluginRun {
     /// Starts the plugins `config.plugins.ids` selects: each from the linked registry,
-    /// or else from the machine registry (verified against its SHA-256), loaded with
-    /// its configuration file, and for HTML builders with its assets collected.
+    /// or else, when `access` is [`PluginAccess::Any`], from the machine registry
+    /// (verified against its SHA-256), loaded with its configuration file, and for HTML
+    /// builders with its assets collected.
     ///
-    /// Fails with `plugins.untrusted` when an `--untrusted` build selects any,
+    /// Fails as [`PluginRun::check_access`] does,
     /// `plugins.config` for more than [`MAX_BUILD_PLUGINS`], an invalid or repeated ID,
     /// or an unreadable dependency, and with the plugin's own problem when it cannot be
     /// found or loaded. Sessions started before a failure are stopped.
@@ -59,17 +61,7 @@ impl PluginRun {
         if ids.is_empty() {
             return Ok(run);
         }
-        if start.untrusted {
-            return Err(Problem::new(
-                "plugins.untrusted",
-                "NATIVE PLUGINS ARE DISABLED",
-                &config.config_dir.join(CONFIG_FILE).display().to_string(),
-                "An untrusted build cannot start native code.",
-                "Remove plugins from this build, or review the project and build without \
-                 --untrusted.",
-                2,
-            ));
-        }
+        PluginRun::check_access(config, start.linked, start.access)?;
         if ids.len() > MAX_BUILD_PLUGINS {
             let message = format!("This build lists more than {MAX_BUILD_PLUGINS} plugins.");
             return Err(configuration(config, "", &message, "Keep plugins to at most 64 IDs."));
@@ -77,11 +69,52 @@ impl PluginRun {
         let mut digest = Digester::new();
         for (i, id) in ids.iter().enumerate() {
             check_id(config, id, &ids[..i])?;
-            let plugin = select(start.linked, id)?;
+            let plugin = select(start.linked, id, start.access)?;
             run.start_one(start, &plugin, &mut digest)?;
         }
         run.digest = digest.finish();
         Ok(run)
+    }
+
+    /// Checks that `access` lets the build start every plugin `config` lists. Fails
+    /// with `plugins.untrusted` (exit 2) when it allows none and the project lists
+    /// any, and with `plugins.not-linked` when it allows only the plugins in `linked`
+    /// and the project lists another. Borrows everything for the call.
+    pub fn check_access(
+        config: &Config,
+        linked: &Registry,
+        access: PluginAccess,
+    ) -> Result<(), Problem> {
+        let conf = config.config_dir.join(CONFIG_FILE).display().to_string();
+        let ids = &config.plugins.ids;
+        match access {
+            PluginAccess::Any => Ok(()),
+            PluginAccess::None if ids.is_empty() => Ok(()),
+            PluginAccess::None => Err(Problem::new(
+                "plugins.untrusted",
+                "NATIVE PLUGINS ARE DISABLED",
+                &conf,
+                "An untrusted build cannot start native code.",
+                "Remove plugins from this build, or review the project and build without \
+                 --untrusted.",
+                2,
+            )),
+            PluginAccess::Linked => match ids.iter().find(|id| linked.find(id).is_none()) {
+                None => Ok(()),
+                Some(id) => Err(Problem::new(
+                    "plugins.not-linked",
+                    "PLUGIN IS NOT LINKED",
+                    &conf,
+                    format!(
+                        "Plugin {id} is not linked into this program, and this build starts \
+                         no plugin from the machine registry."
+                    ),
+                    "Remove it from plugins, or build with plugins from the machine registry \
+                     allowed.",
+                    2,
+                )),
+            },
+        }
     }
 
     fn start_one(
@@ -233,8 +266,8 @@ fn check_id(config: &Config, id: &str, before: &[String]) -> Result<(), Problem>
 }
 
 /// The linked plugin `id`, or the machine registry's (read only then).
-fn select(linked: &Registry, id: &str) -> Result<Plugin, Problem> {
-    let machine = if linked.find(id).is_some() {
+fn select(linked: &Registry, id: &str, access: PluginAccess) -> Result<Plugin, Problem> {
+    let machine = if linked.find(id).is_some() || access != PluginAccess::Any {
         PathBuf::new()
     } else {
         gd_plugins::machine_path().map_err(|p| host_problem(&p))?
@@ -301,19 +334,25 @@ mod tests {
     fn untrusted_builds_start_no_plugins() {
         let mut config = Config::new("/p", "/p/_build");
         let linked = Registry::default();
-        let start = |c: &Config, untrusted| {
+        let start = |c: &Config, access| {
             PluginRun::start(PluginStart {
                 config: c,
                 linked: &linked,
                 kind: BuilderKind::Html,
-                untrusted,
+                access,
             })
         };
-        assert!(start(&config, true).is_ok_and(|r| r.is_empty()));
+        assert!(start(&config, PluginAccess::None).is_ok_and(|r| r.is_empty()));
         config.plugins.ids = vec!["badge".into()];
-        assert_eq!(start(&config, true).map(|_| ()).unwrap_err().code, "plugins.untrusted");
+        let refused = |access| start(&config, access).map(|_| ()).unwrap_err().code;
+        assert_eq!(refused(PluginAccess::None), "plugins.untrusted");
+        // A plugin that is not linked would come from the machine registry.
+        assert_eq!(refused(PluginAccess::Linked), "plugins.not-linked");
         config.plugins.ids = vec!["Bad ID".into()];
-        assert_eq!(start(&config, false).map(|_| ()).unwrap_err().code, "plugins.config");
+        assert_eq!(
+            start(&config, PluginAccess::Any).map(|_| ()).unwrap_err().code,
+            "plugins.config"
+        );
         assert_eq!(assets_url("guide/intro.html", "badge"), "../_static/plugins/badge/");
     }
 }

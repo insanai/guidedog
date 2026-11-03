@@ -25,8 +25,8 @@ let roots = gd_project::watch_roots(&project.config); // for gd_serve::Watch
 | `build(&Project, BuilderKind, &BuildOptions) -> BuildResult` | discover, translate, read, resolve, write, publish |
 | `clean(&Project)` | empties the build folder |
 | `watch_roots(&Config)`, `Project::watch_skip` | what `guidedog serve` watches |
-| `build_limits`, `trusted_policy`, `untrusted_policy` | limits and content policy of a build |
-| `BuildOptions`, `BuildResult`, `BuildStage`, `BuilderKind`, `Jobs` | re-exported from gd-env |
+| `build_limits`, `content_policy`, `trusted_policy`, `untrusted_policy` | limits and content policy of a build |
+| `BuildOptions`, `BuildResult`, `BuildStage`, `BuilderKind`, `Jobs`, `Confinement`, `ReadScope`, `PluginAccess`, `ContentRule`, `ContentRules` | re-exported from gd-env |
 
 With sphinx.ext.duration listed, a build adds the reading times to `BuildResult::steps`,
 warns `duration.limit`, and writes `duration_write_json` into the output

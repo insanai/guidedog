@@ -1,8 +1,9 @@
 //! Trust: what a build may read. A trusted build reads files below the source folder
 //! and the folders conf.toml names (`include_roots`, `autodoc_source_paths`, ...), since
-//! the project is the user's own. An `--untrusted` build does not let the project widen
-//! what it reads: `confine_untrusted` leaves out every setting that leads elsewhere,
-//! each with a warning, before the build discovers or reads anything.
+//! the project is the user's own. A confined build (`--untrusted`, or a program that
+//! builds a project it did not write) does not let the project widen what it reads:
+//! `confine` leaves out every setting that leads outside the given folders, each with a
+//! warning, before the build discovers or reads anything (GDS 0004, GDS 0018).
 
 use std::path::{Path, PathBuf};
 
@@ -13,60 +14,81 @@ use crate::config::Config;
 use crate::paths::source_path;
 use crate::store::warning;
 
-/// Confines `config` for an `--untrusted` build and returns a `build.untrusted` warning
-/// for each setting it drops: `include_roots`; `pdf_preamble` (Typst the project wrote);
-/// files (`html_logo`, `html_favicon`, `pdf_logo`, `mathjax_config_path`) and folders
-/// (`html_static_path`, `html_extra_path`, `templates_path`, `locale_dirs`,
-/// `pdf_font_paths`, `autodoc_source_paths`, `odin_autoapi_dirs`,
-/// `rust_autoapi_crates`) that lead outside the source folder once every link is
-/// followed. No PDF package is downloaded (`pdf_packages = "offline"`).
+/// The `typst` setting that selects the embedded compiler.
+const EMBEDDED_TYPST: &str = "typst";
+
+/// Confines `config` to the source folder: [`confine`] with no other folder and no
+/// linked plugin. This is what an `--untrusted` build reads.
 pub fn confine_untrusted(config: &mut Config) -> Vec<Report> {
-    let conf = config.source_dir.join(crate::CONFIG_FILE).display().to_string();
-    let mut reports = Vec::new();
-    if !config.include_roots.is_empty() {
-        reports.push(untrusted_warning(&conf, "include_roots", &config.include_roots.join(", ")));
-        config.include_roots.clear();
-    }
-    if !config.pdf.preamble.is_empty() {
-        let mut r = warning(
-            &conf,
-            0,
-            "build.untrusted",
-            "SETTING NOT USED",
-            format!(
-                "pdf_preamble names {}, Typst the project wrote, which an --untrusted build \
-                 does not run.",
-                config.pdf.preamble
-            ),
-            "Build without --untrusted if you trust this project.",
+    confine(config, &[], &[])
+}
+
+/// Confines `config` so that a build reads only below the source folder and `roots`
+/// (absolute, or relative to the source folder; links are followed), and returns a
+/// `build.untrusted` warning for each setting it changes or drops:
+///
+/// - `include_roots`, the folder settings (`html_static_path`, `html_extra_path`,
+///   `templates_path`, `locale_dirs`, `pdf_font_paths`, `autodoc_source_paths`,
+///   `odin_autoapi_dirs`, `rust_autoapi_crates`) and the file settings (`html_logo`,
+///   `html_favicon`, `pdf_logo`, `mathjax_config_path`, `pdf_preamble`, and each file
+///   of `plugin_configs`) that lead outside those folders;
+/// - `typst` naming a program: a confined build runs the embedded compiler only;
+/// - each of `plugins` not in `linked_plugins` (the plugins linked into the calling
+///   program): a plugin from the machine registry is a program that reads anything.
+///
+/// It also sets `pdf_packages = "offline"`, so Typst downloads no package. Borrows
+/// `config` for the call; never fails. The caller builds with the result alone.
+pub fn confine(config: &mut Config, roots: &[PathBuf], linked_plugins: &[String]) -> Vec<Report> {
+    let conf = config.config_dir.join(crate::CONFIG_FILE).display().to_string();
+    let mut allowed = Vec::with_capacity(1 + roots.len());
+    allowed.push(config.source_dir.clone());
+    allowed.extend(roots.iter().map(|root| config.source_dir.join(root)));
+    let allowed = gd_host::canonical_roots(&allowed);
+    let mut reports = confine_folders(config, &allowed, &conf);
+    reports.extend(confine_files(config, &allowed, &conf));
+    reports.extend(drop_machine_plugins(config, linked_plugins));
+    if !config.pdf.typst.is_empty() && config.pdf.typst != EMBEDDED_TYPST {
+        let message = format!(
+            "typst names the program {}, which a confined build does not run; it uses the \
+             embedded Typst compiler.",
+            config.pdf.typst
         );
-        r.category = "build.untrusted".into();
-        reports.push(r);
-        config.pdf.preamble.clear();
+        reports.push(confinement_warning(&conf, message));
+        config.pdf.typst = EMBEDDED_TYPST.into();
     }
     config.pdf.packages = "offline".into();
-    let source = gd_host::canonical_roots(std::slice::from_ref(&config.source_dir));
-    let inside = |c: &Config, path: &str| gd_host::confined(&source, &source_path(c, path));
-    let files: [(&str, FileField); 4] = [
-        ("html_logo", |c| &mut c.html.logo),
-        ("html_favicon", |c| &mut c.html.favicon),
-        ("pdf_logo", |c| &mut c.pdf.logo),
-        ("mathjax_config_path", |c| &mut c.mathjax.config_path),
-    ];
-    for (name, field) in files {
-        let file = field(config).clone();
-        if file.is_empty() || file.contains("://") || inside(config, &file) {
-            continue;
+    reports
+}
+
+/// Drops each of `plugins` that is not in `linked_plugins` and returns a
+/// `build.untrusted` warning for each: a build that runs only the plugins linked into
+/// its program starts none from the machine registry. Borrows `config` for the call.
+pub fn drop_machine_plugins(config: &mut Config, linked_plugins: &[String]) -> Vec<Report> {
+    let conf = config.config_dir.join(crate::CONFIG_FILE).display().to_string();
+    let mut reports = Vec::new();
+    config.plugins.ids.retain(|id| {
+        let linked = linked_plugins.contains(id);
+        if !linked {
+            let message = format!(
+                "plugins lists {id}, which is not linked into this program; a confined build \
+                 starts no plugin from the machine registry."
+            );
+            reports.push(confinement_warning(&conf, message));
         }
-        reports.push(untrusted_warning(&conf, name, &file));
-        field(config).clear();
-    }
-    for (name, field) in UNTRUSTED_FOLDERS {
+        linked
+    });
+    reports
+}
+
+/// Keeps the folder settings and the include roots that lead inside `allowed`.
+fn confine_folders(config: &mut Config, allowed: &[PathBuf], conf: &str) -> Vec<Report> {
+    let mut reports = Vec::new();
+    for (name, field) in CONFINED_FOLDERS {
         let mut kept = std::mem::take(field(config));
         kept.retain(|folder| {
-            let keep = inside(config, folder);
+            let keep = gd_host::confined(allowed, &source_path(config, folder));
             if !keep {
-                reports.push(untrusted_warning(&conf, name, folder));
+                reports.push(outside_warning(conf, name, folder));
             }
             keep
         });
@@ -75,12 +97,44 @@ pub fn confine_untrusted(config: &mut Config) -> Vec<Report> {
     reports
 }
 
+/// Keeps the file settings that lead inside `allowed` (or name a URL).
+fn confine_files(config: &mut Config, allowed: &[PathBuf], conf: &str) -> Vec<Report> {
+    let mut reports = Vec::new();
+    for (name, field) in CONFINED_FILES {
+        let file = field(config).clone();
+        if file.is_empty() || file.contains("://") {
+            continue;
+        }
+        if !gd_host::confined(allowed, &source_path(config, &file)) {
+            reports.push(outside_warning(conf, name, &file));
+            field(config).clear();
+        }
+    }
+    let config_dir = config.config_dir.clone();
+    config.plugins.configs.retain(|id, file| {
+        let keep = gd_host::confined(allowed, &crate::clean_path(&config_dir.join(&*file)));
+        if !keep {
+            reports.push(outside_warning(conf, &format!("plugin_configs.{id}"), file));
+        }
+        keep
+    });
+    reports
+}
+
 /// A file setting's field.
 type FileField = fn(&mut Config) -> &mut String;
+const CONFINED_FILES: [(&str, FileField); 5] = [
+    ("html_logo", |c| &mut c.html.logo),
+    ("html_favicon", |c| &mut c.html.favicon),
+    ("pdf_logo", |c| &mut c.pdf.logo),
+    ("mathjax_config_path", |c| &mut c.mathjax.config_path),
+    ("pdf_preamble", |c| &mut c.pdf.preamble),
+];
 
-/// The folder settings an untrusted build keeps only below the source folder.
+/// The folder settings a confined build keeps only inside its folders.
 type FolderField = fn(&mut Config) -> &mut Vec<String>;
-const UNTRUSTED_FOLDERS: [(&str, FolderField); 8] = [
+const CONFINED_FOLDERS: [(&str, FolderField); 9] = [
+    ("include_roots", |c| &mut c.include_roots),
     ("html_static_path", |c| &mut c.html.static_path),
     ("html_extra_path", |c| &mut c.html.extra_path),
     ("templates_path", |c| &mut c.templates_path),
@@ -91,17 +145,23 @@ const UNTRUSTED_FOLDERS: [(&str, FolderField); 8] = [
     ("rust_autoapi_crates", |c| &mut c.rust_api.crates),
 ];
 
-fn untrusted_warning(conf: &str, setting: &str, value: &str) -> Report {
+fn outside_warning(conf: &str, setting: &str, value: &str) -> Report {
+    let message = format!(
+        "{setting} names {value}, outside the folders this build may read, so the build does \
+         not read it."
+    );
+    confinement_warning(conf, message)
+}
+
+fn confinement_warning(conf: &str, message: String) -> Report {
     let mut r = warning(
         conf,
         0,
         "build.untrusted",
         "SETTING NOT USED",
-        format!(
-            "{setting} names {value}, outside the source folder, which an --untrusted build \
-             does not read."
-        ),
-        "Build without --untrusted if you trust this project.",
+        message,
+        "Keep what the project reads below its source folder, or build without --untrusted \
+         if we trust this project.",
     );
     r.category = "build.untrusted".into();
     r

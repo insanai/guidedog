@@ -135,7 +135,7 @@ fn render_svg(
     let ledger = page.ledger;
     let base = config.source_dir.join(&page.info.relative);
     let mut files = GraphFiles {
-        untrusted: page.view.options.untrusted,
+        untrusted: !page.view.options.effective_confinement().graph_files,
         base: base.parent().map(PathBuf::from).unwrap_or_default(),
         roots: page.view.roots,
         named: Vec::new(),

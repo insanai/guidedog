@@ -170,11 +170,11 @@ readable folders directly, while an external ``typst`` program runs with a priva
 symlink root containing only those folders. This keeps book templates and preambles
 within the declared resources.
 
-``typst-diagram`` is a Guidedog extension for RST and MyST projects, rather than a Sphinx extension contract. It compiles inline or file source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks remain examples. The embedded compiler uses the project's package and font policy; ``--untrusted`` refuses compilation. See :doc:`topics/diagrams`.
+``typst-diagram`` is a Guidedog extension for RST and MyST projects, rather than a Sphinx extension contract. It compiles inline or file source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks remain examples. The embedded compiler uses the project's package and font policy, also under ``--untrusted``, where it downloads no package. See :doc:`topics/diagrams`.
 
 ``lilypond`` is also a Guidedog extension, not ``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a documented part of the LilyPond language and engraves it itself, as SVG or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, because the reader runs no program or Scheme code, but refuses file arguments and ``\include``. See :doc:`topics/music`.
 
-``--untrusted`` narrows the read boundary to the source folder.
+``--untrusted`` narrows the read boundary to the source folder and omits raw content; ``raw_content`` and ``unsafe_urls`` in ``conf.toml`` state the same content rules for any build.
 It omits raw content, unsafe URLs, outside resources, project Typst templates,
 and preambles, with diagnostics. It fetches no inventories or Typst packages.
 Graphs that ask to read resources, and music that names a file, are shown as code with a warning.

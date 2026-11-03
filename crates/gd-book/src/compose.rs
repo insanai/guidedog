@@ -99,8 +99,8 @@ impl Composer<'_, '_> {
     }
 
     /// Imports the selected project template and returns its text; `None` when the
-    /// project has none, or an `--untrusted` build leaves it out (with a warning), as
-    /// such a build runs no Typst the project wrote.
+    /// project has none. A confined build uses it too: Typst runs no program, and it
+    /// reads only the folders the build may read.
     fn project_template(
         &self,
         name: &str,
@@ -110,22 +110,6 @@ impl Composer<'_, '_> {
         let config = self.view.config;
         let path = config.source_dir.join("_templates").join(name);
         if !path.is_file() {
-            return None;
-        }
-        if self.view.options.untrusted {
-            let message = "An --untrusted build runs no Typst the project wrote, so the PDF \
-                           uses Guidedog's built-in layout.";
-            let title = if name == "discussion.typ" {
-                "DISCUSSION TEMPLATE NOT USED"
-            } else {
-                "BOOK TEMPLATE NOT USED"
-            };
-            reports.push(Report {
-                path: gd_host::display_path(&path.display().to_string()),
-                category: "build.untrusted".into(),
-                ..Report::warning("build.untrusted", title, message)
-                    .hint("Build without --untrusted if you trust this project.")
-            });
             return None;
         }
         let text = self.read_text(&path, reports)?;

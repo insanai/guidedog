@@ -347,12 +347,19 @@ fn untrusted_builds_read_only_below_the_source_folder() {
     c.html.logo = "../logo.png".into();
     c.pdf.preamble = "book.typ".into();
     c.rust_api.crates = vec!["../crate".into()];
+    c.pdf.typst = "/usr/bin/typst".into();
+    c.plugins.ids = vec!["badge".into()];
+    c.plugins.configs.insert("badge".into(), "../badge.toml".into());
     let reports = confine_untrusted(&mut c);
-    assert!(c.include_roots.is_empty() && c.pdf.preamble.is_empty() && c.html.logo.is_empty());
+    assert!(c.include_roots.is_empty() && c.html.logo.is_empty());
+    // Typst the project wrote is kept when it lies inside the source folder.
+    assert_eq!(c.pdf.preamble, "book.typ");
     assert_eq!(c.html.static_path, ["_static"]);
     assert!(c.rust_api.crates.is_empty());
     assert_eq!(c.pdf.packages, "offline");
-    assert_eq!(reports.len(), 5);
+    assert_eq!(c.pdf.typst, "typst", "a confined build runs the embedded compiler");
+    assert!(c.plugins.ids.is_empty() && c.plugins.configs.is_empty());
+    assert_eq!(reports.len(), 7, "{reports:#?}");
     assert!(
         reports.iter().all(|r| r.code == "build.untrusted" && r.category == "build.untrusted")
     );
@@ -366,5 +373,45 @@ fn untrusted_builds_read_only_below_the_source_folder() {
     .unwrap();
     assert_eq!(outside.code, "build.output.outside");
     assert!(outside.message.contains("is outside the source folder"));
+    let _ = std::fs::remove_dir_all(&top);
+}
+
+/// A program that confines a build to a snapshot keeps what lies inside it, and the
+/// plugins linked into it.
+#[test]
+fn confinement_keeps_what_lies_inside_the_given_roots() {
+    let top = temp_dir("confine-roots");
+    let source = top.join("snapshot/doc");
+    std::fs::create_dir_all(top.join("snapshot/shared")).unwrap();
+    std::fs::create_dir_all(top.join("elsewhere")).unwrap();
+    std::fs::create_dir_all(&source).unwrap();
+    let mut c = Config::new(source.clone(), source.join("_build"));
+    c.include_roots = vec!["../shared".into(), "../../elsewhere".into()];
+    c.pdf.preamble = "../shared/pre.typ".into();
+    c.pdf.typst = "typst".into();
+    c.plugins.ids = vec!["linked".into(), "registered".into()];
+    let snapshot = vec![top.join("snapshot")];
+    let reports = confine(&mut c, &snapshot, &["linked".to_string()]);
+    assert_eq!(c.include_roots, ["../shared"]);
+    assert_eq!(c.pdf.preamble, "../shared/pre.typ");
+    assert_eq!(c.pdf.typst, "typst");
+    assert_eq!(c.plugins.ids, ["linked"]);
+    assert_eq!(reports.len(), 2, "{reports:#?}");
+    assert!(reports.iter().any(|r| r.message.contains("elsewhere")));
+    assert!(reports.iter().any(|r| r.message.contains("registered")));
+    let _ = std::fs::remove_dir_all(&top);
+}
+
+#[test]
+fn content_rules_are_read_from_conf_toml() {
+    let top = temp_dir("content-rules");
+    std::fs::write(top.join("conf.toml"), "raw_content = \"omit\"\n").unwrap();
+    let loaded = load_config(&top, &LoadOptions::default()).unwrap();
+    assert_eq!(loaded.config.content.raw, Some(ContentRule::Omit));
+    assert_eq!(loaded.config.content.unsafe_urls, None, "unset stays unstated");
+    std::fs::write(top.join("conf.toml"), "unsafe_urls = \"refuse\"\n").unwrap();
+    let wrong = load_config(&top, &LoadOptions::default()).unwrap_err();
+    assert_eq!(wrong.code, "config.invalid");
+    assert!(wrong.message.contains("\"allow\" or \"omit\""), "{wrong:?}");
     let _ = std::fs::remove_dir_all(&top);
 }

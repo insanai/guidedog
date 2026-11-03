@@ -7,7 +7,7 @@ index models and the resolution of every domain's references.
 ```rust
 let tables = gd_resolve::resolve(&config, &env, &ui, &mut reports);
 let inventories = gd_resolve::load_intersphinx(&config,
-    IntersphinxOptions { network: !untrusted, budget: &budget }, &mut reports)?;
+    IntersphinxOptions { network, confined, budget: &budget }, &mut reports)?;
 let view = BuildView { config: &config, env: &env, tables: &tables, /* ... */ };
 let to = gd_resolve::resolve_xref(&view, &query, &mut trace)?; // Err(Box<Unresolved>)
 let answer = gd_resolve::lookup_answer(&view, "guide/intro", &lookup); // a Digest
@@ -61,7 +61,7 @@ references `build.xref.unresolved`, `build.xref.external`, `build.xref.anchor`,
   stops nesting at 256 documents deep, figure numbering at 64.
 - **Intersphinx**: inventories are fetched with gd-fetch and cached with a `.base` file;
   `--untrusted` (`network: false`) reads remote inventories only from the cache, at any
-  age, and local ones only inside `readable_roots`. The budget is charged about four
+  age; it and a confined build (`confined: true`) read local ones only inside `readable_roots`. The budget is charged about four
   times an inventory's bytes while loading and released once it is loaded.
   `gd_inventory::Item` has no project, so `Intersphinx::origin` finds the inventory an
   item of the merged one came from, for the "(in Python v3.12)" tooltip.

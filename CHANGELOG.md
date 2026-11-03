@@ -7,6 +7,13 @@ beside it.
 
 ## Unreleased
 
+- Separate what a build may reach from what reaches its output (GDS 0018). `gd_env::BuildOptions` gains `confinement: Confinement` (`reads: ReadScope`, `network`, `plugins: PluginAccess`, `graph_files`, `music_files`), and `content` and `content_defaults: ContentRules` for raw content and unsafe URLs. `untrusted: true` still sets both to their strict values, so `--untrusted` keeps its meaning.
+- Add the conf.toml settings `raw_content` and `unsafe_urls`, each `"allow"` (the default, as in Sphinx) or `"omit"`. `--untrusted` omits both, whatever conf.toml says. A library caller reads them from `Config::content` and may impose its own rules or supply defaults for those the project leaves unset.
+- Add `gd_conf::confine(config, roots, linked_plugins)`: it confines a build to the source folder and the given folders, also resets `typst` to the embedded compiler and drops plugins from the machine registry, and returns a warning for each dropped setting. `confine_untrusted` is `confine` with no other folder. `gd_conf::drop_machine_plugins` and `gd_typst::embedded_backend` are new, `gd_project::content_policy` turns content rules into an engine policy, and `PluginStart::untrusted` becomes `access: PluginAccess`.
+- `--untrusted` builds now draw `typst-diagram` figures and use `pdf_preamble` and the project's `_templates` Typst layouts when they lie inside the source folder. The embedded compiler runs no program, reads only the folders the build may read, and downloads no package there. A confined build never runs the `typst` program conf.toml or `--typst` names; before, `--untrusted` still ran it for PDF output.
+- An image written as `name.*` now picks a WebP file in HTML pages ahead of JPEG; the book still picks JPEG, which Typst stores without decoding. A project can give pages a small WebP and the book its JPEG copy.
+- `intersphinx_mapping` local inventories outside the readable folders are not read in a confined build, even one that may use the network.
+
 ## 1.0.0-beta.11 - 2026-11-03
 
 - Add editable source maps (GDS 0017): the new reusable crate `guidedoc-edit` maps a reStructuredText or Markdown document, read with the Sphinx and MyST readers, to a tree of blocks with the spans of their markup, their editable text and their directive parts. Its operations replace text, insert, delete and move blocks, set and remove directive options, and insert list items as minimal edits, and refuse any edit whose result does not read back with the intended structure.

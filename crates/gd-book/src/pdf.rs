@@ -141,9 +141,7 @@ impl PdfBuilder<'_> {
             return Err(pages_not_written(composed.failed, &generation.paths().out_dir));
         }
         let c = view.config;
-        let Some(backend) = gd_typst::locate(&c.pdf.typst) else {
-            return Err(backend_problem(&c.pdf.typst));
-        };
+        let backend = book_backend(view)?;
         let settings = TypstSettings::of(c, bundled_font_dir(c));
         let inputs = book_inputs(view, &composed, &settings, &backend);
         if let Some(kept) = generation.reuse(&key, inputs, |_| Digest::default()) {
@@ -289,6 +287,27 @@ impl TypstRun<'_, '_> {
             root,
         }
     }
+}
+
+/// The Typst compiler a book is typeset with: the one `typst` names, or in a confined
+/// build always the embedded one, which runs no program. Fails with `typst.missing`
+/// when there is none.
+fn book_backend(view: &BuildView<'_>) -> Result<Backend, Problem> {
+    let program = &view.config.pdf.typst;
+    if !view.options.effective_confinement().is_confined() {
+        return gd_typst::locate(program).ok_or_else(|| backend_problem(program));
+    }
+    gd_typst::embedded_backend().ok_or_else(|| {
+        Problem::new(
+            "typst.missing",
+            "TYPST IS NOT EMBEDDED",
+            program,
+            "A confined build typesets PDF output only with the embedded Typst compiler, \
+             which this build of guidedog does not have; it runs no installed program.",
+            "Use a guidedog release, which embeds Typst, or build without confinement.",
+            4,
+        )
+    })
 }
 
 fn backend_problem(program: &str) -> Problem {

@@ -13,6 +13,8 @@ let c = &loaded.config;               // c.project, c.html.theme, c.myst.heading
 for w in &loaded.warnings { /* gd_report::Report */ }
 let roots = gd_conf::readable_roots(c);       // source + include_roots + rust crates
 let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
+let dropped = gd_conf::confine(&mut c.clone(), &[snapshot], &linked); // a snapshot
+let raw = c.content.raw;              // raw_content: Option<ContentRule>
 ```
 
 | Item | Does |
@@ -21,7 +23,8 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
 | `load_config(dir, &LoadOptions) -> Result<Loaded, Problem>` | find, read, `-D`, check, finish; `Loaded { config, warnings, settings: Digest }` |
 | `find_project`, `apply_table`, `apply_override`, `check_config`, `finish_config`, `merge_table` | the staged path |
 | `SETTINGS`, `Setting { name, kind }`, `SettingKind`, `find_setting`, `suggestion`, `is_foreign_setting`, `NATIVE_EXTENSIONS`, `KNOWN_THEMES` | the settings table (gd-migrate checks conf.py values against it) |
-| `readable_roots`, `confine_untrusted`, `unread_warning`, `rust_crate_roots` | trust |
+| `readable_roots`, `confine`, `confine_untrusted`, `drop_machine_plugins`, `unread_warning`, `rust_crate_roots` | trust |
+| `ContentRule` (`Allow`, `Omit`), `ContentRules { raw, unsafe_urls }` (`OMIT`, `ALLOW`, `or`) | `raw_content`, `unsafe_urls` (GDS 0018) |
 | `Digest`, `Digester` | SHA-256 of parts (each followed by a zero byte), hex `Display`; gd-env re-exports them |
 | `Pattern` | `nitpick_ignore_regex`: a small bounded regex, `full_match` |
 | `json_dumps`, `json_dumps_table` | a TOML value or table as Python's `json.dumps` (mathjax3/4_config) |
@@ -46,7 +49,7 @@ let dropped = gd_conf::confine_untrusted(&mut c.clone()); // --untrusted
   (`rustapi`), `rust_autoapi_options` (`private-members`, `hidden-members`, `noindex`),
   `rust_autoapi_member_order` (`source`, `alphabetical`),
   `rust_autoapi_add_toctree_entry`, `rust_autoapi_generate_api_docs`, checked like the
-  `odin_*` ones; crate folders join `readable_roots` and are dropped by `confine_untrusted`
+  `odin_*` ones; crate folders join `readable_roots` and are dropped by `confine`
   when outside the source folder.
 - `-C` without a project builds the given folder.
 - The TOML parser's own tests live in gd-toml.

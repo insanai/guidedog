@@ -147,7 +147,7 @@ The message includes the position within the diagram or imported Typst file.
 Giving neither or both of a file argument and an inline body reports ``sphinx.typst.source``.
 A ``guidedog`` built without the ``embedded`` Typst feature reports ``typst.embedded``, and exceeding the host memory budget reports ``host.budget``.
 ``-W`` prevents a failed build from replacing the published site or book.
-``--untrusted`` keeps diagram source visible and warns ``build.typst-diagram`` without running Typst.
+``--untrusted`` draws diagrams too: the embedded compiler reads only the source folder there and downloads no package, so a diagram that imports an uncached package fails with a warning.
 Text builds retain source without compiling it.
 
 Migrate existing figure files

@@ -38,9 +38,10 @@ Selecting plugins in a build
 * Lookup order: the linked registry first, then the machine registry, read only when
   needed; a registered program is verified against its SHA-256 before it starts
   (``select_build_plugin``). An ID in neither is a configuration error.
-* ``--untrusted`` refuses any selected plugin before starting code
+* ``--untrusted`` (``PluginAccess::None``) refuses any selected plugin before starting code
   (``plugins.untrusted``, exit 2): "Remove plugins from this build, or review the
   project and build without --untrusted."
+* A build with ``PluginAccess::Linked``, or one confined to folders (``ReadScope::Within``), drops each selected plugin that is not linked into the program, with a ``build.untrusted`` warning, since a registered program reads anything.
 * Assets are collected once, at setup, and only for the HTML builders (``html``,
   ``dirhtml``, ``singlehtml``); they are staged under ``_static/plugins/ID/`` and may
   not collide with project files.

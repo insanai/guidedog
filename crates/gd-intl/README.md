@@ -10,7 +10,7 @@ let mut reports = Vec::new();
 let intl = gd_intl::load_intl(&config, kind, &budget, &mut reports); // never fails
 if kind != BuilderKind::Gettext { gd_intl::localize_config(&mut config, &intl.ui); }
 let dates = gd_intl::build_dates(&config, &intl.ui, now);           // |today|, footer
-let settings = gd_env::build_settings(reading, intl.digest, untrusted, &limits, plugins);
+let settings = gd_env::build_settings(reading, intl.digest, trust, &limits, plugins);
 // gd-read, per document:
 let catalog = intl.catalog_of(docname);    // Option<&Catalog>, for gd_i18n::Translation
 let deps = intl.files_of(docname);         // &[Dependency]: the document depends on them

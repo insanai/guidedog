@@ -212,7 +212,13 @@ pub fn apply_operation(
     op: &Operation<'_>,
 ) -> Result<EditResult, EditError> {
     let map = load_source_map(text, options);
-    let planned = plan(text, options, &map, op)?;
+    let mut planned = plan(text, options, &map, op)?;
+    if uses_crlf(text) {
+        // The operations write `\n`; a file that ends its lines with `\r\n` keeps them.
+        for edit in &mut planned.edits {
+            edit.insert = edit.insert.replace("\r\n", "\n").replace('\n', "\r\n");
+        }
+    }
     if map.truncated {
         return Err(EditError::truncated(planned.target, options.max_blocks));
     }
@@ -226,6 +232,11 @@ pub fn apply_operation(
     }
     let edits = minimize(text, planned.edits);
     Ok(EditResult { edits, text: new_text })
+}
+
+/// Tells whether `text` ends its lines with `\r\n`, judged by its first line break.
+fn uses_crlf(text: &str) -> bool {
+    text.find('\n').is_some_and(|at| at > 0 && text.as_bytes()[at - 1] == b'\r')
 }
 
 /// A further check of an edited text's map, beyond its shape.

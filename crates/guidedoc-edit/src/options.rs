@@ -78,8 +78,13 @@ fn removal(text: &str, span: Span) -> TextEdit {
     if end < text.len() {
         TextEdit { start, end: end + 1, insert: String::new() }
     } else {
-        // The last line of the text: remove the line break before it instead.
-        TextEdit { start: start.saturating_sub(1), end, insert: String::new() }
+        // The last line of the text: remove the line break before it instead, with
+        // its carriage return.
+        let mut from = start.saturating_sub(1);
+        if from > 0 && text.as_bytes()[from - 1] == b'\r' {
+            from -= 1;
+        }
+        TextEdit { start: from, end, insert: String::new() }
     }
 }
 

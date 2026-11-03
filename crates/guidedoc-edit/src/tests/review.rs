@@ -128,3 +128,31 @@ fn yaml_option_values_read_back_as_written() {
     let op = Operation::SetOption { block: map.roots[0], name: "alt", value: "x #y" };
     assert_eq!(edited(Format::Markdown, fields, op), fields.replace("Old", "x #y"));
 }
+
+#[test]
+fn edits_write_the_line_ending_of_the_file() {
+    let text = "Title\r\n=====\r\n\r\nPara one\r\nline two.\r\n\r\nPara two.\r\n";
+    let map = map_of(Format::Rst, text);
+    let paras = all(&map, BlockKind::Paragraph);
+    let op = Operation::ReplaceText { block: paras[0], text: "A\nB" };
+    let out = edited(Format::Rst, text, op);
+    assert_eq!(out, text.replace("Para one\r\nline two.", "A\r\nB"));
+    let op = Operation::InsertBlock { anchor: paras[1], position: Position::After, markup: "C" };
+    let out = edited(Format::Rst, text, op);
+    assert_eq!(out, text.replace("Para two.\r\n", "Para two.\r\n\r\nC\r\n"));
+    let op =
+        Operation::MoveBlock { block: paras[1], anchor: paras[0], position: Position::Before };
+    let out = edited(Format::Rst, text, op);
+    assert_eq!(out, "Title\r\n=====\r\n\r\nPara two.\r\n\r\nPara one\r\nline two.\r\n");
+    let directive = ".. code-block:: python\r\n   :linenos:\r\n\r\n   x\r\n";
+    let map = map_of(Format::Rst, directive);
+    let op = Operation::RemoveOption { block: map.roots[0], name: "linenos" };
+    assert_eq!(edited(Format::Rst, directive, op), ".. code-block:: python\r\n\r\n   x\r\n");
+    let op = Operation::SetOption { block: map.roots[0], name: "caption", value: "C" };
+    let out = edited(Format::Rst, directive, op);
+    assert_eq!(out, directive.replace(":linenos:\r\n", ":linenos:\r\n   :caption: C\r\n"));
+    let last = ".. image:: a.png\r\n   :alt: A";
+    let map = map_of(Format::Rst, last);
+    let op = Operation::RemoveOption { block: map.roots[0], name: "alt" };
+    assert_eq!(edited(Format::Rst, last, op), ".. image:: a.png");
+}

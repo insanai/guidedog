@@ -103,6 +103,8 @@ Text that no reader node covers, such as ``.. highlight::``, becomes a directive
    * - ``insert-item``
      - Adds a list item with the anchor's marker; an explicitly numbered RST list is renumbered after it.
 
+New lines take the line break of the file, ``\r\n`` when its first line ends so.
+
 Every operation reads the edited text again and compares its shape, the depth and kind of every block (and a Markdown title's level), with the shape the operation intends: the same shape for a replacement or an option, the inserted markup's own shape spliced in for an insertion, and so on.
 A replacement also checks that the block reads back with the new text, and an option edit that the directive has the option with the new value.
 A difference refuses the edit with ``edit.unsafe``, so text that would split a paragraph, close a fence early, or merge a new section with its neighbours never reaches the document.

@@ -8,6 +8,7 @@ use std::sync::Arc;
 use crate::builder::Builder;
 use crate::document::Document;
 use crate::emit::Emitter;
+use crate::positions::SourcePositions;
 use crate::stack::DEFAULT_STACK_BYTES;
 use crate::types::{AdmonitionKind, SourceSpan};
 
@@ -381,11 +382,11 @@ pub struct RenderOptions<'a> {
     pub math_inline: [&'a str; 2],
     /// HTML displayed math delimiters with `MathStyle::Sphinx`; empty: `\[` `\]`.
     pub math_display: [&'a str; 2],
-    /// HTML: block elements carry `data-gd-source="<source>:<start>-<end>"`, the byte
-    /// span of the markup they come from, so a preview maps a click back to the source.
-    /// The value is the folder source names are written relative to (a project's source
-    /// folder; empty: names as read). `None` writes no positions.
-    pub source_positions: Option<&'a str>,
+    /// Preview source positions (see [`SourcePositions`]): HTML block elements carry
+    /// `data-gd-source="<source>:<start>-<end>"`, and Typst writes each block's position
+    /// as labelled metadata, so a preview maps a click back to the source. `None` writes
+    /// no positions.
+    pub source_positions: Option<SourcePositions<'a>>,
 }
 
 impl Default for RenderOptions<'_> {

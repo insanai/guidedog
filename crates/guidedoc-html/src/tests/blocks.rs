@@ -1,6 +1,6 @@
 use guidedoc::{
     AdmonitionKind, Align, AttributeKey as A, Builder, CellInfo, Fail, LinkInfo, LinkKind,
-    ListInfo, ListStyle, NodeFlags, NodeKind as K, SourceId, Status,
+    ListInfo, ListStyle, NodeFlags, NodeKind as K, SourceId, SourcePositions, Status,
 };
 
 use super::*;
@@ -578,10 +578,19 @@ fn previews_carry_source_positions_on_blocks() {
         shut(b)?;
         b.end_node(list)
     }
-    let options = RenderOptions { source_positions: Some(""), ..frag() };
+    let positions = SourcePositions { root: "", offset: None };
+    let options = RenderOptions { source_positions: Some(positions), ..frag() };
     let r = render(spanned, options);
     has(&r, "<ul data-gd-source=\"tree.txt:0-20\">");
     has(&r, "<li data-gd-source=\"tree.txt:2-20\">");
     has(&r, "<p data-gd-source=\"tree.txt:2-8\">item</p>");
     lacks(&render(spanned, frag()), "data-gd-source");
+    // A file that starts with a byte order mark holds 3 bytes before the text read.
+    fn bom(name: &str) -> usize {
+        if name == "tree.txt" { 3 } else { 0 }
+    }
+    let positions = SourcePositions { root: "", offset: Some(bom) };
+    let r = render(spanned, RenderOptions { source_positions: Some(positions), ..frag() });
+    has(&r, "<ul data-gd-source=\"tree.txt:3-23\">");
+    has(&r, "<p data-gd-source=\"tree.txt:5-11\">item</p>");
 }

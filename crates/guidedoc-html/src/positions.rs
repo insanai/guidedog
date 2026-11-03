@@ -12,19 +12,21 @@ pub const SOURCE_ATTRIBUTE: &str = "data-gd-source";
 impl Html<'_, '_> {
     /// Adds the source attribute of node `id` to the first tag written since `from`
     /// bytes had been, when positions are asked for and the node is a block with a
-    /// source span.
+    /// position. In check mode, or past the output limit, nothing written is stored, so
+    /// no attribute is added and the measured size leaves the attributes out.
     pub(crate) fn mark_source(&mut self, id: NodeId, from: usize) {
-        let Some(root) = self.options.source_positions else { return };
+        let Some(positions) = self.options.source_positions else { return };
         let node = self.doc.node(id);
-        if !is_marked(node.kind, self.parent().map(|p| self.doc.kind(p))) || node.span.is_zero() {
+        if !is_marked(node.kind, self.parent().map(|p| self.doc.kind(p))) {
             return;
         }
         let Some(at) = tag_name_end(self.w.written_since(from)) else { return };
-        let name = self.doc.source_entry(node.span.source).map_or("", |e| e.name.as_str());
-        let shown = relative(name, root);
+        let Some(position) = self.positions.position(&self.doc, node.span, &positions) else {
+            return;
+        };
         let mut attribute = format!(" {SOURCE_ATTRIBUTE}=\"");
-        escape_attribute(&mut attribute, &shown);
-        attribute.push_str(&format!(":{}-{}\"", node.span.start, node.span.end));
+        escape_attribute(&mut attribute, &position);
+        attribute.push('"');
         self.w.insert(from + at, &attribute);
     }
 }
@@ -59,17 +61,6 @@ fn tag_name_end(bytes: &[u8]) -> Option<usize> {
     None
 }
 
-/// `name` relative to the folder `root`, with `/` separators.
-fn relative(name: &str, root: &str) -> String {
-    let name = name.replace('\\', "/");
-    let root = root.replace('\\', "/");
-    let root = root.trim_end_matches('/');
-    match name.strip_prefix(root) {
-        Some(rest) if !root.is_empty() && rest.starts_with('/') => rest[1..].to_string(),
-        _ => name,
-    }
-}
-
 fn escape_attribute(out: &mut String, text: &str) {
     for c in text.chars() {
         match c {
@@ -90,8 +81,5 @@ mod tests {
         assert_eq!(tag_name_end(b"\n<p class=\"x\">"), Some(3));
         assert_eq!(tag_name_end(b"</p><section>"), Some(12));
         assert_eq!(tag_name_end(b"text"), None);
-        assert_eq!(relative("/w/docs/a/b.rst", "/w/docs"), "a/b.rst");
-        assert_eq!(relative("/w/docsx/b.rst", "/w/docs"), "/w/docsx/b.rst");
-        assert_eq!(relative("b.rst", ""), "b.rst");
     }
 }

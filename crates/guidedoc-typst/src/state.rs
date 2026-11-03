@@ -3,9 +3,9 @@
 //! preformatted text).
 
 use guidedoc::{
-    Anchors, Arg, AttributeKey, Diagnostic, Document, Fail, Message, NodeId, NodeKind, ROOT,
-    Region, RenderContext, RenderOptions, Severity, SourceSpan, StackGuard, arg_int,
-    build_anchors_into, diagnostic, kept_message,
+    Anchors, Arg, AttributeKey, Diagnostic, Document, Fail, Message, NodeId, NodeKind,
+    PositionCache, ROOT, Region, RenderContext, RenderOptions, Severity, SourceSpan, StackGuard,
+    arg_int, build_anchors_into, diagnostic, kept_message,
 };
 
 use crate::messages::DEPTH_LIMIT;
@@ -66,6 +66,8 @@ pub(crate) struct State<'r, 'a> {
     pub key: String,
     /// Every Footnote, Citation, and SubstitutionDefinition, in document order.
     pub notes: Vec<NodeId>,
+    /// The offsets of the sources whose positions a preview writes.
+    pub positions: PositionCache,
 }
 
 /// The renderer's storage, kept in the workspace's scratch between renders.
@@ -122,6 +124,7 @@ impl<'r, 'a> State<'r, 'a> {
             math,
             key,
             notes,
+            positions: PositionCache::default(),
         })
     }
 

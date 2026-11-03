@@ -10,7 +10,8 @@ use gd_host::{Ledger, Problem};
 use gd_report::{Report, Severity};
 use gd_resolve::BuildView;
 use guidedoc::{
-    Builder, Document, MathStyle, Pass, PassOutcome, RenderOptions, Request, Workspace,
+    Builder, Document, MathStyle, Pass, PassOutcome, RenderOptions, Request, SourcePositions,
+    Workspace,
 };
 
 use crate::page::Page;
@@ -130,9 +131,20 @@ pub fn render_options<'b>(
     }
     // A preview maps a click on a page back to the source (GDS 0017).
     if view.options.preview {
-        options.source_positions = Some(config.source_dir.to_str().unwrap_or(""));
+        let root = config.source_dir.to_str().unwrap_or("");
+        options.source_positions = Some(SourcePositions { root, offset: Some(bom_length) });
     }
     options
+}
+
+/// The length of the byte order mark the file `name` starts with, which the readers
+/// drop: 3 for UTF-8's, else 0 (also for a file that cannot be read now). Positions
+/// add it, so they count the file's own bytes.
+fn bom_length(name: &str) -> usize {
+    use std::io::Read;
+    let mut head = [0u8; 3];
+    let read = std::fs::File::open(name).and_then(|f| f.take(3).read_exact(&mut head));
+    if read.is_ok() && head == [0xef, 0xbb, 0xbf] { 3 } else { 0 }
 }
 
 /// Links and renders one page in the worker's workspace, which keeps the result (and

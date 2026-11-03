@@ -248,6 +248,35 @@ fn preview_pages_carry_source_positions() {
     assert!(dir.read("_build/html/notes.html").contains("data-gd-source=\"notes.md:"));
 }
 
+/// Positions count a file's own bytes, its byte order mark included, in a document and
+/// in a file it includes; text a reader generates has none; and a block with several
+/// labels carries its position on its own element.
+#[test]
+fn preview_positions_count_file_bytes_and_skip_generated_text() {
+    let dir = demo("positions-bom");
+    dir.put(
+        "conf.toml",
+        "project = \"Demo\"\nauthor = \"Ada\"\nsource_suffix = [\".rst\", \".md\"]\n\
+         extensions = [\"myst_parser\"]\nrst_epilog = \"Epilog para.\"\n",
+    );
+    dir.put(
+        "guide.rst",
+        "\u{feff}Guide\r\n=====\r\n\r\nFirst para.\r\n\r\n.. include:: inc.txt\r\n\r\n\
+         .. _one:\r\n.. _two:\r\n\r\n- item\r\n",
+    );
+    dir.put("inc.txt", "\u{feff}Incl para.\n");
+    let project = load(&dir.0);
+    let preview = BuildOptions { preview: true, ..BuildOptions::default() };
+    assert_built(&gd_project::build(&project, BuilderKind::Html, &preview));
+    let page = dir.read("_build/html/guide.html");
+    let raw = dir.read("guide.rst");
+    let start = raw.find("First").unwrap();
+    let end = start + "First para.".len();
+    assert!(page.contains(&format!("<p data-gd-source=\"guide.rst:{start}-{end}\">")), "{page}");
+    assert!(page.contains("<p data-gd-source=\"inc.txt:3-13\">Incl para.</p>"), "{page}");
+    assert!(page.contains("Epilog para.") && !page.contains("rst_epilog"), "{page}");
+}
+
 /// A preview book has a page map: where each block of its sources stands on its pages.
 #[test]
 fn preview_books_map_pages_to_sources() {

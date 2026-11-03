@@ -2,9 +2,9 @@
 //! rendering, and the helpers that write tags, ids, and classes.
 
 use guidedoc::{
-    Anchors, Arg, AttributeKey, Document, Limits, Message, NodeId, NodeKind, Policy, ROOT,
-    RenderContext, RenderOptions, Severity, SourceSpan, StackGuard, Status, kept_message,
-    stack_guard,
+    Anchors, Arg, AttributeKey, Document, Limits, Message, NodeId, NodeKind, Policy,
+    PositionCache, ROOT, RenderContext, RenderOptions, Severity, SourceSpan, StackGuard, Status,
+    kept_message, stack_guard,
 };
 
 use crate::notes::Notes;
@@ -159,6 +159,8 @@ pub(crate) struct Html<'c, 'a> {
     pub base: usize,
     /// The parent of the current walk's top-level nodes, when known.
     pub outer: Option<NodeId>,
+    /// The offsets of the sources whose positions a preview writes.
+    pub positions: PositionCache,
 }
 
 /// The renderer's working storage, kept in the workspace between renders: the anchor
@@ -194,6 +196,7 @@ impl<'c, 'a> Html<'c, 'a> {
             contents: None,
             guard: stack_guard(&limits),
             stack: std::mem::take(&mut work.stack),
+            positions: PositionCache::default(),
             base: 0,
             outer: None,
         }

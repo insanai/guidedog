@@ -30,6 +30,7 @@ mod name_map;
 mod nfd;
 mod object;
 mod options;
+mod positions;
 mod report;
 mod scratch;
 mod snapshot;
@@ -69,6 +70,7 @@ pub use options::{
     admonition_label, default_limits, default_policy, default_read_options, default_request,
     label, read_extension, split_label, trusted_policy, unengraved_score,
 };
+pub use positions::{PositionCache, SourcePositions, relative_source};
 pub use report::{
     Arg, CORE_CAPACITY, CORE_DEPTH, CORE_NODES, CORE_STACK, CORE_UNHANDLED_KIND, CORE_UTF8,
     CORE_WORK, Diagnostic, Fail, Message, Reports, Severity, arg_int, arg_span, arg_static,

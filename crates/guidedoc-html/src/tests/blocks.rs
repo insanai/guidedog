@@ -594,3 +594,20 @@ fn previews_carry_source_positions_on_blocks() {
     has(&r, "<ul data-gd-source=\"tree.txt:3-23\">");
     has(&r, "<p data-gd-source=\"tree.txt:5-11\">item</p>");
 }
+
+/// The position goes on the block's own element, not on the empty anchors of its other
+/// labels written before it.
+#[test]
+fn positions_skip_the_anchors_of_extra_labels() {
+    fn labelled(b: &mut Builder<'_>) -> Result<(), Fail> {
+        labels(b, &["one", "two", "three"])?;
+        let list = b.begin_node(K::List, SourceSpan::new(SourceId(0), 30, 40))?;
+        b.begin_node(K::ListItem, SourceSpan::new(SourceId(0), 32, 40))?;
+        shut(b)?;
+        b.end_node(list)
+    }
+    let positions = SourcePositions { root: "", offset: None };
+    let r = render(labelled, RenderOptions { source_positions: Some(positions), ..frag() });
+    has(&r, "<span id=\"two\"></span><span id=\"three\"></span>");
+    has(&r, "<ul data-gd-source=\"tree.txt:30-40\" id=\"one\">");
+}

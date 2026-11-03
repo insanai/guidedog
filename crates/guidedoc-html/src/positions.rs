@@ -48,17 +48,31 @@ fn is_marked(kind: NodeKind, parent: Option<NodeKind>) -> bool {
     }
 }
 
-/// The offset just after the name of the first start tag in `bytes`.
+/// The offset just after the name of the first start tag in `bytes` that is not an
+/// empty alias anchor such as `<span id="two"></span>`, which a block with several
+/// labels writes before its own element.
 fn tag_name_end(bytes: &[u8]) -> Option<usize> {
     let mut i = 0;
     while i + 1 < bytes.len() {
         if bytes[i] == b'<' && bytes[i + 1].is_ascii_alphabetic() {
+            if let Some(after) = alias_end(&bytes[i..]) {
+                i += after;
+                continue;
+            }
             let name = bytes[i + 1..].iter().take_while(|c| c.is_ascii_alphanumeric()).count();
             return Some(i + 1 + name);
         }
         i += 1;
     }
     None
+}
+
+/// The length of the empty alias anchor `<span id="..."></span>` that starts `bytes`.
+fn alias_end(bytes: &[u8]) -> Option<usize> {
+    let rest = bytes.strip_prefix(b"<span id=\"")?;
+    let quote = rest.iter().position(|&c| c == b'"')?;
+    let tail = rest[quote..].strip_prefix(b"\"></span>")?;
+    Some(bytes.len() - tail.len())
 }
 
 fn escape_attribute(out: &mut String, text: &str) {
@@ -81,5 +95,8 @@ mod tests {
         assert_eq!(tag_name_end(b"\n<p class=\"x\">"), Some(3));
         assert_eq!(tag_name_end(b"</p><section>"), Some(12));
         assert_eq!(tag_name_end(b"text"), None);
+        let aliased = b"<span id=\"two\"></span><span id=\"t\"></span><ul id=\"one\">";
+        assert_eq!(tag_name_end(aliased), Some(aliased.len() - 10));
+        assert_eq!(tag_name_end(b"<span id=\"a\">text</span>"), Some(5));
     }
 }

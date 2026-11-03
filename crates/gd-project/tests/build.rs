@@ -275,6 +275,9 @@ fn preview_positions_count_file_bytes_and_skip_generated_text() {
     assert!(page.contains(&format!("<p data-gd-source=\"guide.rst:{start}-{end}\">")), "{page}");
     assert!(page.contains("<p data-gd-source=\"inc.txt:3-13\">Incl para.</p>"), "{page}");
     assert!(page.contains("Epilog para.") && !page.contains("rst_epilog"), "{page}");
+    let item = raw.find("- item").unwrap();
+    let list = format!("<ul data-gd-source=\"guide.rst:{item}-{}\"", item + "- item".len());
+    assert!(page.contains(&list), "{page}");
 }
 
 /// A preview book has a page map: where each block of its sources stands on its pages.

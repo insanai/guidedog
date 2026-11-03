@@ -60,5 +60,8 @@ Discussion registry
    * - 0016
      - :doc:`records/0016-guitar-tablature`
      - committed
+   * - 0017
+     - :doc:`records/0017-source-maps-and-capabilities`
+     - discussion
 
 .. gds-generated-end

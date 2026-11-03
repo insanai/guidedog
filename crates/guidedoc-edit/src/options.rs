@@ -30,6 +30,9 @@ pub(crate) fn set_option(
         (Some(value), _) => {
             let config = default_or(cx.options.sphinx);
             check_option(&config, parts.name.text(text), name, value, block.span)?;
+            if parts.yaml_options && !is_plain_yaml(value) {
+                return Err(yaml_value(name, block.span));
+            }
             let line = option_line(name, value, parts.yaml_options);
             match existing {
                 Some(option) => {
@@ -196,6 +199,33 @@ fn option_value(name: &str, why: &str, span: Span) -> EditError {
         "INVALID OPTION VALUE",
         format!("The value of `{name}` {why}."),
         "Correct the value, or remove the option.",
+    )
+    .at(span)
+}
+
+/// Tells whether `value`, written after `name: ` in a YAML options block, reads back as
+/// itself: a plain scalar that does not start with an indicator, has no white space at
+/// its ends, and holds no `: ` or ` #`, which would make a mapping or a comment.
+fn is_plain_yaml(value: &str) -> bool {
+    const INDICATORS: &[char] = &[
+        '-', '?', ':', ',', '[', ']', '{', '}', '#', '&', '*', '!', '|', '>', '\'', '"', '%', '@',
+        '`',
+    ];
+    let ends = value.trim() == value && !value.ends_with(':');
+    let inner = [": ", ":\t", " #", "\t#"].iter().all(|s| !value.contains(s));
+    value.is_empty() || (ends && inner && !value.starts_with(INDICATORS))
+}
+
+fn yaml_value(name: &str, span: Span) -> EditError {
+    EditError::new(
+        "edit.option-value",
+        "INVALID OPTION VALUE",
+        format!(
+            "The value of `{name}` would read back as another value in the directive's YAML \
+             options: it starts with a YAML indicator, has white space at an end, or holds \
+             `: ` or ` #`."
+        ),
+        "Write this value in the source with YAML quotes, or choose a plain value.",
     )
     .at(span)
 }

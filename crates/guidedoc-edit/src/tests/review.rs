@@ -112,3 +112,19 @@ fn a_replacement_must_read_back_as_the_text_asked_for() {
     let op = Operation::ReplaceText { block: field, text: "other" };
     assert_eq!(edited(Format::Rst, text, op), ":other: body\n");
 }
+
+#[test]
+fn yaml_option_values_read_back_as_written() {
+    let yaml = "```{image} a.png\n---\nalt: Old\n---\n```\n";
+    let map = map_of(Format::Markdown, yaml);
+    for value in ["x #y", "x # y-z", "a: b", "- x", "'q'", "#c", "[a]", "b:", " x"] {
+        let op = Operation::SetOption { block: map.roots[0], name: "alt", value };
+        refused(Format::Markdown, yaml, op, "edit.option-value");
+    }
+    let op = Operation::SetOption { block: map.roots[0], name: "alt", value: "a#b c:d" };
+    assert_eq!(edited(Format::Markdown, yaml, op), yaml.replace("Old", "a#b c:d"));
+    let fields = "```{image} a.png\n:alt: Old\n```\n";
+    let map = map_of(Format::Markdown, fields);
+    let op = Operation::SetOption { block: map.roots[0], name: "alt", value: "x #y" };
+    assert_eq!(edited(Format::Markdown, fields, op), fields.replace("Old", "x #y"));
+}

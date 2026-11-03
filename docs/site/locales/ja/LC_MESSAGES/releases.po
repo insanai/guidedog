@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 06:22+0000\n"
+"POT-Creation-Date: 2026-11-03 03:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -44,7 +44,11 @@ msgid ""
 "for singers and players. Time signatures and chord names follow "
 "LilyPond's defaults: 4/4 prints as C, 2/2 as cut C, and a G seventh chord "
 "as G with a raised 7."
-msgstr "タブ譜は LilyPond の既定のタブ譜に従います。TAB 記号を置き、フレット番号を弦の線の中央に置いて、その周りで線を途切れさせるので、ライトテーマでもダークテーマでも読みやすくなります。リズムは上の譜表が示すため、タブ譜には表示しません。タイで結ばれた音は、行の始まりでだけ丸括弧に入れて繰り返します。上の譜表では、弦番号を丸囲みの数字で表示します。また、メトロノーム記号は拍を表す音符記号付きで表示されるようになり、``\\breathe`` は歌い手や奏者のためのブレス記号を表示します。拍子記号とコードネームは LilyPond の既定に従います。4/4 は C、2/2 は縦線の入った C で表示され、G セブンスのコードは G の右上に小さな 7 を付けて表示されます。"
+msgstr ""
+"タブ譜は LilyPond の既定のタブ譜に従います。TAB "
+"記号を置き、フレット番号を弦の線の中央に置いて、その周りで線を途切れさせるので、ライトテーマでもダークテーマでも読みやすくなります。リズムは上の譜表が示すため、タブ譜には表示しません。タイで結ばれた音は、行の始まりでだけ丸括弧に入れて繰り返します。上の譜表では、弦番号を丸囲みの数字で表示します。また、メトロノーム記号は拍を表す音符記号付きで表示されるようになり、``\\breathe`` "
+"は歌い手や奏者のためのブレス記号を表示します。拍子記号とコードネームは LilyPond の既定に従います。4/4 は C、2/2 は縦線の入った "
+"C で表示され、G セブンスのコードは G の右上に小さな 7 を付けて表示されます。"
 
 #: ../../releases/1.0.0-beta.10.rst:22
 msgid ""
@@ -73,6 +77,48 @@ msgstr ""
 "0016 "
 "<https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html>`_ "
 "にはタブ譜の設計を記録しています。"
+
+#: ../../releases/1.0.0-beta.11.rst:8
+msgid "Guidedog 1.0.0-beta.11"
+msgstr "Guidedog 1.0.0-beta.11"
+
+#: ../../releases/1.0.0-beta.11.rst:11
+msgid ""
+"Editors can now work on Guidedog projects visually beside the source. The "
+"new crate ``guidedoc-edit`` maps a reStructuredText or Markdown document "
+"to blocks with the spans of their markup and their editable text, read "
+"with Guidedog's own readers."
+msgstr "エディターは Guidedog プロジェクトを、ソースの隣で視覚的に編集できるようになりました。新しいクレート ``guidedoc-edit`` は、reStructuredText または Markdown の文書を Guidedog 自身のリーダーで読み、マークアップの範囲と編集可能なテキストを持つブロックに対応付けます。"
+
+#: ../../releases/1.0.0-beta.11.rst:16
+msgid ""
+"Its operations replace a block's text, insert, delete and move blocks, "
+"set and remove directive options, and add list items. Each one changes "
+"only the bytes it must, reads the result again, and refuses an edit that "
+"would not read back as intended, such as text that would close a fence "
+"early."
+msgstr "その操作では、ブロックのテキストの置き換え、ブロックの挿入・削除・移動、ディレクティブのオプションの設定と削除、リスト項目の追加ができます。どの操作も必要なバイトだけを変更し、結果を読み直し、コードブロックを早く閉じてしまうテキストのように意図どおりに読み戻せない編集は拒否します。"
+
+#: ../../releases/1.0.0-beta.11.rst:19
+msgid ""
+"Preview builds now point back to the source: each HTML block carries its "
+"byte span in the file it was read from, and each PDF gets a page map that "
+"places every block on its page. Every build also writes "
+"``gd-dependencies.json``, which names the files each page and book was "
+"made from, so an editor rebuilds only the outputs a change affects. "
+"``guidedog capabilities --json`` reports the formats, builders, "
+"directives, roles, extensions and plugins of the executable, from the "
+"code it links rather than from a table."
+msgstr "プレビュービルドはソースを指し示すようになりました。各 HTML ブロックは読み込んだファイル内のバイト範囲を持ち、各 PDF には各ブロックがどのページにあるかを示すページマップが付きます。さらにどのビルドも ``gd-dependencies.json`` を書き出し、各ページと各ブックがどのファイルから作られたかを記録するので、エディターは変更の影響を受ける出力だけを再ビルドできます。``guidedog capabilities --json`` は、実行ファイルの形式、ビルダー、ディレクティブ、ロール、拡張機能、プラグインを、表からではなくリンクしているコードから報告します。"
+
+#: ../../releases/1.0.0-beta.11.rst:23
+msgid ""
+"This release also fixes a document whose included file is created later, "
+"which is now read again, and diagrams drawn with Graphviz 2.42, which no "
+"longer carry text from one diagram into the next. `GDS 0017 "
+"<https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ "
+"records the design."
+msgstr "このリリースでは、取り込むファイルが後から作られた文書が読み直されるようになり、Graphviz 2.42 で描いた図が前の図のテキストを次の図に持ち越さなくなりました。設計は `GDS 0017 <https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ に記録しています。"
 
 #: ../../releases/1.0.0-beta.6.rst:8
 msgid "Guidedog 1.0.0-beta.6"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 06:22+0000\n"
+"POT-Creation-Date: 2026-11-03 03:39+0000\n"
 "PO-Revision-Date: 2026-10-17 02:05+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -42,7 +42,11 @@ msgid ""
 "for singers and players. Time signatures and chord names follow "
 "LilyPond's defaults: 4/4 prints as C, 2/2 as cut C, and a G seventh chord "
 "as G with a raised 7."
-msgstr "六线谱谱表遵循 LilyPond 默认的六线谱样式：使用 TAB 谱号；品位数字居中写在弦线上，弦线在数字处断开，因此在浅色和深色主题下都清晰可读；不显示节奏，节奏由上方的谱表表示。带延音线的音只在一行开头时才以圆括号形式重复显示。在上方的谱表上，弦号印成圆圈数字。节拍器标记现在会为拍子印出音符符号，``\\breathe`` 则为歌手和演奏者印出换气记号。拍号和和弦名称遵循 LilyPond 的默认样式：4/4 印成 C，2/2 印成带竖线的 C，G 七和弦印成右上角带小号 7 的 G。"
+msgstr ""
+"六线谱谱表遵循 LilyPond 默认的六线谱样式：使用 TAB "
+"谱号；品位数字居中写在弦线上，弦线在数字处断开，因此在浅色和深色主题下都清晰可读；不显示节奏，节奏由上方的谱表表示。带延音线的音只在一行开头时才以圆括号形式重复显示。在上方的谱表上，弦号印成圆圈数字。节拍器标记现在会为拍子印出音符符号，``\\breathe`` "
+"则为歌手和演奏者印出换气记号。拍号和和弦名称遵循 LilyPond 的默认样式：4/4 印成 C，2/2 印成带竖线的 C，G "
+"七和弦印成右上角带小号 7 的 G。"
 
 #: ../../releases/1.0.0-beta.10.rst:22
 msgid ""
@@ -70,6 +74,48 @@ msgstr ""
 "0016 "
 "<https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html>`_ "
 "记录了六线谱的设计。"
+
+#: ../../releases/1.0.0-beta.11.rst:8
+msgid "Guidedog 1.0.0-beta.11"
+msgstr "Guidedog 1.0.0-beta.11"
+
+#: ../../releases/1.0.0-beta.11.rst:11
+msgid ""
+"Editors can now work on Guidedog projects visually beside the source. The "
+"new crate ``guidedoc-edit`` maps a reStructuredText or Markdown document "
+"to blocks with the spans of their markup and their editable text, read "
+"with Guidedog's own readers."
+msgstr "编辑器现在可以在源码旁可视化地编辑 Guidedog 项目。新的 crate ``guidedoc-edit`` 用 Guidedog 自己的读取器读取 reStructuredText 或 Markdown 文档，并把它映射为块，每个块带有其标记的范围和可编辑的文本。"
+
+#: ../../releases/1.0.0-beta.11.rst:16
+msgid ""
+"Its operations replace a block's text, insert, delete and move blocks, "
+"set and remove directive options, and add list items. Each one changes "
+"only the bytes it must, reads the result again, and refuses an edit that "
+"would not read back as intended, such as text that would close a fence "
+"early."
+msgstr "它的操作可以替换块的文本，插入、删除和移动块，设置和移除指令选项，以及添加列表项。每个操作只改动必须改动的字节，然后重新读取结果，并拒绝无法按预期读回的编辑，例如会提前关闭代码块的文本。"
+
+#: ../../releases/1.0.0-beta.11.rst:19
+msgid ""
+"Preview builds now point back to the source: each HTML block carries its "
+"byte span in the file it was read from, and each PDF gets a page map that "
+"places every block on its page. Every build also writes "
+"``gd-dependencies.json``, which names the files each page and book was "
+"made from, so an editor rebuilds only the outputs a change affects. "
+"``guidedog capabilities --json`` reports the formats, builders, "
+"directives, roles, extensions and plugins of the executable, from the "
+"code it links rather than from a table."
+msgstr "预览构建现在会指回源码：每个 HTML 块都带有它在所读文件中的字节范围，每个 PDF 都附带一个页面映射，标出每个块所在的页面。每次构建还会写出 ``gd-dependencies.json``，列出每个页面和每本书由哪些文件生成，因此编辑器只需重新构建受变更影响的输出。``guidedog capabilities --json`` 报告该可执行文件支持的格式、构建器、指令、角色、扩展和插件，信息来自它链接的代码而非表格。"
+
+#: ../../releases/1.0.0-beta.11.rst:23
+msgid ""
+"This release also fixes a document whose included file is created later, "
+"which is now read again, and diagrams drawn with Graphviz 2.42, which no "
+"longer carry text from one diagram into the next. `GDS 0017 "
+"<https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ "
+"records the design."
+msgstr "此版本还修复了两个问题：所包含的文件在之后才创建的文档现在会被重新读取；用 Graphviz 2.42 绘制的图表不再把一个图表的文本带入下一个图表。`GDS 0017 <https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ 记录了这一设计。"
 
 #: ../../releases/1.0.0-beta.6.rst:8
 msgid "Guidedog 1.0.0-beta.6"

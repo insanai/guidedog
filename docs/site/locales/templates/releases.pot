@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 06:22+0000\n"
+"POT-Creation-Date: 2026-11-03 03:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -34,6 +34,26 @@ msgstr ""
 
 #: ../../releases/1.0.0-beta.10.rst:25
 msgid "Pages also read more evenly: a paragraph keeps its justification and hyphenation when one line is loose beside long inline code, and post lists, cards included, are typeset like the rest of the page. `GDS 0016 <https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html>`_ records the tablature design."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.11.rst:8
+msgid "Guidedog 1.0.0-beta.11"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.11.rst:11
+msgid "Editors can now work on Guidedog projects visually beside the source. The new crate ``guidedoc-edit`` maps a reStructuredText or Markdown document to blocks with the spans of their markup and their editable text, read with Guidedog's own readers."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.11.rst:16
+msgid "Its operations replace a block's text, insert, delete and move blocks, set and remove directive options, and add list items. Each one changes only the bytes it must, reads the result again, and refuses an edit that would not read back as intended, such as text that would close a fence early."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.11.rst:19
+msgid "Preview builds now point back to the source: each HTML block carries its byte span in the file it was read from, and each PDF gets a page map that places every block on its page. Every build also writes ``gd-dependencies.json``, which names the files each page and book was made from, so an editor rebuilds only the outputs a change affects. ``guidedog capabilities --json`` reports the formats, builders, directives, roles, extensions and plugins of the executable, from the code it links rather than from a table."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.11.rst:23
+msgid "This release also fixes a document whose included file is created later, which is now read again, and diagrams drawn with Graphviz 2.42, which no longer carry text from one diagram into the next. `GDS 0017 <https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ records the design."
 msgstr ""
 
 #: ../../releases/1.0.0-beta.6.rst:8

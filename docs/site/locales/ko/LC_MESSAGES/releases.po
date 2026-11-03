@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 06:22+0000\n"
+"POT-Creation-Date: 2026-11-03 03:39+0000\n"
 "PO-Revision-Date: 2026-10-17 02:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -43,7 +43,13 @@ msgid ""
 "for singers and players. Time signatures and chord names follow "
 "LilyPond's defaults: 4/4 prints as C, 2/2 as cut C, and a G seventh chord "
 "as G with a raised 7."
-msgstr "타브 보표는 LilyPond의 기본 타브 악보를 따릅니다. TAB 음자리표를 쓰고, 프렛 번호는 줄 위 가운데에 놓이며 줄은 번호 둘레에서 끊기므로 밝은 테마와 어두운 테마 모두에서 잘 읽힙니다. 리듬은 위 보표에 나오므로 적지 않습니다. 붙임줄로 이어진 음은 보표단 첫머리에서만 괄호 안에 넣어 다시 적습니다. 위 보표에는 줄 번호가 동그라미 친 숫자로 인쇄됩니다. 이제 메트로놈 표시는 박을 나타내는 음표 기호를 인쇄하며, ``\\breathe``\\ 는 가수와 연주자를 위한 숨표를 인쇄합니다. 박자표와 코드 이름은 LilyPond의 기본값을 따릅니다. 4/4는 C로, 2/2는 세로줄이 그어진 C로 인쇄되고, G7 코드는 G 오른쪽 위에 작은 7을 붙여 인쇄됩니다."
+msgstr ""
+"타브 보표는 LilyPond의 기본 타브 악보를 따릅니다. TAB 음자리표를 쓰고, 프렛 번호는 줄 위 가운데에 놓이며 줄은 번호 "
+"둘레에서 끊기므로 밝은 테마와 어두운 테마 모두에서 잘 읽힙니다. 리듬은 위 보표에 나오므로 적지 않습니다. 붙임줄로 이어진 음은 "
+"보표단 첫머리에서만 괄호 안에 넣어 다시 적습니다. 위 보표에는 줄 번호가 동그라미 친 숫자로 인쇄됩니다. 이제 메트로놈 표시는 "
+"박을 나타내는 음표 기호를 인쇄하며, ``\\breathe``\\ 는 가수와 연주자를 위한 숨표를 인쇄합니다. 박자표와 코드 이름은 "
+"LilyPond의 기본값을 따릅니다. 4/4는 C로, 2/2는 세로줄이 그어진 C로 인쇄되고, G7 코드는 G 오른쪽 위에 작은 "
+"7을 붙여 인쇄됩니다."
 
 #: ../../releases/1.0.0-beta.10.rst:22
 msgid ""
@@ -72,6 +78,48 @@ msgstr ""
 "글 목록도 페이지의 다른 부분과 같은 방식으로 조판합니다. `GDS 0016 "
 "<https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html>`_\\ "
 "에는 타브 악보 설계가 기록되어 있습니다."
+
+#: ../../releases/1.0.0-beta.11.rst:8
+msgid "Guidedog 1.0.0-beta.11"
+msgstr "Guidedog 1.0.0-beta.11"
+
+#: ../../releases/1.0.0-beta.11.rst:11
+msgid ""
+"Editors can now work on Guidedog projects visually beside the source. The "
+"new crate ``guidedoc-edit`` maps a reStructuredText or Markdown document "
+"to blocks with the spans of their markup and their editable text, read "
+"with Guidedog's own readers."
+msgstr "이제 편집기에서 Guidedog 프로젝트를 소스 옆에서 시각적으로 편집할 수 있습니다. 새 크레이트 ``guidedoc-edit``는 reStructuredText나 Markdown 문서를 Guidedog 자체 리더로 읽어, 마크업의 범위와 편집할 수 있는 텍스트를 지닌 블록으로 대응시킵니다."
+
+#: ../../releases/1.0.0-beta.11.rst:16
+msgid ""
+"Its operations replace a block's text, insert, delete and move blocks, "
+"set and remove directive options, and add list items. Each one changes "
+"only the bytes it must, reads the result again, and refuses an edit that "
+"would not read back as intended, such as text that would close a fence "
+"early."
+msgstr "그 작업으로 블록의 텍스트를 바꾸고, 블록을 넣고 지우고 옮기며, 지시어 옵션을 설정하거나 없애고, 목록 항목을 추가할 수 있습니다. 각 작업은 꼭 필요한 바이트만 바꾸고 결과를 다시 읽으며, 코드 블록을 너무 일찍 닫는 텍스트처럼 의도대로 다시 읽히지 않을 편집은 거부합니다."
+
+#: ../../releases/1.0.0-beta.11.rst:19
+msgid ""
+"Preview builds now point back to the source: each HTML block carries its "
+"byte span in the file it was read from, and each PDF gets a page map that "
+"places every block on its page. Every build also writes "
+"``gd-dependencies.json``, which names the files each page and book was "
+"made from, so an editor rebuilds only the outputs a change affects. "
+"``guidedog capabilities --json`` reports the formats, builders, "
+"directives, roles, extensions and plugins of the executable, from the "
+"code it links rather than from a table."
+msgstr "미리보기 빌드는 이제 소스를 가리킵니다. 각 HTML 블록은 읽어 온 파일 안에서의 바이트 범위를 지니고, 각 PDF에는 모든 블록을 그 페이지에 배치하는 페이지 맵이 붙습니다. 모든 빌드는 ``gd-dependencies.json``도 쓰는데, 각 페이지와 책이 어떤 파일로 만들어졌는지 적어 두므로 편집기는 변경의 영향을 받는 출력만 다시 빌드할 수 있습니다. ``guidedog capabilities --json``은 실행 파일의 형식, 빌더, 지시어, 역할, 확장, 플러그인을 표가 아니라 연결된 코드에서 보고합니다."
+
+#: ../../releases/1.0.0-beta.11.rst:23
+msgid ""
+"This release also fixes a document whose included file is created later, "
+"which is now read again, and diagrams drawn with Graphviz 2.42, which no "
+"longer carry text from one diagram into the next. `GDS 0017 "
+"<https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ "
+"records the design."
+msgstr "이번 릴리스는 포함한 파일이 나중에 만들어진 문서를 이제 다시 읽도록 고치고, Graphviz 2.42로 그린 다이어그램이 더 이상 앞 다이어그램의 텍스트를 다음 다이어그램으로 넘기지 않도록 고칩니다. 설계는 `GDS 0017 <https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_에 기록되어 있습니다."
 
 #: ../../releases/1.0.0-beta.6.rst:8
 msgid "Guidedog 1.0.0-beta.6"

@@ -1,8 +1,8 @@
 //! The pdf builder: one Typst book per `pdf_documents` entry, one output unit each
 //! (`book:<file>`).
 
-use std::collections::HashSet;
-use std::path::Path;
+use std::collections::{BTreeSet, HashSet};
+use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
 use gd_conf::PdfDocument;
@@ -236,13 +236,27 @@ impl TypstRun<'_, '_> {
             unit.emit_text(&language_file("book.typ", &c.language), &self.book.source)?;
         }
         unit.emit_text(&format!("sources/{source_name}"), &self.book.source)?;
-        unit.finish(UnitRecord { inputs, reports: warnings, ..UnitRecord::default() });
+        let files_read = self.files_read();
+        unit.finish(UnitRecord { inputs, reports: warnings, files_read, ..UnitRecord::default() });
         if let Some(typeset) = self.typeset {
             // A poisoned list only means another book's caller panicked; keep adding.
             let mut books = typeset.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
             books.push(TypesetBook { file, pages: compiled.pages });
         }
         Ok(())
+    }
+
+    /// The files the book was made from: each chapter's source and the files it
+    /// depends on, and every file the Typst source reads (template, images, graphs).
+    fn files_read(&self) -> Vec<PathBuf> {
+        let view = self.view;
+        let mut files: BTreeSet<PathBuf> = self.book.files.clone();
+        for chapter in &self.book.chapters {
+            let doc = view.doc(chapter.doc);
+            files.insert(view.config.source_dir.join(&doc.relative));
+            files.extend(doc.deps.iter().map(|d| d.path.clone()));
+        }
+        files.into_iter().collect()
     }
 
     /// The folder Typst runs in: the book's root for the embedded compiler, which

@@ -6,8 +6,11 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::SystemTime;
 
+use gd_conf::ContentRules;
 use gd_host::{OnRefusal, Problem};
 use gd_report::Report;
+
+use crate::trust::Confinement;
 
 /// The output a build writes.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
@@ -151,8 +154,18 @@ pub struct BuildOptions {
     pub warnings_as_errors: bool,
     /// `--keep-going`: accepted, as sphinx-build's; Guidedog always reports everything.
     pub keep_going: bool,
-    /// `--untrusted`: build a project from elsewhere (see `gd_conf::confine_untrusted`).
+    /// `--untrusted`: build a project from elsewhere. It overrides `confinement` with
+    /// [`Confinement::STRICT`] and the content rules with `omit`
+    /// ([`BuildOptions::effective_confinement`], [`BuildOptions::content_rules`]).
     pub untrusted: bool,
+    /// What the build may reach beyond its documents; `Default`: a trusted build.
+    pub confinement: Confinement,
+    /// The content rules the build imposes, whatever conf.toml says; a rule left
+    /// `None` is conf.toml's to state.
+    pub content: ContentRules,
+    /// The content rules for those conf.toml leaves unset; a rule left `None` there
+    /// too is `allow`, as in Sphinx.
+    pub content_defaults: ContentRules,
     /// Include drafts, scheduled pages and expired pages for local review.
     pub preview: bool,
     /// `-j`: reading threads.
@@ -183,6 +196,9 @@ impl fmt::Debug for BuildOptions {
             .field("nitpicky", &self.nitpicky)
             .field("warnings_as_errors", &self.warnings_as_errors)
             .field("untrusted", &self.untrusted)
+            .field("confinement", &self.confinement)
+            .field("content", &self.content)
+            .field("content_defaults", &self.content_defaults)
             .field("jobs", &self.jobs)
             .field("budget", &self.budget)
             .field("on_budget", &self.on_budget.is_some())

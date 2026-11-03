@@ -344,27 +344,46 @@ fn typst_reads_only_the_folders_a_build_may_read() {
 }
 
 #[test]
-fn an_untrusted_build_uses_guidedogs_template() {
-    let mut project = Project::new("pdf-untrusted", &[("index", INDEX)]);
-    let templates = project.source().join("_templates");
-    std::fs::create_dir_all(&templates).unwrap();
-    std::fs::write(templates.join("book.typ"), "#let book(..args, body) = body\n").unwrap();
-    let (out, reports, problem, books) = project.typeset();
-    assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
-    let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
-    assert!(source.contains("#import \"/_templates/book.typ\": book"));
-    // The project's template sets the body alone: no cover with the book's title.
-    let pages = books[0].pages.as_ref().unwrap();
-    assert!(!pages[0].contains("Demo Book"), "{pages:#?}");
-    assert!(pages.join("\n").contains("Welcome to the demo manual."), "{pages:#?}");
+fn an_untrusted_build_uses_the_projects_template() {
+    for untrusted in [false, true] {
+        let mut project = Project::new(&format!("pdf-untrusted-{untrusted}"), &[("index", INDEX)]);
+        let templates = project.source().join("_templates");
+        std::fs::create_dir_all(&templates).unwrap();
+        std::fs::write(templates.join("book.typ"), "#let book(..args, body) = body\n").unwrap();
+        project.options.untrusted = untrusted;
+        let (out, reports, problem, books) = project.typeset();
+        assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
+        assert!(!reports.iter().any(|r| r.code == "build.untrusted"), "{reports:#?}");
+        let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
+        assert!(source.contains("#import \"/_templates/book.typ\": book"));
+        // The project's template sets the body alone: no cover with the book's title.
+        let pages = books[0].pages.as_ref().unwrap();
+        assert!(!pages[0].contains("Demo Book"), "{pages:#?}");
+        assert!(pages.join("\n").contains("Welcome to the demo manual."), "{pages:#?}");
+    }
+}
+
+/// A confined build never runs the typst program conf.toml names: it typesets with the
+/// embedded compiler, so the program, which leaves a mark and fails, never starts.
+#[cfg(unix)]
+#[test]
+fn a_confined_build_never_runs_a_typst_program() {
+    use std::os::unix::fs::PermissionsExt;
+    let mut project = Project::new("pdf-confined-program", &[("index", INDEX)]);
+    let mark = project.source().join("program-ran");
+    let program = project.source().join("not-typst");
+    std::fs::write(&program, format!("#!/bin/sh\ntouch '{}'\nexit 1\n", mark.display())).unwrap();
+    std::fs::set_permissions(&program, std::fs::Permissions::from_mode(0o755)).unwrap();
+    project.config.pdf.typst = program.display().to_string();
     project.options.untrusted = true;
-    let (out, reports, problem, books) = project.typeset();
+    let (_, reports, problem, books) = project.typeset();
     assert!(problem.is_none(), "{problem:?}\n{reports:#?}");
-    let pages = books[0].pages.as_ref().unwrap();
-    assert!(pages[0].contains("Demo Book"), "Guidedog's cover: {pages:#?}");
-    assert!(reports.iter().any(|r| r.code == "build.untrusted"), "{reports:#?}");
-    let source = std::fs::read_to_string(out.join("book-en.typ")).unwrap();
-    assert!(!source.contains("_templates/book.typ"));
+    assert!(books[0].pages.as_ref().unwrap().join("\n").contains("Welcome to the demo manual."));
+    assert!(!mark.exists(), "the program ran in a confined build");
+    project.options.untrusted = false;
+    let (_, reports, problem, _) = project.typeset();
+    assert!(problem.is_some(), "the program fails a trusted build: {reports:#?}");
+    assert!(mark.exists(), "a trusted build runs the program conf.toml names");
 }
 
 /// The typst program runs in a private folder of links to the readable folders; it
@@ -527,14 +546,13 @@ fn discussions_start_with_their_content_and_structured_front_matter() {
     let (_, reports, problem, books) = project.typeset();
     assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
     assert_eq!(books.len(), 1, "editing the shared theme must rebuild the PDF");
-    std::fs::write(templates.join("discussion.typ"), "#panic(\"untrusted template used\")")
-        .unwrap();
-    std::fs::write(templates.join("theme.typ"), "#panic(\"untrusted theme used\")").unwrap();
+    // An untrusted build runs the project's template too: Typst reads only the
+    // source folder there, so the template's own error is what stops the book.
+    std::fs::write(templates.join("discussion.typ"), "#panic(\"project template used\")").unwrap();
     project.options.untrusted = true;
-    let (_, reports, problem, books) = project.typeset();
-    assert!(problem.is_none() && errors(&reports).is_empty(), "{problem:?} {reports:#?}");
-    assert!(reports.iter().any(|report| report.code == "build.untrusted"));
-    assert!(books[0].pages.as_ref().unwrap()[0].contains("EDS 0007"));
+    let (_, reports, problem, _) = project.typeset();
+    assert!(problem.is_some(), "{reports:#?}");
+    assert!(reports.iter().any(|r| r.message.contains("project template used")), "{reports:#?}");
 }
 
 #[test]

@@ -1,7 +1,7 @@
 //! What a build lets through (its content policy) and how far each read and render may
 //! go (its engine limits).
 
-use gd_env::BuildOptions;
+use gd_env::{BuildOptions, ContentRule, ContentRules};
 use gd_host::Problem;
 use guidedoc::{ContentPolicy, Limits, Policy};
 
@@ -12,20 +12,30 @@ pub const DOCUMENT_REPORTS: usize = 1024;
 /// untranslatable math are used as Sphinx uses them, and, as in Sphinx, a document with
 /// an unknown directive or role is reported and still built.
 pub fn trusted_policy() -> Policy {
-    Policy { keep_documents_with_errors: true, ..guidedoc::trusted_policy() }
+    content_policy(ContentRules::ALLOW)
 }
 
 /// The policy of an `--untrusted` build of a project from elsewhere: raw content and
-/// unsafe URLs (`javascript:` and the like) are left out with a warning. With
-/// `gd_conf::confine_untrusted` it also reads files only below the source folder,
-/// fetches nothing, runs no plugin, and reads no file a graph names.
+/// unsafe URLs (`javascript:` and the like) are left out with a warning. What such a
+/// build reads is its confinement (`gd_env::Confinement::STRICT`), not its policy.
 pub fn untrusted_policy() -> Policy {
+    content_policy(ContentRules::OMIT)
+}
+
+/// The policy of a build with the content `rules` (`gd_env::BuildOptions::content_rules`):
+/// raw content and unsafe URLs allowed or omitted as they say (an unstated rule
+/// allows), untranslatable math allowed, and a document with an unknown directive or
+/// role reported and still built.
+pub fn content_policy(rules: ContentRules) -> Policy {
+    let decide = |rule| match rule {
+        ContentRule::Allow => ContentPolicy::Allow,
+        ContentRule::Omit => ContentPolicy::Omit,
+    };
     Policy {
-        raw: ContentPolicy::Omit,
-        unsafe_urls: ContentPolicy::Omit,
-        math: ContentPolicy::Allow,
+        raw: decide(rules.raw_rule()),
+        unsafe_urls: decide(rules.unsafe_url_rule()),
         keep_documents_with_errors: true,
-        ..guidedoc::default_policy()
+        ..guidedoc::trusted_policy()
     }
 }
 

@@ -1,6 +1,7 @@
 //! What a build may read: only the source folder and the include roots, however a file
 //! is reached (document, include, image, template, static file, book, graph); an
-//! `--untrusted` build cannot widen that, and runs none of the project's Typst.
+//! `--untrusted` build cannot widen that. Typst the project wrote runs there too, and
+//! reads no more than the build may.
 
 use guidedog_tests::{Scratch, guidedog, has, lacks};
 
@@ -74,7 +75,7 @@ fn untrusted_builds_read_only_the_source_folder() {
 
 /// Typst reads only the folders the build may read: a book template that reads a file
 /// beside the project fails, and the failed book is kept in the cache, not published.
-/// An --untrusted build leaves the project's template and preamble out.
+/// An --untrusted build uses the project's template and preamble, confined the same way.
 #[test]
 fn books_read_only_what_the_build_may_read() {
     let root = root_with_project("trust-books", "docs");
@@ -100,11 +101,19 @@ fn books_read_only_what_the_build_may_read() {
     let kept = "docs/_build/.doctrees/failed/book-en.typ";
     assert!(root.exists(kept));
     has(&r.err, &root.join(kept).to_string_lossy());
+    // Confined to the source folder, the template's read finds nothing to read.
+    let r = build(&dir, 4, &["pdf", "--untrusted"]);
+    has(&r.err, "include_roots");
+    lacks(&r.err, "BOOK TEMPLATE NOT USED");
+    assert!(!root.exists("docs/_build/pdf/demo-en.pdf"));
+    // Without the reads, both run: the preamble's definition reaches the book.
+    root.write("docs/pre.typ", "#let gd-marker = [Preamble used]\n");
+    let template = template.replace("#let secret = read(\"/private/secret.txt\")\n", "");
+    root.write("docs/_templates/book.typ", &template);
     let r = build(&dir, 0, &["pdf", "--untrusted"]);
-    has(&r.err, "BOOK TEMPLATE NOT USED");
-    has(&r.err, "pdf_preamble");
+    lacks(&r.err, "pdf_preamble");
+    has(&root.read("docs/_build/pdf/book-en.typ"), "Preamble used");
     assert!(root.exists("docs/_build/pdf/demo-en.pdf"));
-    assert!(!root.exists(kept));
 }
 
 /// A graph reads the images it names as a document does, confined and relative to its

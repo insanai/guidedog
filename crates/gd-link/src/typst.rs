@@ -23,9 +23,9 @@ pub(crate) fn replace_diagram(
 ) -> Result<(), Fail> {
     let doc = rw.doc;
     let source = doc.node_text(id);
-    let failure = if page.view.options.untrusted {
-        Some("Typst diagrams are disabled in --untrusted builds.")
-    } else if source.len() > MAX_SOURCE {
+    // A diagram compiles in a confined build too: the embedded compiler runs no
+    // program, reads only below the source folder, and downloads no package there.
+    let failure = if source.len() > MAX_SOURCE {
         Some("The Typst diagram exceeds the 1 MiB source limit.")
     } else {
         None
@@ -68,7 +68,7 @@ fn warn(page: &mut Page<'_>, doc: Document<'_>, id: NodeId, message: String) {
             category: "",
             message,
             hint: "Check the Typst source and pinned imports; use one page below the source root. \
-               Typst diagrams require a trusted build. The source is shown as code.",
+               The source is shown as code.",
         },
     );
 }

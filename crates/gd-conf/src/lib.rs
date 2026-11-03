@@ -2,8 +2,8 @@
 //! by area, with Sphinx's names and defaults), loading (`load_config`, `find_project`),
 //! `-D` overrides (`apply_override`), the checks Sphinx makes when it starts
 //! (`check_config`), the settings table gd-migrate converts conf.py with (`SETTINGS`,
-//! `find_setting`, `suggestion`), trust (`readable_roots`, `confine_untrusted`), and the
-//! content rules (`ContentRules`).
+//! `find_setting`, `suggestion`), trust (`readable_roots`, `confine`,
+//! `confine_untrusted`), and the content rules (`ContentRules`).
 //!
 //! ```no_run
 //! use std::path::Path;
@@ -78,7 +78,9 @@ pub use settings::{
 };
 pub use site::{CollectionConfig, SiteConfig, valid_output};
 pub use store::apply_table;
-pub use trust::{confine_untrusted, rust_crate_roots, unread_warning};
+pub use trust::{
+    confine, confine_untrusted, drop_machine_plugins, rust_crate_roots, unread_warning,
+};
 
 #[cfg(test)]
 mod tests;

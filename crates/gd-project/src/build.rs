@@ -6,8 +6,8 @@ use std::time::SystemTime;
 
 use gd_conf::{Config, Digest};
 use gd_env::{
-    BuildOptions, BuildResult, BuildStage, BuilderKind, CachedFile, DocInfo, Environment, Jobs,
-    ObjectStore, PluginRun, PluginStart, SourceFile,
+    BuildOptions, BuildResult, BuildStage, BuilderKind, CachedFile, Confinement, DocInfo,
+    Environment, Jobs, ObjectStore, PluginAccess, PluginRun, PluginStart, ReadScope, SourceFile,
 };
 use gd_host::{Budget, Problem};
 use gd_intl::Intl;
@@ -19,7 +19,7 @@ use guidedoc::{Limits, Policy};
 
 use crate::duration;
 use crate::finish::finish;
-use crate::limits::{build_limits, trusted_policy, untrusted_policy};
+use crate::limits::{build_limits, content_policy};
 use crate::project::Project;
 use crate::write::write_output;
 
@@ -27,19 +27,24 @@ use crate::write::write_output;
 /// (all of them with `fresh`), resolves the project, writes the outputs whose inputs
 /// changed (all of them with `all`), and publishes them whole.
 ///
-/// The project is never changed: the build works on its own copy of the
-/// configuration, so an `--untrusted` build confines only itself and any number of
+/// The build applies `options.effective_confinement()` to its own copy of the
+/// configuration and `options.content_rules(&project.config)` to every document.
+/// The project is never changed: a confined build confines only itself and any number of
 /// builds may follow. It never fails outright: the result carries the problem that
 /// stopped it (exit != 0), every report, and the counters. Only a build that did all
 /// its work, and that `-W` does not fail, publishes; any other leaves the previous
 /// output, manifest and environment as they were.
 pub fn build(project: &Project, kind: BuilderKind, options: &BuildOptions) -> BuildResult {
+    let confinement = options.effective_confinement().into_owned();
+    let content = options.content_rules(&project.config);
     let setup = Setup {
         project,
         kind,
         options,
         budget: build_budget(options),
-        policy: if options.untrusted { untrusted_policy() } else { trusted_policy() },
+        policy: content_policy(content),
+        trust: gd_env::trust_digest(&confinement, content),
+        confinement,
     };
     let mut config = project.config.clone();
     let mut log = Log {
@@ -76,6 +81,10 @@ pub(crate) struct Setup<'p> {
     pub options: &'p BuildOptions,
     pub budget: Budget,
     pub policy: Policy,
+    /// What the build may reach: `options.effective_confinement()`.
+    pub confinement: Confinement,
+    /// `gd_env::trust_digest` of the confinement and the content rules.
+    pub trust: Digest,
 }
 
 /// What a build has done so far: its reports and the result's counters.
@@ -112,9 +121,7 @@ struct Parts<'c> {
 
 fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Problem> {
     let (kind, options) = (s.kind, s.options);
-    if options.untrusted {
-        log.reports.extend(gd_conf::confine_untrusted(config));
-    }
+    log.reports.extend(confine(s, config)?);
     let paths = gd_outputs::output_paths(config, kind, options.output_dir.as_deref())?;
     // A custom output keeps its records in a cache folder of its own beside it; every
     // record (environment, objects, graphs, fonts) must live there, or the next build
@@ -128,7 +135,7 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
         config,
         linked: &s.project.plugins,
         kind,
-        untrusted: options.untrusted,
+        access: s.confinement.plugins,
     })?;
     let sources = project_sources(config, &mut log.reports)?;
     let intl = gd_intl::load_intl(config, kind, &s.budget, &mut log.reports);
@@ -138,12 +145,16 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     let config: &Config = config;
     let now = options.now.unwrap_or_else(SystemTime::now);
     let dates = gd_intl::build_dates(config, &intl.ui, now);
-    let network = IntersphinxOptions { network: !options.untrusted, budget: &s.budget };
+    let network = IntersphinxOptions {
+        network: s.confinement.network,
+        confined: s.confinement.is_confined(),
+        budget: &s.budget,
+    };
     let intersphinx = gd_resolve::load_intersphinx(config, network, &mut log.reports)?;
     log.result.reached = BuildStage::Reading;
     let reading = gd_env::reading_settings(config);
     let settings =
-        gd_env::build_settings(reading, intl.digest, options.untrusted, &limits, plugins.digest());
+        gd_env::build_settings(reading, intl.digest, s.trust, &limits, plugins.digest());
     let store = ObjectStore::new(gd_env::doctrees_dir(config));
     let run_limits = gd_host::limits_within(limits, s.budget.limit());
     let parts = Parts {
@@ -169,6 +180,31 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     crate::dependencies::write_dependencies(config, kind, (&env, &tables), &mut generation)?;
     log.result.reached = BuildStage::Written;
     Ok(Written { generation, env, store: parts.store })
+}
+
+/// Applies the build's confinement to its copy of the configuration before anything is
+/// discovered or read, and returns a warning for each setting it drops: the readable
+/// folders (`gd_conf::confine`, which also keeps only linked plugins and the embedded
+/// Typst compiler), the plugins, and Typst packages without the network. Fails with
+/// `plugins.untrusted` when the build starts no plugin and the project lists one.
+fn confine(s: &Setup<'_>, config: &mut Config) -> Result<Vec<Report>, Problem> {
+    let c = &s.confinement;
+    let linked = &s.project.plugins;
+    if c.plugins == PluginAccess::None {
+        PluginRun::check_access(config, linked, PluginAccess::None)?;
+    }
+    let linked: Vec<String> = linked.plugins().iter().map(|p| p.id().to_string()).collect();
+    let mut reports = Vec::new();
+    if let ReadScope::Within(roots) = &c.reads {
+        reports = gd_conf::confine(config, roots, &linked);
+    }
+    if c.plugins == PluginAccess::Linked {
+        reports.extend(gd_conf::drop_machine_plugins(config, &linked));
+    }
+    if !c.network {
+        config.pdf.packages = "offline".into();
+    }
+    Ok(reports)
 }
 
 /// The project's documents: the source folder's (with `contents` as the root document
@@ -306,7 +342,7 @@ fn write(
                 s.kind,
                 &options.tags,
                 options.nitpicky,
-                options.untrusted,
+                s.trust,
                 &parts.limits,
                 parts.plugins.digest(),
             ),

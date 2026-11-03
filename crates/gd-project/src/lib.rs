@@ -30,8 +30,11 @@ mod write;
 
 pub use build::build;
 pub use dependencies::{DEPENDENCIES_FILE, DEPENDENCIES_SCHEMA, writes_dependencies};
-pub use gd_env::{BuildOptions, BuildResult, BuildStage, BuilderKind, Jobs};
-pub use limits::{build_limits, trusted_policy, untrusted_policy};
+pub use gd_env::{
+    BuildOptions, BuildResult, BuildStage, BuilderKind, Confinement, ContentRule, ContentRules,
+    Jobs, PluginAccess, ReadScope,
+};
+pub use limits::{build_limits, content_policy, trusted_policy, untrusted_policy};
 pub use project::{LoadOptions, Project, clean, load, watch_roots};
 
 #[cfg(test)]

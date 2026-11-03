@@ -119,7 +119,7 @@ fn local_inventories_load_and_untrusted_builds_stay_inside() {
     dir.put("docs/python.inv", &inventory_bytes());
     let outside = dir.put("elsewhere/python.inv", &inventory_bytes());
     let budget = Budget::new(64 << 20);
-    let trusted = IntersphinxOptions { network: true, budget: &budget };
+    let trusted = IntersphinxOptions { network: true, confined: false, budget: &budget };
     let config = config_with(&dir, vec!["python.inv".into()], "https://docs.python.org/3/");
     let mut reports = Vec::new();
     let it = load_intersphinx(&config, trusted, &mut reports).unwrap();
@@ -130,7 +130,7 @@ fn local_inventories_load_and_untrusted_builds_stay_inside() {
     assert_eq!(it.origin(encoder).map(|i| i.project.as_str()), Some("Python"));
     assert_ne!(it.digest, gd_env::Digest::default());
     // An untrusted build reads no file outside the roots, and fetches nothing.
-    let untrusted = IntersphinxOptions { network: false, budget: &budget };
+    let untrusted = IntersphinxOptions { network: false, confined: true, budget: &budget };
     let path = outside.to_string_lossy().into_owned();
     let config = config_with(&dir, vec![path, String::new()], "https://docs.python.org/3/");
     let it = load_intersphinx(&config, untrusted, &mut reports).unwrap();
@@ -147,7 +147,7 @@ fn nothing_loads_without_the_extension_and_a_tiny_budget_refuses() {
     dir.put("docs/python.inv", &inventory_bytes());
     let mut config = config_with(&dir, vec!["python.inv".into()], "https://docs.python.org/3/");
     let budget = Budget::new(16);
-    let options = IntersphinxOptions { network: true, budget: &budget };
+    let options = IntersphinxOptions { network: true, confined: false, budget: &budget };
     let mut reports = Vec::new();
     let problem = load_intersphinx(&config, options, &mut reports).unwrap_err();
     assert_eq!(problem.code, "host.budget");
@@ -169,7 +169,7 @@ fn remote_inventories_are_fetched_then_cached() {
     let config = config_with(&dir, vec![String::new()], &uri);
     let budget = Budget::new(64 << 20);
     let mut reports = Vec::new();
-    let network = IntersphinxOptions { network: true, budget: &budget };
+    let network = IntersphinxOptions { network: true, confined: false, budget: &budget };
     let it = load_intersphinx(&config, network, &mut reports).unwrap();
     assert!(reports.is_empty(), "{reports:?}");
     let encoder = it.main.find("py:class", "json.JSONEncoder").unwrap();
@@ -178,7 +178,7 @@ fn remote_inventories_are_fetched_then_cached() {
     // The cache serves the next build, and an untrusted one at any age.
     let again = load_intersphinx(&config, network, &mut reports).unwrap();
     assert_eq!(again.digest, it.digest);
-    let untrusted = IntersphinxOptions { network: false, budget: &budget };
+    let untrusted = IntersphinxOptions { network: false, confined: true, budget: &budget };
     assert!(
         load_intersphinx(&config, untrusted, &mut reports).unwrap().named.contains_key("python")
     );

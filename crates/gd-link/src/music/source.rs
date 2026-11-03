@@ -19,7 +19,7 @@ pub(super) fn read(
     from: &Path,
     name: &str,
 ) -> Result<IncludedFile, IncludeRefusal> {
-    if page.view.options.untrusted {
+    if !page.view.options.effective_confinement().music_files {
         return Err(refusal("Music file access is disabled in --untrusted builds."));
     }
     let mut candidates = vec![from.parent().unwrap_or(from).join(name)];

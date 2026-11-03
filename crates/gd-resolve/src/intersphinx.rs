@@ -32,8 +32,11 @@ pub struct Intersphinx {
 #[derive(Debug, Clone, Copy)]
 pub struct IntersphinxOptions<'a> {
     /// Fetch remote inventories (false in an `--untrusted` build: only cached and local
-    /// ones are read).
+    /// ones are read, and local ones only in the readable folders).
     pub network: bool,
+    /// Read local inventories only in the readable folders (`gd_conf::readable_roots`),
+    /// as a confined build does; without the network they always are.
+    pub confined: bool,
     /// The budget the inventories are held within for the build.
     pub budget: &'a Budget,
 }
@@ -64,7 +67,9 @@ pub fn load_intersphinx(
     // The inventories are held while they load; what they load into lives as long as
     // the build, about four times the bytes read.
     let ledger = Ledger::new(options.budget);
-    let loader = Loader { config, network: options.network, roots: loader_roots(config, options) };
+    let confined = options.confined || !options.network;
+    let roots = loader_roots(config, options);
+    let loader = Loader { config, network: options.network, confined, roots };
     let mut sums = Digester::new();
     let mut names: Vec<&IntersphinxProject> = mapping.iter().collect();
     names.sort_by(|a, b| a.name.cmp(&b.name));
@@ -92,9 +97,10 @@ pub fn load_intersphinx(
     Ok(it)
 }
 
-/// The folders an `--untrusted` build may read local inventories from.
+/// The folders a confined build, or one without the network, reads local inventories
+/// from; empty when any folder may be read.
 fn loader_roots(config: &Config, options: IntersphinxOptions<'_>) -> Vec<PathBuf> {
-    if options.network {
+    if options.network && !options.confined {
         return Vec::new();
     }
     gd_host::canonical_roots(&gd_conf::readable_roots(config))
@@ -106,6 +112,8 @@ struct Loader<'a> {
     /// Fetch remote inventories; false in an `--untrusted` build, which reads remote
     /// inventories only from the cache, at any age, and local ones only in `roots`.
     network: bool,
+    /// Read local inventories only in `roots`.
+    confined: bool,
     roots: Vec<PathBuf>,
 }
 
@@ -172,18 +180,14 @@ impl Loader<'_> {
         None
     }
 
-    /// Why an `--untrusted` build does not read an inventory location: it reaches no
-    /// network, and it reads no local file outside the roots.
+    /// Why a build does not read an inventory location: without the network it fetches
+    /// nothing, and confined it reads no local file outside the roots.
     fn refusal(&self, source: &str, remote: bool) -> Option<String> {
-        if self.network {
-            return None;
-        }
         if remote {
-            return Some(format!(
-                "{source} was not fetched: an --untrusted build uses no network"
-            ));
+            return (!self.network)
+                .then(|| format!("{source} was not fetched: this build uses no network"));
         }
-        if !gd_host::confined(&self.roots, Path::new(source)) {
+        if self.confined && !gd_host::confined(&self.roots, Path::new(source)) {
             return Some(format!("{source} is outside the source folder and the include roots"));
         }
         None

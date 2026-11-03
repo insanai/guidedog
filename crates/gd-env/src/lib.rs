@@ -38,6 +38,7 @@ mod posts;
 mod records;
 mod rendered;
 mod settings;
+mod trust;
 
 pub use builder::{
     BUILD_BUDGET, BuildOptions, BuildResult, BuildStage, BuilderKind, Jobs, OutputFormat,
@@ -54,7 +55,7 @@ pub use environment::{
     normalize_name, option_key,
 };
 pub use excerpts::excerpt_root;
-pub use gd_conf::{Digest, Digester};
+pub use gd_conf::{ContentRule, ContentRules, Digest, Digester};
 pub use lookup::{Lookup, LookupKind, Trace};
 pub use objects::{OBJECTS_FOLDER, ObjectError, ObjectStore, SEARCH_FOLDER};
 pub use page::{PageMeta, publication_time};
@@ -66,6 +67,7 @@ pub use rendered::{Asset, EnglishUi, Rendered, UiText};
 pub use settings::{
     build_settings, executable_stamp, file_digest, output_settings, reading_settings,
 };
+pub use trust::{Confinement, PluginAccess, ReadScope, trust_digest};
 
 #[cfg(test)]
 mod tests;

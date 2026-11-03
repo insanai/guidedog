@@ -95,6 +95,36 @@ impl<'a> Emitter<'a> {
         }
     }
 
+    /// The bytes stored since the output was `from` bytes long (a `written` value);
+    /// empty in check mode or past the limit.
+    pub fn written_since(&self, from: usize) -> &[u8] {
+        match self.out.as_deref() {
+            Some(out) if self.written <= self.limit && from <= self.written => {
+                let back = self.written - from;
+                out.get(out.len().saturating_sub(back)..).unwrap_or(&[])
+            }
+            _ => &[],
+        }
+    }
+
+    /// Inserts `bytes` where the output was `at` bytes long (a `written` value at or
+    /// after which everything is still stored), moving what follows. Renderers use it
+    /// to add an attribute to a tag they already wrote. Counts only, like every write,
+    /// in check mode or past the limit.
+    pub fn insert_bytes(&mut self, at: usize, bytes: &[u8]) {
+        let stored = self.written <= self.limit && at <= self.written;
+        let back = self.written.saturating_sub(at);
+        self.written = self.written.saturating_add(bytes.len());
+        let fits = stored && self.written <= self.limit;
+        let Some(out) = self.out.as_deref_mut() else { return };
+        if fits && out.try_reserve(bytes.len()).is_ok() {
+            let index = out.len() - back;
+            out.splice(index..index, bytes.iter().copied());
+        } else {
+            self.limit = 0;
+        }
+    }
+
     /// Writes `s`.
     pub fn emit(&mut self, s: &str) {
         self.emit_bytes(s.as_bytes());
@@ -170,5 +200,24 @@ mod tests {
         e.emit_int(0);
         e.emit_int(i64::MIN);
         assert_eq!(all, b"0-9223372036854775808");
+    }
+
+    #[test]
+    fn insertions_land_where_the_output_was() {
+        let mut out = b"kept ".to_vec();
+        let mut e = Emitter::new(&mut out);
+        e.emit("<p>a</p><ul>");
+        let at = e.written();
+        e.emit("<li>b</li>");
+        assert_eq!(e.written_since(at), b"<li>b</li>");
+        e.insert_bytes(at + 3, b" id=x");
+        e.insert_bytes(2, b" class=y");
+        assert_eq!(e.written(), 35);
+        assert_eq!(out, b"kept <p class=y>a</p><ul><li id=x>b</li>");
+        let mut small = Vec::new();
+        let mut e = Emitter::with_limit(&mut small, 4);
+        e.emit("<p>");
+        e.insert_bytes(2, b" too long");
+        assert_eq!((e.written(), e.written_since(0)), (12, &b""[..]));
     }
 }

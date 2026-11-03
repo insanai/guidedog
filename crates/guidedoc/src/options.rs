@@ -381,6 +381,11 @@ pub struct RenderOptions<'a> {
     pub math_inline: [&'a str; 2],
     /// HTML displayed math delimiters with `MathStyle::Sphinx`; empty: `\[` `\]`.
     pub math_display: [&'a str; 2],
+    /// HTML: block elements carry `data-gd-source="<source>:<start>-<end>"`, the byte
+    /// span of the markup they come from, so a preview maps a click back to the source.
+    /// The value is the folder source names are written relative to (a project's source
+    /// folder; empty: names as read). `None` writes no positions.
+    pub source_positions: Option<&'a str>,
 }
 
 impl Default for RenderOptions<'_> {
@@ -401,6 +406,7 @@ impl Default for RenderOptions<'_> {
             math: MathStyle::Plain,
             math_inline: ["", ""],
             math_display: ["", ""],
+            source_positions: None,
         }
     }
 }

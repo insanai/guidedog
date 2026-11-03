@@ -41,7 +41,7 @@ pub(crate) fn outline(map: &SourceMap) -> String {
 pub(crate) fn edited(format: Format, text: &str, op: Operation<'_>) -> String {
     let options = MapOptions::new(format);
     let result = apply_operation(text, &options, &op).unwrap_or_else(|e| panic!("{e}\n{text}"));
-    assert_eq!(crate::apply_edits(text, &result.edits), result.text);
+    assert_eq!(crate::edit::apply_edits(text, &result.edits), result.text);
     for pair in result.edits.windows(2) {
         assert!(pair[0].end <= pair[1].start, "edits overlap: {:?}", result.edits);
     }

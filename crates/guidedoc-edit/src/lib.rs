@@ -44,8 +44,8 @@ mod walk;
 mod tests;
 
 pub use edit::{
-    EditResult, Operation, OperationKind, Position, TextEdit, apply_edits, apply_operation,
-    block_operations, operations,
+    EditResult, Operation, OperationKind, Position, TextEdit, apply_operation, block_operations,
+    operations,
 };
 pub use error::EditError;
 pub use json::write_source_map_json;

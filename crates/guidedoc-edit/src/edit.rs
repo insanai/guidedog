@@ -284,8 +284,11 @@ fn plan(
     }
 }
 
-/// Applies non-overlapping edits given in increasing order of position.
-pub fn apply_edits(text: &str, edits: &[TextEdit]) -> String {
+/// Applies non-overlapping edits given in increasing order of position, on character
+/// boundaries inside `text`, as the operations make them. It stays inside the crate:
+/// edits from elsewhere would need checking first, and [`EditResult::text`] already
+/// holds the edited text.
+pub(crate) fn apply_edits(text: &str, edits: &[TextEdit]) -> String {
     let mut out = String::with_capacity(text.len() + 64);
     let mut at = 0;
     for edit in edits {

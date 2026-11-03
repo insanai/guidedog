@@ -144,6 +144,8 @@ pub struct Config {
     pub rust_api: RustApiConfig,
     /// `plugins`, `plugin_configs`, `plugin_timeout`.
     pub plugins: PluginConfig,
+    /// `raw_content` and `unsafe_urls`: `None` where conf.toml leaves a rule unset.
+    pub content: crate::ContentRules,
     /// The `html_*` settings.
     pub html: HtmlConfig,
     /// The `pdf_*` settings and `typst`.
@@ -636,6 +638,7 @@ impl Config {
             odin_api: OdinApiConfig::default(),
             rust_api: RustApiConfig::default(),
             plugins: PluginConfig::default(),
+            content: crate::ContentRules::default(),
             html: HtmlConfig::default(),
             pdf: PdfConfig::default(),
             graphviz: GraphvizConfig::default(),

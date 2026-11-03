@@ -368,3 +368,17 @@ fn untrusted_builds_read_only_below_the_source_folder() {
     assert!(outside.message.contains("is outside the source folder"));
     let _ = std::fs::remove_dir_all(&top);
 }
+
+#[test]
+fn content_rules_are_read_from_conf_toml() {
+    let top = temp_dir("content-rules");
+    std::fs::write(top.join("conf.toml"), "raw_content = \"omit\"\n").unwrap();
+    let loaded = load_config(&top, &LoadOptions::default()).unwrap();
+    assert_eq!(loaded.config.content.raw, Some(ContentRule::Omit));
+    assert_eq!(loaded.config.content.unsafe_urls, None, "unset stays unstated");
+    std::fs::write(top.join("conf.toml"), "unsafe_urls = \"refuse\"\n").unwrap();
+    let wrong = load_config(&top, &LoadOptions::default()).unwrap_err();
+    assert_eq!(wrong.code, "config.invalid");
+    assert!(wrong.message.contains("\"allow\" or \"omit\""), "{wrong:?}");
+    let _ = std::fs::remove_dir_all(&top);
+}

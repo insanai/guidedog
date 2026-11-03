@@ -173,8 +173,8 @@ The writing layer
 Every output is a set of units, each with a key: a document's page (its docname), the
 search index (``search``), a book (``book:<file>``), the files every page shares
 (``SITE_UNIT``, the empty key). The manifest records per unit the digest of its inputs,
-the files it made, the assets it needs, its lookups with the digest of each answer, and
-its reports. ``Generation::reuse(key, inputs, answer)`` keeps a unit when, under no
+the files it made, the assets it needs, its lookups with the digest of each answer,
+its reports, and the files it read besides its documents (a book's template, images and graphs). ``Generation::reuse(key, inputs, answer)`` keeps a unit when, under no
 ``-a``:
 
 * the manifest has the unit with the same inputs digest;
@@ -183,7 +183,7 @@ its reports. ``Generation::reuse(key, inputs, answer)`` keeps a unit when, under
 * every file it made is still in the output folder.
 
 A kept unit reports its stored diagnostics again, so a build's result never depends on
-what an earlier build left behind. A unit written again whose bytes match the file in
+what an earlier build left behind. After writing, the build lists every unit with its files and the files it was made from in ``gd-dependencies.json`` in the output folder, so an editor can rebuild only the outputs a changed file affects (GDS 0017). A unit written again whose bytes match the file in
 place only records the file, so unchanged files keep their times.
 
 Unit inputs

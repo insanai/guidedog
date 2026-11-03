@@ -21,6 +21,7 @@
 
 mod build;
 mod coverage;
+mod dependencies;
 mod duration;
 mod finish;
 mod limits;
@@ -28,6 +29,7 @@ mod project;
 mod write;
 
 pub use build::build;
+pub use dependencies::{DEPENDENCIES_FILE, DEPENDENCIES_SCHEMA, writes_dependencies};
 pub use gd_env::{BuildOptions, BuildResult, BuildStage, BuilderKind, Jobs};
 pub use limits::{build_limits, trusted_policy, untrusted_policy};
 pub use project::{LoadOptions, Project, clean, load, watch_roots};

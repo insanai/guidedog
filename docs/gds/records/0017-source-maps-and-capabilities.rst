@@ -137,12 +137,17 @@ Every HTML, PDF and text build writes ``gd-dependencies.json`` in its output fol
 .. code-block:: json
 
    {"schema": 1, "builder": "pdf", "source_dir": "/work/docs", "shared": ["conf.toml"],
+    "navigation": true,
     "outputs": [{"unit": "book:guide.pdf", "files": ["guide-en.pdf", "book-en.typ"],
                  "documents": ["index.rst", "intro.rst"],
-                 "inputs": ["_templates/book.typ", "images/a.svg", "index.rst", "intro.rst"]}]}
+                 "inputs": ["_templates/book.typ", "images/a.svg", "index.rst", "intro.rst"],
+                 "incomplete": false}]}
 
-A unit is a page (its docname), a book (``book:<file>``), or the files every page shares (``""``), which depend on every document.
-A unit's inputs are its documents, the files they include, quote or show, the project templates it loaded, and for a book every file its Typst reads, its template among them.
+A unit is a page (its docname) or a book (``book:<file>``); every other unit, such as the files every page shares (``""``), singlehtml's page, the search index and feeds, depends on every document.
+A unit's inputs are its documents, the files they include, quote or show, the documents its references found their titles, captions and terms in, the project templates it loaded, the files it copied (static files among them), and for a book every file its Typst reads, its template among them.
+A file a document asked for that does not exist is an input too, so creating it rebuilds the unit; the build reads such a document again until the file appears.
+``incomplete`` marks a unit whose document asked for something that names no file, such as an autodoc object that was not found; it may change whenever a file appears.
+``navigation`` is true because every output also shows each document's title, section titles and place in the toctree, so a change to those changes every output.
 Paths are relative to the source folder, or absolute outside it; ``shared`` names what every output depends on.
 The output manifest records the files a unit read (version 3), so a unit kept from an earlier build keeps its inputs.
 

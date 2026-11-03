@@ -38,3 +38,21 @@ fn an_item_goes_next_to_an_empty_item() {
         assert_eq!(edited(format, text, op), want);
     }
 }
+
+#[test]
+fn a_truncated_map_refuses_edits() {
+    let text = "a\n\nb\n\nc\n";
+    let options = MapOptions { max_blocks: 1, ..MapOptions::new(Format::Markdown) };
+    let map = load_source_map(text, &options);
+    assert!(map.truncated);
+    let op = Operation::ReplaceText { block: map.roots[0], text: "a\n```" };
+    let error = apply_operation(text, &options, &op).unwrap_err();
+    assert_eq!(error.code, "edit.truncated");
+    assert!(error.span.is_some() && error.hint.contains("max_blocks"), "{error}");
+    let options = MapOptions { max_blocks: 3, ..MapOptions::new(Format::Markdown) };
+    let map = load_source_map(text, &options);
+    let op =
+        Operation::InsertBlock { anchor: map.roots[2], position: Position::After, markup: "d" };
+    let error = apply_operation(text, &options, &op).unwrap_err();
+    assert_eq!(error.code, "edit.truncated");
+}

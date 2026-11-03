@@ -202,8 +202,10 @@ pub(crate) fn starts_line(text: &str, block: &Block, format: Format) -> bool {
 /// new text. Fails without changing anything when the block is unknown or does not
 /// support the operation (`edit.unknown-block`, `edit.unsupported`), when the new text
 /// or option does not fit (`edit.invalid-text`, `edit.unknown-option`,
-/// `edit.option-value`, `edit.missing-option`, `edit.renumber`), or when the edited
-/// text, read again, would not have the intended structure (`edit.unsafe`).
+/// `edit.option-value`, `edit.missing-option`, `edit.renumber`), when the map of the
+/// text or of the edited text lists only its first `options.max_blocks` blocks, so the
+/// rest could not be checked (`edit.truncated`), or when the edited text, read again,
+/// would not have the intended structure (`edit.unsafe`).
 pub fn apply_operation(
     text: &str,
     options: &MapOptions<'_>,
@@ -211,8 +213,14 @@ pub fn apply_operation(
 ) -> Result<EditResult, EditError> {
     let map = load_source_map(text, options);
     let planned = plan(text, options, &map, op)?;
+    if map.truncated {
+        return Err(EditError::truncated(planned.target, options.max_blocks));
+    }
     let new_text = apply_edits(text, &planned.edits);
     let after = load_source_map(&new_text, options);
+    if after.truncated {
+        return Err(EditError::truncated(planned.target, options.max_blocks));
+    }
     if shape::shape(&after) != planned.expected || !(planned.check)(&after, &new_text) {
         return Err(EditError::unsafe_edit(planned.target));
     }

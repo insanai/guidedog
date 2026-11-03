@@ -9,8 +9,8 @@ use crate::Span;
 /// A refused edit. No edit is ever half applied: the caller's text is unchanged.
 ///
 /// The codes are stable: `edit.unknown-block`, `edit.unsupported`, `edit.invalid-text`,
-/// `edit.unsafe`, `edit.unknown-option`, `edit.option-value`, `edit.missing-option`
-/// and `edit.renumber`.
+/// `edit.unsafe`, `edit.truncated`, `edit.unknown-option`, `edit.option-value`,
+/// `edit.missing-option` and `edit.renumber`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EditError {
     /// A stable code such as `edit.unsafe`.
@@ -78,6 +78,19 @@ impl EditError {
             "TEXT DOES NOT FIT THE BLOCK",
             format!("The new text {why}."),
             "Keep the text within the block, or make structural changes in the source.",
+        )
+        .at(span)
+    }
+
+    pub(crate) fn truncated(span: Span, max_blocks: usize) -> EditError {
+        EditError::new(
+            "edit.truncated",
+            "DOCUMENT TOO LONG TO CHECK",
+            format!(
+                "The map lists only the first {max_blocks} blocks, so the edit cannot be \
+                 checked against the rest of the document."
+            ),
+            "Raise `MapOptions::max_blocks`, split the document, or edit it in the source.",
         )
         .at(span)
     }

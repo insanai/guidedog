@@ -106,7 +106,8 @@ Text that no reader node covers, such as ``.. highlight::``, becomes a directive
 Every operation reads the edited text again and compares its shape, the depth and kind of every block (and a Markdown title's level), with the shape the operation intends: the same shape for a replacement or an option, the inserted markup's own shape spliced in for an insertion, and so on.
 An option edit also checks that the directive has the option with the new value.
 A difference refuses the edit with ``edit.unsafe``, so text that would split a paragraph, close a fence early, or merge a new section with its neighbours never reaches the document.
-Refusals are ``EditError`` values with stable codes: ``edit.unknown-block``, ``edit.unsupported``, ``edit.invalid-text``, ``edit.unsafe``, ``edit.unknown-option`` (with "Did you mean"), ``edit.option-value``, ``edit.missing-option`` and ``edit.renumber``.
+An edit is refused with ``edit.truncated`` when the map of the text, or of the edited text, lists only its first blocks, because the rest could not be compared.
+Refusals are ``EditError`` values with stable codes: ``edit.unknown-block``, ``edit.unsupported``, ``edit.invalid-text``, ``edit.unsafe``, ``edit.truncated``, ``edit.unknown-option`` (with "Did you mean"), ``edit.option-value``, ``edit.missing-option`` and ``edit.renumber``.
 ``EditError::report`` gives an Elm-style report with the block's excerpt.
 
 For example, in ``* item one\n  continues`` replacing the item's text with ``first\nsecond line`` gives the single edit ``"item one\n  continues"`` to ``"first\n  second line"``, and inserting the item ``new`` after ``1. one`` in ``1. one\n\n2. two`` gives ``1. one\n\n2. new\n\n3. two``.

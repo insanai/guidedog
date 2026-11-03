@@ -288,7 +288,7 @@ fn builders() -> Vec<BuilderCapability> {
                 preview: viewed,
                 serve: b == gd_env::BuilderKind::Html,
                 output_source_map: false,
-                dependency_manifest: false,
+                dependency_manifest: gd_project::writes_dependencies(b),
             }
         })
         .collect()

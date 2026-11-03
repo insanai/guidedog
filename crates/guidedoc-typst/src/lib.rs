@@ -33,7 +33,7 @@ mod tests;
 
 use guidedoc::{Conformance, Emitter, Fail, ROOT, RenderContext, Renderer, stack_guard};
 
-pub use escape::{is_label_safe, write_markup_text, write_string_literal};
+pub use escape::{SOURCE_LABEL, is_label_safe, write_markup_text, write_string_literal};
 pub use math::{MathError, translate_math};
 pub use messages::{
     CITATION_MISSING, DEPTH_LIMIT, DIMENSION_IGNORED, FOOTNOTE_MISSING, IMAGE_REMOTE,

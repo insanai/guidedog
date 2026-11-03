@@ -119,6 +119,7 @@ impl State<'_, '_> {
         );
         if !own_label {
             self.emit_anchor(id);
+            self.emit_source_position(id);
         }
         if route(n.kind) == Route::Part {
             self.unhandled(id);

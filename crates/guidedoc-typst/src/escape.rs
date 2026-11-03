@@ -110,6 +110,21 @@ pub(crate) fn write_string_body(out: &mut (impl TextSink + ?Sized), s: &str, spa
     out.put_str(&s[start..]);
 }
 
+/// The label of the metadata that carries block source positions in a book's Typst
+/// (see `RenderOptions::source_positions`).
+pub const SOURCE_LABEL: &str = "gd-source";
+
+/// `name` relative to the folder `root`, with `/` separators.
+fn relative_source(name: &str, root: &str) -> String {
+    let name = name.replace('\\', "/");
+    let root = root.replace('\\', "/");
+    let root = root.trim_end_matches('/');
+    match name.strip_prefix(root) {
+        Some(rest) if !root.is_empty() && rest.starts_with('/') => rest[1..].to_string(),
+        _ => name,
+    }
+}
+
 /// Tells whether `name` can be written as a Typst label literal `<name>`: non-empty,
 /// made of letters, digits, non-ASCII characters, and `-`, `_`, `.`, `:`.
 pub fn is_label_safe(name: &str) -> bool {
@@ -182,6 +197,24 @@ impl State<'_, '_> {
             self.emit("#metadata(none)");
             self.emit_label(id);
         }
+    }
+
+    /// With `RenderOptions::source_positions`, writes the source span of block `id` as
+    /// `#metadata("<source>:<start>-<end>")<gd-source>`, which the compiler can place on
+    /// its page; nothing for a block without a span.
+    pub(crate) fn emit_source_position(&mut self, id: NodeId) {
+        let Some(root) = self.options.source_positions else { return };
+        let span = self.doc.node(id).span;
+        if self.quiet || span.is_zero() {
+            return;
+        }
+        let name = self.doc.source_entry(span.source).map_or("", |e| e.name.as_str());
+        let shown = relative_source(name, root);
+        self.emit("#metadata(");
+        self.emit_string(&format!("{shown}:{}-{}", span.start, span.end));
+        self.emit(")<");
+        self.emit(SOURCE_LABEL);
+        self.emit(">");
     }
 
     /// Writes a node's ids after its primary one as labelled metadata.

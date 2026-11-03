@@ -166,7 +166,7 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     log.result.reached = BuildStage::Writing;
     write(s, &parts, &env, &tables, &mut generation, log)?;
     duration::write_durations_json(config, &times, &mut generation)?;
-    crate::dependencies::write_dependencies(config, kind, &env, &mut generation)?;
+    crate::dependencies::write_dependencies(config, kind, (&env, &tables), &mut generation)?;
     log.result.reached = BuildStage::Written;
     Ok(Written { generation, env, store: parts.store })
 }

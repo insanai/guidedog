@@ -67,3 +67,78 @@ fn a_book_lists_every_chapter() {
     assert_built(&build(&project, BuilderKind::Pdf));
     assert_eq!(dir.read("_build/pdf/gd-dependencies.json"), first);
 }
+
+fn has(list: &[String], want: &str) -> bool {
+    list.iter().any(|i| i == want)
+}
+
+/// A page's references bring in the documents they found titles in; a page named
+/// `dependencies` is a page like any other; the shared files, copied static files and
+/// the search index are made from every document and what they copy.
+#[test]
+fn units_list_what_they_show_copy_and_find() {
+    let dir = demo("deps-units");
+    dir.put(
+        "conf.toml",
+        "project = \"Demo\"\nauthor = \"Ada\"\nsource_suffix = [\".rst\", \".md\"]\n\
+         extensions = [\"myst_parser\"]\nhtml_static_path = [\"_static\"]\n\
+         templates_path = [\"../outside\"]\n",
+    );
+    dir.put(
+        "index.rst",
+        "Demo\n====\n\n.. toctree::\n\n   guide\n   notes\n   dependencies\n\nSee :doc:`guide`.\n",
+    );
+    dir.put("dependencies.rst", "Dependencies\n============\n\n.. include:: part.rst\n");
+    dir.put("part.rst", "Part.\n");
+    dir.put("_static/custom.css", "p {}\n");
+    dir.put("../outside/layout.html", "{% extends \"!layout.html\" %}\n");
+    let r = build(&load(&dir.0), BuilderKind::Html);
+    assert_built(&r);
+    let (manifest, page) = output(&dir, "_build/html", "dependencies");
+    assert_eq!(manifest.get("navigation").and_then(Value::as_bool), Some(true));
+    assert_eq!(texts(&page, "files"), ["dependencies.html"]);
+    assert!(has(&texts(&page, "inputs"), "part.rst"));
+    let (_, notes) = output(&dir, "_build/html", "notes");
+    assert!(has(&texts(&notes, "documents"), "guide.rst"), "the label usage is in guide.rst");
+    let (_, index) = output(&dir, "_build/html", "index");
+    assert!(has(&texts(&index, "documents"), "guide.rst"), "a :doc: shows guide's title");
+    let (_, site) = output(&dir, "_build/html", "");
+    let inputs = texts(&site, "inputs");
+    assert!(has(&inputs, "_static/custom.css") && has(&inputs, "part.rst"), "{inputs:?}");
+    assert!(!inputs.iter().any(|i| i.contains("outside")), "{inputs:?}");
+    let (_, search) = output(&dir, "_build/html", "search");
+    assert!(has(&texts(&search, "documents"), "notes.md"));
+    let all = dir.read(&format!("_build/html/{DEPENDENCIES_FILE}"));
+    assert!(!all.contains("outside/layout.html"), "a template the loader refused: {all}");
+}
+
+/// Singlehtml's one page lists what every document includes. A file a document asks
+/// for that does not exist is listed, so creating it rebuilds the page; an autodoc
+/// object that is not found names no file and marks the unit incomplete.
+#[test]
+fn singlehtml_lists_includes_and_missing_files() {
+    let dir = demo("deps-single");
+    dir.put(
+        "conf.toml",
+        "project = \"Demo\"\nauthor = \"Ada\"\nsource_suffix = [\".rst\", \".md\"]\n\
+         extensions = [\"myst_parser\", \"sphinx.ext.autodoc\"]\n",
+    );
+    dir.put("guide.rst", "Guide\n=====\n\n.. literalinclude:: code.py\n");
+    dir.put("code.py", "x = 1\n");
+    dir.put("notes.md", "# Notes\n\n```{literalinclude} nothere.py\n```\n");
+    dir.put(
+        "index.rst",
+        "Demo\n====\n\n.. toctree::\n\n   guide\n   notes\n\n.. automodule:: nosuchmod\n",
+    );
+    let _ = build(&load(&dir.0), BuilderKind::Singlehtml);
+    let (_, page) = output(&dir, "_build/singlehtml", "");
+    let inputs = texts(&page, "inputs");
+    assert!(has(&inputs, "code.py") && has(&inputs, "nothere.py"), "{inputs:?}");
+    assert!(!inputs.iter().any(|i| i.starts_with('<')), "{inputs:?}");
+    let _ = build(&load(&dir.0), BuilderKind::Html);
+    let (_, notes) = output(&dir, "_build/html", "notes");
+    assert!(has(&texts(&notes, "inputs"), "nothere.py"));
+    assert_eq!(notes.get("incomplete").and_then(Value::as_bool), Some(false));
+    let (_, index) = output(&dir, "_build/html", "index");
+    assert_eq!(index.get("incomplete").and_then(Value::as_bool), Some(true), "{index:?}");
+}

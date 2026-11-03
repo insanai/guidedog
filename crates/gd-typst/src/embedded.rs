@@ -36,12 +36,13 @@ pub(crate) fn compile(
     options: &Options<'_>,
 ) -> Result<Compiled, Error> {
     let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
-    let compiled = catch_unwind(AssertUnwindSafe(|| run(&world, options.target)));
+    let compiled = catch_unwind(AssertUnwindSafe(|| run(&world, options.target, options.marks)));
     // Typst memoizes layout in a process-wide cache that only grows. A build compiles
     // each book once, so nothing is lost by emptying it; without this, a project with
     // many books keeps every earlier book's layout in memory.
     typst::comemo::evict(0);
-    let Exported { artifact, pages, diagnostics } = compiled.map_err(|_| Error::Internal)?;
+    let Exported { artifact, pages, marks, diagnostics } =
+        compiled.map_err(|_| Error::Internal)?;
     let detail = detail_of(&diagnostics);
     let Some(artifact) = artifact else {
         return Err(Error::Compile { exit_code: None, diagnostics, detail });
@@ -51,7 +52,7 @@ pub(crate) fn compile(
     }
     std::fs::write(output, &artifact)
         .map_err(|err| Error::Io { path: output.to_path_buf(), message: err.to_string() })?;
-    Ok(Compiled { diagnostics, detail, pages })
+    Ok(Compiled { diagnostics, detail, pages, marks })
 }
 
 fn detail_of(diagnostics: &[Diagnostic]) -> String {
@@ -76,14 +77,17 @@ struct Exported {
     artifact: Option<Vec<u8>>,
     /// Each page's text, for a paged document that compiled.
     pages: Option<Vec<String>>,
+    /// The labelled metadata asked for, laid out.
+    marks: Vec<crate::Mark>,
     /// Every warning and error, in the order Typst reported them.
     diagnostics: Vec<Diagnostic>,
 }
 
 /// Compiles and exports the world's main file.
-fn run(world: &EmbeddedWorld, target: Target) -> Exported {
+fn run(world: &EmbeddedWorld, target: Target, label: Option<&str>) -> Exported {
     let mut found = Vec::new();
     let mut pages = None;
+    let mut marks = Vec::new();
     let output = if world.html {
         let warned = typst::compile::<typst_html::HtmlDocument>(world);
         record(world, &warned.warnings, &mut found);
@@ -95,6 +99,9 @@ fn run(world: &EmbeddedWorld, target: Target) -> Exported {
         record(world, &warned.warnings, &mut found);
         warned.output.and_then(|doc| {
             pages = Some(doc.pages().iter().map(|page| page_text(&page.frame)).collect());
+            if let Some(label) = label {
+                marks = laid_out_marks(&doc, label);
+            }
             match target {
                 Target::Pdf | Target::Html => {
                     typst_pdf::pdf(&doc, &typst_pdf::PdfOptions::default())
@@ -104,12 +111,38 @@ fn run(world: &EmbeddedWorld, target: Target) -> Exported {
         })
     };
     match output {
-        Ok(bytes) => Exported { artifact: Some(bytes), pages, diagnostics: found },
+        Ok(bytes) => Exported { artifact: Some(bytes), pages, marks, diagnostics: found },
         Err(errors) => {
             record(world, &errors, &mut found);
-            Exported { artifact: None, pages: None, diagnostics: found }
+            Exported { artifact: None, pages: None, marks: Vec::new(), diagnostics: found }
         }
     }
+}
+
+/// The `metadata` elements labelled `label` in `doc`, with their string values and
+/// their positions on the pages.
+fn laid_out_marks(doc: &typst_layout::PagedDocument, label: &str) -> Vec<crate::Mark> {
+    use typst::foundations::{Label, Selector, Value};
+    use typst::introspection::{Introspector, MetadataElem};
+    let Some(label) = Label::new(typst::utils::PicoStr::intern(label)) else { return Vec::new() };
+    let introspector = doc.introspector();
+    let hundredths = |abs: typst::layout::Abs| (abs.to_pt() * 100.0).round() as i32;
+    let mut marks = Vec::new();
+    for content in introspector.query(&Selector::Label(label)) {
+        let value = match content.to_packed::<MetadataElem>().map(|m| &m.value) {
+            Some(Value::Str(s)) => s.to_string(),
+            _ => String::new(),
+        };
+        let position = content.location().and_then(|l| introspector.position(l));
+        let Some(at) = position else { continue };
+        marks.push(crate::Mark {
+            value,
+            page: u32::try_from(at.page.get()).unwrap_or(u32::MAX),
+            x: hundredths(at.point.x),
+            y: hundredths(at.point.y),
+        });
+    }
+    marks
 }
 
 /// The text of a laid-out page: its text runs in layout order, a new line wherever a

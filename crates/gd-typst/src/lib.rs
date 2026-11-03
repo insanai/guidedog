@@ -140,6 +140,9 @@ pub struct Options<'a> {
     /// Asked with the size of the embedded compiler's output before it is written; `false`
     /// refuses the compile. The typst program writes its output itself and is not asked.
     pub reserve: Option<&'a dyn Fn(usize) -> bool>,
+    /// The label of the `metadata` elements whose string values and page positions the
+    /// compile reports as [`Compiled::marks`] (embedded backend, paged targets only).
+    pub marks: Option<&'a str>,
 }
 
 impl fmt::Debug for Options<'_> {
@@ -154,8 +157,22 @@ impl fmt::Debug for Options<'_> {
             .field("font_paths", &self.font_paths)
             .field("read_roots", &self.read_roots)
             .field("reserve", &self.reserve.is_some())
+            .field("marks", &self.marks)
             .finish()
     }
+}
+
+/// A labelled `metadata` element as laid out: its string value and where it stands.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct Mark {
+    /// The metadata's value, when it is a string; empty otherwise.
+    pub value: String,
+    /// The page, from 1.
+    pub page: u32,
+    /// The distance from the page's left edge, in hundredths of a point.
+    pub x: i32,
+    /// The distance from the page's top edge, in hundredths of a point.
+    pub y: i32,
 }
 
 /// What a successful compile reports besides the artifact it wrote.
@@ -169,6 +186,9 @@ pub struct Compiled {
     /// callers and tests can check a PDF without reading it back. `None` for an HTML
     /// target and for the typst program, which reports only the file it wrote.
     pub pages: Option<Vec<String>>,
+    /// The elements [`Options::marks`] asked for, in document order; empty for the
+    /// typst program, which reports only the file it wrote.
+    pub marks: Vec<Mark>,
 }
 
 /// Looks `name` up on PATH, handling Windows' `;` and `.exe`; a name holding a path

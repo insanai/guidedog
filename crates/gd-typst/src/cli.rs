@@ -73,7 +73,7 @@ pub(crate) fn run(
         return Err(Error::Compile { exit_code, diagnostics, detail });
     }
     // The typst program hands back only the file it wrote, not the laid-out pages.
-    Ok(Compiled { diagnostics, detail, pages: None })
+    Ok(Compiled { diagnostics, detail, pages: None, marks: Vec::new() })
 }
 
 fn bounded(mut text: String) -> String {

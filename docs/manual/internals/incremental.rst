@@ -170,21 +170,16 @@ swept after the commit.
 The writing layer
 -----------------
 
-Every output is a set of units, each with a key: a document's page (its docname), the
-search index (``search``), a book (``book:<file>``), the files every page shares
-(``SITE_UNIT``, the empty key). The manifest records per unit the digest of its inputs,
-the files it made, the assets it needs, its lookups with the digest of each answer,
-its reports, and the files it read besides its documents (a book's template, images and graphs). ``Generation::reuse(key, inputs, answer)`` keeps a unit when, under no
-``-a``:
+Every output is a set of units, each with a key: a document's page (its docname), the search index (``search``), a book (``book:<file>``), the files every page shares (``SITE_UNIT``, the empty key). The manifest records per unit the digest of its inputs, the files it made, the assets it needs, its lookups with the digest of each answer, its reports, and the files it read besides its documents: a book's template, images and graphs, and every file the unit copied. ``Generation::reuse(key, inputs, answer)`` keeps a unit when, under no ``-a``:
 
 * the manifest has the unit with the same inputs digest;
 * every recorded lookup, answered again now (``gd_resolve::lookup_answer``), has the
   digest recorded with it;
 * every file it made is still in the output folder.
 
-A kept unit reports its stored diagnostics again, so a build's result never depends on
-what an earlier build left behind. After writing, the build lists every unit with its files and the files it was made from in ``gd-dependencies.json`` in the output folder, so an editor can rebuild only the outputs a changed file affects (GDS 0017). A unit written again whose bytes match the file in
-place only records the file, so unchanged files keep their times.
+A kept unit reports its stored diagnostics again, so a build's result never depends on what an earlier build left behind. A unit written again whose bytes match the file in place only records the file, so unchanged files keep their times.
+
+After writing, the build lists every unit with its files and the files it was made from in ``gd-dependencies.json`` in the output folder, so an editor can rebuild only the outputs a changed file affects (GDS 0017). A file a document asked for that does not exist is listed too, and the document is read again in every build until the file appears.
 
 Unit inputs
 ~~~~~~~~~~~

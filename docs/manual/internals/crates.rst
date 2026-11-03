@@ -195,7 +195,7 @@ Internal crates
 Every other package is internal:
 
 - the host and project layers: ``gd-host``, ``gd-conf``, ``gd-env``, ``gd-outputs``, ``gd-serve``, ``gd-i18n``, ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-intl``, ``gd-migrate``, ``gd-pages`` and ``gd-project``;
-- the command line and its services: ``gd-cli``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
+- the command line and its services: ``gd-cli``, ``gd-capabilities``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
 ``gd-theme`` embeds the built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``) and the browser assets (``guidedog.css``, ``guidedog.js``, ``typography.js``) so that ``quickstart``, ``gd-site`` and ``gd-book`` share one source without a runtime data folder. Its ``pack`` module encodes, decodes, and verifies deterministic ``.gdt`` theme archives and ``guidedog-theme.lock`` files offline.

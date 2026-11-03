@@ -1,6 +1,6 @@
 //! Cases a review found: each once panicked, lost text or accepted a wrong edit.
 
-use super::{all, edited, map_of};
+use super::{all, edited, map_of, outline};
 use crate::*;
 
 #[test]
@@ -55,4 +55,17 @@ fn a_truncated_map_refuses_edits() {
         Operation::InsertBlock { anchor: map.roots[2], position: Position::After, markup: "d" };
     let error = apply_operation(text, &options, &op).unwrap_err();
     assert_eq!(error.code, "edit.truncated");
+}
+
+#[test]
+fn an_underline_is_not_the_next_title_overline() {
+    let text = "A\n===\nB\n---\n\ntext\n";
+    let map = map_of(Format::Rst, text);
+    assert_eq!(outline(&map), "section(title section(title paragraph))");
+    let titles = all(&map, BlockKind::Title);
+    assert_eq!(map.blocks[titles[1].index()].span.text(text), "B\n---");
+    let over = "===\nA\n===\n\nB\n---\n\ntext\n";
+    let map = map_of(Format::Rst, over);
+    let titles = all(&map, BlockKind::Title);
+    assert_eq!(map.blocks[titles[0].index()].span.text(over), "===\nA\n===");
 }

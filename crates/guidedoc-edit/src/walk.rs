@@ -443,14 +443,21 @@ fn is_inline(kind: NodeKind) -> bool {
     kind as usize >= NodeKind::Text as usize && kind != NodeKind::Image
 }
 
-/// An RST title block: the title text, with the overline and underline around it.
+/// An RST title block: the title text, with the overline and underline around it. The
+/// line above is an overline only when it repeats the underline's character and starts
+/// the text or follows a blank line; otherwise it is the underline of the title before.
 pub(crate) fn rst_title(text: &str, span: Span, level: u8) -> Draft {
     let line = line_start(text, span.start);
-    let over = previous_line(text, line).filter(|&l| is_adornment(line_at(text, l)));
     let under_at = next_line(text, line);
     let under =
         (under_at < text.len() && under_at > line && is_adornment(line_at(text, under_at)))
             .then_some(under_at);
+    let mark = |at: usize| line_at(text, at).chars().next();
+    let over = previous_line(text, line).filter(|&l| {
+        is_adornment(line_at(text, l))
+            && under.is_some_and(|u| mark(u) == mark(l))
+            && previous_line(text, l).is_none_or(|p| is_blank(line_at(text, p)))
+    });
     let start = over.unwrap_or(line);
     let end = under.map_or(span.end, |u| line_end_trimmed(text, u));
     Draft { content: vec![span], level, ..Draft::leaf(BlockKind::Title, Span::new(start, end)) }

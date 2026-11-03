@@ -72,6 +72,16 @@ impl Drop for Session<'_> {
     }
 }
 
+/// How many bytes of messages the log holds; [`forget_since`] drops what came after.
+pub(crate) fn mark() -> usize {
+    log().data.len()
+}
+
+/// Drops the messages captured after `mark`.
+pub(crate) fn forget_since(mark: usize) {
+    log().data.truncate(mark);
+}
+
 /// The messages captured so far, as text.
 fn text() -> String {
     String::from_utf8_lossy(&log().data).into_owned()

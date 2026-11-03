@@ -331,16 +331,39 @@ pub(crate) struct Graph<'l> {
 
 impl<'l> Graph<'l> {
     /// Parses the first graph in `text`; `None` when there is none.
-    fn read(_lock: &'l Locked, text: &CStr) -> Option<Graph<'l>> {
+    fn read(lock: &'l Locked, text: &CStr) -> Option<Graph<'l>> {
         // SAFETY: the lock is held and `text` is NUL-terminated; agmemread returns an
         // owned root graph or null.
-        let ptr = NonNull::new(unsafe { ffi::agmemread(text.as_ptr()) })?;
-        Some(Graph { ptr, _lock: PhantomData })
+        let ptr = NonNull::new(unsafe { ffi::agmemread(text.as_ptr()) });
+        drain_scanner(lock, text.to_bytes().len());
+        Some(Graph { ptr: ptr?, _lock: PhantomData })
     }
 
     pub(crate) fn as_ptr(&self) -> *mut ffi::Agraph {
         self.ptr.as_ptr()
     }
+}
+
+/// Empties the scanner of Graphviz releases that scan with one global buffer, such as
+/// 2.42. A read stops after the first graph and leaves the rest of the text in that
+/// buffer, so the next read would start with it: a trailing line break moves the next
+/// error a line late, and a second graph would be drawn in place of the next source.
+/// Only a read that finds no graph empties the buffer, so we read empty text until one
+/// does, closing any graph left behind, and drop what those reads logged. Releases with
+/// a scanner per read, such as 16.1, find no graph at once. Each graph left behind uses
+/// some of `limit` bytes of text, which bounds the loop.
+fn drain_scanner(_lock: &Locked, limit: usize) {
+    let mark = log::mark();
+    for _ in 0..=limit {
+        // SAFETY: the lock is held and the literal is NUL-terminated; agmemread returns
+        // an owned root graph or null.
+        let Some(left) = NonNull::new(unsafe { ffi::agmemread(c"".as_ptr()) }) else {
+            break;
+        };
+        // SAFETY: `left` is an open root graph that nothing else refers to.
+        unsafe { ffi::agclose(left.as_ptr()) };
+    }
+    log::forget_since(mark);
 }
 
 impl Drop for Graph<'_> {

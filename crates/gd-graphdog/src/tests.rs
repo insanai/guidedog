@@ -389,3 +389,27 @@ fn img_src_is_found_in_any_case() {
     assert_eq!(&label[start..end], "x.png");
     assert_eq!(files::next_img_src("<IMG>"), None);
 }
+
+/// Older Graphviz releases keep the text after a graph in their scanner; a render must
+/// not see what the render before it left behind.
+#[test]
+fn a_render_does_not_see_the_text_left_by_the_one_before() {
+    let ctx = context();
+    let bad = "digraph {\n  a -> ;\n}\n";
+    assert_eq!(render(&ctx, bad, Options::default()).expect_err("a syntax error").line, 2);
+    for good in ["digraph { a }\n", "digraph { a }\r\n", "digraph { a }\n// c\n\n\n"] {
+        render(&ctx, good, Options::default()).expect("a valid graph");
+        assert_eq!(
+            render(&ctx, bad, Options::default()).expect_err("a syntax error").line,
+            2,
+            "{good:?}"
+        );
+    }
+    let first = render_svg("digraph { a } digraph { zzz } digraph { yyy }", Options::default());
+    assert!(first.contains(">a<") && !first.contains("zzz"), "{first}");
+    let next = render_svg("digraph { b }", Options::default());
+    assert!(next.contains(">b<") && !next.contains("zzz") && !next.contains("yyy"), "{next}");
+    let after_junk = render(&ctx, "digraph { a } } junk", Options::default());
+    assert!(after_junk.is_ok(), "text after the first graph is not read");
+    assert_eq!(render(&ctx, bad, Options::default()).expect_err("a syntax error").line, 2);
+}

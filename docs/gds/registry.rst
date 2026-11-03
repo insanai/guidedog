@@ -63,5 +63,8 @@ Discussion registry
    * - 0017
      - :doc:`records/0017-source-maps-and-capabilities`
      - discussion
+   * - 0018
+     - :doc:`records/0018-confinement-and-content-rules`
+     - discussion
 
 .. gds-generated-end

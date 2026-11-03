@@ -23,5 +23,6 @@ Discussion reading order
    records/0015-lilypond-music
    records/0016-guitar-tablature
    records/0017-source-maps-and-capabilities
+   records/0018-confinement-and-content-rules
 
 .. gds-generated-end

@@ -208,7 +208,7 @@ Images for the book: imgconverter
 
 Sphinx's ``imgconverter`` runs ImageMagick to turn images LaTeX cannot use, such as GIF and SVG, into ones it can. Guidedog's PDF is typeset by Typst, which reads PNG, JPEG, GIF, SVG, WebP and PDF images directly, so there is nothing to convert. The extension is accepted, and no program is ever started. ``image_converter`` and ``image_converter_args`` are accepted and have no effect.
 
-An image in a format the book cannot show, such as TIFF or BMP, is reported as ``imgconverter.format``, and the book shows its alternative text in its place. The hint suggests a PNG, JPEG, GIF or SVG version. When we name the image ``picture.*``, each output picks the first version it reads.
+An image in a format the book cannot show, such as TIFF or BMP, is reported as ``imgconverter.format``, and the book shows its alternative text in its place. The hint suggests a PNG, JPEG, GIF or SVG version. When we name the image ``picture.*``, each output picks the first version it reads. Pages prefer SVG, PNG, GIF, WebP and then JPEG; the book prefers SVG, PNG, JPEG and then GIF. So a project can keep a WebP picture for pages beside a JPEG copy for the book.
 
 Diagnostics
 -----------

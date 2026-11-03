@@ -8,7 +8,7 @@ use guidedoc_sphinx::Config;
 use crate::gaps;
 use crate::lines::{
     indent_of, is_blank, line_at, line_end_trimmed, line_start, line_starts, next_line,
-    previous_line, trim_end,
+    previous_line, quoted_line, trim_end,
 };
 use crate::map::{BlockKind, DirectiveParts};
 use crate::parts::{self, Ctx};
@@ -120,7 +120,7 @@ impl<'d, 't> Walker<'d, 't> {
     /// The block for node `id`; `None` for a node to look through.
     fn block(&mut self, id: NodeId, span: Span, area: Area) -> Option<Draft> {
         let kind = self.doc.kind(id);
-        if let Some(parts) = parts::directive(&self.ctx, span) {
+        if let Some(parts) = parts::directive(&self.ctx, span, area.quotes) {
             return Some(self.directive(id, kind, span, parts, area));
         }
         let leaf = |k| Some(Draft::leaf(k, span));
@@ -139,7 +139,7 @@ impl<'d, 't> Walker<'d, 't> {
             NodeKind::FieldList => Some(self.container(id, span, area, BlockKind::FieldList)),
             NodeKind::Field => Some(self.field(id, span, area)),
             NodeKind::CodeBlock | NodeKind::Preformatted | NodeKind::DoctestBlock => {
-                Some(self.literal(span))
+                Some(self.literal(span, area.quotes))
             }
             NodeKind::Figure => Some(self.container(id, span, area, BlockKind::Figure)),
             NodeKind::Admonition => Some(self.container(id, span, area, BlockKind::Admonition)),
@@ -310,23 +310,21 @@ impl<'d, 't> Walker<'d, 't> {
     }
 
     /// A literal block not written as a directive: an RST `::` block, a Markdown fence
-    /// or indented code, or a doctest block.
-    fn literal(&self, span: Span) -> Draft {
+    /// or indented code, or a doctest block, inside `quotes` Markdown quote markers.
+    fn literal(&self, span: Span, quotes: usize) -> Draft {
         let text = self.ctx.text;
-        let first = line_at(text, span.start).trim_start();
-        let fenced = self.ctx.format == Format::Markdown
-            && (first.starts_with("```") || first.starts_with("~~~"));
-        if fenced {
-            let body = Span::new(next_line(text, span.start), line_start(text, span.end));
+        let start = line_start(text, span.start);
+        if self.ctx.format == Format::Markdown
+            && let Some(body) = fence_body(text, span, quotes)
+        {
             let content = if body.start < body.end {
-                code_lines(text, trim_end(text, body))
+                code_lines(text, trim_end(text, body), quotes)
             } else {
                 Vec::new()
             };
             return Draft { content, ..Draft::leaf(BlockKind::LiteralBlock, span) };
         }
-        let start = line_start(text, span.start);
-        let content = code_lines(text, Span::new(start, span.end));
+        let content = code_lines(text, Span::new(start, span.end), quotes);
         let marker = previous_nonblank(text, start).filter(|&l| line_at(text, l).trim() == "::");
         let span = Span::new(marker.unwrap_or(start), span.end);
         Draft { content, ..Draft::leaf(BlockKind::LiteralBlock, span) }
@@ -365,7 +363,7 @@ impl<'d, 't> Walker<'d, 't> {
         match (block_kind, parts.content) {
             (BlockKind::Image, _) | (_, None) => {}
             (BlockKind::LiteralBlock | BlockKind::Table, Some(content)) => {
-                draft.content = code_lines(self.ctx.text, content);
+                draft.content = code_lines(self.ctx.text, content, area.quotes);
             }
             (_, Some(content)) => {
                 let inner = Area { region: content, ..area };
@@ -374,7 +372,7 @@ impl<'d, 't> Walker<'d, 't> {
                     && draft.children.iter().all(|c| c.kind == BlockKind::Source)
                 {
                     draft.children.clear();
-                    draft.content = code_lines(self.ctx.text, content);
+                    draft.content = code_lines(self.ctx.text, content, area.quotes);
                 }
             }
         }
@@ -522,13 +520,31 @@ fn comment_lines(text: &str, span: Span) -> Vec<Span> {
     out
 }
 
-/// The lines of code: each without the indentation all non-blank lines share; blank
-/// lines as empty spans.
-pub(crate) fn code_lines(text: &str, span: Span) -> Vec<Span> {
+/// The body of a Markdown fence at `span`, inside `quotes` quote markers: the lines
+/// after the opening fence, up to the closing fence when there is one and to the end of
+/// the span otherwise. `None` when the span does not open with a fence.
+fn fence_body(text: &str, span: Span, quotes: usize) -> Option<Span> {
+    let first = quoted_line(text, span.start, quotes).1.trim_start();
+    let fence = first.chars().next().filter(|c| matches!(c, '`' | '~'))?;
+    let count = first.len() - first.trim_start_matches(fence).len();
+    if count < 3 {
+        return None;
+    }
+    let start = line_start(text, span.start);
+    let last = line_start(text, span.end);
+    let closing = quoted_line(text, last, quotes).1.trim();
+    let closed = last > start && closing.len() >= count && closing.chars().all(|c| c == fence);
+    let end = if closed { last } else { span.end };
+    Some(Span::new(next_line(text, span.start).min(end), end))
+}
+
+/// The lines of code inside `quotes` Markdown quote markers: each without the markers
+/// and the indentation all non-blank lines share; blank lines as empty spans.
+pub(crate) fn code_lines(text: &str, span: Span, quotes: usize) -> Vec<Span> {
     let starts = line_starts(text, Span::new(line_start(text, span.start), span.end));
     let indent = starts
         .iter()
-        .map(|&s| line_at(text, s))
+        .map(|&s| quoted_line(text, s, quotes).1)
         .filter(|l| !is_blank(l))
         .map(indent_of)
         .min()
@@ -537,7 +553,12 @@ pub(crate) fn code_lines(text: &str, span: Span) -> Vec<Span> {
         .into_iter()
         .map(|s| {
             let end = line_end_trimmed(text, s).min(span.end);
-            if is_blank(&text[s..end]) { Span::new(end, end) } else { Span::new(s + indent, end) }
+            let from = quoted_line(text, s, quotes).0.min(end);
+            if is_blank(&text[from..end]) {
+                Span::new(end, end)
+            } else {
+                Span::new((from + indent).min(end), end)
+            }
         })
         .collect()
 }

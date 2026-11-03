@@ -61,7 +61,7 @@ pub(crate) fn chunks(ctx: &Ctx<'_>, span: Span, quotes: usize) -> Vec<Draft> {
         at = next;
     }
     out.extend(current.map(|(chunk, _)| chunk));
-    out.into_iter().map(|chunk| block(ctx, chunk)).collect()
+    out.into_iter().map(|chunk| block(ctx, chunk, quotes)).collect()
 }
 
 /// The offset of the first character of `line` after white space and `quotes` quote
@@ -81,10 +81,11 @@ fn content_start(line: &str, quotes: usize) -> Option<usize> {
     (at < line.len()).then_some(at)
 }
 
-fn block(ctx: &Ctx<'_>, chunk: Span) -> Draft {
-    match parts::directive(ctx, chunk) {
+fn block(ctx: &Ctx<'_>, chunk: Span, quotes: usize) -> Draft {
+    match parts::directive(ctx, chunk, quotes) {
         Some(parts) => {
-            let content = parts.content.map(|c| code_lines(ctx.text, c)).unwrap_or_default();
+            let content =
+                parts.content.map(|c| code_lines(ctx.text, c, quotes)).unwrap_or_default();
             Draft { content, directive: Some(parts), ..Draft::leaf(BlockKind::Directive, chunk) }
         }
         None => Draft::leaf(BlockKind::Source, chunk),

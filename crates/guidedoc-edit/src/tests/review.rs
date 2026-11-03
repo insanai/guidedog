@@ -69,3 +69,35 @@ fn an_underline_is_not_the_next_title_overline() {
     let titles = all(&map, BlockKind::Title);
     assert_eq!(map.blocks[titles[0].index()].span.text(over), "===\nA\n===");
 }
+
+#[test]
+fn code_in_a_markdown_quote_has_no_quote_markers() {
+    let text = "> ```\n> code\n> ```\n";
+    let map = map_of(Format::Markdown, text);
+    let code = all(&map, BlockKind::LiteralBlock)[0];
+    assert_eq!(map.content_text(code, text), "code");
+    let op = Operation::ReplaceText { block: code, text: "a\n\nb" };
+    assert_eq!(edited(Format::Markdown, text, op), "> ```\n> a\n>\n> b\n> ```\n");
+    let text = "> ```{code-block} python\n> :linenos:\n>\n> x = 1\n> ```\n";
+    let map = map_of(Format::Markdown, text);
+    let code = all(&map, BlockKind::LiteralBlock)[0];
+    assert_eq!(map.content_text(code, text), "x = 1");
+    let options = &map.blocks[code.index()].directive.as_ref().unwrap().options;
+    assert_eq!(options[0].name.text(text), "linenos");
+    let op = Operation::ReplaceText { block: code, text: "y = 2" };
+    assert_eq!(edited(Format::Markdown, text, op), text.replace("x = 1", "y = 2"));
+}
+
+#[test]
+fn an_unclosed_fence_keeps_its_last_line() {
+    let text = "```\ncode\nmore";
+    let map = map_of(Format::Markdown, text);
+    let code = all(&map, BlockKind::LiteralBlock)[0];
+    assert_eq!(map.content_text(code, text), "code\nmore");
+    let op = Operation::ReplaceText { block: code, text: "x" };
+    assert_eq!(edited(Format::Markdown, text, op), "```\nx");
+    let one = "```\ncode";
+    let map = map_of(Format::Markdown, one);
+    let code = all(&map, BlockKind::LiteralBlock)[0];
+    assert_eq!(map.content_text(code, one), "code");
+}

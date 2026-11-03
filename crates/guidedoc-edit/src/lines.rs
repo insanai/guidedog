@@ -47,17 +47,18 @@ pub(crate) fn indent_of(line: &str) -> usize {
     line.len() - line.trim_start_matches([' ', '\t']).len()
 }
 
-/// The starts of the lines that `span` touches, in order.
+/// The starts of the lines that `span` touches, in order. The last line of a text that
+/// does not end in a line break is followed by no other line.
 pub(crate) fn line_starts(text: &str, span: Span) -> Vec<usize> {
     let mut out = Vec::new();
     let mut at = line_start(text, span.start);
     while at < span.end.max(at + 1) && at <= text.len() {
         out.push(at);
-        let next = next_line(text, at);
-        if next == at || next > span.end {
+        let end = line_end(text, at);
+        if end >= text.len() || end + 1 > span.end {
             break;
         }
-        at = next;
+        at = end + 1;
     }
     out
 }
@@ -76,6 +77,37 @@ pub(crate) fn skip_blank_lines(text: &str, at: usize) -> usize {
         at = next_line(text, at);
     }
     at
+}
+
+/// The offset after up to `quotes` Markdown quote markers that start the line at
+/// `start`, which ends at `end`: each `>` may follow up to three spaces and takes one
+/// space after it. Code keeps any further indentation.
+pub(crate) fn strip_quotes(text: &str, start: usize, end: usize, quotes: usize) -> usize {
+    let bytes = text.as_bytes();
+    let end = end.min(text.len());
+    let mut at = start.min(end);
+    for _ in 0..quotes {
+        let mut p = at;
+        while p < end && p - at < 3 && bytes[p] == b' ' {
+            p += 1;
+        }
+        if p >= end || bytes[p] != b'>' {
+            break;
+        }
+        at = p + 1;
+        if at < end && bytes[at] == b' ' {
+            at += 1;
+        }
+    }
+    at
+}
+
+/// The line at `at` after `quotes` quote markers, without its line break; and where
+/// that text starts.
+pub(crate) fn quoted_line(text: &str, at: usize, quotes: usize) -> (usize, &str) {
+    let end = line_end_trimmed(text, at);
+    let from = strip_quotes(text, line_start(text, at), end, quotes);
+    (from, &text[from..end])
 }
 
 /// `prefix` with every character but white space (and `>` in Markdown quotes) turned
@@ -97,6 +129,8 @@ mod tests {
         assert_eq!(previous_line(text, 6), Some(0));
         assert_eq!(skip_blank_lines(text, 5), 12);
         assert_eq!(line_starts(text, Span { start: 1, end: 13 }), vec![0, 4, 11, 12]);
+        assert_eq!(line_starts(text, Span { start: 12, end: 16 }), vec![12]);
+        assert_eq!(line_starts("a\n", Span { start: 0, end: 2 }), vec![0, 2]);
         assert_eq!(indent_of("  \tx"), 3);
         assert_eq!(continuation("> - ", true), ">   ");
         assert_eq!(continuation("#. ", false), "   ");

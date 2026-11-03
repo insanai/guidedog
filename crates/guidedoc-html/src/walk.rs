@@ -109,7 +109,10 @@ impl Html<'_, '_> {
                 self.stack.pop();
                 self.leave(open, close);
             }
-            let Visit::Descend(close) = self.enter(i) else {
+            let mark = self.w.written();
+            let visit = self.enter(i);
+            self.mark_source(i, mark);
+            let Visit::Descend(close) = visit else {
                 i = self.doc.subtree_end(i);
                 continue;
             };

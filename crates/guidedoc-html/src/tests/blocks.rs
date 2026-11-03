@@ -1,6 +1,6 @@
 use guidedoc::{
     AdmonitionKind, Align, AttributeKey as A, Builder, CellInfo, Fail, LinkInfo, LinkKind,
-    ListInfo, ListStyle, NodeFlags, NodeKind as K, Status,
+    ListInfo, ListStyle, NodeFlags, NodeKind as K, SourceId, Status,
 };
 
 use super::*;
@@ -564,4 +564,24 @@ fn aliases_go_inside_or_before_elements() {
         "<p id=\"a\"><span id=\"b\"></span>Text</p>\n\
          <span id=\"d\"></span><ul id=\"c\">\n<li>\n<p>x</p>\n</li>\n</ul>\n"
     );
+}
+
+#[test]
+fn previews_carry_source_positions_on_blocks() {
+    fn spanned(b: &mut Builder<'_>) -> Result<(), Fail> {
+        let span = |start, end| SourceSpan::new(SourceId(0), start, end);
+        let list = b.begin_node(K::List, span(0, 20))?;
+        b.begin_node(K::ListItem, span(2, 20))?;
+        let para = b.begin_node(K::Paragraph, span(2, 8))?;
+        b.add_text_leaf(K::Text, span(2, 8), "item")?;
+        b.end_node(para)?;
+        shut(b)?;
+        b.end_node(list)
+    }
+    let options = RenderOptions { source_positions: Some(""), ..frag() };
+    let r = render(spanned, options);
+    has(&r, "<ul data-gd-source=\"tree.txt:0-20\">");
+    has(&r, "<li data-gd-source=\"tree.txt:2-20\">");
+    has(&r, "<p data-gd-source=\"tree.txt:2-8\">item</p>");
+    lacks(&render(spanned, frag()), "data-gd-source");
 }

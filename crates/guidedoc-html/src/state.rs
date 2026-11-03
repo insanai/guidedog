@@ -23,6 +23,21 @@ pub(crate) struct Writer<'c, 'a> {
 }
 
 impl<'c, 'a> Writer<'c, 'a> {
+    /// The number of bytes written so far.
+    pub fn written(&self) -> usize {
+        self.ctx.out.written()
+    }
+
+    /// The bytes written since `from` bytes had been, when they are stored.
+    pub fn written_since(&self, from: usize) -> &[u8] {
+        self.ctx.out.written_since(from)
+    }
+
+    /// Inserts `s` where `at` bytes had been written.
+    pub fn insert(&mut self, at: usize, s: &str) {
+        self.ctx.out.insert_bytes(at, s.as_bytes());
+    }
+
     /// Writes `s`.
     pub fn put(&mut self, s: &str) {
         if let Some(&c) = s.as_bytes().last() {

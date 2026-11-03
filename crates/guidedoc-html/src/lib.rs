@@ -19,6 +19,7 @@ mod escape;
 mod fields;
 mod inlines;
 mod notes;
+mod positions;
 mod sections;
 mod sphinx;
 mod state;
@@ -31,6 +32,8 @@ use guidedoc::{
 };
 
 use state::{Html, HtmlWork};
+
+pub use positions::SOURCE_ATTRIBUTE;
 
 /// The renderer's version: the project version every crate inherits.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

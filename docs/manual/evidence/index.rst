@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.11`
+     - Editable source maps, previews and dependency manifests for editors, two faults nisaba found, the pre-release review and verified five-platform publication (3 November 2026)
    * - :doc:`release-1.0.0-beta.10`
      - LilyPond-style time signatures and chord names, the moved unpublished tag, closed web typography issue and verified five-platform publication (2 November 2026)
    * - :doc:`release-1.0.0-beta.9`
@@ -46,6 +48,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   release-1.0.0-beta.11
    release-1.0.0-beta.10
    release-1.0.0-beta.9
    release-1.0.0-beta.8

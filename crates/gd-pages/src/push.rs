@@ -68,13 +68,16 @@ pub enum PushOutcome {
     Unknown(Problem),
 }
 
-/// Sends the request file at `request` (of `size` bytes), which moves `branch`, and
-/// reads GitHub's report.
+/// Sends the request file at `request` (of `size` bytes), which moves `branch` from
+/// `old` (`None` for a new branch), and reads GitHub's report. A refusal is
+/// `pages.conflict` when the branch no longer holds `old`: receive-pack's words say so
+/// only sometimes, so the branch is read again when they do not.
 pub fn push(
     c: &Client,
     owner: &str,
     repo: &str,
     branch: &str,
+    old: Option<Id>,
     request: &Path,
     size: u64,
 ) -> PushOutcome {
@@ -108,7 +111,36 @@ pub fn push(
         }
         Some(_) => return PushOutcome::Unknown(transfer_problem(&r, &url, x.doing)),
     }
-    read_report(&r.body, &url, branch)
+    match read_report(&r.body, &url, branch) {
+        PushOutcome::Refused(p) => PushOutcome::Refused(moved(c, owner, repo, branch, old, p)),
+        outcome => outcome,
+    }
+}
+
+/// The problem of a refused push: a conflict when the branch no longer holds `old`,
+/// which tells it more surely than receive-pack's words. Stock Git, for one, refuses a
+/// stale update with only "failed to update ref".
+fn moved(
+    c: &Client,
+    owner: &str,
+    repo: &str,
+    branch: &str,
+    old: Option<Id>,
+    refused: Problem,
+) -> Problem {
+    if refused.code == "pages.conflict" || refused.code == "pages.ruleset" {
+        return refused;
+    }
+    match branch_head(c, owner, repo, branch) {
+        Ok(head) if head != old => problem(
+            "pages.conflict",
+            "The branch moved",
+            branch,
+            &format!("Another publication moved {branch} after this one read it."),
+            "Run the command again: it plans from the branch as it is now.",
+        ),
+        _ => refused,
+    }
 }
 
 fn read_report(body: &[u8], url: &str, branch: &str) -> PushOutcome {
@@ -146,7 +178,12 @@ fn read_report(body: &[u8], url: &str, branch: &str) -> PushOutcome {
 pub(crate) fn refusal(branch: &str, reason: &str) -> Problem {
     let lower = reason.to_lowercase();
     let says = |words: &[&str]| words.iter().any(|w| lower.contains(w));
-    if says(&["fetch first", "stale", "non-fast-forward", "failed to lock"]) {
+    // GitHub says "cannot lock ref 'refs/heads/B': is at X but expected Y" for a stale
+    // update and "... reference already exists" for a branch created meanwhile. Other
+    // "cannot lock ref" refusals, such as a name that clashes with a folder of
+    // branches, are not conflicts, so the words after it decide.
+    let stale = ["fetch first", "stale", "non-fast-forward", "failed to lock", "but expected"];
+    if says(&stale) || says(&["reference already exists"]) {
         return problem(
             "pages.conflict",
             "The branch moved",
@@ -261,6 +298,13 @@ mod tests {
         assert_eq!(refusal("gh-pages", "protected branch hook declined").code, "pages.ruleset");
         assert_eq!(refusal("gh-pages", "GH013: Repository rule violations").code, "pages.ruleset");
         assert_eq!(refusal("gh-pages", "funny refname").code, "pages.refused");
+        let github = "cannot lock ref 'refs/heads/gh-pages': is at 1a but expected 2b";
+        assert_eq!(refusal("gh-pages", github).code, "pages.conflict");
+        let created = "cannot lock ref 'refs/heads/gh-pages': reference already exists";
+        assert_eq!(refusal("gh-pages", created).code, "pages.conflict");
+        let folder = "cannot lock ref 'refs/heads/a/b': 'refs/heads/a' exists";
+        assert_eq!(refusal("a/b", folder).code, "pages.refused");
+        assert_eq!(refusal("gh-pages", "failed to update ref").code, "pages.refused");
     }
 
     #[test]

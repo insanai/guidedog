@@ -7,9 +7,10 @@ mod support;
 use std::path::Path;
 use std::time::Duration;
 
+use gd_git::{Commit, Id, Kind, Mode, Person};
 use gd_pages::{
-    Client, Journal, Settings, bind, read_config, review_target, start_device, target_key, today,
-    wait_device,
+    Blob, Client, Journal, PackContents, PushOutcome, Settings, bind, branch_head, push,
+    read_config, review_target, start_device, target_key, today, wait_device, write_pack,
 };
 use gd_plugins::{
     Cancel, ChangeKind, LoadOptions, Problem, PublisherSession, SnapshotOptions, State, snapshot,
@@ -313,4 +314,75 @@ fn device_login_follows_github() {
     assert_eq!(f.world().polls, 3);
     c.cancel = Cancel::from_fn(|| true);
     assert_eq!(wait_device(&c, "Iv1.test", &d).unwrap_err().code, "pages.cancelled");
+}
+
+/// Writes, with the public pack writer, a commit on `parent` holding `index.html` from
+/// `site` and a generated `CNAME`; returns the request, its size and the commit.
+fn public_request(site: &Path, work: &Path, parent: Id) -> (std::path::PathBuf, u64, Id) {
+    let index = site.join("index.html");
+    let (index_id, size) = gd_git::file_id(&index).unwrap();
+    let cname = b"docs.example.org\n".to_vec();
+    let cname_id = gd_git::object_id(Kind::Blob, &cname);
+    let files = [
+        gd_git::File { path: "CNAME".into(), mode: Mode::File, id: cname_id },
+        gd_git::File { path: "index.html".into(), mode: Mode::File, id: index_id },
+    ];
+    let trees = gd_git::build_trees(&files).unwrap();
+    let who = Person { name: "A".into(), email: "a@example.org".into(), time: 1, offset: 0 };
+    let commit = gd_git::commit_bytes(&Commit {
+        tree: trees.last().unwrap().id,
+        parents: vec![parent],
+        author: who.clone(),
+        committer: who,
+        message: "Publish\n".into(),
+    });
+    let candidate = gd_git::object_id(Kind::Commit, &commit);
+    let blobs = [Blob::File { path: index, size, id: index_id }, Blob::Bytes(cname)];
+    let contents = PackContents { blobs: &blobs, trees: &trees, commit: &commit };
+    let (request, size) =
+        write_pack(work, &contents, "gh-pages", Some(parent), candidate).unwrap();
+    (request, size, candidate)
+}
+
+/// A program that composes the public pack writer and push, as a server does, learns
+/// that the branch moved even when receive-pack only says "failed to update ref".
+#[test]
+fn public_pushes_tell_a_moved_branch_from_other_refusals() {
+    if !has_git() {
+        return;
+    }
+    let f = Fake::start("public");
+    let settings = f.settings();
+    let site = f.write_site("out", &[("index.html", "<p>one</p>")]);
+    let config = f.write_config(&site);
+    bind_fixture(&settings, &config, false).unwrap();
+    assert_eq!(publish_site(&settings, &config).0, State::Live);
+    let c = read_config(&config).unwrap();
+    let client = settings.client(settings.load_token(&c.profile).unwrap(), Cancel::default());
+    let read = || branch_head(&client, &c.owner, &c.repo, &c.branch).unwrap().unwrap();
+    let work = support::scratch("public-work");
+    f.write_site("out", &[("index.html", "<p>two</p>")]);
+    let head = read();
+    let (request, size, _) = public_request(&site, &work, head);
+    // Another publisher moves the branch before the push.
+    let tree = f.git(&["rev-parse", &format!("{head}^{{tree}}")]);
+    let identity = ["-c", "user.name=B", "-c", "user.email=b@example.org"];
+    let other = f.git(
+        &[&identity[..], &["commit-tree", &tree, "-p", &head.to_hex(), "-m", "other"]].concat(),
+    );
+    f.git(&["update-ref", "refs/heads/gh-pages", &other]);
+    let outcome = push(&client, &c.owner, &c.repo, &c.branch, Some(head), &request, size);
+    assert!(
+        matches!(&outcome, PushOutcome::Refused(p) if p.code == "pages.conflict"),
+        "{outcome:?}"
+    );
+    assert_eq!(read().to_hex(), other);
+    let moved = read();
+    let (request, size, candidate) = public_request(&site, &work, moved);
+    let outcome = push(&client, &c.owner, &c.repo, &c.branch, Some(moved), &request, size);
+    assert_eq!(outcome, PushOutcome::Accepted);
+    assert_eq!(read(), candidate);
+    assert_eq!(f.git(&["show", &format!("{candidate}:CNAME")]), "docs.example.org");
+    assert_eq!(f.git(&["show", &format!("{candidate}:index.html")]), "<p>two</p>");
+    let _ = std::fs::remove_dir_all(&work);
 }

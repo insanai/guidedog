@@ -73,11 +73,11 @@ impl Session {
             return Outcome::failed(p);
         }
         let c = &self.config;
-        match push(&self.client, &c.owner, &c.repo, &c.branch, &request.0, size) {
+        match push(&self.client, &c.owner, &c.repo, &c.branch, pp.head, &request.0, size) {
             PushOutcome::Accepted => self.accepted(j),
             PushOutcome::Refused(p) => {
                 let _ = self.state.drop_journal(&self.key);
-                Outcome::failed(self.moved(&j, p))
+                Outcome::failed(p)
             }
             PushOutcome::Unknown(p) => self.reconcile(j, p),
         }
@@ -332,25 +332,6 @@ impl Session {
         )
         .exit(4);
         self.reconcile(j, lost)
-    }
-
-    /// The problem of a refused push: a conflict when the branch no longer has the commit
-    /// the plan read, which tells it more surely than receive-pack's words.
-    fn moved(&self, j: &Journal, refused: Problem) -> Problem {
-        if refused.code == "pages.conflict" || refused.code == "pages.ruleset" {
-            return refused;
-        }
-        let c = &self.config;
-        match branch_head(&self.client, &c.owner, &c.repo, &c.branch) {
-            Ok(head) if head.map(|h| h.to_hex()) != j.observed => problem(
-                "pages.conflict",
-                "The branch moved",
-                &c.branch,
-                &format!("Another publication moved {} after this one read it.", c.branch),
-                "Run the command again: it plans from the branch as it is now.",
-            ),
-            _ => refused,
-        }
     }
 }
 

@@ -7,9 +7,9 @@
 
 use std::path::Path;
 
-use gd_env::{Digest, Digester, DocId, LabelKind, Lookup, LookupKind, Trace};
+use gd_env::{Digest, Digester, DocId, Environment, LabelKind, Lookup, LookupKind, Trace};
 
-use crate::tables::TargetRef;
+use crate::tables::{Tables, TargetRef};
 use crate::view::{BuildView, doc_target, file_target, item_number};
 use crate::xref::{Resolved, Unresolved, XrefQuery};
 
@@ -83,8 +83,17 @@ pub(crate) fn suffix_object<'t>(
     suffix: &str,
     role: &str,
 ) -> Option<&'t TargetRef> {
+    suffix_target(view.tables, prefix, suffix, role)
+}
+
+fn suffix_target<'t>(
+    tables: &'t Tables,
+    prefix: &str,
+    suffix: &str,
+    role: &str,
+) -> Option<&'t TargetRef> {
     let mut best: Option<(&str, &TargetRef)> = None;
-    for (key, o) in &view.tables.objects {
+    for (key, o) in &tables.objects {
         if !key.starts_with(prefix) || !key.ends_with(suffix) || !role_takes(role, &o.objtype) {
             continue;
         }
@@ -193,6 +202,47 @@ pub fn page_inputs(view: &BuildView<'_>, id: DocId, common: &Digest) -> Digest {
         }
     }
     d.finish()
+}
+
+/// The documents whose text answered `lookup`: the target's document for a name, the
+/// document itself for a document, the posts a post list selected, and for an excerpt
+/// its source and what its own lookup found. A page shows what it found there, such as
+/// a figure's caption or a term, so an editor rebuilds the page when one changes.
+/// Lookups of files, images, templates and navigation name no document.
+pub fn lookup_documents(env: &Environment, tables: &Tables, lookup: &Lookup) -> Vec<DocId> {
+    let target = |r: Option<&TargetRef>| r.map(|r| r.doc).into_iter().collect();
+    match lookup.kind {
+        LookupKind::Label => target(tables.labels.get(&lookup.key)),
+        LookupKind::Term => target(tables.terms.get(&lookup.key)),
+        LookupKind::Object => target(tables.objects.get(&lookup.key)),
+        LookupKind::Suffix => {
+            let (prefix, suffix, role) = lookup.suffix_parts().unwrap_or(("", "", ""));
+            target(suffix_target(tables, prefix, suffix, role))
+        }
+        LookupKind::Doc => tables.doc_named(&lookup.key).into_iter().collect(),
+        LookupKind::Postlist => {
+            gd_env::PostlistSpec::decode(&lookup.key).map_or_else(Vec::new, |s| s.select(env))
+        }
+        LookupKind::Excerpt => {
+            let Some((source, encoded)) = lookup.key.split_once('\0') else {
+                return Vec::new();
+            };
+            let mut out: Vec<DocId> = tables.doc_named(source).into_iter().collect();
+            if let Some(inner) = Lookup::decode(encoded).filter(|l| l.kind != LookupKind::Excerpt)
+            {
+                out.extend(lookup_documents(env, tables, &inner));
+            }
+            out
+        }
+        LookupKind::File
+        | LookupKind::FileContent
+        | LookupKind::Image
+        | LookupKind::Modules
+        | LookupKind::Cpp
+        | LookupKind::Template
+        | LookupKind::Mount
+        | LookupKind::Navigation => Vec::new(),
+    }
 }
 
 /// Answers a lookup the page of `page` (a docname) made, against this build's tables

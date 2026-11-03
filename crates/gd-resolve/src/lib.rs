@@ -49,7 +49,7 @@ pub use gd_env::{normalize_name, option_key};
 pub use index::{IndexGroup, IndexLink, IndexSub, IndexTerm, create_index};
 pub use intersphinx::{Intersphinx, IntersphinxOptions, load_intersphinx};
 pub use inventory::write_inventory;
-pub use lookups::{document_settings, page_inputs};
+pub use lookups::{document_settings, lookup_documents, page_inputs};
 pub use modindex::{ModindexEntry, ModindexLetter, has_module_index, module_index};
 pub use tables::{Tables, TargetRef, TreeEntry, object_key, resolve};
 pub use view::{

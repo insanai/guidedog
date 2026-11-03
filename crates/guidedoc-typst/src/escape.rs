@@ -188,23 +188,31 @@ impl State<'_, '_> {
         }
     }
 
-    /// With `RenderOptions::source_positions`, writes the source position of block `id`
-    /// as `#metadata("<source>:<start>-<end>")<gd-source>`, which the compiler can place
-    /// on its page; nothing for a block without a position.
-    pub(crate) fn emit_source_position(&mut self, id: NodeId) {
+    /// With `RenderOptions::source_positions`, inserts the source position of block
+    /// `id` where its output began (`start` bytes) as
+    /// `#metadata("<source>:<start>-<end>")<gd-source>`, which the compiler can place on
+    /// its page. Nothing for a block that wrote nothing (such as `.. raw:: html` in a
+    /// book), a block without a position, or a block whose span equals the last mark
+    /// written, such as the block a glossary or an epigraph wraps.
+    pub(crate) fn mark_source(&mut self, id: NodeId, start: usize) {
         let Some(positions) = self.options.source_positions else { return };
-        if self.quiet {
+        if self.quiet || self.ctx.out.written() <= start {
             return;
         }
         let span = self.doc.node(id).span;
         let Some(position) = self.positions.position(&self.doc, span, &positions) else {
             return;
         };
-        self.emit("#metadata(");
-        self.emit_string(&position);
-        self.emit(")<");
-        self.emit(SOURCE_LABEL);
-        self.emit(">");
+        if position == self.last_position {
+            return;
+        }
+        let mut mark = String::from("#metadata(");
+        write_string_literal(&mut mark, &position);
+        mark.push_str(")<");
+        mark.push_str(SOURCE_LABEL);
+        mark.push('>');
+        self.ctx.out.insert_bytes(start, mark.as_bytes());
+        self.last_position = position;
     }
 
     /// Writes a node's ids after its primary one as labelled metadata.

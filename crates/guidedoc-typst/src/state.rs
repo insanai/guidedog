@@ -68,6 +68,9 @@ pub(crate) struct State<'r, 'a> {
     pub notes: Vec<NodeId>,
     /// The offsets of the sources whose positions a preview writes.
     pub positions: PositionCache,
+    /// The last source position written, so a block inside another with the same span
+    /// adds no second mark.
+    pub last_position: String,
 }
 
 /// The renderer's storage, kept in the workspace's scratch between renders.
@@ -125,6 +128,7 @@ impl<'r, 'a> State<'r, 'a> {
             key,
             notes,
             positions: PositionCache::default(),
+            last_position: String::new(),
         })
     }
 

@@ -289,6 +289,12 @@ fn preview_books_map_pages_to_sources() {
         "project = \"Demo\"\nauthor = \"Ada\"\nsource_suffix = [\".rst\", \".md\"]\n\
          extensions = [\"myst_parser\"]\npdf_fonts = \"embedded\"\npdf_packages = \"offline\"\n",
     );
+    // A raw HTML block writes nothing in a book, and a glossary wraps a list of the same
+    // span: neither may add a mark of its own.
+    let guide = "Guide\n=====\n\nSome *text*. See :ref:`usage`.\n\n.. _usage:\n\nUsage\n-----\n\n\
+                 Use it.\n\n.. raw:: html\n\n   <b>web only</b>\n\n.. glossary::\n\n   term\n\
+                 \x20     A definition.\n";
+    dir.put("guide.rst", guide);
     let project = load(&dir.0);
     assert_built(&build(&project, BuilderKind::Pdf));
     assert!(!dir.exists("_build/pdf/demo-en.pdf.sourcemap.json"));
@@ -309,6 +315,16 @@ fn preview_books_map_pages_to_sources() {
     let page = para.get("page").and_then(|v| v.as_u64()).unwrap();
     assert!(page >= 1 && page <= pages, "{para:?}");
     assert!(marks.iter().any(|m| m.get("source").and_then(|s| s.as_str()) == Some("notes.md")));
+    let raw = guide.find(".. raw::").unwrap() as u64;
+    let at = |m: &&gd_json::Value| m.get("start").and_then(|s| s.as_u64());
+    let in_guide: Vec<_> = marks
+        .iter()
+        .filter(|m| m.get("source").and_then(|s| s.as_str()) == Some("guide.rst"))
+        .collect();
+    assert!(in_guide.iter().all(|m| at(m) != Some(raw)), "{in_guide:?}");
+    let glossary = guide.find(".. glossary::").unwrap() as u64;
+    let wrapped = in_guide.iter().filter(|m| at(m) == Some(glossary)).count();
+    assert_eq!(wrapped, 1, "{in_guide:?}");
 }
 
 /// A document that includes a file that does not exist yet is read again once the file

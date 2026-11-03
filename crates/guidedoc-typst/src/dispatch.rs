@@ -119,12 +119,15 @@ impl State<'_, '_> {
         );
         if !own_label {
             self.emit_anchor(id);
-            self.emit_source_position(id);
         }
+        let start = self.ctx.out.written();
         if route(n.kind) == Route::Part {
             self.unhandled(id);
         } else {
             self.render_node(id, &n, true);
+        }
+        if !own_label {
+            self.mark_source(id, start);
         }
         self.leave();
     }

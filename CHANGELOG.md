@@ -9,7 +9,7 @@ beside it.
 
 - Add editable source maps (GDS 0017): the new reusable crate `guidedoc-edit` maps a reStructuredText or Markdown document, read with the Sphinx and MyST readers, to a tree of blocks with the spans of their markup, their editable text and their directive parts. Its operations replace text, insert, delete and move blocks, set and remove directive options, and insert list items as minimal edits, and refuse any edit whose result does not read back with the intended structure.
 - Add `guidedog capabilities [PROJECT] [--json]` and the `gd-capabilities` crate: formats, source maps and edit operations, builders, every directive and role with its options and what enables it, Markdown and Sphinx extensions, and the linked plugins, all from the code the program links. `guidedoc-sphinx` lists its directives and roles (`directives`, `roles`, `find_directive`), and `guidedoc-rst` exports Docutils' tables.
-- Preview builds write source positions: a `data-gd-source="<source>:<start>-<end>"` attribute on HTML blocks, and with the embedded Typst compiler a `<file>.sourcemap.json` page map beside each PDF.
+- Preview builds write source positions: a `data-gd-source="<source>:<start>-<end>"` attribute on HTML blocks, counting the bytes of the file as stored, and with the embedded Typst compiler a `<file>.sourcemap.json` page map beside each PDF.
 - Every HTML, PDF and text build writes `gd-dependencies.json` beside its output: the files each page and book was made from. The output manifest's version is now 3, so the first build after an upgrade writes every output again.
 
 ## 1.0.0-beta.10 - 2026-11-02

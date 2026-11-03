@@ -112,13 +112,17 @@ Refusals are ``EditError`` values with stable codes: ``edit.unknown-block``, ``e
 For example, in ``* item one\n  continues`` replacing the item's text with ``first\nsecond line`` gives the single edit ``"item one\n  continues"`` to ``"first\n  second line"``, and inserting the item ``new`` after ``1. one`` in ``1. one\n\n2. two`` gives ``1. one\n\n2. new\n\n3. two``.
 
 *HTML source positions.*
-``RenderOptions::source_positions`` names the folder source names are written relative to.
-With it, the HTML renderer adds ``data-gd-source="<source>:<start>-<end>"`` to the first element each block writes: sections, headings, paragraphs, lists and items, terms, literal blocks, figures and captions, admonitions, tables, directives and stand-alone images.
-The span is the block's byte span in the source it was read from, which is an included file for included text.
+``RenderOptions::source_positions`` holds a ``guidedoc::SourcePositions``: the folder source names are written relative to, and a function that tells how many bytes a source file holds before the text it was read as.
+With it, the HTML renderer adds ``data-gd-source="<source>:<start>-<end>"`` to the element of each block: sections, headings, paragraphs, lists and items, terms, literal blocks, figures and captions, admonitions, tables, directives and stand-alone images.
+A block with several labels writes an empty anchor for each label after the first before its element; the attribute goes on the element, not on those anchors.
+The span is the block's byte span in the file it was read from, which is an included file for included text.
+The readers drop a leading byte order mark, so preview builds count its 3 bytes back in: positions are offsets in the file's own bytes, as an editor reads them.
+Text a reader generates rather than reads from a file, such as ``rst_epilog``, autodoc's signatures and MyST substitutions, has a source name in angle brackets and carries no position.
 Preview builds (``--preview``) set it to the source folder; other builds write no positions, and a preview's pages are never reused for a build or the other way round.
 
 *PDF page maps.*
-In a preview, the Typst renderer writes ``#metadata("<source>:<start>-<end>")<gd-source>`` before each block.
+In a preview, the Typst renderer writes ``#metadata("<source>:<start>-<end>")<gd-source>`` before each block, by the rules of HTML positions.
+A block that writes nothing in a book, such as ``.. raw:: html``, has no mark, and a block that wraps another of the same span, such as a glossary or an epigraph, adds no second one.
 The embedded compiler reports where each such element stands (``gd_typst::Compiled::marks``), and the book builder writes ``<file>.sourcemap.json`` beside the PDF:
 
 .. code-block:: json
@@ -129,7 +133,7 @@ The embedded compiler reports where each such element stands (``gd_typst::Compil
 
 A mark is the block's top left corner in points from the page's top left corner.
 A block that breaks across pages has one mark, on its first page, and section titles carry no mark of their own; the next block marks their page.
-The typst program reports no positions, so a book it typesets has ``"complete": false`` and no marks.
+The typst program reports no positions and no page count, so a book it typesets has ``"complete": false``, ``"pages": null`` and no marks.
 
 *Dependency manifest.*
 Every HTML, PDF and text build writes ``gd-dependencies.json`` in its output folder:
@@ -186,7 +190,7 @@ Backwards compatibility
 
 Existing builds are unchanged except for the new ``gd-dependencies.json`` file in their output.
 The output manifest's version is now 3, so the first build after an upgrade writes every unit again.
-``RenderOptions`` gains ``source_positions``, ``gd_typst::Options`` gains ``marks``, ``Compiled`` gains ``marks``, and ``UnitRecord`` and ``OutputRecord`` gain ``files_read``; callers that build these with struct literals must add them, which the 1.0 beta versioning permits.
+``RenderOptions`` gains ``source_positions``, ``guidedoc`` gains ``SourcePositions``, ``PositionCache`` and ``relative_source``, ``gd_typst::Options`` gains ``marks``, ``Compiled`` gains ``marks``, and ``UnitRecord`` and ``OutputRecord`` gain ``files_read``; callers that build these with struct literals must add them, which the 1.0 beta versioning permits.
 ``guidedoc-rst`` exports ``standard_directives``, ``find_standard_directive``, ``standard_roles`` and ``column_width``; nothing existing changes.
 
 Acceptance criteria and implementation status

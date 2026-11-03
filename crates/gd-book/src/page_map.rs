@@ -13,7 +13,8 @@
 //! in document order. Typst places a block's mark where the block starts; a block that
 //! breaks across pages has one mark, on its first page. Section titles carry no mark of
 //! their own; the first block after them does. `complete` is false when the typst
-//! program, which reports no positions, typeset the book: the map then has no marks.
+//! program, which reports no positions, typeset the book: the map then has no marks,
+//! and `pages` is `null`, since that program does not report its page count either.
 
 use std::fmt::Write;
 
@@ -30,7 +31,7 @@ pub fn page_map_name(file: &str) -> String {
 /// The page map of the PDF `file`, from what compiling it reported; `positions` tells
 /// whether the compiler reported positions (the embedded one does).
 pub(crate) fn page_map_json(file: &str, compiled: &Compiled, positions: bool) -> String {
-    let pages = compiled.pages.as_ref().map_or(0, Vec::len);
+    let pages = compiled.pages.as_ref().map_or("null".to_string(), |p| p.len().to_string());
     let mut out = format!("{{\"schema\":{PAGE_MAP_SCHEMA},\"pdf\":");
     gd_report::escape_json(&mut out, file);
     let _ = write!(out, ",\"complete\":{positions},\"pages\":{pages},\"marks\":[");
@@ -83,5 +84,11 @@ mod tests {
              \"start\":10,\"end\":24}]}\n"
         );
         assert_eq!(page_map_name("guide.pdf"), "guide.pdf.sourcemap.json");
+        let program = page_map_json("guide.pdf", &Compiled::default(), false);
+        assert_eq!(
+            program,
+            "{\"schema\":1,\"pdf\":\"guide.pdf\",\"complete\":false,\"pages\":null,\
+             \"marks\":[]}\n"
+        );
     }
 }

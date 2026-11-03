@@ -261,7 +261,8 @@ const BUILD: &str = "  USAGE
     -E                 Fresh build: ignore the saved environment
     -W                 Treat warnings as errors
     --keep-going       With -W, finish the build before failing
-    --untrusted        Leave out raw content, fetch nothing, run no build plugin
+    --untrusted        Read only the source folder, fetch nothing, run no plugin
+                       or typst program, and omit raw content and unsafe URLs
     --preview          Include drafts, scheduled pages and expired pages
     --now=RFC3339      Fix the UTC build clock for scheduled publication
     -n                 Nitpicky: warn about every unresolved reference

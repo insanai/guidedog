@@ -7,10 +7,15 @@ beside it.
 
 ## Unreleased
 
+## 1.0.0-beta.11 - 2026-11-03
+
 - Add editable source maps (GDS 0017): the new reusable crate `guidedoc-edit` maps a reStructuredText or Markdown document, read with the Sphinx and MyST readers, to a tree of blocks with the spans of their markup, their editable text and their directive parts. Its operations replace text, insert, delete and move blocks, set and remove directive options, and insert list items as minimal edits, and refuse any edit whose result does not read back with the intended structure.
 - Add `guidedog capabilities [PROJECT] [--json]` and the `gd-capabilities` crate: formats, source maps and edit operations, builders, every directive and role with its options and what enables it, Markdown and Sphinx extensions, and the linked plugins, all from the code the program links. `guidedoc-sphinx` lists its directives and roles (`directives`, `roles`, `find_directive`), and `guidedoc-rst` exports Docutils' tables.
 - Preview builds write source positions: a `data-gd-source="<source>:<start>-<end>"` attribute on HTML blocks, counting the bytes of the file as stored, and with the embedded Typst compiler a `<file>.sourcemap.json` page map beside each PDF.
-- Every HTML, PDF and text build writes `gd-dependencies.json` beside its output: the files each page and book was made from. The output manifest's version is now 3, so the first build after an upgrade writes every output again.
+- Every HTML, PDF and text build writes `gd-dependencies.json` beside its output: for each page, book and shared file, the documents and files it was made from, the documents its references found answers in, the files it copied, and the files it asked for that do not exist. The output manifest's version is now 3, so the first build after an upgrade writes every output again.
+- `gd-pages` makes its pack writer public (`write_pack`, `PackContents`, `Blob`), and `push` now takes the commit the branch held: it reads the branch again after a refusal whose words it cannot place, so a branch another publication moved is always `pages.conflict`. Stock Git says only "failed to update ref", and GitHub "cannot lock ref ...: is at X but expected Y"; neither was read as a conflict.
+- Fix a document that includes or quotes a file that does not exist yet: it is now read again once the file is created, instead of keeping its old page and error.
+- Fix Graphviz diagrams with Graphviz releases that scan with one global buffer, such as the 2.42 many Linux distributions ship: a read left the text after the first graph behind, so the next diagram placed its first error a line late or drew a graph from the diagram before. Release archives link Graphviz 16.1, which was not affected.
 
 ## 1.0.0-beta.10 - 2026-11-02
 

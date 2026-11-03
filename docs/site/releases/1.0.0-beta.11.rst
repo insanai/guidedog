@@ -1,0 +1,24 @@
+:date: 2026-11-03
+:author: Guidedog contributors
+:category: releases
+:tags: rust, editors, publishing
+:summary: Editable source maps, previews that point back to the source, dependency manifests and capability reports for editors.
+:pdf: article
+
+Guidedog 1.0.0-beta.11
+======================
+
+Editors can now work on Guidedog projects visually beside the source.
+The new crate ``guidedoc-edit`` maps a reStructuredText or Markdown document to blocks with the spans of their markup and their editable text, read with Guidedog's own readers.
+
+.. more::
+
+Its operations replace a block's text, insert, delete and move blocks, set and remove directive options, and add list items.
+Each one changes only the bytes it must, reads the result again, and refuses an edit that would not read back as intended, such as text that would close a fence early.
+
+Preview builds now point back to the source: each HTML block carries its byte span in the file it was read from, and each PDF gets a page map that places every block on its page.
+Every build also writes ``gd-dependencies.json``, which names the files each page and book was made from, so an editor rebuilds only the outputs a change affects.
+``guidedog capabilities --json`` reports the formats, builders, directives, roles, extensions and plugins of the executable, from the code it links rather than from a table.
+
+This release also fixes a document whose included file is created later, which is now read again, and diagrams drawn with Graphviz 2.42, which no longer carry text from one diagram into the next.
+`GDS 0017 <https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html>`_ records the design.

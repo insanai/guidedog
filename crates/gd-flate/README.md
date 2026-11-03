@@ -7,7 +7,7 @@ Standard library only. Gzip is not provided: nothing uses it.
 
 ```toml
 [dependencies]
-gd-flate = "1.0.0-beta.10"
+gd-flate = "1.0.0-beta.11"
 ```
 
 We compress, then decompress with a limit on the output, so a hostile input cannot exhaust memory:

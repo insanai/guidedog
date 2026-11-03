@@ -199,7 +199,7 @@ The output manifest's version is now 3, so the first build after an upgrade writ
 Acceptance criteria and implementation status
 ---------------------------------------------
 
-Implemented on the branch ``nisaba-source-maps``, not yet released:
+Implemented and published in Guidedog 1.0.0-beta.11:
 
 * Map tests for every block kind in both formats, for directive parts, gaps, the innermost block at an offset, configuration-dependent directive rules, and the JSON form.
 * Operation tests in both formats for each operation, including Unicode title widths, quoted Markdown text, MyST field and YAML options, renumbering, and every refusal code.
@@ -219,6 +219,9 @@ Review history
 --------------
 
 On 3 November 2026 the maintainer asked for these interfaces so that nisaba can offer visual operations beyond text replacement, map its previews back to source, rebuild only affected PDFs, and report capabilities from Guidedog's registries; this record proposes them and records the implementation.
+
+Before the release, three independent reviews of the implementation found faults, which we fixed with tests that fail without the fix: maps that panicked or mislabelled RST titles, Markdown quotes and unclosed fences; edits that a truncated map, a changed field name, a YAML comment or CRLF line endings let through; positions three bytes short after a byte order mark, on generated text or on a label's anchor; and manifests that hid a page named ``dependencies``, left out what singlehtml, the search index and static files were made from, or listed markers and refused templates as files.
+Fixing the manifest also showed that Guidedog kept a document's page when a file it included was created later; it now reads such a document again.
 
 References
 ----------

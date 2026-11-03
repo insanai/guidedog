@@ -1,13 +1,14 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.10 adds guitar tablature to native LilyPond engraving and a practical songbook task.
+Version 1.0.0-beta.11 gives editors the interfaces they need to edit Guidedog projects visually beside the source.
 
-- **Guitar tablature.** `\new TabStaff` draws a six-string guitar part as tablature beside its staff, and `\1` to `\6` name a note's string. Guidedog chooses strings and frets as LilyPond does by default and draws LilyPond's default tablature: a TAB clef, fret numbers on broken string lines that read in light and dark themes, and tied notes repeated in parentheses only at the start of a line. GDS 0016 records the design.
-- **Vocal and instrumental marks.** Metronome marks print a note symbol for the beat, with the rate in parentheses after a tempo word, as LilyPond does. `\breathe` prints a breath mark above the staff and makes room for it, and string numbers print as circled digits on the staff above the tablature.
-- **Write a songbook.** A new practical task writes *Mary Had a Little Lamb* for voice, piano and guitar: the tune, two verses, chord names, a two-voice piano part, and a guitar part with tablature, explained step by step for students and built as a website and a book. Every manual edition includes it.
-- **Even typography.** Paragraphs keep justification and hyphenation when one line is loose beside long inline code, a paragraph that fits on one line only by shrinking is no longer wrapped ragged, and post lists, cards included, are typeset like the rest of the page.
+- **Editable source maps.** The new reusable crate `guidedoc-edit` maps a reStructuredText or Markdown document, read with Guidedog's own Sphinx and MyST readers, to blocks with the spans of their markup and their editable text. Its operations replace text, insert, delete and move blocks, set directive options and add list items as minimal edits, and refuse any edit whose result would not read back as intended.
+- **Previews that point back to the source.** Preview builds mark each HTML block with its byte span in the source file, and write a page map beside each PDF that places every block on its page.
+- **Dependency manifests.** Every HTML, PDF and text build writes `gd-dependencies.json`: the files each page and book was made from, so an editor rebuilds only what a change affects.
+- **Capability reports.** `guidedog capabilities --json` lists the formats, builders, directives, roles, extensions and plugins this executable supports, from the code it links.
+- **Fixes.** A document whose included file is created later is read again; Graphviz 2.42 no longer carries text from one diagram into the next; and `gd-pages` tells a branch that moved from other refusals and makes its pack writer public.
 
-The [songbook task](https://insanai.github.io/guidedog/manual/howto/songbook.html), [music chapter](https://insanai.github.io/guidedog/manual/topics/music.html), [GDS 0016](https://insanai.github.io/guidedog/discussions/records/0016-guitar-tablature.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.10/CHANGELOG.md) describe the behavior and limits.
+The [command reference](https://insanai.github.io/guidedog/manual/reference/cli.html#guidedog-capabilities), [GDS 0017](https://insanai.github.io/guidedog/discussions/records/0017-source-maps-and-capabilities.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.11/CHANGELOG.md) describe the behavior and limits.
 
 ## Downloads
 
@@ -18,7 +19,7 @@ The [songbook task](https://insanai.github.io/guidedog/manual/howto/songbook.htm
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.10-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.11-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

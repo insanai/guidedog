@@ -5,7 +5,8 @@
 use crate::edit::{Plan, Position, TextEdit, apply_edits, starts_line};
 use crate::error::EditError;
 use crate::lines::{
-    continuation, is_blank, line_at, line_end_trimmed, line_start, next_line, skip_blank_lines,
+    continuation, is_blank, line_at, line_end_trimmed, line_start, next_line, previous_line,
+    skip_blank_lines,
 };
 use crate::map::{Block, BlockId, BlockKind, SourceMap, load_source_map};
 use crate::shape::{self, shifted, spliced};
@@ -279,13 +280,14 @@ fn deletion(cx: &Cx<'_>, id: BlockId) -> Result<TextEdit, EditError> {
     }
     block_indent(cx, block)?;
     let text = cx.text;
+    let markdown = cx.markdown();
     let start = line_start(text, block.span.start);
-    let next = skip_blank_lines(text, block.span.end);
+    let next = skip_empty_lines(text, block.span.end, markdown);
     let limit = block.parent.map_or(text.trim_end().len(), |p| cx.map.blocks[p.index()].span.end);
     if next < limit {
         return Ok(TextEdit { start, end: next, insert: String::new() });
     }
-    let before = text[..start].trim_end().len();
+    let before = content_end_before(text, start, markdown);
     let parent_start = block.parent.map_or(0, |p| cx.map.blocks[p.index()].span.start);
     if before <= parent_start {
         // The only block of its parent: remove its lines.
@@ -296,6 +298,40 @@ fn deletion(cx: &Cx<'_>, id: BlockId) -> Result<TextEdit, EditError> {
         });
     }
     Ok(TextEdit { start: before, end: block.span.end, insert: String::new() })
+}
+
+/// Tells whether `line` separates blocks: it holds only white space, and in Markdown
+/// also quote markers, as the empty line inside a quote does.
+fn is_empty_line(line: &str, markdown: bool) -> bool {
+    match markdown {
+        true => line.trim_matches(|c: char| c.is_whitespace() || c == '>').is_empty(),
+        false => is_blank(line),
+    }
+}
+
+/// The offset after the line breaks and empty lines that follow `at`.
+fn skip_empty_lines(text: &str, at: usize, markdown: bool) -> usize {
+    if !markdown {
+        return skip_blank_lines(text, at);
+    }
+    let mut at = next_line(text, at);
+    while at < text.len() && is_empty_line(line_at(text, at), markdown) {
+        at = next_line(text, at);
+    }
+    at
+}
+
+/// The offset after the last character of the last non-empty line before the line
+/// that starts at `start`; 0 when there is none.
+fn content_end_before(text: &str, start: usize, markdown: bool) -> usize {
+    let mut at = start;
+    while let Some(previous) = previous_line(text, at) {
+        if !is_empty_line(line_at(text, previous), markdown) {
+            return text[..line_end_trimmed(text, previous)].trim_end().len();
+        }
+        at = previous;
+    }
+    0
 }
 
 pub(crate) fn move_block(

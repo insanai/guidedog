@@ -156,3 +156,14 @@ fn edits_write_the_line_ending_of_the_file() {
     let op = Operation::RemoveOption { block: map.roots[0], name: "alt" };
     assert_eq!(edited(Format::Rst, last, op), ".. image:: a.png");
 }
+
+#[test]
+fn deleting_in_a_markdown_quote_leaves_no_stray_marker() {
+    let text = "> a\n>\n> b\n";
+    let map = map_of(Format::Markdown, text);
+    let paras = all(&map, BlockKind::Paragraph);
+    let op = Operation::DeleteBlock { block: paras[0] };
+    assert_eq!(edited(Format::Markdown, text, op), "> b\n");
+    let op = Operation::DeleteBlock { block: paras[1] };
+    assert_eq!(edited(Format::Markdown, text, op), "> a\n");
+}

@@ -106,6 +106,8 @@ Commands overview
      - Converts one file, or standard input, without a project.
    * - ``formats``
      - Lists the readers and renderers built in, and the Typst backend.
+   * - ``capabilities [DIR]``
+     - Reports formats, source maps, edit operations, builders, directives, roles, extensions, and plugins.
    * - ``publish --publisher=ID``
      - Builds the project a publisher's configuration names, and publishes the site.
    * - ``plugin COMMAND``
@@ -482,6 +484,16 @@ conformance (``planned``, ``partial``, ``conformant``). It also reports the Typs
    guidedog formats
    guidedog formats --format=json
    guidedog formats --typst=/opt/typst/bin/typst
+
+guidedog capabilities
+---------------------
+
+Reports what this executable supports, read from the code it links rather than from a table: the document formats with their source maps and visual edit operations, the builders, every directive and role with its options and what enables it (``default``, ``config``, or ``plugin``), the Markdown and Sphinx extensions, and the plugins linked in. With a project folder, its ``conf.toml`` decides which entries are enabled. Editors read the JSON form, whose ``schema`` field counts incompatible changes. GDS 0017 specifies the report.
+
+.. code-block:: sh
+
+   guidedog capabilities
+   guidedog capabilities docs --json
 
 guidedog dsc
 ------------

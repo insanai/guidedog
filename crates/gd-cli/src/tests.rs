@@ -549,6 +549,21 @@ fn formats_lists_the_adapters() {
 }
 
 #[test]
+fn capabilities_reports_formats_markup_and_plugins() {
+    let (status, out, _) = run_captured(&["capabilities", "--color=never"], "");
+    assert_eq!(status, 0);
+    assert!(out.contains("DOCUMENT FORMATS") && out.contains("move-block"), "{out}");
+    let (status, out, _) = run_captured(&["capabilities", "--json"], "");
+    assert_eq!(status, 0);
+    let value = gd_json::parse(&out).expect("the report is JSON");
+    assert_eq!(value.get("schema").and_then(|v| v.as_i64()), Some(1));
+    let (status, _, err) = run_captured(&["capabilities", "/nonexistent/project"], "");
+    assert_eq!(status, 2, "{err}");
+    assert!(err.contains("NO DOCUMENTATION PROJECT HERE"), "{err}");
+    assert_eq!(problem(&["capabilities", "--xml"]).title, "UNKNOWN OPTION");
+}
+
+#[test]
 fn quickstart_needs_a_name_and_an_author() {
     let (status, _, err) = run_captured(&["quickstart", "-q", "-p", "P"], "");
     assert_eq!(status, 2);

@@ -24,6 +24,7 @@ pub(crate) fn help_text(topic: Option<&str>, color: bool, added: &[Extension]) -
         None => OVERVIEW,
         Some("convert") => CONVERT,
         Some("formats") => FORMATS,
+        Some("capabilities") => CAPABILITIES,
         Some("quickstart") => QUICKSTART,
         Some("migrate") => MIGRATE,
         Some("intl") => INTL,
@@ -118,6 +119,7 @@ const OVERVIEW: &str = "  USAGE
   FILES
     convert     Convert RST, Markdown, or Typst to HTML, PDF, or RST
     formats     Show readers, renderers, and the Typst backend
+    capabilities  Report formats, directives, roles, edits, and plugins
 
 ";
 
@@ -181,6 +183,17 @@ const FORMATS: &str = "  USAGE
 
   Lists the readers and renderers built in, with their versions and conformance,
   and the Typst backend this program finds.
+
+";
+
+const CAPABILITIES: &str = "  USAGE
+    guidedog capabilities [PROJECT] [--json | --format=table|json]
+
+  Reports what this program supports, from the code it links: document formats
+  with their source maps and visual edit operations, builders, directives and
+  roles with their options and what enables them, Markdown and Sphinx
+  extensions, and the plugins linked in. With PROJECT, its conf.toml decides
+  which entries are enabled. The JSON form is versioned by its schema field.
 
 ";
 

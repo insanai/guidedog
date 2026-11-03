@@ -10,7 +10,9 @@ use guidedoc::ContentPolicy;
 use crate::args::{Word, Words, command_word, no_value, positive, unknown_option, usage};
 use crate::args::{with_suggestion, without};
 use crate::command::Parsed;
-use crate::command::{ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand, Output};
+use crate::command::{
+    CapabilitiesCommand, ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand, Output,
+};
 use crate::extension::{Extension, first_words, parse_extension};
 
 /// Every command word, for the help text and "Did you mean".
@@ -23,6 +25,7 @@ pub(crate) const COMMANDS: &[&str] = &[
     "intl",
     "convert",
     "formats",
+    "capabilities",
     "publish",
     "plugin",
 ];
@@ -76,6 +79,7 @@ fn parse_into(
         "publish" => crate::parse_plugin::parse_publish(&rest, output),
         "convert" => parse_convert(&rest, output),
         "formats" => parse_formats(&rest, output),
+        "capabilities" => parse_capabilities(&rest, output),
         "quickstart" | "build" | "serve" | "clean" | "migrate" | "intl" => {
             crate::parse_project::parse_project(word, &rest, output)
         }
@@ -88,8 +92,8 @@ fn parse_into(
 fn unknown_command(word: &str, extensions: &[Extension]) -> Problem {
     let added = first_words(extensions);
     let hint = if added.is_empty() {
-        "Use quickstart, build, serve, clean, migrate, intl, convert, formats, publish, \
-         or plugin; see guidedog --help."
+        "Use quickstart, build, serve, clean, migrate, intl, convert, formats, \
+         capabilities, publish, or plugin; see guidedog --help."
             .to_string()
     } else {
         format!(
@@ -242,6 +246,34 @@ fn parse_formats(args: &[String], output: &mut Output) -> Result<Command, Proble
         }
     }
     Ok(Command::Formats(command))
+}
+
+/// `guidedog capabilities [--json | --format=table|json] [PROJECT]`.
+fn parse_capabilities(args: &[String], output: &mut Output) -> Result<Command, Problem> {
+    const KNOWN: &[&str] =
+        &["--json", "--format", "--help", "-h", "--color", "--diagnostics", "--quiet", "-q"];
+    let mut words = Words::new(args);
+    let mut command = CapabilitiesCommand::default();
+    while let Some(word) = words.next_word() {
+        let (name, inline) = match word {
+            Word::Arg(arg) if command.project.is_none() => {
+                command.project = Some(PathBuf::from(arg));
+                continue;
+            }
+            Word::Arg(arg) => return Err(unexpected_argument("capabilities", arg)),
+            Word::Opt { name, inline } => (name, inline),
+        };
+        if output_option(&mut words, output, name, inline)? {
+            continue;
+        }
+        match name {
+            "-h" | "--help" => return Ok(Command::Help(Some("capabilities"))),
+            "--json" => command.json = true,
+            "--format" => command.json = table_or_json(words.value(name, inline)?)?,
+            _ => return Err(unknown_option("capabilities", name, KNOWN)),
+        }
+    }
+    Ok(Command::Capabilities(command))
 }
 
 fn table_or_json(value: &str) -> Result<bool, Problem> {

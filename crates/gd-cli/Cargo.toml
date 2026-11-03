@@ -32,6 +32,12 @@ gd-migrate = { workspace = true }
 # `guidedog --version` names the Graphviz library linked in.
 gd-graphdog = { workspace = true }
 gd-sha = { workspace = true }
+# `guidedog capabilities`.
+gd-capabilities = { workspace = true }
+
+[dev-dependencies]
+# The capability report's test parses its JSON.
+gd-json = { workspace = true }
 
 [lints]
 workspace = true

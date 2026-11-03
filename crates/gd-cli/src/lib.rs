@@ -20,6 +20,7 @@
 #![forbid(unsafe_code)]
 
 mod args;
+mod capabilities;
 mod command;
 mod console;
 mod convert;
@@ -41,9 +42,10 @@ use std::process::ExitCode;
 
 use gd_plugins::Registry;
 
+pub use command::MigrateCommand;
 pub use command::{BuildCommand, CleanCommand, ColorMode, Command, ConvertCommand, Diagnostics};
+pub use command::{CapabilitiesCommand, FormatsCommand, IntlAction, IntlCommand, MemoryMode};
 pub use command::{ExtensionCommand, QuickstartCommand, ServeCommand};
-pub use command::{FormatsCommand, IntlAction, IntlCommand, MemoryMode, MigrateCommand};
 pub use command::{MigrateOutput, Output, Parsed, PluginAction, PluginCommand, PublishCommand};
 pub use console::{Streams, Terminals};
 pub use extension::{Extension, extensions};
@@ -137,6 +139,7 @@ fn execute(
             0
         }
         Command::Formats(f) => convert::formats(console, f),
+        Command::Capabilities(c) => capabilities::capabilities(console, c, linked),
         Command::Convert(c) => convert::convert(console, c),
         Command::Quickstart(q) => project::quickstart(console, q),
         Command::Build(b) => project::build(console, b, linked),

@@ -66,6 +66,8 @@ pub enum Command {
     Licenses,
     /// `formats`.
     Formats(FormatsCommand),
+    /// `capabilities`.
+    Capabilities(CapabilitiesCommand),
     /// `convert`.
     Convert(Box<ConvertCommand>),
     /// `quickstart`.
@@ -108,6 +110,16 @@ pub struct FormatsCommand {
     pub json: bool,
     /// `--typst`: the Typst program to describe.
     pub typst: String,
+}
+
+/// `guidedog capabilities`.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct CapabilitiesCommand {
+    /// `--json` or `--format=json` instead of the summary.
+    pub json: bool,
+    /// The project whose configuration decides what is enabled; `None` reports a
+    /// project without configuration.
+    pub project: Option<PathBuf>,
 }
 
 /// `guidedog convert INPUT`: one file to HTML or PDF, without a project. The formats

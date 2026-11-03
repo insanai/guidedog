@@ -61,7 +61,7 @@ impl Session {
         }
         let commit = gd_git::commit_bytes(&self.publication_commit(pp, &generation));
         let candidate = gd_git::object_id(Kind::Commit, &commit);
-        let contents = PackContents { send: &pp.send, trees: &pp.trees, commit: &commit };
+        let contents = PackContents { blobs: &pp.send, trees: &pp.trees, commit: &commit };
         let (request, size) =
             match write_pack(&self.work, &contents, &self.config.branch, pp.head, candidate) {
                 Ok(written) => written,

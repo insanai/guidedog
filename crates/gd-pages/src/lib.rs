@@ -77,7 +77,7 @@ pub use github::{
 };
 pub use guide::{GuideOptions, Prompt, plan_lines, publish_guided};
 pub use infer::{find_project, gh_token, origin_url, parse_github_remote};
-pub use push::{PushOutcome, branch_head, push};
+pub use push::{Blob, PackContents, PushOutcome, branch_head, push, write_pack};
 pub use session::{MARK, Pages};
 pub use state::{Binding, Journal, Profile, State, StateLock, target_key, today};
 pub use target::{Review, bind, remember_token, review_lines, review_target, setup, site_lines};

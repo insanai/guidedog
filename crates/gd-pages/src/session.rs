@@ -16,7 +16,7 @@ use crate::github::{
     remote_files,
 };
 use crate::problem::{pack_problem, problem};
-use crate::push::{SendFile, branch_head};
+use crate::push::{Blob, branch_head};
 use crate::state::{Binding, State, StateLock, target_key};
 use crate::target::{default_branch, short};
 use crate::{ENV_PROFILE, ID, Settings, VERSION};
@@ -72,7 +72,7 @@ pub(crate) struct PagesPlan {
     pub head: Option<Id>,
     pub tree: Id,
     pub trees: Vec<Tree>,
-    pub send: Vec<SendFile>,
+    pub send: Vec<Blob>,
 }
 
 impl Publisher for Pages {
@@ -398,7 +398,7 @@ fn local_tree(
         files.push(gd_git::File { path: e.path.clone(), mode: Mode::File, id });
         let hex = id.to_hex();
         if !known.contains(hex.as_str()) && sent.insert(id) {
-            send.push(SendFile { path: Some(path), size, id });
+            send.push(Blob::File { path, size, id });
         }
         ids.insert(e.path.clone(), hex);
     }
@@ -406,7 +406,7 @@ fn local_tree(
         let empty = gd_git::object_id(Kind::Blob, &[]);
         files.push(gd_git::File { path: ".nojekyll".into(), mode: Mode::File, id: empty });
         if !known.contains(empty.to_hex().as_str()) && sent.insert(empty) {
-            send.push(SendFile { path: None, size: 0, id: empty });
+            send.push(Blob::Bytes(Vec::new()));
         }
     }
     let trees = gd_git::build_trees(&files).map_err(|e| pack_problem(&e))?;

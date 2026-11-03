@@ -175,26 +175,39 @@ pub(crate) fn refusal(branch: &str, reason: &str) -> Problem {
     )
 }
 
-/// A blob a publication sends: a file of the snapshot, or (`path` `None`) the empty
-/// `.nojekyll` the branch needs.
+/// A blob a publication sends.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(crate) struct SendFile {
-    pub path: Option<PathBuf>,
-    pub size: u64,
-    pub id: Id,
+pub enum Blob {
+    /// A file; the pack writer reads it again and refuses it if its size or ID changed.
+    File {
+        /// Where the file is.
+        path: PathBuf,
+        /// Its size in bytes, as [`gd_git::file_id`] measured it.
+        size: u64,
+        /// Its Git blob ID, as [`gd_git::file_id`] computed it.
+        id: Id,
+    },
+    /// Bytes held in memory, such as the empty `.nojekyll` or a `CNAME`.
+    Bytes(Vec<u8>),
 }
 
 /// What a pack carries: the blobs the branch lacks, the trees, and the commit.
-pub(crate) struct PackContents<'a> {
-    pub send: &'a [SendFile],
+#[derive(Debug, Clone, Copy)]
+pub struct PackContents<'a> {
+    /// The blobs the branch lacks, each once.
+    pub blobs: &'a [Blob],
+    /// The trees, as [`gd_git::build_trees`] returns them.
     pub trees: &'a [Tree],
+    /// The commit, as [`gd_git::commit_bytes`] writes it.
     pub commit: &'a [u8],
 }
 
-/// Writes the objects of a publication to `work` (each file is read again and checked)
-/// and the request that moves `branch` from `old` (zero for a new branch) to
-/// `candidate`. Returns the request file and its size.
-pub(crate) fn write_pack(
+/// Writes the objects of a publication into the folder `work` and the request that
+/// moves `branch` from `old` (`None` for a new branch) to `candidate`, ready for
+/// [`push`]. Returns the request file, which the caller removes, and its size; the pack
+/// itself is removed. Fails with `pages.pack` when a file cannot be read, changed, or
+/// the folder cannot be written.
+pub fn write_pack(
     work: &Path,
     contents: &PackContents<'_>,
     branch: &str,
@@ -205,12 +218,12 @@ pub(crate) fn write_pack(
     let request = work.join(format!("{candidate}.pack.request"));
     let _ = std::fs::remove_file(&pack);
     let _ = std::fs::remove_file(&request);
-    let count = contents.send.len() + contents.trees.len() + 1;
+    let count = contents.blobs.len() + contents.trees.len() + 1;
     let mut w = PackWriter::begin(&pack, count).map_err(|e| pack_problem(&e))?;
-    for f in contents.send {
-        let added = match &f.path {
-            Some(path) => w.add_file(path, f.size, f.id),
-            None => w.add(Kind::Blob, &[]),
+    for blob in contents.blobs {
+        let added = match blob {
+            Blob::File { path, size, id } => w.add_file(path, *size, *id),
+            Blob::Bytes(bytes) => w.add(Kind::Blob, bytes),
         };
         added.map_err(|e| pack_problem(&e))?;
     }

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-01 10:17+0000\n"
+"POT-Creation-Date: 2026-11-03 23:40+0000\n"
 "PO-Revision-Date: 2026-10-01 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -20,8 +20,17 @@ msgid "Compatibility with Sphinx"
 msgstr "与 Sphinx 的兼容性"
 
 #: ../../compatibility.rst:4
-msgid "Guidedog supports all of reStructuredText and all of Sphinx's built-in extensions. It supports them in its own way: the output serves the same purpose, but it is not identical to Sphinx's. Guidedog never runs Python, neither the configuration nor an extension. It measures compatibility feature by feature. **A successful build is evidence of a build, not proof of complete equivalence.**"
-msgstr "Guidedog 支持 reStructuredText 的全部内容，以及 Sphinx 的全部内置扩展。支持方式是它自己的：输出的用途相同，但与 Sphinx 的输出并不完全一样。Guidedog 从不运行 Python，无论是配置还是扩展。它逐项衡量兼容性。**构建成功只说明完成了一次构建，并不证明完全等价。**"
+msgid ""
+"Guidedog supports all of reStructuredText and all of Sphinx's built-in "
+"extensions. It supports them in its own way: the output serves the same "
+"purpose, but it is not identical to Sphinx's. Guidedog never runs Python, "
+"neither the configuration nor an extension. It measures compatibility "
+"feature by feature. **A successful build is evidence of a build, not "
+"proof of complete equivalence.**"
+msgstr ""
+"Guidedog 支持 reStructuredText 的全部内容，以及 Sphinx 的全部内置扩展。支持方式是它自己的：输出的用途相同，但与 "
+"Sphinx 的输出并不完全一样。Guidedog 从不运行 "
+"Python，无论是配置还是扩展。它逐项衡量兼容性。**构建成功只说明完成了一次构建，并不证明完全等价。**"
 
 #: ../../compatibility.rst:10
 msgid "Projects and publication"
@@ -44,15 +53,20 @@ msgid "Project layout and build flags"
 msgstr "项目布局与构建参数"
 
 #: ../../compatibility.rst:20
-msgid "Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M -c -C``."
-msgstr "采用 Sphinx 风格的源目录、输出目录及参数：\\ ``-a -E -W -n -D -t -j -b -M -c -C``\\ 。"
+msgid ""
+"Sphinx-style source and output directories; ``-a -E -W -n -D -t -j -b -M "
+"-c -C``."
+msgstr ""
+"采用 Sphinx 风格的源目录、输出目录及参数：\\ ``-a -E -W -n -D -t -j -b -M -c -C``\\ 。"
 
 #: ../../compatibility.rst:21
 msgid "Configuration"
 msgstr "配置"
 
 #: ../../compatibility.rst:22
-msgid "TOML data with familiar Sphinx names. Migration converts literals and reports computed values."
+msgid ""
+"TOML data with familiar Sphinx names. Migration converts literals and "
+"reports computed values."
 msgstr "使用熟悉的 Sphinx 设置名，以 TOML 数据配置。迁移时转换字面量，并报告需要计算的值。"
 
 #: ../../compatibility.rst:23
@@ -60,7 +74,9 @@ msgid "HTML builders"
 msgstr "HTML 构建器"
 
 #: ../../compatibility.rst:24
-msgid "``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include document names."
+msgid ""
+"``html``, ``dirhtml``, and ``singlehtml``. Single-page anchors include "
+"document names."
 msgstr "支持 ``html``\\ 、\\ ``dirhtml`` 和 ``singlehtml``\\ 。单页锚点包含文档名称。"
 
 #: ../../compatibility.rst:25
@@ -68,15 +84,21 @@ msgid "Other builders"
 msgstr "其他构建器"
 
 #: ../../compatibility.rst:26
-msgid "``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and ``latexpdf`` select that route."
-msgstr "支持 ``text``\\ 、\\ ``gettext`` 和 ``dummy``\\ 。\\ ``pdf`` 使用 Typst；\\ ``latex`` 和 ``latexpdf`` 也选择这条处理路线。"
+msgid ""
+"``text``, ``gettext``, and ``dummy``. ``pdf`` uses Typst; ``latex`` and "
+"``latexpdf`` select that route."
+msgstr ""
+"支持 ``text``\\ 、\\ ``gettext`` 和 ``dummy``\\ 。\\ ``pdf`` 使用 Typst；\\ "
+"``latex`` 和 ``latexpdf`` 也选择这条处理路线。"
 
 #: ../../compatibility.rst:27
 msgid "Templates"
 msgstr "模板"
 
 #: ../../compatibility.rst:28
-msgid "Guidedog's Jinja implementation, typed ``html_context``, layout inheritance, and additional pages."
+msgid ""
+"Guidedog's Jinja implementation, typed ``html_context``, layout "
+"inheritance, and additional pages."
 msgstr "Guidedog 自带的 Jinja 实现、保留类型的 ``html_context``\\ 、布局继承及附加页面。"
 
 #: ../../compatibility.rst:29
@@ -84,7 +106,9 @@ msgid "Incremental work"
 msgstr "增量构建"
 
 #: ../../compatibility.rst:30
-msgid "Sources, dependencies, templates, configuration, and reference lookups invalidate affected output."
+msgid ""
+"Sources, dependencies, templates, configuration, and reference lookups "
+"invalidate affected output."
 msgstr "源文件、依赖项、模板、配置和引用查询的变化，使受影响的输出失效。"
 
 #: ../../compatibility.rst:31
@@ -92,20 +116,46 @@ msgid "Publication"
 msgstr "发布"
 
 #: ../../compatibility.rst:32
-msgid "One complete generation. A failed build keeps the previous published generation."
+msgid ""
+"One complete generation. A failed build keeps the previous published "
+"generation."
 msgstr "一次发布完整的一代输出。构建失败时保留上一代已发布内容。"
 
 #: ../../compatibility.rst:34
-msgid "``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. A project with ``contents`` and no ``index`` can use ``contents`` as its root, with a warning. Additional template pages use filenames at the site root, including under ``dirhtml``. See :doc:`templates` for the exact contract."
-msgstr "``-D`` 的布尔值接受 ``true``\\ 、\\ ``false`` 或 ``1``\\ 、\\ ``0``\\ 。若项目有 ``contents`` 而没有 ``index``\\ ，可将 ``contents`` 作为根文档，但会给出警告。附加模板页面放在站点根目录，即使使用 ``dirhtml`` 也是如此。具体约定见 :doc:`templates`\\ 。"
+msgid ""
+"``-D`` accepts ``true`` and ``false``, or ``1`` and ``0``, for booleans. "
+"A project with ``contents`` and no ``index`` can use ``contents`` as its "
+"root, with a warning. Additional template pages use filenames at the site "
+"root, including under ``dirhtml``. See :doc:`templates` for the exact "
+"contract."
+msgstr ""
+"``-D`` 的布尔值接受 ``true``\\ 、\\ ``false`` 或 ``1``\\ 、\\ ``0``\\ 。若项目有 "
+"``contents`` 而没有 ``index``\\ ，可将 ``contents`` "
+"作为根文档，但会给出警告。附加模板页面放在站点根目录，即使使用 ``dirhtml`` 也是如此。具体约定见 :doc:`templates`\\ "
+"。"
 
 #: ../../compatibility.rst:39
-msgid "An unchanged page reports its diagnostics again. Therefore ``-W`` has the same meaning on a clean build and an unchanged build. A deleted document's page is removed. Publication uses a recoverable journal. The next build settles an interrupted commit. See :doc:`internals/publication` for the invariant and its platform boundary."
-msgstr "未变化的页面也会再次报告诊断，因此 ``-W`` 在全新构建和未变化的构建中含义一致。删除文档后，其页面也会移除。发布使用可恢复的日志；若提交中断，下次构建会完成恢复。不变式及平台边界见 :doc:`internals/publication`\\ 。"
+msgid ""
+"An unchanged page reports its diagnostics again. Therefore ``-W`` has the "
+"same meaning on a clean build and an unchanged build. A deleted "
+"document's page is removed. Publication uses a recoverable journal. The "
+"next build settles an interrupted commit. See "
+":doc:`internals/publication` for the invariant and its platform boundary."
+msgstr ""
+"未变化的页面也会再次报告诊断，因此 ``-W`` "
+"在全新构建和未变化的构建中含义一致。删除文档后，其页面也会移除。发布使用可恢复的日志；若提交中断，下次构建会完成恢复。不变式及平台边界见 "
+":doc:`internals/publication`\\ 。"
 
 #: ../../compatibility.rst:44
-msgid "``coverage`` comes with the ``coverage`` extension, described below. The builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and ``changes`` are unavailable. Their names receive a correction message. The repository's ``tools/linkcheck`` is a separate verification tool."
-msgstr "``coverage`` 随 ``coverage`` 扩展提供，见下文。不提供 ``epub``、``man``、``texinfo``、``linkcheck``、``doctest`` 和 ``changes`` 构建器。使用这些名称时会给出纠正说明。仓库中的 ``tools/linkcheck`` 是独立的验证工具。"
+msgid ""
+"``coverage`` comes with the ``coverage`` extension, described below. The "
+"builders ``epub``, ``man``, ``texinfo``, ``linkcheck``, ``doctest``, and "
+"``changes`` are unavailable. Their names receive a correction message. "
+"The repository's ``tools/linkcheck`` is a separate verification tool."
+msgstr ""
+"``coverage`` 随 ``coverage`` 扩展提供，见下文。不提供 "
+"``epub``、``man``、``texinfo``、``linkcheck``、``doctest`` 和 ``changes`` "
+"构建器。使用这些名称时会给出纠正说明。仓库中的 ``tools/linkcheck`` 是独立的验证工具。"
 
 #: ../../compatibility.rst:48
 msgid "Source languages"
@@ -128,7 +178,9 @@ msgid "reStructuredText"
 msgstr "reStructuredText"
 
 #: ../../compatibility.rst:58
-msgid "98 corpus sources match the compared Docutils trees and identifiers. The comparison excludes source positions and several bookkeeping attributes."
+msgid ""
+"98 corpus sources match the compared Docutils trees and identifiers. The "
+"comparison excludes source positions and several bookkeeping attributes."
 msgstr "98 个语料源文件与对照的 Docutils 树及标识符一致。对比不包括源码位置和若干内部管理属性。"
 
 #: ../../compatibility.rst:59
@@ -144,52 +196,120 @@ msgid "MyST 0.16.1 reference"
 msgstr "MyST 0.16.1 reference"
 
 #: ../../compatibility.rst:62
-msgid "215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. Remaining differences are recorded."
+msgid ""
+"215 of 218 reader fixtures and 8 of 10 Sphinx fixture builds match. "
+"Remaining differences are recorded."
 msgstr "218 个读取器测试样例中有 215 个一致，10 个 Sphinx 构建样例中有 8 个一致。其余差异均已记录。"
 
 #: ../../compatibility.rst:64
-msgid "These are pinned tests. They do not imply compatibility with every later release. Run ``guidedog formats`` for the executable's reader and renderer evidence. The reader directories contain their conformance notes."
-msgstr "这些测试使用固定版本，不能据此推断与所有后续版本兼容。运行 ``guidedog formats`` 可查看当前可执行程序的读取器和渲染器验证信息。各读取器目录还包含一致性说明。"
+msgid ""
+"These are pinned tests. They do not imply compatibility with every later "
+"release. Run ``guidedog formats`` for the executable's reader and "
+"renderer evidence. The reader directories contain their conformance notes."
+msgstr ""
+"这些测试使用固定版本，不能据此推断与所有后续版本兼容。运行 ``guidedog formats`` "
+"可查看当前可执行程序的读取器和渲染器验证信息。各读取器目录还包含一致性说明。"
 
 #: ../../compatibility.rst:68
-msgid "``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` follows the source. Neither is inserted into Markdown. ``only`` and ``ifconfig`` keep their sections when the condition holds. Their placement can differ from Sphinx when a conditional section changes the surrounding section level. Section titles inside MyST ``eval-rst`` are errors."
-msgstr "``rst_prolog`` 插在开头的书目信息字段之后，\\ ``rst_epilog`` 插在源码末尾，两者均不插入 Markdown。条件成立时，\\ ``only`` 和 ``ifconfig`` 保留其中的章节。若条件章节改变了周围的章节层级，其位置可能与 Sphinx 不同。MyST 的 ``eval-rst`` 内不允许章节标题，会报告错误。"
+msgid ""
+"``rst_prolog`` follows leading bibliographic fields. ``rst_epilog`` "
+"follows the source. Neither is inserted into Markdown. ``only`` and "
+"``ifconfig`` keep their sections when the condition holds. Their "
+"placement can differ from Sphinx when a conditional section changes the "
+"surrounding section level. Section titles inside MyST ``eval-rst`` are "
+"errors."
+msgstr ""
+"``rst_prolog`` 插在开头的书目信息字段之后，\\ ``rst_epilog`` 插在源码末尾，两者均不插入 "
+"Markdown。条件成立时，\\ ``only`` 和 ``ifconfig`` 保留其中的章节。若条件章节改变了周围的章节层级，其位置可能与 "
+"Sphinx 不同。MyST 的 ``eval-rst`` 内不允许章节标题，会报告错误。"
 
 #: ../../compatibility.rst:74
 msgid "References and domains"
 msgstr "引用与域"
 
 #: ../../compatibility.rst:77
-msgid "Guidedog implements toctrees, labels, glossaries, numbered sections and figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, ``keyword``, ``option``, ``envvar``, and ``token`` references. Objects can appear in toctrees, sidebars, and the page outline."
-msgstr "Guidedog 实现了 toctree、标签、术语表、章节与插图编号，以及 ``ref``\\ 、\\ ``doc``\\ 、\\ ``numref``\\ 、\\ ``term``\\ 、\\ ``download``\\ 、\\ ``any``\\ 、\\ ``keyword``\\ 、\\ ``option``\\ 、\\ ``envvar`` 和 ``token`` 引用。对象可以出现在目录树、侧边栏和页面大纲中。"
+msgid ""
+"Guidedog implements toctrees, labels, glossaries, numbered sections and "
+"figures, ``ref``, ``doc``, ``numref``, ``term``, ``download``, ``any``, "
+"``keyword``, ``option``, ``envvar``, and ``token`` references. Objects "
+"can appear in toctrees, sidebars, and the page outline."
+msgstr ""
+"Guidedog 实现了 toctree、标签、术语表、章节与插图编号，以及 ``ref``\\ 、\\ ``doc``\\ 、\\ "
+"``numref``\\ 、\\ ``term``\\ 、\\ ``download``\\ 、\\ ``any``\\ 、\\ "
+"``keyword``\\ 、\\ ``option``\\ 、\\ ``envvar`` 和 ``token`` "
+"引用。对象可以出现在目录树、侧边栏和页面大纲中。"
 
 #: ../../compatibility.rst:82
-msgid "The standard, Python, C, C++, JavaScript, reStructuredText, and math domains are implemented. The Odin and Rust domains are Guidedog's own extensions. They describe packages or crates, declarations, signatures, and generated API pages. See :doc:`odin` and :doc:`rust` for their source-only discovery and limits."
-msgstr "已实现标准、Python、C、C++、JavaScript、reStructuredText 和数学域。Odin 域和 Rust 域是 Guidedog 自有的扩展，用于描述包或 crate、声明、签名以及生成的 API 页面。其纯静态源码发现机制及限制见 :doc:`odin` 和 :doc:`rust`。"
+msgid ""
+"The standard, Python, C, C++, JavaScript, reStructuredText, and math "
+"domains are implemented. The Odin and Rust domains are Guidedog's own "
+"extensions. They describe packages or crates, declarations, signatures, "
+"and generated API pages. See :doc:`odin` and :doc:`rust` for their "
+"source-only discovery and limits."
+msgstr ""
+"已实现标准、Python、C、C++、JavaScript、reStructuredText 和数学域。Odin 域和 Rust 域是 "
+"Guidedog 自有的扩展，用于描述包或 crate、声明、签名以及生成的 API 页面。其纯静态源码发现机制及限制见 :doc:`odin` "
+"和 :doc:`rust`。"
 
 #: ../../compatibility.rst:87
-msgid "Parameter, return, exception, and variable fields form structured descriptions. Canonical names become aliases for references and inventories. Python defaults and annotations retain their source spelling. Sphinx may print them again through Python's unparser. C++ declarations publish Sphinx-compatible identifier versions and symbol inventories. Nesting limits still apply. Nested parentheses are parsed in linear time."
-msgstr "参数、返回值、异常和变量字段组成结构化描述。规范名称成为引用和清单中的别名。Python 默认值和注解保留源码写法；Sphinx 可能通过 Python 的反解析器重新打印。C++ 声明发布与 Sphinx 兼容的标识符版本和符号清单。仍有嵌套深度限制。嵌套括号的解析时间为线性。"
+msgid ""
+"Parameter, return, exception, and variable fields form structured "
+"descriptions. Canonical names become aliases for references and "
+"inventories. Python defaults and annotations retain their source "
+"spelling. Sphinx may print them again through Python's unparser. C++ "
+"declarations publish Sphinx-compatible identifier versions and symbol "
+"inventories. Nesting limits still apply. Nested parentheses are parsed in "
+"linear time."
+msgstr ""
+"参数、返回值、异常和变量字段组成结构化描述。规范名称成为引用和清单中的别名。Python 默认值和注解保留源码写法；Sphinx 可能通过 "
+"Python 的反解析器重新打印。C++ 声明发布与 Sphinx 兼容的标识符版本和符号清单。仍有嵌套深度限制。嵌套括号的解析时间为线性。"
 
 #: ../../compatibility.rst:94
-msgid "``numref`` substitutes one number slot and reports an unnumbered target. Section numbering follows reading order. A document is numbered once. A second numbered toctree reports the conflict. See the reference tests for format substitution and identifier details."
-msgstr "``numref`` 替换一个编号占位符，并报告未编号的目标。章节编号遵循阅读顺序。每份文档只编号一次，第二个带编号的目录树会报告冲突。格式替换和标识符的细节见参考测试。"
+msgid ""
+"``numref`` substitutes one number slot and reports an unnumbered target. "
+"Section numbering follows reading order. A document is numbered once. A "
+"second numbered toctree reports the conflict. See the reference tests for "
+"format substitution and identifier details."
+msgstr ""
+"``numref`` "
+"替换一个编号占位符，并报告未编号的目标。章节编号遵循阅读顺序。每份文档只编号一次，第二个带编号的目录树会报告冲突。格式替换和标识符的细节见参考测试。"
 
 #: ../../compatibility.rst:99
-msgid "The general index, module index, and search are built in. Search matches word prefixes. It does not copy Sphinx's English stemming."
+msgid ""
+"The general index, module index, and search are built in. Search matches "
+"word prefixes. It does not copy Sphinx's English stemming."
 msgstr "内置通用索引、模块索引和搜索。搜索按词语前缀匹配，不照搬 Sphinx 的英语词干提取。"
 
 #: ../../compatibility.rst:102
-msgid "Declarative object types replace a useful class of Python extension registrations. ``object_types``, ``crossref_types``, and ``directive_aliases`` describe their data. A custom Python ``parse_node`` becomes declarative name, display, and program rules. Migration reports code it cannot express. See :doc:`object-types`."
-msgstr "声明式对象类型可替代一类常用的 Python 扩展注册。\\ ``object_types``\\ 、\\ ``crossref_types`` 和 ``directive_aliases`` 描述相应数据。自定义 Python ``parse_node`` 改为声明式的名称、显示和程序规则。迁移会报告无法表达的代码。参见 :doc:`object-types`\\ 。"
+msgid ""
+"Declarative object types replace a useful class of Python extension "
+"registrations. ``object_types``, ``crossref_types``, and "
+"``directive_aliases`` describe their data. A custom Python ``parse_node`` "
+"becomes declarative name, display, and program rules. Migration reports "
+"code it cannot express. See :doc:`object-types`."
+msgstr ""
+"声明式对象类型可替代一类常用的 Python 扩展注册。\\ ``object_types``\\ 、\\ ``crossref_types`` "
+"和 ``directive_aliases`` 描述相应数据。自定义 Python ``parse_node`` "
+"改为声明式的名称、显示和程序规则。迁移会报告无法表达的代码。参见 :doc:`object-types`\\ 。"
 
 #: ../../compatibility.rst:107 ../../compatibility.rst:112
 msgid "Built-in extensions"
 msgstr "内置扩展"
 
 #: ../../compatibility.rst:110
-msgid "Every extension in Sphinx's ``sphinx.ext`` package is built in. A project lists it by its Sphinx name in ``extensions``, and its directives, roles, settings and builders are there. The settings keep Sphinx's names and defaults, so ``guidedog migrate`` carries them over from ``conf.py``. Where Sphinx imports Python, Guidedog reads the source instead. Where Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 records the design of each one."
-msgstr "Sphinx ``sphinx.ext`` 包中的每个扩展都已内置。项目在 ``extensions`` 中按 Sphinx 的名称列出扩展，它的指令、角色、设置和构建器就都可用了。设置沿用 Sphinx 的名称和默认值，因此 ``guidedog migrate`` 能从 ``conf.py`` 中把它们原样迁移过来。Sphinx 导入 Python 的地方，Guidedog 改为读取源码。Sphinx 调用外部程序的地方，Guidedog 使用自己内置的实现。GDS 0011 记录了每个扩展的设计。"
+msgid ""
+"Every extension in Sphinx's ``sphinx.ext`` package is built in. A project "
+"lists it by its Sphinx name in ``extensions``, and its directives, roles, "
+"settings and builders are there. The settings keep Sphinx's names and "
+"defaults, so ``guidedog migrate`` carries them over from ``conf.py``. "
+"Where Sphinx imports Python, Guidedog reads the source instead. Where "
+"Sphinx calls a program, Guidedog uses what it has built in. GDS 0011 "
+"records the design of each one."
+msgstr ""
+"Sphinx ``sphinx.ext`` 包中的每个扩展都已内置。项目在 ``extensions`` 中按 Sphinx "
+"的名称列出扩展，它的指令、角色、设置和构建器就都可用了。设置沿用 Sphinx 的名称和默认值，因此 ``guidedog migrate`` "
+"能从 ``conf.py`` 中把它们原样迁移过来。Sphinx 导入 Python 的地方，Guidedog 改为读取源码。Sphinx "
+"调用外部程序的地方，Guidedog 使用自己内置的实现。GDS 0011 记录了每个扩展的设计。"
 
 #: ../../compatibility.rst:116
 msgid "Extension"
@@ -212,7 +332,8 @@ msgid "``graphviz``"
 msgstr "``graphviz``"
 
 #: ../../compatibility.rst:121
-msgid "Linked Graphviz produces static drawings. Resource confinement applies."
+msgid ""
+"Linked Graphviz produces static drawings. Resource confinement applies."
 msgstr "链接的 Graphviz 库生成静态图形，并遵守资源访问边界。"
 
 #: ../../compatibility.rst:122
@@ -220,7 +341,8 @@ msgid "``intersphinx``"
 msgstr "``intersphinx``"
 
 #: ../../compatibility.rst:123
-msgid "Local and fetched inventories. Fetching uses the built-in HTTP client."
+msgid ""
+"Local and fetched inventories. Fetching uses the built-in HTTP client."
 msgstr "支持本地清单和远程获取的清单。获取时使用内置的 HTTP 客户端。"
 
 #: ../../compatibility.rst:124
@@ -236,7 +358,9 @@ msgid "``mathjax`` and ``imgmath``"
 msgstr "``mathjax`` 和 ``imgmath``"
 
 #: ../../compatibility.rst:127
-msgid "HTML mathematics uses MathJax. PDF translates its supported LaTeX subset to Typst."
+msgid ""
+"HTML mathematics uses MathJax. PDF translates its supported LaTeX subset "
+"to Typst."
 msgstr "HTML 公式使用 MathJax。PDF 将支持的 LaTeX 子集转换为 Typst。"
 
 #: ../../compatibility.rst:128
@@ -244,7 +368,9 @@ msgid "``doctest``"
 msgstr "``doctest``"
 
 #: ../../compatibility.rst:129
-msgid "The tests are shown, highlighted. Guidedog never runs Python, so it never runs them."
+msgid ""
+"The tests are shown, highlighted. Guidedog never runs Python, so it never "
+"runs them."
 msgstr "测试会以高亮形式显示。Guidedog 从不运行 Python，所以从不执行这些测试。"
 
 #: ../../compatibility.rst:130
@@ -260,7 +386,9 @@ msgid "``napoleon``"
 msgstr "``napoleon``"
 
 #: ../../compatibility.rst:133
-msgid "Google and NumPy docstring sections become the fields autodoc shows (:doc:`autodoc`)."
+msgid ""
+"Google and NumPy docstring sections become the fields autodoc shows "
+"(:doc:`autodoc`)."
 msgstr "Google 和 NumPy 风格的文档字符串小节会变成 autodoc 显示的字段（:doc:`autodoc`）。"
 
 #: ../../compatibility.rst:134
@@ -268,7 +396,9 @@ msgid "``autosummary`` and ``apidoc``"
 msgstr "``autosummary`` 和 ``apidoc``"
 
 #: ../../compatibility.rst:135
-msgid "Summary tables and API pages are generated from the source, in memory. Nothing is written into the source folder (:doc:`autodoc`)."
+msgid ""
+"Summary tables and API pages are generated from the source, in memory. "
+"Nothing is written into the source folder (:doc:`autodoc`)."
 msgstr "汇总表和 API 页面在内存中根据源码生成。不会向源目录写入任何内容（:doc:`autodoc`）。"
 
 #: ../../compatibility.rst:136
@@ -276,7 +406,9 @@ msgid "``viewcode``"
 msgstr "``viewcode``"
 
 #: ../../compatibility.rst:137
-msgid "Highlighted source pages under ``_modules/``, linked to the descriptions and back (:doc:`sources-and-diagrams`)."
+msgid ""
+"Highlighted source pages under ``_modules/``, linked to the descriptions "
+"and back (:doc:`sources-and-diagrams`)."
 msgstr "``_modules/`` 下的高亮源码页面，与对象描述相互链接（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:138
@@ -284,15 +416,21 @@ msgid "``linkcode``"
 msgstr "``linkcode``"
 
 #: ../../compatibility.rst:139
-msgid "A URL template, ``linkcode_url``, replaces the Python function ``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
-msgstr "用 URL 模板 ``linkcode_url`` 取代 Python 函数 ``linkcode_resolve``\\ （:doc:`sources-and-diagrams`）。"
+msgid ""
+"A URL template, ``linkcode_url``, replaces the Python function "
+"``linkcode_resolve`` (:doc:`sources-and-diagrams`)."
+msgstr ""
+"用 URL 模板 ``linkcode_url`` 取代 Python 函数 ``linkcode_resolve``\\ "
+"（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:140
 msgid "``inheritance_diagram``"
 msgstr "``inheritance_diagram``"
 
 #: ../../compatibility.rst:141
-msgid "Class graphs from the source, drawn by the linked Graphviz (:doc:`sources-and-diagrams`)."
+msgid ""
+"Class graphs from the source, drawn by the linked Graphviz "
+"(:doc:`sources-and-diagrams`)."
 msgstr "根据源码生成类图，由内置链接的 Graphviz 绘制（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:142
@@ -300,15 +438,20 @@ msgid "``coverage``"
 msgstr "``coverage``"
 
 #: ../../compatibility.rst:143
-msgid "``guidedog build coverage`` writes ``python.txt`` from the source and the documents (:doc:`autodoc`)."
-msgstr "``guidedog build coverage`` 根据源码和文档写出 ``python.txt``\\ （:doc:`autodoc`）。"
+msgid ""
+"``guidedog build coverage`` writes ``python.txt`` from the source and the "
+"documents (:doc:`autodoc`)."
+msgstr ""
+"``guidedog build coverage`` 根据源码和文档写出 ``python.txt``\\ （:doc:`autodoc`）。"
 
 #: ../../compatibility.rst:144
 msgid "``duration``"
 msgstr "``duration``"
 
 #: ../../compatibility.rst:145
-msgid "The slowest documents to read, in the build summary and a JSON file (:doc:`sources-and-diagrams`)."
+msgid ""
+"The slowest documents to read, in the build summary and a JSON file "
+"(:doc:`sources-and-diagrams`)."
 msgstr "读取最慢的文档，显示在构建摘要中，并写入一个 JSON 文件（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:146
@@ -316,8 +459,12 @@ msgid "``imgconverter``"
 msgstr "``imgconverter``"
 
 #: ../../compatibility.rst:147
-msgid "Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF itself. Other formats are reported (:doc:`sources-and-diagrams`)."
-msgstr "会被接受，但不运行任何程序：Typst 自己就能读取 PNG、JPEG、GIF、SVG、WebP 和 PDF。其他格式会被报告（:doc:`sources-and-diagrams`）。"
+msgid ""
+"Accepted, and nothing runs: Typst reads PNG, JPEG, GIF, SVG, WebP and PDF "
+"itself. Other formats are reported (:doc:`sources-and-diagrams`)."
+msgstr ""
+"会被接受，但不运行任何程序：Typst 自己就能读取 PNG、JPEG、GIF、SVG、WebP 和 "
+"PDF。其他格式会被报告（:doc:`sources-and-diagrams`）。"
 
 #: ../../compatibility.rst:148
 msgid "``myst_parser``"
@@ -328,61 +475,192 @@ msgid "The implemented project Markdown layer."
 msgstr "已实现的项目级 Markdown 层。"
 
 #: ../../compatibility.rst:151
-msgid "Reading source has limits that importing does not. Compiled modules, objects created at run time, external decorators, computed values and extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx documenter tests provide the reference behavior. See :doc:`autodoc` for the full settings and exceptions."
-msgstr "读取源码有导入时不存在的局限。编译模块、运行时创建的对象、外部装饰器、计算所得的值以及扩展的事件钩子都无法看到。参考行为来自 Python 3.13 和固定版本的 Sphinx 文档生成器测试。完整的设置和例外见 :doc:`autodoc`。"
+msgid ""
+"Reading source has limits that importing does not. Compiled modules, "
+"objects created at run time, external decorators, computed values and "
+"extension event hooks cannot be seen. Python 3.13 and the pinned Sphinx "
+"documenter tests provide the reference behavior. See :doc:`autodoc` for "
+"the full settings and exceptions."
+msgstr ""
+"读取源码有导入时不存在的局限。编译模块、运行时创建的对象、外部装饰器、计算所得的值以及扩展的事件钩子都无法看到。参考行为来自 Python "
+"3.13 和固定版本的 Sphinx 文档生成器测试。完整的设置和例外见 :doc:`autodoc`。"
 
 #: ../../compatibility.rst:153
-msgid "A third-party extension, such as ``sphinx_design``, is not built in. Configuration that names one is refused, and ``guidedog migrate`` leaves it out with a note. An unknown directive or role is reported at its source location. **Its omitted content must be reviewed before publication.** Declared object types (:doc:`object-types`) and build plugins (:doc:`plugins`) cover many of them. Other theme names are accepted using Guidedog's theme implementation."
-msgstr "第三方扩展（例如 ``sphinx_design``）没有内置。配置中出现这类扩展会被拒绝，``guidedog migrate`` 会将其略去并附上说明。未知的指令或角色会在源码位置报告。**发布之前必须检查被省略的内容。**\\ 声明式对象类型（:doc:`object-types`）和构建插件（:doc:`plugins`）可以覆盖其中的许多情况。其他主题名称会被接受，但使用 Guidedog 自己的主题实现。"
+msgid ""
+"A third-party extension, such as ``sphinx_design``, is not built in. "
+"Configuration that names one is refused, and ``guidedog migrate`` leaves "
+"it out with a note. An unknown directive or role is reported at its "
+"source location. **Its omitted content must be reviewed before "
+"publication.** Declared object types (:doc:`object-types`) and build "
+"plugins (:doc:`plugins`) cover many of them. Other theme names are "
+"accepted using Guidedog's theme implementation."
+msgstr ""
+"第三方扩展（例如 ``sphinx_design``）没有内置。配置中出现这类扩展会被拒绝，``guidedog migrate`` "
+"会将其略去并附上说明。未知的指令或角色会在源码位置报告。**发布之前必须检查被省略的内容。**\\ "
+"声明式对象类型（:doc:`object-types`）和构建插件（:doc:`plugins`）可以覆盖其中的许多情况。其他主题名称会被接受，但使用 "
+"Guidedog 自己的主题实现。"
 
 #: ../../compatibility.rst:158
 msgid "Trust and resource limits"
 msgstr "信任与资源限制"
 
 #: ../../compatibility.rst:161
-msgid "A normal build accepts the project's raw HTML and Typst, templates, and network inventories. Local reads stay within the source directory and explicitly shared roots. A symlink does not grant access outside that boundary. Templates, static files, includes, images, fonts, and API sources obey the same rule."
-msgstr "普通构建接受项目的原始 HTML、Typst、模板和网络清单。本地读取限于源目录及明确共享的根目录。符号链接不能扩大权限。模板、静态文件、include、图片、字体和 API 源码均遵守同一规则。"
+msgid ""
+"A normal build accepts the project's raw HTML and Typst, templates, and "
+"network inventories. Local reads stay within the source directory and "
+"explicitly shared roots. A symlink does not grant access outside that "
+"boundary. Templates, static files, includes, images, fonts, and API "
+"sources obey the same rule."
+msgstr ""
+"普通构建接受项目的原始 "
+"HTML、Typst、模板和网络清单。本地读取限于源目录及明确共享的根目录。符号链接不能扩大权限。模板、静态文件、include、图片、字体和 "
+"API 源码均遵守同一规则。"
 
 #: ../../compatibility.rst:166
-msgid "Graphviz image resources are resolved relative to their document and confined. Supported image bytes are embedded in the drawing. ``imagepath`` and ``fontpath`` do not expand the boundary. The embedded Typst compiler enforces the declared readable folders directly, while an external ``typst`` program runs with a private symlink root containing only those folders. This keeps book templates and preambles within the declared resources."
-msgstr "Graphviz 图像资源按所属文档的相对路径解析并受边界限制。受支持的图像字节会嵌入绘图中。``imagepath`` 和 ``fontpath`` 不会扩大读取边界。内嵌 Typst 编译器直接强制执行声明的可读文件夹，而外部 ``typst`` 程序则在仅包含这些文件夹的私有符号链接根目录中运行。这使书籍模板和前导代码始终保持在声明的资源范围内。"
+msgid ""
+"Graphviz image resources are resolved relative to their document and "
+"confined. Supported image bytes are embedded in the drawing. "
+"``imagepath`` and ``fontpath`` do not expand the boundary. The embedded "
+"Typst compiler enforces the declared readable folders directly, while an "
+"external ``typst`` program runs with a private symlink root containing "
+"only those folders. This keeps book templates and preambles within the "
+"declared resources."
+msgstr ""
+"Graphviz 图像资源按所属文档的相对路径解析并受边界限制。受支持的图像字节会嵌入绘图中。``imagepath`` 和 "
+"``fontpath`` 不会扩大读取边界。内嵌 Typst 编译器直接强制执行声明的可读文件夹，而外部 ``typst`` "
+"程序则在仅包含这些文件夹的私有符号链接根目录中运行。这使书籍模板和前导代码始终保持在声明的资源范围内。"
 
 #: ../../compatibility.rst:173
-msgid "``typst-diagram`` is a Guidedog extension for RST and MyST projects, rather than a Sphinx extension contract. It compiles inline or file source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks remain examples. The embedded compiler uses the project's package and font policy; ``--untrusted`` refuses compilation. See :doc:`topics/diagrams`."
-msgstr "``typst-diagram`` 是面向 RST 和 MyST 项目的 Guidedog 扩展，不是对 Sphinx 扩展兼容性的承诺。它将内联或文件源代码编译为 HTML 和 PDF 使用的 SVG 或 PNG。普通 Typst 代码块仍然是示例。内嵌编译器使用项目的包和字体策略；``--untrusted`` 拒绝编译。参见 :doc:`topics/diagrams`。"
+#| msgid ""
+#| "``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
+#| "rather than a Sphinx extension contract. It compiles inline or file "
+#| "source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
+#| "remain examples. The embedded compiler uses the project's package and "
+#| "font policy; ``--untrusted`` refuses compilation. See "
+#| ":doc:`topics/diagrams`."
+msgid ""
+"``typst-diagram`` is a Guidedog extension for RST and MyST projects, "
+"rather than a Sphinx extension contract. It compiles inline or file "
+"source into SVG or PNG for HTML and PDF. Ordinary Typst code blocks "
+"remain examples. The embedded compiler uses the project's package and "
+"font policy, also under ``--untrusted``, where it downloads no package. "
+"See :doc:`topics/diagrams`."
+msgstr "``typst-diagram`` 是用于 RST 和 MyST 项目的 Guidedog 扩展，并非 Sphinx 扩展契约。它将内联或文件源码编译为 HTML 和 PDF 使用的 SVG 或 PNG。普通 Typst 代码块仍是示例。嵌入式编译器遵循项目的包和字体策略，``--untrusted`` 模式下也如此，但不下载包。参见 :doc:`topics/diagrams`。"
 
 #: ../../compatibility.rst:175
-msgid "``lilypond`` is also a Guidedog extension, not ``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a documented part of the LilyPond language and engraves it itself, as SVG or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, because the reader runs no program or Scheme code, but refuses file arguments and ``\\include``. See :doc:`topics/music`."
-msgstr "``lilypond`` 同样是 Guidedog 自有扩展，而非 ``sphinxcontrib-lilypond``。它不调用外部 LilyPond 程序，而是直接读取受支持的 LilyPond 记谱子集，自行排印为供 HTML 和 PDF 使用的 SVG 或 PNG。由于读取过程不执行任何外部程序或 Scheme 代码，``--untrusted`` 仍会排印内联乐谱，但会拒绝文件参数和 ``\\include``。参见 :doc:`topics/music`。"
+msgid ""
+"``lilypond`` is also a Guidedog extension, not "
+"``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a "
+"documented part of the LilyPond language and engraves it itself, as SVG "
+"or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, "
+"because the reader runs no program or Scheme code, but refuses file "
+"arguments and ``\\include``. See :doc:`topics/music`."
+msgstr ""
+"``lilypond`` 同样是 Guidedog 自有扩展，而非 ``sphinxcontrib-lilypond``。它不调用外部 "
+"LilyPond 程序，而是直接读取受支持的 LilyPond 记谱子集，自行排印为供 HTML 和 PDF 使用的 SVG 或 "
+"PNG。由于读取过程不执行任何外部程序或 Scheme 代码，``--untrusted`` 仍会排印内联乐谱，但会拒绝文件参数和 "
+"``\\include``。参见 :doc:`topics/music`。"
 
 #: ../../compatibility.rst:177
-msgid "``--untrusted`` narrows the read boundary to the source folder. It omits raw content, unsafe URLs, outside resources, project Typst templates, and preambles, with diagnostics. It fetches no inventories or Typst packages. Graphs that ask to read resources, and music that names a file, are shown as code with a warning. This mode does not bound the native compiler's memory or execution time."
-msgstr "``--untrusted`` 将读取范围缩至源目录，省略原始内容、不安全 URL、外部资源、项目 Typst 模板和前置内容，并给出诊断。它不获取清单或 Typst 包。请求读取资源的图表以及指定文件的乐谱会以代码显示，并给出警告。此模式不限制原生编译器的内存或运行时间。"
+#| msgid ""
+#| "``--untrusted`` narrows the read boundary to the source folder and "
+#| "omits raw content; ``raw_content`` and ``unsafe_urls`` in "
+#| "``conf.toml`` state the same content rules for any build. It omits raw "
+#| "content, unsafe URLs, outside resources, project Typst templates, and "
+#| "preambles, with diagnostics. It fetches no inventories or Typst "
+#| "packages. Graphs that ask to read resources, and music that names a "
+#| "file, are shown as code with a warning. This mode does not bound the "
+#| "native compiler's memory or execution time."
+msgid ""
+"``--untrusted`` narrows the read boundary to the source folder and omits "
+"raw content; ``raw_content`` and ``unsafe_urls`` in ``conf.toml`` state "
+"the same content rules for any build. It omits raw content, unsafe URLs "
+"and outside resources, with diagnostics. Project Typst templates and "
+"preambles inside the source folder remain available through the embedded "
+"compiler. It fetches no inventories or Typst packages. Graphs that ask to "
+"read resources, and music that names a file, are shown as code with a "
+"warning. This mode does not bound the native compiler's memory or "
+"execution time."
+msgstr "``--untrusted`` 将读取边界限制在源文件夹内，并省略原始内容；``conf.toml`` 中的 ``raw_content`` 和 ``unsafe_urls`` 为任何构建指定相同的内容规则。它会省略原始内容、不安全 URL 和外部资源，并给出诊断。源文件夹内的项目 Typst 模板和前言仍可通过嵌入式编译器使用。它不获取清单或 Typst 包。要求读取资源的图和指定文件的乐谱会以带警告的代码显示。此模式不限制原生编译器的内存或执行时间。"
 
-#: ../../compatibility.rst:183
-msgid "The host budget defaults to 1 GiB. It is coarse: it counts the sources, included files, and PDF output the host holds, reserved before they are read. Each worker reuses one workspace. The retained project graph and catalogs still consume memory as the project grows. Reading workers coordinate admission. A refused request reports the failing operation and a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine headroom. Working memory always stays in memory. There is no disk-backed mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
-msgstr "宿主内存预算默认为 1 GiB。这是一项粗粒度预算：统计宿主所持有的源文件、包含文件和 PDF 输出，并在读取前先行预留。每个工作线程复用各自的工作区。随着项目规模扩大，常驻内存的项目图和消息目录仍会占用空间。各读取线程协同控制准入；请求被拒时，会报告失败的操作及够用的预算值。可通过 ``GUIDEDOG_AVAILABLE_MIB`` 指定已知的机器可用内存。工作数据始终驻留内存，不提供磁盘缓存模式，``--memory=disk`` 和 ``--disk-budget`` 会被拒绝。"
+#: ../../compatibility.rst:184
+msgid ""
+"The host budget defaults to 1 GiB. It is coarse: it counts the sources, "
+"included files, and PDF output the host holds, reserved before they are "
+"read. Each worker reuses one workspace. The retained project graph and "
+"catalogs still consume memory as the project grows. Reading workers "
+"coordinate admission. A refused request reports the failing operation and "
+"a budget that fits. ``GUIDEDOG_AVAILABLE_MIB`` can supply known machine "
+"headroom. Working memory always stays in memory. There is no disk-backed "
+"mode, and ``--memory=disk`` and ``--disk-budget`` are refused."
+msgstr ""
+"宿主内存预算默认为 1 GiB。这是一项粗粒度预算：统计宿主所持有的源文件、包含文件和 PDF "
+"输出，并在读取前先行预留。每个工作线程复用各自的工作区。随着项目规模扩大，常驻内存的项目图和消息目录仍会占用空间。各读取线程协同控制准入；请求被拒时，会报告失败的操作及够用的预算值。可通过 "
+"``GUIDEDOG_AVAILABLE_MIB`` "
+"指定已知的机器可用内存。工作数据始终驻留内存，不提供磁盘缓存模式，``--memory=disk`` 和 ``--disk-budget`` "
+"会被拒绝。"
 
-#: ../../compatibility.rst:190
-msgid "``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document work. Changing a limit invalidates cached reading and output. Depth and stack capacity must agree. Native Graphviz, tree-sitter, and Typst allocations are outside the host budget. We use operating-system limits when those need a hard bound. See :doc:`errors` and :doc:`internals/memory`."
-msgstr "``--max-depth``、``--max-nodes`` 和 ``--stack-kib`` 限制单篇文档的处理规模；调整这些上限会使读取缓存和输出缓存失效，且嵌套深度须与栈容量相匹配。原生 Graphviz、tree-sitter 和 Typst 的内存分配不计入宿主预算；若需硬性上限，请使用操作系统级的资源限制。参见 :doc:`errors` 和 :doc:`internals/memory`。"
+#: ../../compatibility.rst:191
+msgid ""
+"``--max-depth``, ``--max-nodes``, and ``--stack-kib`` bound document "
+"work. Changing a limit invalidates cached reading and output. Depth and "
+"stack capacity must agree. Native Graphviz, tree-sitter, and Typst "
+"allocations are outside the host budget. We use operating-system limits "
+"when those need a hard bound. See :doc:`errors` and "
+":doc:`internals/memory`."
+msgstr ""
+"``--max-depth``、``--max-nodes`` 和 ``--stack-kib`` "
+"限制单篇文档的处理规模；调整这些上限会使读取缓存和输出缓存失效，且嵌套深度须与栈容量相匹配。原生 Graphviz、tree-sitter 和 "
+"Typst 的内存分配不计入宿主预算；若需硬性上限，请使用操作系统级的资源限制。参见 :doc:`errors` 和 "
+":doc:`internals/memory`。"
 
-#: ../../compatibility.rst:196
+#: ../../compatibility.rst:197
 msgid "Verification and real projects"
 msgstr "验证与实际项目"
 
-#: ../../compatibility.rst:199
-msgid "``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx 9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, body links, inventories, numbering, and diagnostics. The stored results explain each difference, for example precise source locations, stable reading-order numbering, and explicit reports for omitted target-specific raw content (:doc:`internals/sphinx-comparison`). The reader conformance tests (:doc:`internals/rst-conformance`, :doc:`internals/commonmark-conformance`) keep their expected outputs, and ``cargo xtask verify-docutils`` checks those against a pinned Docutils 0.22.4. All 98 trees match."
-msgstr "``cargo xtask sphinxdiff-roots`` 在 Sphinx 自身的 42 个测试根目录上，把 Guidedog 与固定版本的 Sphinx 9.1.0 进行对比，检查页面、标识符、正文链接、清单、编号和诊断。存储的结果解释了每一处差异，例如精确的源码位置、稳定的阅读顺序编号，以及对省略的目标专用原始内容给出明确报告（:doc:`internals/sphinx-comparison`）。读取器的一致性测试（:doc:`internals/rst-conformance`、:doc:`internals/commonmark-conformance`）保留了各自的预期输出，``cargo xtask verify-docutils`` 会用固定版本的 Docutils 0.22.4 核对这些输出。98 棵文档树全部一致。"
+#: ../../compatibility.rst:200
+msgid ""
+"``cargo xtask sphinxdiff-roots`` compares Guidedog with a pinned Sphinx "
+"9.1.0 over 42 of Sphinx's own test roots. It checks pages, identifiers, "
+"body links, inventories, numbering, and diagnostics. The stored results "
+"explain each difference, for example precise source locations, stable "
+"reading-order numbering, and explicit reports for omitted target-specific "
+"raw content (:doc:`internals/sphinx-comparison`). The reader conformance "
+"tests (:doc:`internals/rst-conformance`, "
+":doc:`internals/commonmark-conformance`) keep their expected outputs, and "
+"``cargo xtask verify-docutils`` checks those against a pinned Docutils "
+"0.22.4. All 98 trees match."
+msgstr ""
+"``cargo xtask sphinxdiff-roots`` 在 Sphinx 自身的 42 个测试根目录上，把 Guidedog "
+"与固定版本的 Sphinx 9.1.0 "
+"进行对比，检查页面、标识符、正文链接、清单、编号和诊断。存储的结果解释了每一处差异，例如精确的源码位置、稳定的阅读顺序编号，以及对省略的目标专用原始内容给出明确报告（:doc:`internals/sphinx-comparison`）。读取器的一致性测试（:doc:`internals/rst-conformance`、:doc:`internals/commonmark-conformance`）保留了各自的预期输出，``cargo "
+"xtask verify-docutils`` 会用固定版本的 Docutils 0.22.4 核对这些输出。98 棵文档树全部一致。"
 
-#: ../../compatibility.rst:201
-msgid "On 15 October 2026 we built the manuals of CPython, Django and Flask as HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). Every HTML build succeeded, and the link check found no broken internal link besides two inert ones in CPython. The Django and Flask books built; the CPython book needs more memory than the 12 GB machine had."
-msgstr "2026 年 10 月 15 日，我们将 CPython、Django 和 Flask 的手册分别构建为 HTML 与 PDF 图书，同时实测了全新冷构建和无改动增量重建两种场景（:doc:`evidence/manuals`）。所有 HTML 构建均告成功；链接检查除 CPython 中两处不生效的死链外，未发现任何损坏的内部链接。Django 和 Flask 的 PDF 图书均顺利生成；CPython 图书所需内存则超出了测试机 12 GB 的容量。"
+#: ../../compatibility.rst:202
+msgid ""
+"On 15 October 2026 we built the manuals of CPython, Django and Flask as "
+"HTML and as PDF books, clean and unchanged (:doc:`evidence/manuals`). "
+"Every HTML build succeeded, and the link check found no broken internal "
+"link besides two inert ones in CPython. The Django and Flask books built; "
+"the CPython book needs more memory than the 12 GB machine had."
+msgstr ""
+"2026 年 10 月 15 日，我们将 CPython、Django 和 Flask 的手册分别构建为 HTML 与 PDF "
+"图书，同时实测了全新冷构建和无改动增量重建两种场景（:doc:`evidence/manuals`）。所有 HTML 构建均告成功；链接检查除 "
+"CPython 中两处不生效的死链外，未发现任何损坏的内部链接。Django 和 Flask 的 PDF 图书均顺利生成；CPython "
+"图书所需内存则超出了测试机 12 GB 的容量。"
 
-#: ../../compatibility.rst:203
-msgid "Those projects contain unsupported Python extension constructs. Their diagnostics remain part of the evidence. A zero exit status does not mean all their private directives were reproduced. We run with ``-W`` when publishing requires zero diagnostics."
-msgstr "这些项目包含不受支持的 Python 扩展结构，它们的诊断仍是证据的一部分。退出状态为零并不表示其所有私有指令都已复现。如果发布要求零诊断，我们使用 ``-W`` 运行。"
+#: ../../compatibility.rst:204
+msgid ""
+"Those projects contain unsupported Python extension constructs. Their "
+"diagnostics remain part of the evidence. A zero exit status does not mean "
+"all their private directives were reproduced. We run with ``-W`` when "
+"publishing requires zero diagnostics."
+msgstr ""
+"这些项目包含不受支持的 Python "
+"扩展结构，它们的诊断仍是证据的一部分。退出状态为零并不表示其所有私有指令都已复现。如果发布要求零诊断，我们使用 ``-W`` 运行。"
 
-#: ../../compatibility.rst:205
-msgid "The measurements describe the recorded workloads on the recorded machine. They are not universal speed or memory bounds."
+#: ../../compatibility.rst:206
+msgid ""
+"The measurements describe the recorded workloads on the recorded machine. "
+"They are not universal speed or memory bounds."
 msgstr "这些测量结果描述的是在所记录的机器上运行所记录的工作负载，并不是普遍适用的速度或内存上限。"

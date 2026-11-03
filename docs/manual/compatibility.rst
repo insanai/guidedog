@@ -175,8 +175,9 @@ within the declared resources.
 ``lilypond`` is also a Guidedog extension, not ``sphinxcontrib-lilypond``. It runs no LilyPond program; Guidedog reads a documented part of the LilyPond language and engraves it itself, as SVG or PNG for HTML and PDF. ``--untrusted`` still engraves inline notation, because the reader runs no program or Scheme code, but refuses file arguments and ``\include``. See :doc:`topics/music`.
 
 ``--untrusted`` narrows the read boundary to the source folder and omits raw content; ``raw_content`` and ``unsafe_urls`` in ``conf.toml`` state the same content rules for any build.
-It omits raw content, unsafe URLs, outside resources, project Typst templates,
-and preambles, with diagnostics. It fetches no inventories or Typst packages.
+It omits raw content, unsafe URLs and outside resources, with diagnostics.
+Project Typst templates and preambles inside the source folder remain available through the embedded compiler.
+It fetches no inventories or Typst packages.
 Graphs that ask to read resources, and music that names a file, are shown as code with a warning.
 This mode does not bound the native compiler's memory or execution time.
 

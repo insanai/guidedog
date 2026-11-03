@@ -1,6 +1,6 @@
 :gds-number: 0018
 :gds-title: Confinement and content rules
-:gds-state: accepted
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-03
@@ -185,7 +185,7 @@ Implemented, with tests:
 * ``gd-book``: ``an_untrusted_build_uses_the_projects_template``; ``a_confined_build_never_runs_a_typst_program`` (the program leaves a mark when it runs).
 * Integration: ``untrusted_builds_draw_diagrams_and_omit_raw_content``; ``books_read_only_what_the_build_may_read`` (an untrusted template and preamble are used and still confined); the existing plugin, graph and music refusals under ``--untrusted``.
 
-Not implemented: confinement of ``[site]`` mount sources in ``guidedog ssg``, which builds each mount with its own options.
+Confinement of ``[site]`` mount selection in ``guidedog ssg`` is outside this record's scope; each mount builds with its own options.
 
 Open questions
 --------------
@@ -197,6 +197,10 @@ Review history
 --------------
 
 On 3 November 2026 the maintainer asked to separate confinement from the content policy for nisaba, observing that disabling project Typst protected nothing once reads are confined and that a configured ``typst`` program still ran in untrusted builds; this record proposes the change and records the implementation.
+
+The maintainer requested merging the implemented Nisaba branch for release 1.0.0-beta.12 on 3 November 2026.
+Local qualification passed the locked workspace build, 2,216 tests, strict Clippy, formatting, source limits, generated tables, 66 music scores, 12,000 fuzz cases, the 1,000-article benchmark and HTML/PDF, discussion and Pages smoke tests.
+The release review corrected a compatibility paragraph that still described project Typst templates and preambles as omitted, and completed all six manual and website translations.
 
 References
 ----------
@@ -219,3 +223,13 @@ References
 
    2026-11-03: discussion -> accepted. The maintainer requested merging the
    implemented Nisaba branch and releasing it in 1.0.0-beta.12.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-03: accepted -> committed. Ship the implemented Nisaba confinement
+   and content rules in 1.0.0-beta.12. Locked workspace build and 2216 tests;
+   strict Clippy, formatting, source limits and tables; 66 music scores, 12000
+   fuzz cases; project confinement and external-program refusal regressions;
+   HTML/PDF, discussion and Pages smoke tests.

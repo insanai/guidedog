@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 03:38+0000\n"
+"POT-Creation-Date: 2026-11-03 23:38+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -59,20 +59,20 @@ msgid "Every command accepts these:"
 msgstr "Jeder Befehl akzeptiert diese Optionen:"
 
 #: ../../reference/cli.rst:35 ../../reference/cli.rst:158
-#: ../../reference/cli.rst:217 ../../reference/cli.rst:349
-#: ../../reference/cli.rst:375 ../../reference/cli.rst:431
-#: ../../reference/cli.rst:523 ../../reference/cli.rst:593
-#: ../../reference/cli.rst:639 ../../reference/cli.rst:702
-#: ../../reference/cli.rst:866
+#: ../../reference/cli.rst:217 ../../reference/cli.rst:348
+#: ../../reference/cli.rst:374 ../../reference/cli.rst:430
+#: ../../reference/cli.rst:522 ../../reference/cli.rst:592
+#: ../../reference/cli.rst:638 ../../reference/cli.rst:701
+#: ../../reference/cli.rst:865
 msgid "Option"
 msgstr "Option"
 
 #: ../../reference/cli.rst:36 ../../reference/cli.rst:159
-#: ../../reference/cli.rst:218 ../../reference/cli.rst:350
-#: ../../reference/cli.rst:376 ../../reference/cli.rst:432
-#: ../../reference/cli.rst:524 ../../reference/cli.rst:594
-#: ../../reference/cli.rst:640 ../../reference/cli.rst:703
-#: ../../reference/cli.rst:840 ../../reference/cli.rst:867
+#: ../../reference/cli.rst:218 ../../reference/cli.rst:349
+#: ../../reference/cli.rst:375 ../../reference/cli.rst:431
+#: ../../reference/cli.rst:523 ../../reference/cli.rst:593
+#: ../../reference/cli.rst:639 ../../reference/cli.rst:702
+#: ../../reference/cli.rst:839 ../../reference/cli.rst:866
 msgid "Meaning"
 msgstr "Bedeutung"
 
@@ -365,7 +365,9 @@ msgstr "``capabilities [PROJECT]``"
 msgid ""
 "Reports formats, source maps, edit operations, builders, directives, "
 "roles, extensions, and plugins."
-msgstr "Meldet Formate, Source Maps, Bearbeitungsoperationen, Builder, Direktiven, Rollen, Erweiterungen und Plugins."
+msgstr ""
+"Meldet Formate, Source Maps, Bearbeitungsoperationen, Builder, "
+"Direktiven, Rollen, Erweiterungen und Plugins."
 
 #: ../../reference/cli.rst:111
 msgid "``publish --publisher=ID``"
@@ -791,33 +793,31 @@ msgstr "``--untrusted``"
 
 #: ../../reference/cli.rst:250
 msgid ""
-"Leave out raw content, external Graphviz resources, ``typst-diagram`` "
-"compilation, and music read from files (``lilypond`` file arguments and "
-"``\\include``); fetch nothing; and run no build plugin. This is a "
-"capability policy, not a process sandbox."
-msgstr ""
-"Lässt Rohinhalte, externe Graphviz-Ressourcen, die "
-"``typst-diagram``-Kompilierung und aus Dateien gelesene Musik "
-"(``lilypond``-Dateiargumente und ``\\include``) weg, lädt nichts aus dem "
-"Netz und führt kein Build-Plugin aus. Das ist eine Richtlinie für "
-"Fähigkeiten, keine Prozess-Sandbox."
+"Read only below the source folder; fetch nothing; run no build plugin and "
+"no installed ``typst`` program (the embedded compiler draws "
+"``typst-diagram`` figures and typesets PDF output); read no file a graph "
+"names and no music file (``lilypond`` file arguments and ``\\include``); "
+"and leave out raw content and unsafe URLs. This is a capability policy, "
+"not a process sandbox. See the configuration reference's \"Trust\" "
+"section."
+msgstr "Nur unterhalb des Quellordners lesen; nichts abrufen; kein Build-Plugin und kein installiertes ``typst``-Programm ausführen (der eingebettete Compiler zeichnet ``typst-diagram``-Abbildungen und setzt PDF-Ausgaben); keine von einem Graphen benannte Datei und keine Musikdatei lesen (``lilypond``-Dateiargumente und ``\\include``); rohe Inhalte und unsichere URLs weglassen. Dies ist eine Regel für Befugnisse, keine Prozess-Sandbox. Siehe den Abschnitt „Trust“ der Konfigurationsreferenz."
 
-#: ../../reference/cli.rst:252 ../../reference/cli.rst:464
+#: ../../reference/cli.rst:251 ../../reference/cli.rst:463
 msgid "``--budget=MIB``"
 msgstr "``--budget=MIB``"
 
-#: ../../reference/cli.rst:253
+#: ../../reference/cli.rst:252
 msgid ""
 "Memory the build may hold at once, from 1 to 1048576 (default: ``1024``)."
 msgstr ""
 "Speicher, den der Build gleichzeitig belegen darf, von 1 bis 1048576 "
 "(Standard: ``1024``)."
 
-#: ../../reference/cli.rst:254
+#: ../../reference/cli.rst:253
 msgid "``--memory=ram``"
 msgstr "``--memory=ram``"
 
-#: ../../reference/cli.rst:255
+#: ../../reference/cli.rst:254
 msgid ""
 "At the budget, stop without asking. Without it, a terminal asks whether "
 "to raise the budget or stop; a build without a terminal stops. "
@@ -832,27 +832,27 @@ msgstr ""
 "``cli.memory-disk`` abgelehnt. Der Arbeitsspeicher bleibt im Speicher, "
 "begrenzt durch das Budget; wir erhöhen stattdessen ``--budget``."
 
-#: ../../reference/cli.rst:260
+#: ../../reference/cli.rst:259
 msgid "``--max-depth=N``"
 msgstr "``--max-depth=N``"
 
-#: ../../reference/cli.rst:261
+#: ../../reference/cli.rst:260
 msgid "How deep content may nest (default: ``256``)."
 msgstr "Wie tief Inhalte verschachtelt sein dürfen (Standard: ``256``)."
 
-#: ../../reference/cli.rst:262
+#: ../../reference/cli.rst:261
 msgid "``--max-nodes=N``"
 msgstr "``--max-nodes=N``"
 
-#: ../../reference/cli.rst:263
+#: ../../reference/cli.rst:262
 msgid "Nodes per document (default: ``1000000``)."
 msgstr "Knoten pro Dokument (Standard: ``1000000``)."
 
-#: ../../reference/cli.rst:264 ../../reference/cli.rst:468
+#: ../../reference/cli.rst:263 ../../reference/cli.rst:467
 msgid "``--stack-kib=N``"
 msgstr "``--stack-kib=N``"
 
-#: ../../reference/cli.rst:265
+#: ../../reference/cli.rst:264
 msgid ""
 "Stack for nested content (default: ``512``; at most what the reading "
 "threads hold, 6144 on Linux and macOS). Raise it together with "
@@ -862,21 +862,21 @@ msgstr ""
 "wie die lesenden Threads haben, unter Linux und macOS 6144). Wir erhöhen "
 "den Wert zusammen mit ``--max-depth``."
 
-#: ../../reference/cli.rst:267 ../../reference/cli.rst:454
-#: ../../reference/cli.rst:546
+#: ../../reference/cli.rst:266 ../../reference/cli.rst:453
+#: ../../reference/cli.rst:545
 msgid "``--typst=PATH``"
 msgstr "``--typst=PATH``"
 
-#: ../../reference/cli.rst:268
+#: ../../reference/cli.rst:267
 msgid "The Typst program for PDF, overriding ``typst`` in ``conf.toml``."
 msgstr ""
 "Das Typst-Programm für PDF; überschreibt ``typst`` in ``conf.toml``."
 
-#: ../../reference/cli.rst:269 ../../reference/cli.rst:611
+#: ../../reference/cli.rst:268 ../../reference/cli.rst:610
 msgid "``--preview``"
 msgstr "``--preview``"
 
-#: ../../reference/cli.rst:270
+#: ../../reference/cli.rst:269
 msgid ""
 "Include pages that would otherwise be withheld by ``:draft:``, "
 "``:publish-at:`` in the future, or ``:expires-at:`` in the past."
@@ -885,11 +885,11 @@ msgstr ""
 "``:publish-at:`` oder ein vergangenes ``:expires-at:`` zurückgehalten "
 "würden."
 
-#: ../../reference/cli.rst:271 ../../reference/cli.rst:613
+#: ../../reference/cli.rst:270 ../../reference/cli.rst:612
 msgid "``--now=RFC3339``"
 msgstr "``--now=RFC3339``"
 
-#: ../../reference/cli.rst:272
+#: ../../reference/cli.rst:271
 msgid ""
 "Evaluate publication timestamps (``:publish-at:`` and ``:expires-at:``) "
 "and default build dates against this UTC instant (for example, "
@@ -901,7 +901,7 @@ msgstr ""
 "``--now=2026-10-16T09:00:00Z``) anstelle der Systemuhr oder "
 "``SOURCE_DATE_EPOCH`` auswerten."
 
-#: ../../reference/cli.rst:274
+#: ../../reference/cli.rst:273
 msgid ""
 "The build prints what it read and wrote, then a verdict: ``build "
 "succeeded`` or ``build failed``, with the number of errors and warnings "
@@ -916,7 +916,7 @@ msgstr ""
 "gehören zum Build selbst, ``-W`` zählt sie also mit. "
 "``suppress_warnings`` unterdrückt Warnungen, bevor ``-W`` sie zählt."
 
-#: ../../reference/cli.rst:279
+#: ../../reference/cli.rst:278
 msgid ""
 "``read`` counts the documents parsed and those unchanged since the last "
 "build (taken from the environment). ``write`` counts the outputs written "
@@ -935,11 +935,11 @@ msgstr ""
 "gemeinsamen Dateien der Website (Theme, Indizes, ``objects.inv``). Sie "
 "werden nicht mitgezählt."
 
-#: ../../reference/cli.rst:286
+#: ../../reference/cli.rst:285
 msgid "guidedog serve"
 msgstr "guidedog serve"
 
-#: ../../reference/cli.rst:289
+#: ../../reference/cli.rst:288
 msgid ""
 "Builds the HTML site and serves it on ``http://127.0.0.1:PORT/``. When "
 "sources, templates, static files, or ``conf.toml`` changed, it rebuilds "
@@ -950,7 +950,7 @@ msgstr ""
 "``conf.toml`` geändert, baut der Server neu, bevor er eine Anfrage "
 "beantwortet:"
 
-#: ../../reference/cli.rst:299
+#: ../../reference/cli.rst:298
 msgid ""
 "``--host IP`` selects an IPv4 or IPv6 bind address. The default is "
 "``127.0.0.1``. We use ``--host 0.0.0.0`` for all IPv4 interfaces or "
@@ -967,7 +967,7 @@ msgstr ""
 "in einem Netzwerk bereit, in dem dieser Zugriff erwünscht ist. Hostnamen "
 "und kombinierte Adress-Port-Werte werden nicht akzeptiert."
 
-#: ../../reference/cli.rst:301
+#: ../../reference/cli.rst:300
 msgid ""
 "``--port PORT`` (``-p`` is quickstart's project name, not the port) "
 "chooses the port, from 1 to 65535 (default: ``8000``). ``-c``, ``-C``, "
@@ -984,7 +984,7 @@ msgstr ""
 "fehlgeschlagener Rebuild behält die vorherige Website bei und meldet das "
 "Problem. Strg+C stoppt den Server."
 
-#: ../../reference/cli.rst:303
+#: ../../reference/cli.rst:302
 msgid ""
 "It serves ``_build/html``. It watches the source folder, the Odin and "
 "Rust API sources (``odin_autoapi_dirs``, ``odin_collections``, "
@@ -1003,11 +1003,11 @@ msgstr ""
 "erkennt der Server an Dateinamen, Größen und Zeitstempeln. Die Prüfung "
 "läuft, bevor eine HTML-Seite ausgeliefert wird:"
 
-#: ../../reference/cli.rst:320
+#: ../../reference/cli.rst:319
 msgid "guidedog clean"
 msgstr "guidedog clean"
 
-#: ../../reference/cli.rst:323
+#: ../../reference/cli.rst:322
 msgid ""
 "Removes the contents of the project's build folder, the environment cache "
 "included:"
@@ -1015,11 +1015,11 @@ msgstr ""
 "Löscht den Inhalt des Build-Ordners des Projekts, einschließlich des "
 "Umgebungs-Caches:"
 
-#: ../../reference/cli.rst:329
+#: ../../reference/cli.rst:328
 msgid "guidedog migrate"
 msgstr "guidedog migrate"
 
-#: ../../reference/cli.rst:332
+#: ../../reference/cli.rst:331
 msgid ""
 "Converts a Sphinx ``conf.py`` (or an old ``guidedog.toml``) to "
 "``conf.toml`` without running Python. Literal settings carry over. "
@@ -1031,32 +1031,32 @@ msgstr ""
 "übernommen. Alles, was Python berechnen würde, wird gemeldet und als "
 "Kommentar in ``conf.toml`` aufbewahrt:"
 
-#: ../../reference/cli.rst:345
+#: ../../reference/cli.rst:344
 msgid "Options of migrate"
 msgstr "Optionen von migrate"
 
-#: ../../reference/cli.rst:351
+#: ../../reference/cli.rst:350
 msgid "``-o FILE``, ``--output FILE``"
 msgstr "``-o FILE``, ``--output FILE``"
 
-#: ../../reference/cli.rst:352
+#: ../../reference/cli.rst:351
 msgid "Write here instead of beside ``conf.py``; ``-`` prints it."
 msgstr ""
 "Schreibt hierhin statt neben ``conf.py``; ``-`` gibt das Ergebnis aus."
 
-#: ../../reference/cli.rst:353 ../../reference/cli.rst:442
+#: ../../reference/cli.rst:352 ../../reference/cli.rst:441
 msgid "``--force``"
 msgstr "``--force``"
 
-#: ../../reference/cli.rst:354
+#: ../../reference/cli.rst:353
 msgid "Replace an existing ``conf.toml``."
 msgstr "Ersetzt eine vorhandene ``conf.toml``."
 
-#: ../../reference/cli.rst:356
+#: ../../reference/cli.rst:355
 msgid "guidedog intl"
 msgstr "guidedog intl"
 
-#: ../../reference/cli.rst:359
+#: ../../reference/cli.rst:358
 msgid ""
 "Keeps translation catalogs in step with the documents, as ``sphinx-intl`` "
 "does. First we write the message templates with ``guidedog build "
@@ -1074,59 +1074,59 @@ msgstr ""
 "bauen wir mit ``-D language=LANG`` oder setzen ``language`` in "
 "``conf.toml``."
 
-#: ../../reference/cli.rst:371
+#: ../../reference/cli.rst:370
 msgid "Options of intl"
 msgstr "Optionen von intl"
 
-#: ../../reference/cli.rst:377
+#: ../../reference/cli.rst:376
 msgid "``-l LANG``, ``--language LANG``"
 msgstr "``-l LANG``, ``--language LANG``"
 
-#: ../../reference/cli.rst:378
+#: ../../reference/cli.rst:377
 msgid "A language; repeat it for several."
 msgstr "Eine Sprache; für mehrere Sprachen wiederholen."
 
-#: ../../reference/cli.rst:379
+#: ../../reference/cli.rst:378
 msgid "``-p DIR``, ``--pot-dir DIR``"
 msgstr "``-p DIR``, ``--pot-dir DIR``"
 
-#: ../../reference/cli.rst:380
+#: ../../reference/cli.rst:379
 msgid "The templates (default: ``_build/gettext``)."
 msgstr "Die Vorlagen (Standard: ``_build/gettext``)."
 
-#: ../../reference/cli.rst:381
+#: ../../reference/cli.rst:380
 msgid "``-d DIR``, ``--locale-dir DIR``"
 msgstr "``-d DIR``, ``--locale-dir DIR``"
 
-#: ../../reference/cli.rst:382
+#: ../../reference/cli.rst:381
 msgid "The catalogs (default: the first of ``locale_dirs``)."
 msgstr "Die Kataloge (Standard: der erste Eintrag von ``locale_dirs``)."
 
-#: ../../reference/cli.rst:383
+#: ../../reference/cli.rst:382
 msgid "``-w N``, ``--line-width N``"
 msgstr "``-w N``, ``--line-width N``"
 
-#: ../../reference/cli.rst:384
+#: ../../reference/cli.rst:383
 msgid "Wrap lines at ``N`` characters (default: ``76``)."
 msgstr "Bricht Zeilen nach ``N`` Zeichen um (Standard: ``76``)."
 
-#: ../../reference/cli.rst:385
+#: ../../reference/cli.rst:384
 msgid "``--no-obsolete``"
 msgstr "``--no-obsolete``"
 
-#: ../../reference/cli.rst:386
+#: ../../reference/cli.rst:385
 msgid "Drop messages the templates no longer have."
 msgstr "Verwirft Nachrichten, die in den Vorlagen nicht mehr vorkommen."
 
-#: ../../reference/cli.rst:387
+#: ../../reference/cli.rst:386
 msgid "``-c DIR``, ``-D name=value``"
 msgstr "``-c DIR``, ``-D name=value``"
 
-#: ../../reference/cli.rst:388
+#: ../../reference/cli.rst:387
 msgid "Where ``conf.toml`` is; override a setting."
 msgstr "Wo ``conf.toml`` liegt; überschreibt eine Einstellung."
 
-#: ../../reference/cli.rst:390
+#: ../../reference/cli.rst:389
 msgid ""
 "``stat`` prints, for each catalog, how many messages are translated, "
 "fuzzy, and untranslated."
@@ -1134,18 +1134,18 @@ msgstr ""
 "``stat`` gibt für jeden Katalog aus, wie viele Nachrichten übersetzt, "
 "fuzzy und unübersetzt sind."
 
-#: ../../reference/cli.rst:393
+#: ../../reference/cli.rst:392
 msgid "guidedog convert"
 msgstr "guidedog convert"
 
-#: ../../reference/cli.rst:396
+#: ../../reference/cli.rst:395
 msgid ""
 "Converts one file, or standard input, without a project or configuration:"
 msgstr ""
 "Konvertiert eine Datei oder die Standardeingabe, ohne Projekt und ohne "
 "Konfiguration:"
 
-#: ../../reference/cli.rst:406
+#: ../../reference/cli.rst:405
 msgid ""
 "The input format comes from ``--from`` or the input's suffix: ``.rst`` "
 "and ``.rest`` are reStructuredText, ``.md`` and ``.markdown`` CommonMark, "
@@ -1168,7 +1168,7 @@ msgstr ""
 "Ausgabe (``.html``, ``.htm``, ``.pdf``, ``.rst``, ``.rest``). Für "
 "``convert`` gelten nur die Optionen unten."
 
-#: ../../reference/cli.rst:414
+#: ../../reference/cli.rst:413
 msgid ""
 "``--to rst`` writes reStructuredText with Guidedog's own writer (the "
 "``rst`` renderer). It keeps the author's lines: each line break inside a "
@@ -1198,7 +1198,7 @@ msgstr ""
 "Writer kommt dem so nahe wie möglich und meldet einen Hinweis. "
 "Typst-Eingaben lassen sich nicht in reStructuredText umwandeln."
 
-#: ../../reference/cli.rst:424
+#: ../../reference/cli.rst:423
 msgid ""
 "With ``--from sphinx`` or ``--from myst``, an unengraved ``lilypond`` "
 "file argument becomes a descriptive sentence in HTML and PDF, translated "
@@ -1212,23 +1212,23 @@ msgstr ""
 "Partitur. Die Konvertierung öffnet die Partiturdatei nie; die "
 "Konvertierung nach RST erhält ihre Direktive und ihren Dateinamen."
 
-#: ../../reference/cli.rst:427
+#: ../../reference/cli.rst:426
 msgid "Options of convert"
 msgstr "Optionen von convert"
 
-#: ../../reference/cli.rst:433
+#: ../../reference/cli.rst:432
 msgid "``-o FILE``, ``--output=FILE``"
 msgstr "``-o FILE``, ``--output=FILE``"
 
-#: ../../reference/cli.rst:434
+#: ../../reference/cli.rst:433
 msgid "The destination, or ``-`` for standard output. Required."
 msgstr "Das Ziel, oder ``-`` für die Standardausgabe. Pflichtangabe."
 
-#: ../../reference/cli.rst:435
+#: ../../reference/cli.rst:434
 msgid "``--from=rst|sphinx|commonmark|myst|typst``"
 msgstr "``--from=rst|sphinx|commonmark|myst|typst``"
 
-#: ../../reference/cli.rst:436
+#: ../../reference/cli.rst:435
 msgid ""
 "The input format (``restructuredtext``, ``md``, ``markdown`` and ``typ`` "
 "are accepted spellings)."
@@ -1236,53 +1236,53 @@ msgstr ""
 "Das Eingabeformat (``restructuredtext``, ``md``, ``markdown`` und ``typ`` "
 "sind als Schreibweisen ebenfalls erlaubt)."
 
-#: ../../reference/cli.rst:438
+#: ../../reference/cli.rst:437
 msgid "``--to=html|pdf|rst``"
 msgstr "``--to=html|pdf|rst``"
 
-#: ../../reference/cli.rst:439
+#: ../../reference/cli.rst:438
 msgid "The output format (``restructuredtext`` is an accepted spelling)."
 msgstr ""
 "Das Ausgabeformat (``restructuredtext`` ist als Schreibweise ebenfalls "
 "erlaubt)."
 
-#: ../../reference/cli.rst:440
+#: ../../reference/cli.rst:439
 msgid "``--emit-typst=FILE``"
 msgstr "``--emit-typst=FILE``"
 
-#: ../../reference/cli.rst:441
+#: ../../reference/cli.rst:440
 msgid "Also write the generated Typst source (not for Typst input)."
 msgstr ""
 "Schreibt zusätzlich den erzeugten Typst-Quelltext (nicht bei "
 "Typst-Eingabe)."
 
-#: ../../reference/cli.rst:443
+#: ../../reference/cli.rst:442
 msgid "Replace an existing output file."
 msgstr "Ersetzt eine vorhandene Ausgabedatei."
 
-#: ../../reference/cli.rst:444
+#: ../../reference/cli.rst:443
 msgid "``--raw=refuse|omit|allow``"
 msgstr "``--raw=refuse|omit|allow``"
 
-#: ../../reference/cli.rst:445
+#: ../../reference/cli.rst:444
 msgid "Raw HTML or Typst content: fail (default), leave it out, or keep it."
 msgstr ""
 "Roher HTML- oder Typst-Inhalt: Fehler (Standard), weglassen oder "
 "übernehmen."
 
-#: ../../reference/cli.rst:446
+#: ../../reference/cli.rst:445
 msgid "``--strict``"
 msgstr "``--strict``"
 
-#: ../../reference/cli.rst:447
+#: ../../reference/cli.rst:446
 msgid "Treat warnings as failures."
 msgstr "Behandelt Warnungen als Fehler."
 
-#: ../../reference/cli.rst:448
+#: ../../reference/cli.rst:447
 msgid "``--title=TEXT``, ``--lang=TAG``"
 msgstr "``--title=TEXT``, ``--lang=TAG``"
 
-#: ../../reference/cli.rst:449
+#: ../../reference/cli.rst:448
 msgid ""
 "The document's title and language. The language also translates "
 "Guidedog's own labels in HTML and PDF output, such as admonition titles."
@@ -1291,23 +1291,23 @@ msgstr ""
 "PDF-Ausgaben auch Guidedogs eigene Beschriftungen, etwa Titel von "
 "Hinweisboxen."
 
-#: ../../reference/cli.rst:450
+#: ../../reference/cli.rst:449
 msgid "``--number-sections``"
 msgstr "``--number-sections``"
 
-#: ../../reference/cli.rst:451
+#: ../../reference/cli.rst:450
 msgid "Number section headings."
 msgstr "Nummeriert Abschnittsüberschriften."
 
-#: ../../reference/cli.rst:452
+#: ../../reference/cli.rst:451
 msgid "``--fragment``"
 msgstr "``--fragment``"
 
-#: ../../reference/cli.rst:453
+#: ../../reference/cli.rst:452
 msgid "Write the body only, not a complete document."
 msgstr "Schreibt nur den Rumpf, kein vollständiges Dokument."
 
-#: ../../reference/cli.rst:455
+#: ../../reference/cli.rst:454
 msgid ""
 "The Typst program (default: the embedded compiler, else ``typst`` on "
 "``PATH``)."
@@ -1315,56 +1315,56 @@ msgstr ""
 "Das Typst-Programm (Standard: der eingebettete Compiler, sonst ``typst`` "
 "aus dem ``PATH``)."
 
-#: ../../reference/cli.rst:456
+#: ../../reference/cli.rst:455
 msgid "``--font-path=DIR``"
 msgstr "``--font-path=DIR``"
 
-#: ../../reference/cli.rst:457
+#: ../../reference/cli.rst:456
 msgid "An extra font folder; repeat it for more."
 msgstr "Ein zusätzlicher Schriftordner; für weitere wiederholen."
 
-#: ../../reference/cli.rst:458
+#: ../../reference/cli.rst:457
 msgid "``--embedded-fonts-only``"
 msgstr "``--embedded-fonts-only``"
 
-#: ../../reference/cli.rst:459
+#: ../../reference/cli.rst:458
 msgid "Ignore system fonts, for reproducible PDFs."
 msgstr "Ignoriert Systemschriften, für reproduzierbare PDFs."
 
-#: ../../reference/cli.rst:460
+#: ../../reference/cli.rst:459
 msgid "``--offline``"
 msgstr "``--offline``"
 
-#: ../../reference/cli.rst:461
+#: ../../reference/cli.rst:460
 msgid "Use only Typst packages already on disk."
 msgstr "Verwendet nur Typst-Pakete, die schon auf der Platte liegen."
 
-#: ../../reference/cli.rst:462
+#: ../../reference/cli.rst:461
 msgid "``--package-cache=DIR``"
 msgstr "``--package-cache=DIR``"
 
-#: ../../reference/cli.rst:463
+#: ../../reference/cli.rst:462
 msgid "The Typst package cache folder."
 msgstr "Der Ordner des Typst-Paket-Caches."
 
-#: ../../reference/cli.rst:465
+#: ../../reference/cli.rst:464
 msgid "The memory budget of the conversion (default: ``256``)."
 msgstr "Das Speicherbudget der Konvertierung (Standard: ``256``)."
 
-#: ../../reference/cli.rst:466
+#: ../../reference/cli.rst:465
 msgid "``--max-depth=N``, ``--max-nodes=N``"
 msgstr "``--max-depth=N``, ``--max-nodes=N``"
 
-#: ../../reference/cli.rst:467
+#: ../../reference/cli.rst:466
 msgid "Nesting and node limits."
 msgstr "Grenzen für Verschachtelung und Knotenzahl."
 
-#: ../../reference/cli.rst:469
+#: ../../reference/cli.rst:468
 msgid "Stack for nested content (default: ``512``, at most ``6144``)."
 msgstr ""
 "Stack für verschachtelte Inhalte (Standard: ``512``, höchstens ``6144``)."
 
-#: ../../reference/cli.rst:471
+#: ../../reference/cli.rst:470
 msgid ""
 "The exit status is 0 for success, 1 for invalid or refused content, 2 for "
 "usage, 3 for a limit, 4 for a file or Typst failure, and 5 for an "
@@ -1375,11 +1375,11 @@ msgstr ""
 "einem Datei- oder Typst-Fehler und 5 bei einem internen Fehler. Eine "
 "fehlgeschlagene Konvertierung schreibt keine Ausgabe."
 
-#: ../../reference/cli.rst:475
+#: ../../reference/cli.rst:474
 msgid "guidedog formats"
 msgstr "guidedog formats"
 
-#: ../../reference/cli.rst:478
+#: ../../reference/cli.rst:477
 msgid ""
 "Reports the readers and renderers this executable actually has, with "
 "their versions and conformance (``planned``, ``partial``, "
@@ -1392,11 +1392,11 @@ msgstr ""
 "Typst-Backend (eingebettet oder ein installiertes Programm) und ob es die "
 "festgelegte Version ist."
 
-#: ../../reference/cli.rst:488
+#: ../../reference/cli.rst:487
 msgid "guidedog capabilities"
 msgstr "guidedog capabilities"
 
-#: ../../reference/cli.rst:491
+#: ../../reference/cli.rst:490
 msgid ""
 "Reports what this executable supports, read from the code it links rather "
 "than from a table: the document formats with their source maps and visual "
@@ -1407,13 +1407,23 @@ msgid ""
 "or ``--format=json``, writes the JSON form that editors read, whose "
 "``schema`` field counts incompatible changes; ``--format=table`` is the "
 "default. GDS 0017 specifies the report."
-msgstr "Meldet, was dieses Programm unterstützt, gelesen aus dem Code, den es einbindet, statt aus einer Tabelle: die Dokumentformate mit ihren Source Maps und visuellen Bearbeitungsoperationen, die Builder, jede Direktive und Rolle mit ihren Optionen und dem, was sie aktiviert (``default``, ``config`` oder ``plugin``), die Markdown- und Sphinx-Erweiterungen und die eingebundenen Plugins. Mit einem Projektordner entscheidet dessen ``conf.toml``, welche Einträge aktiviert sind. ``--json`` oder ``--format=json`` schreibt die JSON-Form, die Editoren lesen und deren Feld ``schema`` inkompatible Änderungen zählt; ``--format=table`` ist die Voreinstellung. GDS 0017 legt den Bericht fest."
+msgstr ""
+"Meldet, was dieses Programm unterstützt, gelesen aus dem Code, den es "
+"einbindet, statt aus einer Tabelle: die Dokumentformate mit ihren Source "
+"Maps und visuellen Bearbeitungsoperationen, die Builder, jede Direktive "
+"und Rolle mit ihren Optionen und dem, was sie aktiviert (``default``, "
+"``config`` oder ``plugin``), die Markdown- und Sphinx-Erweiterungen und "
+"die eingebundenen Plugins. Mit einem Projektordner entscheidet dessen "
+"``conf.toml``, welche Einträge aktiviert sind. ``--json`` oder "
+"``--format=json`` schreibt die JSON-Form, die Editoren lesen und deren "
+"Feld ``schema`` inkompatible Änderungen zählt; ``--format=table`` ist die "
+"Voreinstellung. GDS 0017 legt den Bericht fest."
 
-#: ../../reference/cli.rst:498
+#: ../../reference/cli.rst:497
 msgid "guidedog dsc"
 msgstr "guidedog dsc"
 
-#: ../../reference/cli.rst:501
+#: ../../reference/cli.rst:500
 msgid ""
 "Keeps a discussion catalog and builds it. The commands come from the "
 "discussion plugin, which every ``guidedog`` links. They work on any "
@@ -1432,7 +1442,7 @@ msgstr ""
 "solcher Katalog, in ``docs/gds``. :doc:`../howto/discussions` zeigt den "
 "ganzen Ablauf."
 
-#: ../../reference/cli.rst:517
+#: ../../reference/cli.rst:516
 msgid ""
 "``guidedog dsc build`` builds the catalog as a Guidedog project, as "
 "``guidedog build`` does, with ``pdf_documents`` set to the record books "
@@ -1448,29 +1458,29 @@ msgstr ""
 "``guidedog dsc COMMAND --help`` zeigt die Optionen eines einzelnen "
 "Befehls."
 
-#: ../../reference/cli.rst:519
+#: ../../reference/cli.rst:518
 msgid "Options of guidedog dsc"
 msgstr "Optionen von guidedog dsc"
 
-#: ../../reference/cli.rst:525
+#: ../../reference/cli.rst:524
 msgid "``--dir=DIR``"
 msgstr "``--dir=DIR``"
 
-#: ../../reference/cli.rst:526
+#: ../../reference/cli.rst:525
 msgid "The catalog. By default, the one the current folder is in."
 msgstr "Der Katalog. Standardmäßig der, in dem der aktuelle Ordner liegt."
 
-#: ../../reference/cli.rst:527
+#: ../../reference/cli.rst:526
 msgid "``--prefix=NAME``"
 msgstr "``--prefix=NAME``"
 
-#: ../../reference/cli.rst:528
+#: ../../reference/cli.rst:527
 msgid ""
 "The prefix of a catalog without ``discussion.toml``; ``init`` needs it."
 msgstr ""
 "Das Präfix eines Katalogs ohne ``discussion.toml``; ``init`` braucht es."
 
-#: ../../reference/cli.rst:529
+#: ../../reference/cli.rst:528
 msgid ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
@@ -1478,7 +1488,7 @@ msgstr ""
 "``--name=NAME``, ``--config=FILE``, ``--process=FILE``, "
 "``--template=FILE``"
 
-#: ../../reference/cli.rst:530
+#: ../../reference/cli.rst:529
 msgid ""
 "The name, settings, process draft, and record template of a new catalog "
 "(``init``)."
@@ -1486,11 +1496,11 @@ msgstr ""
 "Name, Einstellungen, Prozessentwurf und Aufzeichnungsvorlage eines neuen "
 "Katalogs (``init``)."
 
-#: ../../reference/cli.rst:532
+#: ../../reference/cli.rst:531
 msgid "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 msgstr "``--author=NAME``, ``--labels=a,b``, ``--slug=NAME``"
 
-#: ../../reference/cli.rst:533
+#: ../../reference/cli.rst:532
 msgid ""
 "A new draft's author (default: Git's ``user.name``), labels, and file "
 "name (``new``; ``init`` takes the first two)."
@@ -1498,21 +1508,21 @@ msgstr ""
 "Autor (Standard: ``user.name`` aus Git), Labels und Dateiname eines neuen "
 "Entwurfs (``new``; ``init`` nimmt die ersten beiden)."
 
-#: ../../reference/cli.rst:535
+#: ../../reference/cli.rst:534
 msgid "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 msgstr "``--state=STATE``, ``--label=NAME``, ``--include-historical``"
 
-#: ../../reference/cli.rst:536
+#: ../../reference/cli.rst:535
 msgid "``list``: filter by state or label; include inherited records."
 msgstr ""
 "``list``: nach Zustand oder Label filtern; geerbte Aufzeichnungen "
 "einbeziehen."
 
-#: ../../reference/cli.rst:537
+#: ../../reference/cli.rst:536
 msgid "``--number=N``, ``--discussion=URL``"
 msgstr "``--number=N``, ``--discussion=URL``"
 
-#: ../../reference/cli.rst:538
+#: ../../reference/cli.rst:537
 msgid ""
 "The number and review link of a promotion; ``--number`` also selects a "
 "record to build."
@@ -1520,37 +1530,37 @@ msgstr ""
 "Nummer und Review-Link einer Hochstufung; ``--number`` wählt außerdem "
 "eine Aufzeichnung zum Bauen aus."
 
-#: ../../reference/cli.rst:540
+#: ../../reference/cli.rst:539
 msgid "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 msgstr "``--to=STATE``, ``--reason=TEXT``, ``--evidence=TEXT``"
 
-#: ../../reference/cli.rst:541
+#: ../../reference/cli.rst:540
 msgid "A state change, why, and for ``committed`` the evidence."
 msgstr ""
 "Eine Zustandsänderung, ihr Grund und bei ``committed`` der Nachweis."
 
-#: ../../reference/cli.rst:542
+#: ../../reference/cli.rst:541
 msgid "``--check``, ``--render``"
 msgstr "``--check``, ``--render``"
 
-#: ../../reference/cli.rst:543
+#: ../../reference/cli.rst:542
 msgid ""
 "``index``: check without writing; ``check``: also build the artifacts."
 msgstr ""
 "``index``: prüfen, ohne zu schreiben; ``check``: zusätzlich die Artefakte "
 "bauen."
 
-#: ../../reference/cli.rst:544
+#: ../../reference/cli.rst:543
 msgid "``--target=html|pdf|both``"
 msgstr "``--target=html|pdf|both``"
 
-#: ../../reference/cli.rst:545
+#: ../../reference/cli.rst:544
 msgid "What ``build`` writes (default: both). A record selects one PDF."
 msgstr ""
 "Was ``build`` schreibt (Standard: beides). Eine Aufzeichnung wählt ein "
 "PDF aus."
 
-#: ../../reference/cli.rst:547
+#: ../../reference/cli.rst:546
 msgid ""
 "``build`` and ``check``: the Typst program for a catalog of older Typst "
 "records (default: the embedded compiler), and for the PDF books."
@@ -1559,7 +1569,7 @@ msgstr ""
 "Typst-Aufzeichnungen (Standard: der eingebettete Compiler) und für die "
 "PDF-Bücher."
 
-#: ../../reference/cli.rst:549
+#: ../../reference/cli.rst:548
 msgid ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
@@ -1567,12 +1577,12 @@ msgstr ""
 "``--dry-run``, ``--format=table|json``, ``--diagnostics=text|json``, "
 "``-q``"
 
-#: ../../reference/cli.rst:550
+#: ../../reference/cli.rst:549
 msgid "Preview a change; machine-readable output; quiet success."
 msgstr ""
 "Eine Änderung vorab ansehen; maschinenlesbare Ausgabe; stiller Erfolg."
 
-#: ../../reference/cli.rst:552
+#: ../../reference/cli.rst:551
 msgid ""
 "The exit statuses are those of ``guidedog``. Problems about a catalog "
 "have codes in its prefix, such as ``eds.recovery-needed``."
@@ -1580,11 +1590,11 @@ msgstr ""
 "Die Exitstatus sind die von ``guidedog``. Probleme eines Katalogs haben "
 "Codes mit seinem Präfix, etwa ``eds.recovery-needed``."
 
-#: ../../reference/cli.rst:555
+#: ../../reference/cli.rst:554
 msgid "guidedog ssg"
 msgstr "guidedog ssg"
 
-#: ../../reference/cli.rst:558
+#: ../../reference/cli.rst:557
 msgid ""
 "Scaffolds static websites, manages article lifecycles, packs and verifies "
 "portable theme archives, and builds multi-project mounted sites. The "
@@ -1603,11 +1613,11 @@ msgstr ""
 "Kommentare und Zeilenenden unberührt. RFC-3339-Zeitstempel erfordern eine "
 "Zeitzone; reine Datumsangaben beginnen um Mitternacht UTC."
 
-#: ../../reference/cli.rst:573 ../../reference/cli.rst:734
+#: ../../reference/cli.rst:572 ../../reference/cli.rst:733
 msgid "Subcommands:"
 msgstr "Unterbefehle:"
 
-#: ../../reference/cli.rst:575
+#: ../../reference/cli.rst:574
 msgid ""
 "``guidedog ssg init PATH [--preset=project|journal|research] "
 "[--title=TITLE] [--author=NAME] [--now=RFC3339]``: creates a complete "
@@ -1624,7 +1634,7 @@ msgstr ""
 "und versieht den ersten Beitrag mit dem heutigen UTC-Datum (oder "
 "``--now``)."
 
-#: ../../reference/cli.rst:576
+#: ../../reference/cli.rst:575
 msgid ""
 "``guidedog ssg new PATH [--title=TITLE] [--template=NAME] "
 "[--now=RFC3339]``: creates a new draft article at ``PATH`` (``.rst`` or "
@@ -1638,7 +1648,7 @@ msgstr ""
 "``--title`` verwendet standardmäßig den Dateinamen ohne Endung; "
 "``--template`` setzt bei Angabe ``:template: NAME``."
 
-#: ../../reference/cli.rst:577
+#: ../../reference/cli.rst:576
 msgid ""
 "``guidedog ssg draft PATH [--now=RFC3339]``: marks an existing article at "
 "``PATH`` as a draft (``:draft: true``), preserving its date and schedule. "
@@ -1649,7 +1659,7 @@ msgstr ""
 "Zeitplan erhalten bleiben. Normale Builds halten ihn zurück, solange "
 "draft auf true steht."
 
-#: ../../reference/cli.rst:578
+#: ../../reference/cli.rst:577
 msgid ""
 "``guidedog ssg schedule PATH --at=RFC3339 [--now=RFC3339]``: clears draft "
 "and expiration and sets ``:publish-at: RFC3339``. The article stays "
@@ -1660,7 +1670,7 @@ msgstr ""
 "Artikel bleibt bis zu diesem Zeitpunkt zurückgehalten; ein vergangener "
 "Zeitpunkt wird akzeptiert."
 
-#: ../../reference/cli.rst:579
+#: ../../reference/cli.rst:578
 msgid ""
 "``guidedog ssg publish PATH [--date=DATE] [--now=RFC3339]``: clears "
 "draft, schedule and expiration. ``--date`` sets a date or RFC 3339 "
@@ -1675,7 +1685,7 @@ msgstr ""
 "bei oder verwendet das heutige UTC-Datum, wenn das alte Datum fehlt oder "
 "in der Zukunft liegt."
 
-#: ../../reference/cli.rst:580
+#: ../../reference/cli.rst:579
 msgid ""
 "``guidedog ssg status [PROJECT] [--now=RFC3339]``: lists every dated, "
 "draft, or scheduled document in ``PROJECT`` (default: ``.``) with its "
@@ -1688,7 +1698,7 @@ msgstr ""
 "seinem Freigabedatum oder Zeitstempel und seinem Quellpfad relativ zum "
 "Projekt auf."
 
-#: ../../reference/cli.rst:581
+#: ../../reference/cli.rst:580
 msgid ""
 "``guidedog ssg build [PROJECT] [--out=DIR] [--no-pdf] [--preview] "
 "[--now=RFC3339]``: builds every ``[[site.mounts]]`` entry (and each "
@@ -1708,7 +1718,7 @@ msgstr ""
 "Seiten ein; ``--now`` fixiert die Veröffentlichungsuhr über alle Mounts "
 "hinweg."
 
-#: ../../reference/cli.rst:583
+#: ../../reference/cli.rst:582
 msgid ""
 "Sitemaps and feeds are generated by each mounted project's own ``[site]`` "
 "settings. Assembly preserves their output paths; it does not merge them "
@@ -1719,7 +1729,7 @@ msgstr ""
 "Ausgabepfade; sie werden nicht zu einer aggregierten Sitemap "
 "zusammengeführt."
 
-#: ../../reference/cli.rst:585
+#: ../../reference/cli.rst:584
 msgid ""
 "``guidedog ssg theme pack DIR --out=FILE``: packs the ``_templates`` and "
 "``_static`` trees of ``DIR`` into a deterministic ``.gdt`` theme archive "
@@ -1729,7 +1739,7 @@ msgstr ""
 "``_templates`` und ``_static`` von ``DIR`` in ein deterministisches "
 "``.gdt``-Theme-Archiv unter ``FILE``."
 
-#: ../../reference/cli.rst:586
+#: ../../reference/cli.rst:585
 msgid ""
 "``guidedog ssg theme install URL --sha256=HASH [--project=DIR]``: fetches "
 "a ``.gdt`` archive from ``URL`` (or a local path), checks its "
@@ -1743,7 +1753,7 @@ msgstr ""
 "installiert den Verzeichnisbaum unter ``_themes/<tree-sha256>/`` in "
 "``--project`` (Standard: ``.``) und schreibt ``guidedog-theme.lock``."
 
-#: ../../reference/cli.rst:587
+#: ../../reference/cli.rst:586
 msgid ""
 "``guidedog ssg theme verify [PROJECT]``: reads ``guidedog-theme.lock`` "
 "and verifies the installed ``_themes/<tree-sha256>/`` tree in ``PROJECT`` "
@@ -1754,69 +1764,69 @@ msgstr ""
 "``_themes/<tree-sha256>/`` in ``PROJECT`` (Standard: ``.``) anhand von "
 "``tree_sha256`` ohne Netzwerkzugriff."
 
-#: ../../reference/cli.rst:589
+#: ../../reference/cli.rst:588
 msgid "Options of guidedog ssg"
 msgstr "Optionen von guidedog ssg"
 
-#: ../../reference/cli.rst:595
+#: ../../reference/cli.rst:594
 msgid "``--preset=project|journal|research``"
 msgstr "``--preset=project|journal|research``"
 
-#: ../../reference/cli.rst:596
+#: ../../reference/cli.rst:595
 msgid "``init``: the site layout preset (default: ``project``)."
 msgstr ""
 "``init``: die Voreinstellung für das Website-Layout (Standard: "
 "``project``)."
 
-#: ../../reference/cli.rst:597
+#: ../../reference/cli.rst:596
 msgid "``--title=TITLE``"
 msgstr "``--title=TITLE``"
 
-#: ../../reference/cli.rst:598
+#: ../../reference/cli.rst:597
 msgid "``init``, ``new``: the website or article title."
 msgstr "``init``, ``new``: der Titel der Website oder des Artikels."
 
-#: ../../reference/cli.rst:599
+#: ../../reference/cli.rst:598
 msgid "``--author=NAME``"
 msgstr "``--author=NAME``"
 
-#: ../../reference/cli.rst:600
+#: ../../reference/cli.rst:599
 msgid "``init``: the website author."
 msgstr "``init``: der Autor der Website."
 
-#: ../../reference/cli.rst:601
+#: ../../reference/cli.rst:600
 msgid "``--template=NAME``"
 msgstr "``--template=NAME``"
 
-#: ../../reference/cli.rst:602
+#: ../../reference/cli.rst:601
 msgid "``new``: the HTML layout template to set in ``:template:``."
 msgstr "``new``: die in ``:template:`` einzutragende HTML-Layoutvorlage."
 
-#: ../../reference/cli.rst:603
+#: ../../reference/cli.rst:602
 msgid "``--at=RFC3339``"
 msgstr "``--at=RFC3339``"
 
-#: ../../reference/cli.rst:604
+#: ../../reference/cli.rst:603
 msgid ""
 "``schedule``: the UTC release instant for ``:publish-at:``; required."
 msgstr ""
 "``schedule``: der UTC-Freigabezeitpunkt für ``:publish-at:``; "
 "erforderlich."
 
-#: ../../reference/cli.rst:605
+#: ../../reference/cli.rst:604
 msgid "``--date=DATE``"
 msgstr "``--date=DATE``"
 
-#: ../../reference/cli.rst:606
+#: ../../reference/cli.rst:605
 msgid "``publish``: the publication date (``YYYY-MM-DD`` or RFC 3339)."
 msgstr ""
 "``publish``: das Veröffentlichungsdatum (``YYYY-MM-DD`` oder RFC 3339)."
 
-#: ../../reference/cli.rst:607
+#: ../../reference/cli.rst:606
 msgid "``--out=DIR``"
 msgstr "``--out=DIR``"
 
-#: ../../reference/cli.rst:608
+#: ../../reference/cli.rst:607
 msgid ""
 "``build``: the assembled site output folder (default: ``_build/site``); "
 "``theme pack``: the destination ``.gdt`` archive file (required)."
@@ -1825,20 +1835,20 @@ msgstr ""
 "``_build/site``); ``theme pack``: die Ziel-``.gdt``-Archivdatei "
 "(erforderlich)."
 
-#: ../../reference/cli.rst:609
+#: ../../reference/cli.rst:608
 msgid "``--no-pdf``"
 msgstr "``--no-pdf``"
 
-#: ../../reference/cli.rst:610
+#: ../../reference/cli.rst:609
 msgid "``build``: skip ``pdf`` and ``discussion-pdf`` mounts."
 msgstr ""
 "``build``: Mounts vom Typ ``pdf`` und ``discussion-pdf`` überspringen."
 
-#: ../../reference/cli.rst:612
+#: ../../reference/cli.rst:611
 msgid "``build``: include draft, scheduled, and expired pages."
 msgstr "``build``: Entwürfe, geplante und abgelaufene Seiten einbeziehen."
 
-#: ../../reference/cli.rst:614
+#: ../../reference/cli.rst:613
 msgid ""
 "``init``, ``new``, ``draft``, ``schedule``, ``publish``, ``status``, "
 "``build``: fix the UTC clock used for timestamps and publication "
@@ -1848,11 +1858,11 @@ msgstr ""
 "``build``: die für Zeitstempel und Veröffentlichungsberechtigung "
 "verwendete UTC-Uhrzeit fixieren."
 
-#: ../../reference/cli.rst:615
+#: ../../reference/cli.rst:614
 msgid "``--sha256=HASH``"
 msgstr "``--sha256=HASH``"
 
-#: ../../reference/cli.rst:616
+#: ../../reference/cli.rst:615
 msgid ""
 "``theme install``: the required 64-digit hexadecimal SHA-256 of the "
 "``.gdt`` archive."
@@ -1860,11 +1870,11 @@ msgstr ""
 "``theme install``: der erforderliche 64-stellige hexadezimale "
 "SHA-256-Wert des ``.gdt``-Archivs."
 
-#: ../../reference/cli.rst:617
+#: ../../reference/cli.rst:616
 msgid "``--project=DIR``"
 msgstr "``--project=DIR``"
 
-#: ../../reference/cli.rst:618
+#: ../../reference/cli.rst:617
 msgid ""
 "``theme install``: the project root where ``_themes/`` and "
 "``guidedog-theme.lock`` live (default: ``.``)."
@@ -1872,11 +1882,11 @@ msgstr ""
 "``theme install``: das Projekt-Root-Verzeichnis, in dem sich ``_themes/`` "
 "und ``guidedog-theme.lock`` befinden (Standard: ``.``)."
 
-#: ../../reference/cli.rst:620
+#: ../../reference/cli.rst:619
 msgid "guidedog publish"
 msgstr "guidedog publish"
 
-#: ../../reference/cli.rst:623
+#: ../../reference/cli.rst:622
 msgid ""
 "Builds the project that a publisher's configuration names, as HTML with "
 "Guidedog's own engine. It freezes the site, and the publisher plans and "
@@ -1886,7 +1896,7 @@ msgstr ""
 "mit Guidedogs eigener Engine. Es friert die Website ein, und der "
 "Publisher plant und veröffentlicht sie:"
 
-#: ../../reference/cli.rst:631
+#: ../../reference/cli.rst:630
 msgid ""
 "The publisher is looked up among the plugins linked into this executable "
 "first, then in the machine's registry (``guidedog plugin register``). A "
@@ -1897,40 +1907,40 @@ msgstr ""
 "register``). Ein Build-Plugin wird abgelehnt, denn nur Publisher "
 "veröffentlichen."
 
-#: ../../reference/cli.rst:635
+#: ../../reference/cli.rst:634
 msgid "Options of publish"
 msgstr "Optionen von publish"
 
-#: ../../reference/cli.rst:641
+#: ../../reference/cli.rst:640
 msgid "``--publisher=ID``"
 msgstr "``--publisher=ID``"
 
-#: ../../reference/cli.rst:642
+#: ../../reference/cli.rst:641
 msgid "The publisher."
 msgstr "Der Publisher."
 
-#: ../../reference/cli.rst:643 ../../reference/cli.rst:868
+#: ../../reference/cli.rst:642 ../../reference/cli.rst:867
 msgid "``--config=FILE``"
 msgstr "``--config=FILE``"
 
-#: ../../reference/cli.rst:644
+#: ../../reference/cli.rst:643
 msgid "The publisher's configuration, which names the project or site."
 msgstr ""
 "Die Konfiguration des Publishers, die das Projekt oder die Website nennt."
 
-#: ../../reference/cli.rst:645
+#: ../../reference/cli.rst:644
 msgid "``--dry-run``"
 msgstr "``--dry-run``"
 
-#: ../../reference/cli.rst:646
+#: ../../reference/cli.rst:645
 msgid "Build and plan; write nothing to the target."
 msgstr "Baut und plant; schreibt nichts ins Ziel."
 
-#: ../../reference/cli.rst:647
+#: ../../reference/cli.rst:646
 msgid "``--wait=SECONDS``"
 msgstr "``--wait=SECONDS``"
 
-#: ../../reference/cli.rst:648
+#: ../../reference/cli.rst:647
 msgid ""
 "How long to wait for the host to confirm the deployment, from 0 (do not "
 "wait) to 86400."
@@ -1938,11 +1948,11 @@ msgstr ""
 "Wie lange auf die Bestätigung des Deployments durch den Host gewartet "
 "wird, von 0 (nicht warten) bis 86400."
 
-#: ../../reference/cli.rst:650
+#: ../../reference/cli.rst:649
 msgid "``--timeout=SECONDS``"
 msgstr "``--timeout=SECONDS``"
 
-#: ../../reference/cli.rst:651
+#: ../../reference/cli.rst:650
 msgid ""
 "The bound on each whole exchange with the publisher, writing the request "
 "included, from 1 to 86400 (default: 300). Choose a value longer than "
@@ -1952,15 +1962,15 @@ msgstr ""
 "einschließlich des Schreibens der Anfrage, von 1 bis 86400 (Standard: "
 "300). Wir wählen einen Wert, der größer ist als ``--wait``."
 
-#: ../../reference/cli.rst:653
+#: ../../reference/cli.rst:652
 msgid "``--verbose``"
 msgstr "``--verbose``"
 
-#: ../../reference/cli.rst:654
+#: ../../reference/cli.rst:653
 msgid "List every change of the plan."
 msgstr "Listet jede Änderung des Plans auf."
 
-#: ../../reference/cli.rst:656
+#: ../../reference/cli.rst:655
 msgid ""
 "A timeout or Ctrl+C after a possible write reports an unknown outcome "
 "(exit status 7). We then run the publisher's recovery command before "
@@ -1975,11 +1985,11 @@ msgstr ""
 "entfernt wird. Gleichzeitige Aufrufe können ihre Snapshots also nicht "
 "gegenseitig verändern. Siehe :doc:`../plugins`."
 
-#: ../../reference/cli.rst:661
+#: ../../reference/cli.rst:660
 msgid "guidedog publish pages"
 msgstr "guidedog publish pages"
 
-#: ../../reference/cli.rst:664
+#: ../../reference/cli.rst:663
 msgid ""
 "``guidedog publish pages`` is the guided way to GitHub Pages; the GitHub "
 "Pages plugin adds it. It does whatever is still missing and asks only "
@@ -1989,7 +1999,7 @@ msgstr ""
 "GitHub-Pages-Plugin fügt ihn hinzu. Es erledigt, was noch fehlt, und "
 "fragt nur, wenn es nötig ist. Dann baut und veröffentlicht es:"
 
-#: ../../reference/cli.rst:667
+#: ../../reference/cli.rst:666
 msgid ""
 "``pages.toml``: written once, with the repository taken from the "
 "``origin`` remote and the project from the nearest ``conf.toml`` (or as "
@@ -1999,7 +2009,7 @@ msgstr ""
 "Remote ``origin`` und dem Projekt aus der nächstgelegenen ``conf.toml`` "
 "(oder wie angegeben)."
 
-#: ../../reference/cli.rst:669
+#: ../../reference/cli.rst:668
 msgid ""
 "A token: GitHub's device sign-in, stored in the system's credential "
 "store, or the GitHub CLI's token for this run only."
@@ -2008,7 +2018,7 @@ msgstr ""
 "Anmeldedatenspeicher des Systems, oder das Token der GitHub CLI nur für "
 "diesen Lauf."
 
-#: ../../reference/cli.rst:671
+#: ../../reference/cli.rst:670
 msgid ""
 "The binding: the target is reviewed, and it asks us once to let this "
 "machine publish there."
@@ -2016,7 +2026,7 @@ msgstr ""
 "Die Bindung: Das Ziel wird geprüft, und wir werden einmal gefragt, ob "
 "dieser Rechner dorthin veröffentlichen darf."
 
-#: ../../reference/cli.rst:673
+#: ../../reference/cli.rst:672
 msgid ""
 "The Pages source: when Pages publishes another branch, or uses Actions, "
 "it asks us once to switch it."
@@ -2024,7 +2034,7 @@ msgstr ""
 "Die Pages-Quelle: Veröffentlicht Pages einen anderen Branch oder nutzt es "
 "Actions, werden wir einmal gefragt, ob umgestellt werden soll."
 
-#: ../../reference/cli.rst:675
+#: ../../reference/cli.rst:674
 msgid ""
 "The publication: one push to the site's own branch, then a wait for the "
 "deployment."
@@ -2032,7 +2042,7 @@ msgstr ""
 "Die Veröffentlichung: ein Push auf den eigenen Branch der Website, danach "
 "das Warten auf das Deployment."
 
-#: ../../reference/cli.rst:677
+#: ../../reference/cli.rst:676
 msgid ""
 "On a machine that is already set up, it publishes without a question. "
 "Without a terminal it never asks. A missing step then fails with a hint "
@@ -2057,11 +2067,11 @@ msgstr ""
 "gelinkten Plugins; ``--guidedog=PATH`` baut stattdessen mit einem anderen "
 "Programm. Siehe :doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:685
+#: ../../reference/cli.rst:684
 msgid "guidedog pages workflow"
 msgstr "guidedog pages workflow"
 
-#: ../../reference/cli.rst:688
+#: ../../reference/cli.rst:687
 msgid ""
 "``guidedog pages workflow`` is added by the linked GitHub Pages plugin. "
 "It prints, writes, or checks a GitHub Actions workflow. The workflow "
@@ -2077,15 +2087,15 @@ msgstr ""
 "manuellen Veröffentlichung vom eigenen Rechner, wenn jeder Push in den "
 "Quell-Branch automatisch bereitgestellt werden soll."
 
-#: ../../reference/cli.rst:698
+#: ../../reference/cli.rst:697
 msgid "Options of pages workflow"
 msgstr "Optionen von pages workflow"
 
-#: ../../reference/cli.rst:704
+#: ../../reference/cli.rst:703
 msgid "``--write``, ``--force``"
 msgstr "``--write``, ``--force``"
 
-#: ../../reference/cli.rst:705
+#: ../../reference/cli.rst:704
 msgid ""
 "Write ``.github/workflows/docs-pages.yml`` instead of printing it; "
 "replace an existing one."
@@ -2093,11 +2103,11 @@ msgstr ""
 "Schreibt ``.github/workflows/docs-pages.yml``, statt die Datei "
 "auszugeben; ersetzt eine vorhandene."
 
-#: ../../reference/cli.rst:707
+#: ../../reference/cli.rst:706
 msgid "``--check``"
 msgstr "``--check``"
 
-#: ../../reference/cli.rst:708
+#: ../../reference/cli.rst:707
 msgid ""
 "Check an existing workflow: an older release, a missing checksum, an "
 "unpinned action, ``pull_request_target``, a checkout that keeps its "
@@ -2107,22 +2117,22 @@ msgstr ""
 "Prüfsumme, eine nicht fixierte Action, ``pull_request_target``, ein "
 "Checkout, der seine Anmeldedaten behält."
 
-#: ../../reference/cli.rst:710
+#: ../../reference/cli.rst:709
 msgid "``--project=DIR``, ``--branch=NAME``"
 msgstr "``--project=DIR``, ``--branch=NAME``"
 
-#: ../../reference/cli.rst:711
+#: ../../reference/cli.rst:710
 msgid ""
 "The project (default: ``docs``) and the source branch (default: ``main``)."
 msgstr ""
 "Das Projekt (Standard: ``docs``) und der Quell-Branch (Standard: "
 "``main``)."
 
-#: ../../reference/cli.rst:712
+#: ../../reference/cli.rst:711
 msgid "``--version=X``, ``--sha256=HEX``, ``--offline``"
 msgstr "``--version=X``, ``--sha256=HEX``, ``--offline``"
 
-#: ../../reference/cli.rst:713
+#: ../../reference/cli.rst:712
 msgid ""
 "The release to install, its archive's SHA-256 (default: read from the "
 "release's ``SHA256SUMS``), or a marked placeholder without network access."
@@ -2131,15 +2141,15 @@ msgstr ""
 "``SHA256SUMS`` des Releases gelesen) oder ein markierter Platzhalter ohne "
 "Netzwerkzugriff."
 
-#: ../../reference/cli.rst:716
+#: ../../reference/cli.rst:715
 msgid "See :doc:`../howto/github-pages`."
 msgstr "Siehe :doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:718
+#: ../../reference/cli.rst:717
 msgid "guidedog plugin"
 msgstr "guidedog plugin"
 
-#: ../../reference/cli.rst:721
+#: ../../reference/cli.rst:720
 msgid ""
 "Records which plugin programs may run on this machine, in "
 "``plugins.toml`` in Guidedog's configuration folder "
@@ -2149,7 +2159,7 @@ msgstr ""
 "``plugins.toml`` im Konfigurationsordner von Guidedog "
 "(``GUIDEDOG_CONFIG_DIR`` verschiebt ihn):"
 
-#: ../../reference/cli.rst:736
+#: ../../reference/cli.rst:735
 msgid ""
 "``register ID PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS] "
 "[--yes]``: inspects the program after we confirm (``--yes`` skips the "
@@ -2163,7 +2173,7 @@ msgstr ""
 "sich als ``ID`` ausweisen. Ein Build-Plugin muss vor der Registrierung "
 "die unten beschriebenen Qualifikationsprüfungen bestehen."
 
-#: ../../reference/cli.rst:740
+#: ../../reference/cli.rst:739
 msgid ""
 "``check PATH [--project=DIR] [--config=FILE] [--timeout=SECONDS]``: runs "
 "the qualification checks against a build plugin without changing the "
@@ -2175,7 +2185,7 @@ msgstr ""
 "zu ändern. Ein Publisher wird abgelehnt. Einen Publisher testen wir mit "
 "seinen eigenen Tests und ``guidedog publish --dry-run``."
 
-#: ../../reference/cli.rst:743
+#: ../../reference/cli.rst:742
 msgid ""
 "``list``: the registered programs, their IDs, paths, and kinds, beside "
 "the plugins linked into this executable."
@@ -2183,7 +2193,7 @@ msgstr ""
 "``list``: die registrierten Programme mit IDs, Pfaden und Arten, neben "
 "den in dieses Programm gelinkten Plugins."
 
-#: ../../reference/cli.rst:745
+#: ../../reference/cli.rst:744
 msgid ""
 "``inspect ID``: an entry's declared build hooks (source, HTML, assets) or "
 "publisher capabilities, the commands it adds, and whether the program on "
@@ -2193,7 +2203,7 @@ msgstr ""
 "HTML, Assets) oder seine Publisher-Fähigkeiten, die Befehle, die er "
 "hinzufügt, und ob das Programm auf der Platte noch das registrierte ist."
 
-#: ../../reference/cli.rst:748
+#: ../../reference/cli.rst:747
 msgid ""
 "``run ID -- [ARGS...]``: runs an external registered program's own "
 "commands, after checking its SHA-256 (linked plugins run directly as "
@@ -2204,7 +2214,7 @@ msgstr ""
 "Plugins laufen direkt als ``guidedog <command>``, etwa ``guidedog pages "
 "auth status``)."
 
-#: ../../reference/cli.rst:750
+#: ../../reference/cli.rst:749
 msgid ""
 "``unregister ID``: removes the entry from ``plugins.toml``. The program, "
 "and anything it published, stay unchanged."
@@ -2212,7 +2222,7 @@ msgstr ""
 "``unregister ID``: entfernt den Eintrag aus ``plugins.toml``. Das "
 "Programm und alles, was es veröffentlicht hat, bleiben unverändert."
 
-#: ../../reference/cli.rst:753
+#: ../../reference/cli.rst:752
 msgid ""
 "Build plugins are selected by ``plugins`` in ``conf.toml`` and run during "
 "``guidedog build``. ``guidedog publish`` accepts publishers only. "
@@ -2225,11 +2235,11 @@ msgstr ""
 "Anleitung, ein Beispiel und die Konfiguration stehen unter "
 ":doc:`../plugins`."
 
-#: ../../reference/cli.rst:757
+#: ../../reference/cli.rst:756
 msgid "Build-plugin qualification checks"
 msgstr "Qualifikationsprüfungen für Build-Plugins"
 
-#: ../../reference/cli.rst:760
+#: ../../reference/cli.rst:759
 msgid ""
 "``guidedog plugin check PATH --project=DIR --config=FILE`` exercises the "
 "declared hooks in child processes: loading, repeated results, and "
@@ -2249,11 +2259,11 @@ msgstr ""
 "Veröffentlichung aus. Bestandene Prüfungen belegen die Interoperabilität; "
 "sie sind weder Sandbox noch Sicherheitszertifikat."
 
-#: ../../reference/cli.rst:767
+#: ../../reference/cli.rst:766
 msgid "Custom binaries with linked plugins"
 msgstr "Eigene Binaries mit gelinkten Plugins"
 
-#: ../../reference/cli.rst:770
+#: ../../reference/cli.rst:769
 msgid ""
 "The whole command line is the ``gd-cli`` crate. A Rust program can be a "
 "``guidedog`` with plugins linked in, instead of registered as separate "
@@ -2267,7 +2277,7 @@ msgstr ""
 "``gd_plugins::Registry`` seiner Plugins an ``gd_cli::run_with``. Diese "
 "Funktion liest die Prozessargumente und gibt den Exitstatus zurück."
 
-#: ../../reference/cli.rst:789
+#: ../../reference/cli.rst:788
 msgid ""
 "The program accepts every command and option on this page. A selected "
 "plugin ID is looked up among the linked plugins first, then in the "
@@ -2290,11 +2300,11 @@ msgstr ""
 "demselben ``Plugin``-Wert, den seine installierte Form über "
 "``gd_plugins::serve_plugin`` bereitstellt (siehe :doc:`../plugins`)."
 
-#: ../../reference/cli.rst:791
+#: ../../reference/cli.rst:790
 msgid "Commands plugins add"
 msgstr "Befehle aus Plugins"
 
-#: ../../reference/cli.rst:794
+#: ../../reference/cli.rst:793
 msgid ""
 "A plugin may add commands to ``guidedog``, or targets to ``guidedog "
 "publish``. ``guidedog --help`` lists them under PLUGIN COMMANDS, each "
@@ -2306,7 +2316,7 @@ msgstr ""
 "auf, jeweils mit der ID ihres Plugins, und ``guidedog plugin inspect ID`` "
 "zeigt die Befehle eines Plugins:"
 
-#: ../../reference/cli.rst:806
+#: ../../reference/cli.rst:805
 msgid ""
 "Guidedog looks for a word it does not know (or a ``publish`` target) "
 "among the commands of the linked plugins first, then among those of the "
@@ -2323,7 +2333,7 @@ msgstr ""
 "Guidedog ersetzen, und das erste Plugin, das einen Namen hinzufügt, "
 "behält ihn."
 
-#: ../../reference/cli.rst:808
+#: ../../reference/cli.rst:807
 msgid ""
 "A linked plugin's command runs inside ``guidedog``. A registered "
 "program's command runs as that program, started on our terminal after its "
@@ -2340,11 +2350,11 @@ msgstr ""
 "des Programms werden bei der Registrierung gelesen; eine neue Version "
 "registrieren wir also wie immer erneut."
 
-#: ../../reference/cli.rst:810
+#: ../../reference/cli.rst:809
 msgid "guidedog pages"
 msgstr "guidedog pages"
 
-#: ../../reference/cli.rst:813
+#: ../../reference/cli.rst:812
 msgid ""
 "The linked Pages plugin publishes through ``guidedog publish pages`` and "
 "exposes maintenance through ``guidedog pages``. Guidedog builds the "
@@ -2357,46 +2367,46 @@ msgstr ""
 "Schrittbefehle bleiben für Skripte und zur separaten Prüfung jedes Teils "
 "erhalten. Siehe :doc:`../howto/github-pages`."
 
-#: ../../reference/cli.rst:835
+#: ../../reference/cli.rst:834
 msgid "Settings of pages.toml"
 msgstr "Einstellungen von pages.toml"
 
-#: ../../reference/cli.rst:839
+#: ../../reference/cli.rst:838
 msgid "Setting"
 msgstr "Einstellung"
 
-#: ../../reference/cli.rst:841
+#: ../../reference/cli.rst:840
 msgid "``schema = 1``"
 msgstr "``schema = 1``"
 
-#: ../../reference/cli.rst:842
+#: ../../reference/cli.rst:841
 msgid "The file's version; required."
 msgstr "Die Version der Datei; erforderlich."
 
-#: ../../reference/cli.rst:843
+#: ../../reference/cli.rst:842
 msgid "``repository = \"OWNER/REPO\"``"
 msgstr "``repository = \"OWNER/REPO\"``"
 
-#: ../../reference/cli.rst:844
+#: ../../reference/cli.rst:843
 msgid "The GitHub.com repository; required."
 msgstr "Das Repository auf GitHub.com; erforderlich."
 
-#: ../../reference/cli.rst:845
+#: ../../reference/cli.rst:844
 msgid "``branch = \"gh-pages\"``"
 msgstr "``branch = \"gh-pages\"``"
 
-#: ../../reference/cli.rst:846
+#: ../../reference/cli.rst:845
 msgid ""
 "The branch the site is published to: its own, never the default branch."
 msgstr ""
 "Der Branch, auf den die Website veröffentlicht wird: ein eigener, nie der "
 "Standardbranch."
 
-#: ../../reference/cli.rst:847
+#: ../../reference/cli.rst:846
 msgid "``project = \"docs\"`` or ``site = \"build/site\"``"
 msgstr "``project = \"docs\"`` oder ``site = \"build/site\"``"
 
-#: ../../reference/cli.rst:848
+#: ../../reference/cli.rst:847
 msgid ""
 "The Guidedog project to build, or the folder of a site built already; one "
 "of them, relative to ``pages.toml``."
@@ -2404,19 +2414,19 @@ msgstr ""
 "Das zu bauende Guidedog-Projekt oder der Ordner einer bereits gebauten "
 "Website; eines von beiden, relativ zu ``pages.toml``."
 
-#: ../../reference/cli.rst:850
+#: ../../reference/cli.rst:849
 msgid "``profile = \"default\"``"
 msgstr "``profile = \"default\"``"
 
-#: ../../reference/cli.rst:851
+#: ../../reference/cli.rst:850
 msgid "The credential profile whose token publishes."
 msgstr "Das Zugangsdatenprofil, mit dessen Token veröffentlicht wird."
 
-#: ../../reference/cli.rst:852
+#: ../../reference/cli.rst:851
 msgid "``site_url``"
 msgstr "``site_url``"
 
-#: ../../reference/cli.rst:853
+#: ../../reference/cli.rst:852
 msgid ""
 "The address readers open, and ``html_baseurl`` for the build (default: "
 "``https://OWNER.github.io/REPO/``)."
@@ -2424,27 +2434,27 @@ msgstr ""
 "Die Adresse, die Leser öffnen, und ``html_baseurl`` für den Build "
 "(Standard: ``https://OWNER.github.io/REPO/``)."
 
-#: ../../reference/cli.rst:855
+#: ../../reference/cli.rst:854
 msgid "``strict = true``"
 msgstr "``strict = true``"
 
-#: ../../reference/cli.rst:856
+#: ../../reference/cli.rst:855
 msgid "Build with warnings as errors."
 msgstr "Mit Warnungen als Fehler bauen."
 
-#: ../../reference/cli.rst:857
+#: ../../reference/cli.rst:856
 msgid "``wait_seconds = 300``"
 msgstr "``wait_seconds = 300``"
 
-#: ../../reference/cli.rst:858
+#: ../../reference/cli.rst:857
 msgid "How long ``publish`` waits for the deployment."
 msgstr "Wie lange ``publish`` auf das Deployment wartet."
 
-#: ../../reference/cli.rst:859
+#: ../../reference/cli.rst:858
 msgid "``[watch] debounce_ms``, ``max_wait_ms``"
 msgstr "``[watch] debounce_ms``, ``max_wait_ms``"
 
-#: ../../reference/cli.rst:860
+#: ../../reference/cli.rst:859
 msgid ""
 "How long ``watch`` lets sources settle, and the most it waits after a "
 "change."
@@ -2452,24 +2462,24 @@ msgstr ""
 "Wie lange ``watch`` die Quellen zur Ruhe kommen lässt und wie lange es "
 "nach einer Änderung höchstens wartet."
 
-#: ../../reference/cli.rst:862
+#: ../../reference/cli.rst:861
 msgid "Options of guidedog pages"
 msgstr "Optionen von guidedog pages"
 
-#: ../../reference/cli.rst:869
+#: ../../reference/cli.rst:868
 msgid "The configuration (default: ``pages.toml``)."
 msgstr "Die Konfiguration (Standard: ``pages.toml``)."
 
-#: ../../reference/cli.rst:870
+#: ../../reference/cli.rst:869
 msgid "``--profile=NAME``"
 msgstr "``--profile=NAME``"
 
-#: ../../reference/cli.rst:871
+#: ../../reference/cli.rst:870
 msgid "The profile ``auth`` and ``init`` use (default: ``default``)."
 msgstr ""
 "Das Profil, das ``auth`` und ``init`` verwenden (Standard: ``default``)."
 
-#: ../../reference/cli.rst:872
+#: ../../reference/cli.rst:871
 msgid ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
@@ -2477,15 +2487,15 @@ msgstr ""
 "``--repository=OWNER/REPO``, ``--project=DIR``, ``--site=DIR``, "
 "``--branch=NAME``"
 
-#: ../../reference/cli.rst:873
+#: ../../reference/cli.rst:872
 msgid "``init``: what the new ``pages.toml`` says."
 msgstr "``init``: was in der neuen ``pages.toml`` steht."
 
-#: ../../reference/cli.rst:874
+#: ../../reference/cli.rst:873
 msgid "``--credential=env``"
 msgstr "``--credential=env``"
 
-#: ../../reference/cli.rst:875
+#: ../../reference/cli.rst:874
 msgid ""
 "Use the token in ``GUIDEDOG_PAGES_TOKEN`` for this command, without "
 "storing it."
@@ -2493,11 +2503,11 @@ msgstr ""
 "Für diesen Befehl das Token aus ``GUIDEDOG_PAGES_TOKEN`` verwenden, ohne "
 "es zu speichern."
 
-#: ../../reference/cli.rst:876
+#: ../../reference/cli.rst:875
 msgid "``--guidedog=PATH``"
 msgstr "``--guidedog=PATH``"
 
-#: ../../reference/cli.rst:877
+#: ../../reference/cli.rst:876
 msgid ""
 "The ``guidedog`` that builds (default: this ``guidedog`` executable when "
 "invoked through ``guidedog pages watch``, else "
@@ -2507,11 +2517,11 @@ msgstr ""
 "beim Aufruf über ``guidedog pages watch``, sonst "
 "``GUIDEDOG_PAGES_GUIDEDOG``, dann ``PATH``)."
 
-#: ../../reference/cli.rst:878
+#: ../../reference/cli.rst:877
 msgid "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 msgstr "``--dry-run``, ``--wait=SECONDS``, ``--verbose``"
 
-#: ../../reference/cli.rst:879
+#: ../../reference/cli.rst:878
 msgid ""
 "``publish``: plan only; how long to wait for the deployment; list every "
 "change."
@@ -2519,11 +2529,11 @@ msgstr ""
 "``publish``: nur planen; wie lange auf das Deployment gewartet wird; jede "
 "Änderung auflisten."
 
-#: ../../reference/cli.rst:880
+#: ../../reference/cli.rst:879
 msgid "``--adopt``, ``--yes``"
 msgstr "``--adopt``, ``--yes``"
 
-#: ../../reference/cli.rst:881
+#: ../../reference/cli.rst:880
 msgid ""
 "``bind``: let a branch of other work be replaced; answer yes to the "
 "question."
@@ -2531,13 +2541,13 @@ msgstr ""
 "``bind``: einen Branch mit fremder Arbeit ersetzen lassen; die Rückfrage "
 "mit Ja beantworten."
 
-#: ../../reference/cli.rst:882
+#: ../../reference/cli.rst:881
 msgid ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 msgstr ""
 "``--client-id=ID``, ``--scope=public|private``, ``--open``, ``--replace``"
 
-#: ../../reference/cli.rst:883
+#: ../../reference/cli.rst:882
 msgid ""
 "``auth login``: the app; the repositories an OAuth App token may reach; "
 "open the browser; give the profile to another account."
@@ -2545,25 +2555,25 @@ msgstr ""
 "``auth login``: die App; die Repositorys, die ein OAuth-App-Token "
 "erreichen darf; den Browser öffnen; das Profil einem anderen Konto geben."
 
-#: ../../reference/cli.rst:885
+#: ../../reference/cli.rst:884
 msgid "``--operation=COMMIT``"
 msgstr "``--operation=COMMIT``"
 
-#: ../../reference/cli.rst:886
+#: ../../reference/cli.rst:885
 msgid "``status``: the publication to ask about (default: the last one)."
 msgstr ""
 "``status``: die Veröffentlichung, nach der gefragt wird (Standard: die "
 "letzte)."
 
-#: ../../reference/cli.rst:887
+#: ../../reference/cli.rst:886
 msgid "``--diagnostics=text|json``, ``--color=auto|always|never``"
 msgstr "``--diagnostics=text|json``, ``--color=auto|always|never``"
 
-#: ../../reference/cli.rst:888
+#: ../../reference/cli.rst:887
 msgid "How problems and results are written."
 msgstr "Wie Probleme und Ergebnisse ausgegeben werden."
 
-#: ../../reference/cli.rst:890
+#: ../../reference/cli.rst:889
 msgid ""
 "Its exit statuses are those of ``guidedog publish``: 0 live or unchanged, "
 "1 nothing published, 2 a usage or configuration problem, 4 a file, "
@@ -2742,7 +2752,8 @@ msgstr "Projektinformationen"
 #: ../../reference/configuration.rst:1442
 #: ../../reference/configuration.rst:1483
 #: ../../reference/configuration.rst:1508
-#: ../../reference/configuration.rst:1579
+#: ../../reference/configuration.rst:1570
+#: ../../reference/configuration.rst:1614
 msgid "Key"
 msgstr "Schlüssel"
 
@@ -2768,7 +2779,8 @@ msgstr "Schlüssel"
 #: ../../reference/configuration.rst:1443
 #: ../../reference/configuration.rst:1484
 #: ../../reference/configuration.rst:1509
-#: ../../reference/configuration.rst:1580
+#: ../../reference/configuration.rst:1571
+#: ../../reference/configuration.rst:1615
 msgid "Type"
 msgstr "Typ"
 
@@ -2794,7 +2806,8 @@ msgstr "Typ"
 #: ../../reference/configuration.rst:1444
 #: ../../reference/configuration.rst:1485
 #: ../../reference/configuration.rst:1510
-#: ../../reference/configuration.rst:1581
+#: ../../reference/configuration.rst:1572
+#: ../../reference/configuration.rst:1616
 msgid "Default"
 msgstr "Standard"
 
@@ -2820,7 +2833,8 @@ msgstr "Standard"
 #: ../../reference/configuration.rst:1445
 #: ../../reference/configuration.rst:1486
 #: ../../reference/configuration.rst:1511
-#: ../../reference/configuration.rst:1582
+#: ../../reference/configuration.rst:1573
+#: ../../reference/configuration.rst:1617
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -2908,6 +2922,8 @@ msgstr "``project``"
 #: ../../reference/configuration.rst:1496
 #: ../../reference/configuration.rst:1513
 #: ../../reference/configuration.rst:1517
+#: ../../reference/configuration.rst:1575
+#: ../../reference/configuration.rst:1579
 msgid "string"
 msgstr "Zeichenkette"
 
@@ -3771,21 +3787,21 @@ msgstr ""
 "von 1 bis 86400."
 
 #: ../../reference/configuration.rst:292
+#| msgid ""
+#| "A plugin ID is looked up among the plugins linked into the "
+#| "``guidedog`` executable first, then among the programs registered with "
+#| "``guidedog plugin register ID PATH``. A normal build invokes no "
+#| "publisher. ``--untrusted`` disables build plugins. Build plugins "
+#| "transform source text, post-process complete HTML pages, and add "
+#| "generated assets. See :doc:`../plugins`."
 msgid ""
 "A plugin ID is looked up among the plugins linked into the ``guidedog`` "
 "executable first, then among the programs registered with ``guidedog "
 "plugin register ID PATH``. A normal build invokes no publisher. "
-"``--untrusted`` disables build plugins. Build plugins transform source "
-"text, post-process complete HTML pages, and add generated assets. See "
-":doc:`../plugins`."
-msgstr ""
-"Eine Plugin-ID wird zuerst unter den Plugins gesucht, die in die "
-"ausführbare Datei ``guidedog`` gelinkt sind, danach unter den Programmen, "
-"die mit ``guidedog plugin register ID PATH`` registriert wurden. Ein "
-"normaler Build ruft keinen Publisher auf. ``--untrusted`` schaltet "
-"Build-Plugins ab. Build-Plugins wandeln Quelltext um, bearbeiten fertige "
-"HTML-Seiten nach und fügen generierte Assets hinzu. Siehe "
-":doc:`../plugins`."
+"``--untrusted`` disables build plugins (see `Trust`_). Build plugins "
+"transform source text, post-process complete HTML pages, and add "
+"generated assets. See :doc:`../plugins`."
+msgstr "Eine Plugin-ID wird zuerst unter den in das Programm ``guidedog`` eingebundenen Plugins gesucht, dann unter den mit ``guidedog plugin register ID PATH`` registrierten Programmen. Ein normaler Build ruft keinen Publisher auf. ``--untrusted`` deaktiviert Build-Plugins (siehe `Trust`_). Build-Plugins verändern Quelltext, bearbeiten vollständige HTML-Seiten nach und ergänzen erzeugte Ressourcen. Siehe :doc:`../plugins`."
 
 #: ../../reference/configuration.rst:306
 msgid "Object types and directive aliases"
@@ -4094,7 +4110,7 @@ msgid "``html_title``"
 msgstr "``html_title``"
 
 #: ../../reference/configuration.rst:473
-#: ../../reference/configuration.rst:1593
+#: ../../reference/configuration.rst:1628
 msgid "derived"
 msgstr "abgeleitet"
 
@@ -4434,12 +4450,14 @@ msgid "``\"download\"``"
 msgstr "``\"download\"``"
 
 #: ../../reference/configuration.rst:617
+#| msgid ""
+#| "Typst packages: download what is missing, or ``\"offline\"``, only "
+#| "what is on disk."
 msgid ""
 "Typst packages: download what is missing, or ``\"offline\"``, only what "
-"is on disk."
-msgstr ""
-"Typst-Pakete: Fehlendes wird heruntergeladen, oder mit ``\"offline\"`` "
-"nur verwendet, was auf der Platte liegt."
+"is on disk. A build without the network (``--untrusted``) is always "
+"offline."
+msgstr "Typst-Pakete: Fehlendes herunterladen oder mit ``\"offline\"`` nur Vorhandenes auf der Festplatte nutzen. Ein Build ohne Netzwerk (``--untrusted``) ist immer offline."
 
 #: ../../reference/configuration.rst:618
 msgid "``pdf_fonts``"
@@ -4474,12 +4492,14 @@ msgid "``\"typst\"``"
 msgstr "``\"typst\"``"
 
 #: ../../reference/configuration.rst:630
+#| msgid ""
+#| "The Typst program when the compiler is not built in, or to use another "
+#| "one (``--typst`` overrides it)."
 msgid ""
 "The Typst program when the compiler is not built in, or to use another "
-"one (``--typst`` overrides it)."
-msgstr ""
-"Das Typst-Programm, wenn der Compiler nicht eingebaut ist oder wir einen "
-"anderen verwenden wollen (``--typst`` hat Vorrang)."
+"one (``--typst`` overrides it). A confined build (``--untrusted``) "
+"ignores it and runs the embedded compiler only."
+msgstr "Das Typst-Programm, wenn der Compiler nicht eingebaut ist oder ein anderer verwendet werden soll (``--typst`` überschreibt es). Ein beschränkter Build (``--untrusted``) ignoriert es und führt nur den eingebetteten Compiler aus."
 
 #: ../../reference/configuration.rst:633
 msgid ""
@@ -6361,80 +6381,141 @@ msgstr "Vertrauen"
 
 #: ../../reference/configuration.rst:1562
 msgid ""
-"``guidedog build --untrusted`` builds a project whose sources we did not "
-"write. Raw content is left out, nothing is fetched, and no build plugin "
-"runs. The project cannot widen what the build reads. ``include_roots`` "
-"and ``pdf_preamble`` are not used. Files and folders that lead outside "
-"the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, "
-"``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, "
-"``templates_path``, ``locale_dirs``, ``pdf_font_paths``, "
-"``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) "
-"are left out. Embedded ``typst-diagram`` compilation is disabled and no "
-"Typst package is downloaded. Inline ``lilypond`` music is still engraved, "
-"but its file arguments and ``\\include`` are refused. Each dropped "
-"setting is a ``build.untrusted`` warning. This is a capability policy, "
-"not a process sandbox. See :doc:`cli`."
-msgstr ""
-"``guidedog build --untrusted`` baut ein Projekt, dessen Quellen wir nicht "
-"selbst geschrieben haben. Rohinhalte werden ausgelassen, nichts wird "
-"heruntergeladen, und kein Build-Plugin läuft. Das Projekt kann nicht "
-"erweitern, was der Build liest. ``include_roots`` und ``pdf_preamble`` "
-"werden nicht verwendet. Dateien und Ordner, die aus dem Quellordner "
-"hinausführen (``html_logo``, ``html_favicon``, ``pdf_logo``, "
-"``mathjax_config_path``, ``html_static_path``, ``html_extra_path``, "
-"``templates_path``, ``locale_dirs``, ``pdf_font_paths``, "
-"``autodoc_source_paths``, ``odin_autoapi_dirs``, "
-"``rust_autoapi_crates``), werden ausgelassen. Die eingebettete "
-"``typst-diagram``-Kompilierung ist deaktiviert, und kein Typst-Paket wird "
-"heruntergeladen. Musik im Dokument (``lilypond``) wird weiterhin gesetzt, "
-"ihre Dateiargumente und ``\\include`` werden aber verweigert. Jede "
-"verworfene Einstellung ergibt eine Warnung ``build.untrusted``. Das ist "
-"eine Regel darüber, was der Build darf, keine Prozess-Sandbox. Siehe "
-":doc:`cli`."
+"A build trusts a project in two separate ways. Its confinement decides "
+"what the build may reach on the machine: the folders it reads, the "
+"network, build plugins, and the files graphs and music name. Its content "
+"rules decide what reaches the output: raw content and unsafe URLs."
+msgstr "Ein Build vertraut einem Projekt auf zwei getrennte Arten. Seine Zugriffsgrenzen bestimmen, was er auf dem Rechner erreichen darf: gelesene Ordner, Netzwerk, Build-Plugins sowie von Graphen und Musik benannte Dateien. Seine Inhaltsregeln bestimmen, was in der Ausgabe erscheint: rohe Inhalte und unsichere URLs."
 
-#: ../../reference/configuration.rst:1572
+#: ../../reference/configuration.rst:1566
+msgid "Content rules"
+msgstr "Inhaltsregeln"
+
+#: ../../reference/configuration.rst:1574
+#| msgid "``autoclass_content``"
+msgid "``raw_content``"
+msgstr "``raw_content``"
+
+#: ../../reference/configuration.rst:1576
+#: ../../reference/configuration.rst:1580
+#| msgid "``\"all\"``"
+msgid "``\"allow\"``"
+msgstr "``\"allow\"``"
+
+#: ../../reference/configuration.rst:1577
+msgid ""
+"``\"allow\"`` keeps raw HTML, Typst and LaTeX (``.. raw::``), as Sphinx "
+"does; ``\"omit\"`` leaves it out with a warning."
+msgstr "``\"allow\"`` behält rohes HTML, Typst und LaTeX (``.. raw::``) wie Sphinx bei; ``\"omit\"`` lässt es mit einer Warnung weg."
+
+#: ../../reference/configuration.rst:1578
+#| msgid "``site_url``"
+msgid "``unsafe_urls``"
+msgstr "``unsafe_urls``"
+
+#: ../../reference/configuration.rst:1581
+msgid ""
+"``\"allow\"`` keeps ``javascript:``, ``vbscript:`` and non-image "
+"``data:`` URLs, as Sphinx does; ``\"omit\"`` leaves them out with a "
+"warning."
+msgstr "``\"allow\"`` behält wie Sphinx ``javascript:``-, ``vbscript:``- und nicht auf Bilder verweisende ``data:``-URLs bei; ``\"omit\"`` lässt sie mit einer Warnung weg."
+
+#: ../../reference/configuration.rst:1583
+msgid ""
+"Any other value is an ``INVALID CONFIGURATION`` problem. ``guidedog build "
+"--untrusted`` omits both, whatever ``conf.toml`` says. A program that "
+"builds projects through the library may impose its own rules, or give "
+"defaults for the rules ``conf.toml`` leaves unset "
+"(``BuildOptions::content`` and ``BuildOptions::content_defaults``)."
+msgstr "Jeder andere Wert ist ein Fehler ``INVALID CONFIGURATION``. ``guidedog build --untrusted`` lässt beides unabhängig von ``conf.toml`` weg. Ein Programm, das Projekte über die Bibliothek baut, kann eigene Regeln erzwingen oder Vorgaben für die von ``conf.toml`` nicht gesetzten Regeln liefern (``BuildOptions::content`` und ``BuildOptions::content_defaults``)."
+
+#: ../../reference/configuration.rst:1592
+#| msgid ""
+#| "``guidedog build --untrusted`` builds a project whose sources we did "
+#| "not write. Raw content is left out, nothing is fetched, and no build "
+#| "plugin runs. The project cannot widen what the build reads. "
+#| "``include_roots`` and ``pdf_preamble`` are not used. Files and folders "
+#| "that lead outside the source folder (``html_logo``, ``html_favicon``, "
+#| "``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, "
+#| "``html_extra_path``, ``templates_path``, ``locale_dirs``, "
+#| "``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, "
+#| "``rust_autoapi_crates``) are left out. Embedded ``typst-diagram`` "
+#| "compilation is disabled and no Typst package is downloaded. Inline "
+#| "``lilypond`` music is still engraved, but its file arguments and "
+#| "``\\include`` are refused. Each dropped setting is a "
+#| "``build.untrusted`` warning. This is a capability policy, not a "
+#| "process sandbox. See :doc:`cli`."
+msgid ""
+"``guidedog build --untrusted`` builds a project whose sources we did not "
+"write. The project cannot widen what the build reads: it reads only below "
+"the source folder. ``include_roots`` and the files and folders that lead "
+"outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, "
+"``mathjax_config_path``, ``pdf_preamble``, ``plugin_configs``, "
+"``html_static_path``, ``html_extra_path``, ``templates_path``, "
+"``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, "
+"``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. ``typst`` "
+"is ignored: PDF output and diagrams use the embedded Typst compiler, and "
+"no installed program runs. Nothing is fetched: intersphinx reads only "
+"cached and local inventories, and no Typst package is downloaded. No "
+"build plugin runs. A graph reads no file it names, and ``lilypond`` file "
+"arguments and ``\\include`` are refused. Raw content and unsafe URLs are "
+"left out. Each dropped setting is a ``build.untrusted`` warning."
+msgstr "``guidedog build --untrusted`` baut ein Projekt, dessen Quellen wir nicht selbst geschrieben haben. Das Projekt kann den Lesebereich nicht erweitern: Gelesen wird nur unterhalb des Quellordners. ``include_roots`` sowie Dateien und Ordner außerhalb davon (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``pdf_preamble``, ``plugin_configs``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) werden weggelassen. ``typst`` wird ignoriert: PDF-Ausgaben und Diagramme verwenden den eingebetteten Typst-Compiler; kein installiertes Programm läuft. Es wird nichts abgerufen: intersphinx liest nur zwischengespeicherte und lokale Inventare, und kein Typst-Paket wird heruntergeladen. Kein Build-Plugin läuft. Graphen lesen keine benannten Dateien, und ``lilypond``-Dateiargumente sowie ``\\include`` werden abgewiesen. Rohe Inhalte und unsichere URLs werden weggelassen. Jede verworfene Einstellung erzeugt eine Warnung ``build.untrusted``."
+
+#: ../../reference/configuration.rst:1602
+msgid ""
+"Typst the project wrote still runs: ``typst-diagram`` directives, "
+"``pdf_preamble`` and the templates in ``_templates`` inside the source "
+"folder. The embedded compiler runs no program and reads only below its "
+"root, so a confined build lets Typst read no more than the build itself. "
+"This is a capability policy, not a process sandbox: the memory and time "
+"native code takes are bounded only by the operating system. See "
+":doc:`cli`."
+msgstr "Vom Projekt geschriebener Typst-Code läuft weiterhin: ``typst-diagram``-Direktiven, ``pdf_preamble`` und Vorlagen in ``_templates`` innerhalb des Quellordners. Der eingebettete Compiler führt kein Programm aus und liest nur unterhalb seiner Wurzel; daher darf Typst in einem beschränkten Build nicht mehr lesen als der Build selbst. Dies ist eine Regel für Befugnisse, keine Prozess-Sandbox: Speicher und Laufzeit nativen Codes begrenzt nur das Betriebssystem. Siehe :doc:`cli`."
+
+#: ../../reference/configuration.rst:1607
 msgid "Native music engraving"
 msgstr "Nativer Notensatz"
 
-#: ../../reference/configuration.rst:1583
+#: ../../reference/configuration.rst:1618
 msgid "``lilypond_staff_size``"
 msgstr "``lilypond_staff_size``"
 
-#: ../../reference/configuration.rst:1584
-#: ../../reference/configuration.rst:1588
-#: ../../reference/configuration.rst:1592
+#: ../../reference/configuration.rst:1619
+#: ../../reference/configuration.rst:1623
+#: ../../reference/configuration.rst:1627
 msgid "float"
 msgstr "Gleitkommazahl"
 
-#: ../../reference/configuration.rst:1585
+#: ../../reference/configuration.rst:1620
 msgid "``18``"
 msgstr "``18``"
 
-#: ../../reference/configuration.rst:1586
+#: ../../reference/configuration.rst:1621
 msgid ""
 "Default five-line staff height in points, from ``10`` through ``40``."
 msgstr ""
 "Standardhöhe des fünflinigen Notensystems in Punkt, von ``10`` bis ``40``."
 
-#: ../../reference/configuration.rst:1587
+#: ../../reference/configuration.rst:1622
 msgid "``lilypond_html_width``"
 msgstr "``lilypond_html_width``"
 
-#: ../../reference/configuration.rst:1589
+#: ../../reference/configuration.rst:1624
 msgid "``564``"
 msgstr "``564``"
 
-#: ../../reference/configuration.rst:1590
+#: ../../reference/configuration.rst:1625
 msgid "Wide HTML system measure in points (positive, at most ``100000``)."
 msgstr ""
 "Systembreite für das breite HTML-Layout in Punkt (positiv, höchstens "
 "``100000``)."
 
-#: ../../reference/configuration.rst:1591
+#: ../../reference/configuration.rst:1626
 msgid "``lilypond_pdf_width``"
 msgstr "``lilypond_pdf_width``"
 
-#: ../../reference/configuration.rst:1594
+#: ../../reference/configuration.rst:1629
 msgid ""
 "PDF system measure in points (positive, at most ``100000``); when "
 "omitted, derived from ``pdf_paper_size`` and the selected template's "
@@ -6444,7 +6525,7 @@ msgstr ""
 "Wert, wird sie aus ``pdf_paper_size`` und dem horizontalen Rand der "
 "gewählten Vorlage abgeleitet."
 
-#: ../../reference/configuration.rst:1596
+#: ../../reference/configuration.rst:1631
 msgid ""
 "All three values are finite TOML numbers, and directive options override "
 "their project defaults."
@@ -6452,7 +6533,7 @@ msgstr ""
 "Alle drei Werte sind endliche TOML-Zahlen, und Direktivenoptionen "
 "überschreiben die Projektstandards."
 
-#: ../../reference/configuration.rst:1604
+#: ../../reference/configuration.rst:1639
 msgid ""
 "The PDF templates declare their horizontal margin in their leading 256 "
 "lines with a comment such as ``// guidedog: margin-x = 31mm``. Without a "
@@ -6709,3 +6790,15 @@ msgstr ""
 "Diese Seiten halten die Verträge fest. Sie sind zum Suchen und "
 "Nachschlagen gedacht. Wenn wir ein erstes Beispiel brauchen, beginnen wir "
 "mit einem Tutorial."
+
+#~ msgid ""
+#~ "Leave out raw content, external Graphviz resources, ``typst-diagram`` "
+#~ "compilation, and music read from files (``lilypond`` file arguments "
+#~ "and ``\\include``); fetch nothing; and run no build plugin. This is a "
+#~ "capability policy, not a process sandbox."
+#~ msgstr ""
+#~ "Lässt Rohinhalte, externe Graphviz-Ressourcen, die "
+#~ "``typst-diagram``-Kompilierung und aus Dateien gelesene Musik "
+#~ "(``lilypond``-Dateiargumente und ``\\include``) weg, lädt nichts aus "
+#~ "dem Netz und führt kein Build-Plugin aus. Das ist eine Richtlinie für "
+#~ "Fähigkeiten, keine Prozess-Sandbox."

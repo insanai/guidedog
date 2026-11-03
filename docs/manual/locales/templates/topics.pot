@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-02 06:22+0000\n"
+"POT-Creation-Date: 2026-11-03 23:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -177,7 +177,7 @@ msgid "The ``pdf_packages``, ``pdf_fonts`` and ``pdf_font_paths`` settings gover
 msgstr ""
 
 #: ../../topics/diagrams.rst:209
-msgid "A failed drawing remains visible as source with a warning (``build.graphviz`` or ``build.typst-diagram``; missing or duplicate directive sources report ``sphinx.graphviz.source`` or ``sphinx.typst.source``). We build with ``-W`` when a missing diagram must prevent publication. ``--untrusted`` refuses Typst compilation and external Graphviz resources and retains the source. Text builds show source without compiling a drawing. The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files."
+msgid "A failed drawing remains visible as source with a warning (``build.graphviz`` or ``build.typst-diagram``; missing or duplicate directive sources report ``sphinx.graphviz.source`` or ``sphinx.typst.source``). We build with ``-W`` when a missing diagram must prevent publication. ``--untrusted`` still compiles Typst diagrams with the embedded compiler, which reads only the source folder and downloads no package, and refuses the files a Graphviz graph names. Text builds show source without compiling a drawing. The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files."
 msgstr ""
 
 #: ../../topics/diagrams.rst:215

@@ -341,6 +341,19 @@ fn wildcard_images_and_anonymous_labels_follow_sphinx() {
     has(&r.err, "The label models is also defined in");
 }
 
+/// "name.*" gives pages a WebP picture and the book its JPEG copy.
+#[test]
+fn wildcard_images_prefer_webp_in_pages_only() {
+    let dir = project("wildcard-webp");
+    dir.write("img/shot.webp", "RIFF\0\0\0\0WEBP");
+    dir.write("img/shot.jpg", "\u{ff}\u{d8}\u{ff}");
+    dir.write("index.rst", "Demo\n====\n\n.. image:: img/shot.*\n");
+    build(&dir.path, 0, &["html", "-W"]);
+    has(&dir.read("_build/html/index.html"), "src=\"_images/img/shot.webp\"");
+    assert!(dir.exists("_build/html/_images/img/shot.webp"));
+    assert!(!dir.exists("_build/html/_images/img/shot.jpg"));
+}
+
 /// Math is written and loaded as sphinx.ext.mathjax does it; :eq: finds equation
 /// labels, which :ref: does not.
 #[test]

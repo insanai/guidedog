@@ -23,7 +23,7 @@ assert_eq!(gd_book::language_file("manual.pdf", "de"), "manual-de.pdf");
 Problems: `build.pdf.duplicate`, `build.pdf.root`, `build.output` (a chapter or page
 could not be made), `build.builder` (no text renderer), `typst.missing`, `typst.root`,
 `typst.compile` (with `typst.compiler` reports), `typst.launch`, `host.budget`.
-Warnings: `build.untrusted` (project book template left out), Typst's own.
+Warnings: Typst's own. A confined build typesets with the embedded compiler only (`typst.missing` when there is none).
 
 ## Design notes
 

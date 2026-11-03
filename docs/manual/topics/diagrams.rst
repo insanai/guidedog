@@ -208,7 +208,7 @@ Diagrams must produce one finite page; PNG export is limited to 16 million pixel
 
 A failed drawing remains visible as source with a warning (``build.graphviz`` or ``build.typst-diagram``; missing or duplicate directive sources report ``sphinx.graphviz.source`` or ``sphinx.typst.source``).
 We build with ``-W`` when a missing diagram must prevent publication.
-``--untrusted`` refuses Typst compilation and external Graphviz resources and retains the source.
+``--untrusted`` still compiles Typst diagrams with the embedded compiler, which reads only the source folder and downloads no package, and refuses the files a Graphviz graph names.
 Text builds show source without compiling a drawing.
 The :doc:`../howto/typst-diagrams` guide lists every option, source limit and migration step for existing figure files.
 

@@ -95,7 +95,7 @@ Reading settings (``gd_env::reading_settings``)
    and toctree flags); whether napoleon, autosummary, apidoc, viewcode, linkcode and inheritance_diagram are on, and their settings (GDS 0011). The coverage, duration and imgconverter settings change no document, so they are not in it.
 
 Build settings (``gd_env::build_settings``), saved as ``Environment::settings``
-   The reading settings; the translation digest; whether the build is untrusted; the
+   The reading settings; the translation digest; the trust digest (``gd_env::trust_digest`` of the confinement and the content rules); the
    engine limits (depth, nodes, stack and the rest, from ``--max-depth``,
    ``--max-nodes``, ``--stack-kib``); the plugin digest. An environment saved with other
    build settings, of another ``ENVIRONMENT_VERSION``, or under ``-E`` is not used:
@@ -121,7 +121,7 @@ Inventory digest (``gd_resolve::Intersphinx::digest``)
 
 Output settings (``gd_env::output_settings``)
    The project settings; the builder's name; the ``-t`` tags, sorted; ``-n``; whether
-   the build is untrusted; the engine limits; the executable stamp; the plugin digest.
+   the trust digest; the engine limits; the executable stamp; the plugin digest.
 
 The reading layer
 -----------------

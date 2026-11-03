@@ -108,7 +108,7 @@ The HTML builder automatically omits this block without emitting warnings.
 
 The ``only`` directive controls output after parsing. Both branches must contain valid RST, and custom directives must be declared even in a branch omitted from the selected output. ``typst`` is not a built-in ``only`` tag; the raw block's format name and the output guard serve different purposes.
 
-Raw Typst executes only when the raw-content policy allows it. ``--untrusted`` omits raw content and disables build plugins; it therefore cannot run these formatting and preprocessing examples.
+Raw Typst executes only when the raw-content rule allows it (``raw_content`` in ``conf.toml``). ``--untrusted`` omits raw content and disables build plugins; it therefore cannot run these formatting and preprocessing examples.
 
 .. note::
 

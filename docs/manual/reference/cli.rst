@@ -247,8 +247,7 @@ Builders:
      - Show only errors: no progress, summary, warnings or notes (``-W`` still counts
        the warnings).
    * - ``--untrusted``
-     - Leave out raw content, external Graphviz resources, ``typst-diagram`` compilation, and music read from files (``lilypond`` file arguments and ``\include``); fetch nothing; and run no build plugin. This is a
-       capability policy, not a process sandbox.
+     - Read only below the source folder; fetch nothing; run no build plugin and no installed ``typst`` program (the embedded compiler draws ``typst-diagram`` figures and typesets PDF output); read no file a graph names and no music file (``lilypond`` file arguments and ``\include``); and leave out raw content and unsafe URLs. This is a capability policy, not a process sandbox. See the configuration reference's "Trust" section.
    * - ``--budget=MIB``
      - Memory the build may hold at once, from 1 to 1048576 (default: ``1024``).
    * - ``--memory=ram``

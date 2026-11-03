@@ -174,7 +174,7 @@ The PDF builder recognizes the leading metadata, such as ``:eds-number:`` and ``
 
 The layout is embedded in the Guidedog binary. ``guidedog dsc init`` copies ``_templates/discussion.typ`` and its shared ``_templates/theme.typ`` for customization. Existing catalogs without a copy use the embedded layout. It defines a ``book`` function with the usual PDF parameters and an additional ``record`` dictionary. ``record.id`` is the readable identifier, ``record.catalog`` is the project name, and ``record.fields`` contains pairs of readable field labels and values. All values arrive as quoted strings. The source heading supplies the title and its anchor. The template reads the catalog metadata without assuming a fixed prefix or lifecycle. Its optional ``contents`` and ``memo`` parameters control the contents and status note. :doc:`../templates` describes the shared PDF parameters.
 
-An ``--untrusted`` build uses the built-in discussion layout instead of running a project template. A record included as a chapter of a larger book keeps its metadata in that chapter; the root document selects the book's layout.
+An ``--untrusted`` build uses the project template too, since Typst reads only the source folder there. A record included as a chapter of a larger book keeps its metadata in that chapter; the root document selects the book's layout.
 
 When an update is interrupted
 -----------------------------

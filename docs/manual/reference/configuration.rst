@@ -291,7 +291,7 @@ Build plugins
 
 A plugin ID is looked up among the plugins linked into the ``guidedog`` executable
 first, then among the programs registered with ``guidedog plugin register ID PATH``.
-A normal build invokes no publisher. ``--untrusted`` disables build plugins.
+A normal build invokes no publisher. ``--untrusted`` disables build plugins (see `Trust`_).
 Build plugins transform source text, post-process complete HTML pages, and add generated
 assets. See :doc:`../plugins`.
 
@@ -614,7 +614,7 @@ PDF and Typst
    * - ``pdf_packages``
      - string
      - ``"download"``
-     - Typst packages: download what is missing, or ``"offline"``, only what is on disk.
+     - Typst packages: download what is missing, or ``"offline"``, only what is on disk. A build without the network (``--untrusted``) is always offline.
    * - ``pdf_fonts``
      - string
      - ``"system"``
@@ -628,7 +628,7 @@ PDF and Typst
      - string
      - ``"typst"``
      - The Typst program when the compiler is not built in, or to use another one
-       (``--typst`` overrides it).
+       (``--typst`` overrides it). A confined build (``--untrusted``) ignores it and runs the embedded compiler only.
 
 The book's layout is ``_templates/book.typ`` in the source folder, written by
 ``quickstart``. A book's file gets the language as a suffix
@@ -1559,15 +1559,50 @@ The ``[site]`` table configures static website outputs: sitemaps, syndication fe
 Trust
 -----
 
-``guidedog build --untrusted`` builds a project whose sources we did not write. Raw
-content is left out, nothing is fetched, and no build plugin runs. The project cannot
-widen what the build reads. ``include_roots`` and ``pdf_preamble`` are not used. Files
-and folders that lead outside the source folder (``html_logo``, ``html_favicon``,
-``pdf_logo``, ``mathjax_config_path``, ``html_static_path``, ``html_extra_path``,
-``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``,
-``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out. Embedded ``typst-diagram``
-compilation is disabled and no Typst package is downloaded. Inline ``lilypond`` music is still engraved, but its file arguments and ``\include`` are refused. Each dropped setting is a
-``build.untrusted`` warning. This is a capability policy, not a process sandbox. See :doc:`cli`.
+A build trusts a project in two separate ways.
+Its confinement decides what the build may reach on the machine: the folders it reads, the network, build plugins, and the files graphs and music name.
+Its content rules decide what reaches the output: raw content and unsafe URLs.
+
+.. list-table:: Content rules
+   :header-rows: 1
+   :widths: 28 14 18 40
+
+   * - Key
+     - Type
+     - Default
+     - Description
+   * - ``raw_content``
+     - string
+     - ``"allow"``
+     - ``"allow"`` keeps raw HTML, Typst and LaTeX (``.. raw::``), as Sphinx does; ``"omit"`` leaves it out with a warning.
+   * - ``unsafe_urls``
+     - string
+     - ``"allow"``
+     - ``"allow"`` keeps ``javascript:``, ``vbscript:`` and non-image ``data:`` URLs, as Sphinx does; ``"omit"`` leaves them out with a warning.
+
+Any other value is an ``INVALID CONFIGURATION`` problem.
+``guidedog build --untrusted`` omits both, whatever ``conf.toml`` says.
+A program that builds projects through the library may impose its own rules, or give defaults for the rules ``conf.toml`` leaves unset (``BuildOptions::content`` and ``BuildOptions::content_defaults``).
+
+.. code-block:: toml
+
+   raw_content = "omit"
+   unsafe_urls = "omit"
+
+``guidedog build --untrusted`` builds a project whose sources we did not write.
+The project cannot widen what the build reads: it reads only below the source folder.
+``include_roots`` and the files and folders that lead outside the source folder (``html_logo``, ``html_favicon``, ``pdf_logo``, ``mathjax_config_path``, ``pdf_preamble``, ``plugin_configs``, ``html_static_path``, ``html_extra_path``, ``templates_path``, ``locale_dirs``, ``pdf_font_paths``, ``autodoc_source_paths``, ``odin_autoapi_dirs``, ``rust_autoapi_crates``) are left out.
+``typst`` is ignored: PDF output and diagrams use the embedded Typst compiler, and no installed program runs.
+Nothing is fetched: intersphinx reads only cached and local inventories, and no Typst package is downloaded.
+No build plugin runs.
+A graph reads no file it names, and ``lilypond`` file arguments and ``\include`` are refused.
+Raw content and unsafe URLs are left out.
+Each dropped setting is a ``build.untrusted`` warning.
+
+Typst the project wrote still runs: ``typst-diagram`` directives, ``pdf_preamble`` and the templates in ``_templates`` inside the source folder.
+The embedded compiler runs no program and reads only below its root, so a confined build lets Typst read no more than the build itself.
+This is a capability policy, not a process sandbox: the memory and time native code takes are bounded only by the operating system.
+See :doc:`cli`.
 
 Native music engraving
 ----------------------

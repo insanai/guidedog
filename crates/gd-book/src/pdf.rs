@@ -201,7 +201,11 @@ impl TypstRun<'_, '_> {
         let root = self.root()?;
         let reserve = |bytes: usize| ledger.charge(bytes);
         let read_roots = if self.backend.is_embedded() { typst_folders(c) } else { Vec::new() };
-        let options = self.settings.options(read_roots, &reserve);
+        let mut options = self.settings.options(read_roots, &reserve);
+        let preview = self.view.options.preview;
+        if preview {
+            options.marks = Some(guidedoc_typst::SOURCE_LABEL);
+        }
         let outcome =
             gd_typst::compile_text(&self.backend, &self.book.source, root.dir(), &stage, &options);
         if gd_host::was_interrupted() {
@@ -236,6 +240,10 @@ impl TypstRun<'_, '_> {
             unit.emit_text(&language_file("book.typ", &c.language), &self.book.source)?;
         }
         unit.emit_text(&format!("sources/{source_name}"), &self.book.source)?;
+        if preview {
+            let map = crate::page_map::page_map_json(&file, &compiled, self.backend.is_embedded());
+            unit.emit_text(&crate::page_map::page_map_name(&file), &map)?;
+        }
         let files_read = self.files_read();
         unit.finish(UnitRecord { inputs, reports: warnings, files_read, ..UnitRecord::default() });
         if let Some(typeset) = self.typeset {

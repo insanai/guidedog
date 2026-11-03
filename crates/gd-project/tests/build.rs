@@ -247,3 +247,34 @@ fn preview_pages_carry_source_positions() {
     assert!(page.contains(&format!("<p data-gd-source=\"guide.rst:{start}-{end}\">")), "{page}");
     assert!(dir.read("_build/html/notes.html").contains("data-gd-source=\"notes.md:"));
 }
+
+/// A preview book has a page map: where each block of its sources stands on its pages.
+#[test]
+fn preview_books_map_pages_to_sources() {
+    let dir = demo("page-map");
+    dir.put(
+        "conf.toml",
+        "project = \"Demo\"\nauthor = \"Ada\"\nsource_suffix = [\".rst\", \".md\"]\n\
+         extensions = [\"myst_parser\"]\npdf_fonts = \"embedded\"\npdf_packages = \"offline\"\n",
+    );
+    let project = load(&dir.0);
+    assert_built(&build(&project, BuilderKind::Pdf));
+    assert!(!dir.exists("_build/pdf/demo-en.pdf.sourcemap.json"));
+    assert!(!dir.read("_build/pdf/book-en.typ").contains("<gd-source>"));
+    let preview = BuildOptions { preview: true, ..BuildOptions::default() };
+    assert_built(&gd_project::build(&project, BuilderKind::Pdf, &preview));
+    let map = gd_json::parse(&dir.read("_build/pdf/demo-en.pdf.sourcemap.json")).unwrap();
+    assert_eq!(map.get("complete").and_then(|v| v.as_bool()), Some(true));
+    let marks = map.get("marks").and_then(|v| v.as_array()).unwrap();
+    let text = dir.read("guide.rst");
+    let start = text.find("Some").unwrap() as u64;
+    let para = marks.iter().find(|m| {
+        m.get("source").and_then(|s| s.as_str()) == Some("guide.rst")
+            && m.get("start").and_then(|s| s.as_u64()) == Some(start)
+    });
+    let para = para.unwrap_or_else(|| panic!("no mark for the paragraph in {marks:?}"));
+    let pages = map.get("pages").and_then(|v| v.as_u64()).unwrap();
+    let page = para.get("page").and_then(|v| v.as_u64()).unwrap();
+    assert!(page >= 1 && page <= pages, "{para:?}");
+    assert!(marks.iter().any(|m| m.get("source").and_then(|s| s.as_str()) == Some("notes.md")));
+}

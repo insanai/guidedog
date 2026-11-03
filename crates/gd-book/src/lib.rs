@@ -33,6 +33,7 @@ mod fonts;
 mod inputs;
 mod layout;
 mod music;
+mod page_map;
 mod pages;
 mod pdf;
 mod text;
@@ -40,6 +41,7 @@ mod typst_root;
 
 pub use compose::{language_file, typst_markup, typst_string};
 pub use fonts::bundled_font_dir;
+pub use page_map::{PAGE_MAP_SCHEMA, page_map_name};
 pub use pdf::{PdfBuilder, TypesetBook};
 pub use text::{DummyBuilder, TextBuilder};
 

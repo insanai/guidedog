@@ -94,7 +94,7 @@ impl Format {
     /// The file suffixes of the format, with their dots, as projects recognize them.
     pub fn suffixes(self) -> &'static [&'static str] {
         match self {
-            Format::Rst => &[".rst", ".rest", ".txt"],
+            Format::Rst => &[".rst", ".rest"],
             Format::Markdown => &[".md", ".markdown"],
         }
     }

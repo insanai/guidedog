@@ -95,7 +95,22 @@ pub(crate) fn replace_text(cx: &Cx<'_>, id: BlockId, new: &str) -> Result<Plan, 
     if title {
         edits.extend(adornment_edit(cx.text, block, first, &new, false));
     }
-    Ok(Plan::new(edits, shape::shape(cx.map), block.span))
+    let mut plan = Plan::new(edits, shape::shape(cx.map), block.span);
+    // The shape alone misses text that reads back as other text, such as a field name
+    // that gains a colon and so moves the rest into the field's body.
+    let want = comparable(&new, code);
+    plan.check = Box::new(move |after: &SourceMap, new_text: &str| {
+        after.block(id).is_some() && comparable(&after.content_text(id, new_text), code) == want
+    });
+    Ok(plan)
+}
+
+/// `text` as a replacement is compared with what reads back: lines without trailing
+/// white space, and for inline text without leading white space either.
+fn comparable(text: &str, code: bool) -> String {
+    let lines: Vec<&str> =
+        text.lines().map(|l| if code { l.trim_end() } else { l.trim() }).collect();
+    lines.join("\n").trim_end().to_string()
 }
 
 /// Refuses text that cannot be the block's: empty text, a blank line in inline text,

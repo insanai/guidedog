@@ -1,6 +1,6 @@
 //! Cases a review found: each once panicked, lost text or accepted a wrong edit.
 
-use super::{all, edited, map_of, outline};
+use super::{all, edited, map_of, outline, refused};
 use crate::*;
 
 #[test]
@@ -100,4 +100,15 @@ fn an_unclosed_fence_keeps_its_last_line() {
     let map = map_of(Format::Markdown, one);
     let code = all(&map, BlockKind::LiteralBlock)[0];
     assert_eq!(map.content_text(code, one), "code");
+}
+
+#[test]
+fn a_replacement_must_read_back_as_the_text_asked_for() {
+    let text = ":name: body\n";
+    let map = map_of(Format::Rst, text);
+    let field = all(&map, BlockKind::Field)[0];
+    let op = Operation::ReplaceText { block: field, text: "a: b" };
+    refused(Format::Rst, text, op, "edit.unsafe");
+    let op = Operation::ReplaceText { block: field, text: "other" };
+    assert_eq!(edited(Format::Rst, text, op), ":other: body\n");
 }

@@ -104,7 +104,7 @@ Text that no reader node covers, such as ``.. highlight::``, becomes a directive
      - Adds a list item with the anchor's marker; an explicitly numbered RST list is renumbered after it.
 
 Every operation reads the edited text again and compares its shape, the depth and kind of every block (and a Markdown title's level), with the shape the operation intends: the same shape for a replacement or an option, the inserted markup's own shape spliced in for an insertion, and so on.
-An option edit also checks that the directive has the option with the new value.
+A replacement also checks that the block reads back with the new text, and an option edit that the directive has the option with the new value.
 A difference refuses the edit with ``edit.unsafe``, so text that would split a paragraph, close a fence early, or merge a new section with its neighbours never reaches the document.
 An edit is refused with ``edit.truncated`` when the map of the text, or of the edited text, lists only its first blocks, because the rest could not be compared.
 Refusals are ``EditError`` values with stable codes: ``edit.unknown-block``, ``edit.unsupported``, ``edit.invalid-text``, ``edit.unsafe``, ``edit.truncated``, ``edit.unknown-option`` (with "Did you mean"), ``edit.option-value``, ``edit.missing-option`` and ``edit.renumber``.

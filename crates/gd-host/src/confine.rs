@@ -2,7 +2,7 @@
 //! project applies to every file it reads.
 
 use std::path::{Component, Path, PathBuf};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex, PoisonError};
 
 use guidedoc::{Resource, ResourceProvider, ResourceStatus};
 
@@ -31,6 +31,8 @@ pub struct Files<'l> {
     /// When set, each file's size is charged here before it is read; a file the budget
     /// cannot hold is `ResourceStatus::Limit`. The charges last as long as the ledger.
     pub ledger: Option<&'l Ledger<'l>>,
+    /// The files asked for that do not exist, as written; see [`Files::missing`].
+    missing: Mutex<Vec<PathBuf>>,
 }
 
 impl Files<'static> {
@@ -42,6 +44,7 @@ impl Files<'static> {
             max_bytes: MAX_SOURCE_BYTES,
             project: None,
             ledger: None,
+            missing: Mutex::default(),
         }
     }
 }
@@ -63,6 +66,21 @@ impl<'l> Files<'l> {
     /// The resolved roots.
     pub fn roots(&self) -> &[PathBuf] {
         &self.roots
+    }
+
+    /// The files asked for so far that did not exist, absolute and sorted, each once. A
+    /// reader records them as dependencies, so a document that includes a file that is
+    /// created later is read again.
+    pub fn missing(&self) -> Vec<PathBuf> {
+        let mut out = self.missing.lock().unwrap_or_else(PoisonError::into_inner).clone();
+        out.sort();
+        out.dedup();
+        out
+    }
+
+    fn note_missing(&self, path: &Path) -> ResourceStatus {
+        self.missing.lock().unwrap_or_else(PoisonError::into_inner).push(path.to_path_buf());
+        ResourceStatus::Missing
     }
 
     /// Resolves `name` as written in source `from`; `None` for a name never served.
@@ -91,11 +109,11 @@ impl ResourceProvider for Files<'_> {
         if passes_link(root, &written) {
             return Err(ResourceStatus::Refused);
         }
-        let path = written.canonicalize().map_err(|_| ResourceStatus::Missing)?;
+        let path = written.canonicalize().map_err(|_| self.note_missing(&written))?;
         if containing_root(&self.roots, &path).is_none() {
             return Err(ResourceStatus::Refused);
         }
-        let info = std::fs::symlink_metadata(&path).map_err(|_| ResourceStatus::Missing)?;
+        let info = std::fs::symlink_metadata(&path).map_err(|_| self.note_missing(&written))?;
         if !info.is_file() || info.len() > self.max_bytes as u64 {
             return Err(ResourceStatus::Refused);
         }

@@ -278,3 +278,22 @@ fn preview_books_map_pages_to_sources() {
     assert!(page >= 1 && page <= pages, "{para:?}");
     assert!(marks.iter().any(|m| m.get("source").and_then(|s| s.as_str()) == Some("notes.md")));
 }
+
+/// A document that includes a file that does not exist yet is read again once the file
+/// is created, though the document itself did not change.
+#[test]
+fn a_missing_include_is_read_once_it_is_created() {
+    let dir = common::demo("missing-include");
+    dir.put(
+        "guide.rst",
+        "Guide\n=====\n\n.. include:: later.txt\n\n.. literalinclude:: later.py\n",
+    );
+    let project = common::load(&dir.0);
+    let _ = common::build(&project, BuilderKind::Html);
+    assert!(!dir.read("_build/html/guide.html").contains("LATER"));
+    dir.put("later.txt", "Text LATER-ONE.\n");
+    dir.put("later.py", "LATER_TWO = 2\n");
+    common::assert_built(&common::build(&project, BuilderKind::Html));
+    let page = dir.read("_build/html/guide.html");
+    assert!(page.contains("LATER-ONE") && page.contains("LATER_TWO"), "{page}");
+}

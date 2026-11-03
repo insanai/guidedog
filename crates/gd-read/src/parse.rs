@@ -256,6 +256,10 @@ impl<'a> Worker<'a> {
             ..default_request(&name, text, reader.id, "")
         };
         self.run_read(d, reader, &request, text);
+        // A missing file never matches its digest, so the document is read again each
+        // build until the file exists.
+        let missing = files.missing().into_iter();
+        d.deps.extend(missing.map(|path| gd_env::Dependency { path, ..Default::default() }));
         d.deps.extend_from_slice(ctx.intl.files_of(&f.docname));
         if let Some(python) = &python {
             python.dependencies(&mut d.deps);

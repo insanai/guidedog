@@ -8,12 +8,12 @@ use crate::lines::{continuation, line_end_trimmed, line_start};
 use crate::map::{BlockId, SourceMap};
 
 /// The marker of the item at `start`: the token up to the first space, and the token
-/// with the spaces after it.
+/// with the spaces after it. An empty item's marker may end its line or the text.
 fn marker(text: &str, start: usize) -> (Span, Span) {
     let end = line_end_trimmed(text, start);
     let token = text[start..end].find([' ', '\t']).map_or(end, |i| start + i);
     let body = end - text[token..end].trim_start().len();
-    let body = if body == end { token + 1 } else { body };
+    let body = if body == end { (token + 1).min(end) } else { body };
     (Span::new(start, token), Span::new(start, body.max(token)))
 }
 
@@ -52,7 +52,11 @@ pub(crate) fn item_edits(
     let line = line_start(text, item.span.start);
     let prefix = &text[line..item.span.start];
     let (token, with_space) = marker(text, item.span.start);
-    let spaces = &text[token.end..with_space.end];
+    // An empty item has no space after its marker; the new item takes one.
+    let spaces = match &text[token.end..with_space.end] {
+        "" => " ",
+        spaces => spaces,
+    };
     let renumber = !markdown && number(text, token).is_some();
     if !markdown && !renumber && lettered(text, token) {
         return Err(renumber_error(item.span));

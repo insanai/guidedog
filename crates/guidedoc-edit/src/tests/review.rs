@@ -26,3 +26,15 @@ fn comment_markers_are_stripped_on_character_boundaries() {
     let comment = all(&map, BlockKind::Comment)[0];
     assert_eq!(map.content_text(comment, rst), "a\nb");
 }
+
+#[test]
+fn an_item_goes_next_to_an_empty_item() {
+    for (format, text, want) in
+        [(Format::Markdown, "- a\n-", "- a\n-\n- New"), (Format::Rst, "* a\n*", "* a\n*\n* New")]
+    {
+        let map = map_of(format, text);
+        let last = *all(&map, BlockKind::ListItem).last().unwrap();
+        let op = Operation::InsertItem { anchor: last, position: Position::After, text: "New" };
+        assert_eq!(edited(format, text, op), want);
+    }
+}

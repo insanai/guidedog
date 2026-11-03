@@ -126,7 +126,13 @@ fn write_page(
     }
     assets.extend(page.assets.iter().cloned());
     reports.extend(own.iter().cloned());
-    unit.finish(UnitRecord { inputs, assets: page.assets, lookups, reports: own });
+    unit.finish(UnitRecord {
+        inputs,
+        assets: page.assets,
+        lookups,
+        reports: own,
+        ..UnitRecord::default()
+    });
     Ok(())
 }
 

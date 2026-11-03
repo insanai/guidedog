@@ -35,6 +35,7 @@ fn publish_page(p: &Project, budget: &Budget, answer: Digest) {
         assets: vec![Asset { source: p.dir.join("img.png"), target: "_images/img.png".into() }],
         lookups: vec![(label("intro"), answer)],
         reports: vec![Report::error("ref.x", "A REPORT", "kept")],
+        files_read: vec![p.dir.join("_templates/book.typ")],
     });
     assert_eq!(commit(generation), CommitState::Published);
 }

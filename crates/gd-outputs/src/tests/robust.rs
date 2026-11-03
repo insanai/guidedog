@@ -57,6 +57,7 @@ fn sample_manifest() -> Manifest {
             (Lookup::suffix("py:", ".open", "py:func"), Digest::of_text("b")),
         ],
         reports: vec![Report::error("ref.x", "A REPORT", "message").hint("a hint")],
+        files_read: vec![PathBuf::from("/src/_templates/book.typ")],
     };
     let mut units = BTreeMap::new();
     units.insert("guide/intro".to_string(), record);

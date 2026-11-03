@@ -121,6 +121,7 @@ fn write_documents(
             assets: page.assets,
             lookups: answers(view, docname, page.trace),
             reports: page.reports,
+            ..UnitRecord::default()
         });
     }
     generation.check_written()

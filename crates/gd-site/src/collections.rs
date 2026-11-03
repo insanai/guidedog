@@ -240,7 +240,13 @@ fn write_page(
     unit.emit_text(&file, &html)?;
     reports.extend(own.iter().cloned());
     assets.extend(rendered.assets.iter().cloned());
-    unit.finish(UnitRecord { inputs, lookups, reports: own, assets: rendered.assets });
+    unit.finish(UnitRecord {
+        inputs,
+        lookups,
+        reports: own,
+        assets: rendered.assets,
+        ..UnitRecord::default()
+    });
     Ok(())
 }
 

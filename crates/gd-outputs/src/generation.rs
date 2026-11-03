@@ -97,6 +97,11 @@ impl Generation {
         &self.paths
     }
 
+    /// The units of this generation so far, written or kept, by key in sorted order.
+    pub fn units(&self) -> impl Iterator<Item = (&str, &OutputRecord)> {
+        self.current.units.iter().map(|(key, unit)| (key.as_str(), unit))
+    }
+
     /// Keeps the unit `key` of the previous generation when its inputs digest is
     /// `inputs`, each of its recorded lookups still gets the answer it recorded
     /// (`answer`, gd-resolve's `lookup_answer` for the unit's page), and its files are
@@ -311,6 +316,8 @@ pub struct UnitRecord {
     pub lookups: Vec<(Lookup, Digest)>,
     /// What writing it reported.
     pub reports: Vec<Report>,
+    /// Files it read besides its documents and their recorded dependencies, absolute.
+    pub files_read: Vec<PathBuf>,
 }
 
 /// One output unit being written. Paths are below the output folder, with `/`
@@ -459,6 +466,7 @@ impl Unit<'_> {
             assets: record.assets,
             lookups: record.lookups,
             reports: record.reports,
+            files_read: record.files_read,
         };
         if self.key == SITE_UNIT {
             self.generation.site_written = true;

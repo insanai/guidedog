@@ -10,8 +10,9 @@ use gd_json::{Object, Value};
 use gd_report::Report;
 
 /// The manifest's format version. In version 2 lookups carry their answers' digests,
-/// so a changed answer is known exactly; a manifest of another version is not read.
-pub const MANIFEST_VERSION: u32 = 2;
+/// so a changed answer is known exactly; version 3 records the files a unit read for
+/// the dependency manifest. A manifest of another version is not read.
+pub const MANIFEST_VERSION: u32 = 3;
 
 /// The key of the unit of files every page shares: static files, indexes, assets.
 pub const SITE_UNIT: &str = "";
@@ -33,6 +34,9 @@ pub struct OutputRecord {
     pub lookups: Vec<(Lookup, Digest)>,
     /// What writing it reported, given again when it is reused.
     pub reports: Vec<Report>,
+    /// Files it read besides its documents and their recorded dependencies (a book's
+    /// template, images and graphs), absolute: the dependency manifest lists them.
+    pub files_read: Vec<PathBuf>,
 }
 
 /// Every unit of one generation, by key.
@@ -83,7 +87,12 @@ fn record_to_json(unit: &OutputRecord) -> Value {
         .list("assets", &unit.assets, asset_to_json)
         .list("lookups", &unit.lookups, lookup_to_json)
         .list("reports", &unit.reports, gd_env::report_to_json)
+        .texts("files_read", &paths_as_text(&unit.files_read))
         .done()
+}
+
+fn paths_as_text(paths: &[PathBuf]) -> Vec<String> {
+    paths.iter().map(|p| p.to_string_lossy().into_owned()).collect()
 }
 
 fn record_from_json(value: &Value) -> Option<OutputRecord> {
@@ -94,6 +103,7 @@ fn record_from_json(value: &Value) -> Option<OutputRecord> {
         assets: r.list("assets", asset_from_json)?,
         lookups: r.list("lookups", lookup_from_json)?,
         reports: r.list("reports", gd_env::report_from_json)?,
+        files_read: r.texts("files_read")?.into_iter().map(PathBuf::from).collect(),
     })
 }
 

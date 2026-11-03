@@ -48,6 +48,7 @@ mod sources;
 mod translate;
 
 pub use api::api_sources;
+pub use autodoc::uses_autodoc;
 pub use config::{myst_settings, sphinx_config};
 pub use context::{ReadContext, ReadOutcome, ReadingTime};
 pub use coverage::{Coverage, Documented, coverage};

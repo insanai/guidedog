@@ -67,7 +67,7 @@ impl PythonHost {
 
 /// Whether autodoc reads Python: sphinx.ext.autodoc, or an extension that sets it up
 /// as Sphinx's do (napoleon, autosummary, apidoc).
-pub(crate) fn uses_autodoc(c: &Config) -> bool {
+pub fn uses_autodoc(c: &Config) -> bool {
     ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx.ext.autosummary", "sphinx.ext.apidoc"]
         .iter()
         .any(|e| c.has_extension(e))

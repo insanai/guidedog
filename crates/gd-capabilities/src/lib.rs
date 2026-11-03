@@ -93,7 +93,8 @@ pub struct BuilderCapability {
     pub serve: bool,
     /// A preview build's output carries source positions: `data-gd-source` attributes
     /// on HTML blocks (`guidedoc_html::SOURCE_ATTRIBUTE`), or a page map beside each PDF
-    /// (`<file>.sourcemap.json`, complete with the embedded Typst compiler).
+    /// (`<file>.sourcemap.json`) with marks. A PDF built by the typst program gets a map
+    /// without marks, so this is false then.
     pub output_source_map: bool,
     /// Its output folder holds a dependency manifest (`gd-dependencies.json`).
     pub dependency_manifest: bool,
@@ -231,7 +232,7 @@ pub fn load_capabilities(
         readers: adapters(readers.collect()),
         renderers: adapters(renderers.collect()),
         formats: formats(),
-        builders: builders(),
+        builders: builders(config),
         directives: catalog::directives(config),
         roles: catalog::roles(config),
         markdown_extensions: catalog::markdown_extensions(config, &default_config),
@@ -273,7 +274,8 @@ fn formats() -> Vec<FormatCapability> {
     out
 }
 
-fn builders() -> Vec<BuilderCapability> {
+fn builders(config: &gd_conf::Config) -> Vec<BuilderCapability> {
+    let pdf_marks = gd_typst::uses_embedded(&config.pdf.typst);
     gd_env::BuilderKind::ALL
         .iter()
         .map(|&b| {
@@ -288,7 +290,7 @@ fn builders() -> Vec<BuilderCapability> {
                 format,
                 preview: viewed,
                 serve: b == gd_env::BuilderKind::Html,
-                output_source_map: b.is_html() || b == gd_env::BuilderKind::Pdf,
+                output_source_map: b.is_html() || (b == gd_env::BuilderKind::Pdf && pdf_marks),
                 dependency_manifest: gd_project::writes_dependencies(b),
             }
         })
@@ -363,5 +365,21 @@ mod tests {
         let autodoc =
             report.sphinx_extensions.iter().find(|e| e.name == "sphinx.ext.autodoc").unwrap();
         assert!(autodoc.enabled);
+    }
+
+    /// Napoleon sets autodoc up, so the report agrees with the auto directives; a PDF
+    /// made by the typst program has no marks in its page map.
+    #[test]
+    fn extensions_that_set_autodoc_up_and_the_typst_program_are_reported() {
+        let extensions = vec!["sphinx.ext.napoleon".into()];
+        let mut config = gd_conf::Config { extensions, ..Default::default() };
+        config.pdf.typst = "/opt/typst/bin/typst".into();
+        let report = load_capabilities(&gd_plugins::Registry::default(), Some(&config));
+        assert!(find(&report, "automodule").enabled);
+        let autodoc =
+            report.sphinx_extensions.iter().find(|e| e.name == "sphinx.ext.autodoc").unwrap();
+        assert!(autodoc.enabled);
+        let pdf = report.builders.iter().find(|b| b.name == "pdf").unwrap();
+        assert!(!pdf.output_source_map && pdf.dependency_manifest);
     }
 }

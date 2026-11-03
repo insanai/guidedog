@@ -268,7 +268,10 @@ fn parse_capabilities(args: &[String], output: &mut Output) -> Result<Command, P
         }
         match name {
             "-h" | "--help" => return Ok(Command::Help(Some("capabilities"))),
-            "--json" => command.json = true,
+            "--json" => {
+                no_value(name, inline)?;
+                command.json = true;
+            }
             "--format" => command.json = table_or_json(words.value(name, inline)?)?,
             _ => return Err(unknown_option("capabilities", name, KNOWN)),
         }

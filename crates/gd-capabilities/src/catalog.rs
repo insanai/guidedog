@@ -161,7 +161,9 @@ pub(crate) fn sphinx_extensions(config: &gd_conf::Config) -> Vec<ExtensionCapabi
         .map(|&name| ExtensionCapability {
             name,
             default: false,
-            enabled: config.has_extension(name),
+            // Napoleon, autosummary and apidoc set autodoc up, as in Sphinx.
+            enabled: config.has_extension(name)
+                || (name == "sphinx.ext.autodoc" && gd_read::uses_autodoc(config)),
         })
         .collect()
 }

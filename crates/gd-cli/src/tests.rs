@@ -561,6 +561,7 @@ fn capabilities_reports_formats_markup_and_plugins() {
     assert_eq!(status, 2, "{err}");
     assert!(err.contains("NO DOCUMENTATION PROJECT HERE"), "{err}");
     assert_eq!(problem(&["capabilities", "--xml"]).title, "UNKNOWN OPTION");
+    assert_eq!(problem(&["capabilities", "--json=no"]).title, "UNEXPECTED OPTION VALUE");
 }
 
 #[test]

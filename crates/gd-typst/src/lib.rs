@@ -211,11 +211,17 @@ pub fn find_program(name: &str) -> Option<PathBuf> {
         .find(|path| path.is_file())
 }
 
+/// Whether the setting `program` (`typst` in `conf.toml`) selects the embedded
+/// compiler: this build links one and `program` is `""` or `"typst"`.
+pub fn uses_embedded(program: &str) -> bool {
+    EMBEDDED && (program.is_empty() || program == "typst")
+}
+
 /// Returns the embedded compiler when this build links one and `program` is `""` or
 /// `"typst"`; otherwise finds the program and asks for its version. `None` when no program
 /// is found.
 pub fn locate(program: &str) -> Option<Backend> {
-    if EMBEDDED && (program.is_empty() || program == "typst") {
+    if uses_embedded(program) {
         return Some(Backend::Embedded);
     }
     let path = find_program(program)?;

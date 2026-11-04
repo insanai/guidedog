@@ -1,7 +1,7 @@
 Readiness for 1.0.0 beta
 ========================
 
-This page records the initial readiness audit we ran before calling Guidedog a 1.0.0 beta, what we measured then, and what remained open at that checkpoint. It describes the state of 15 October 2026, at version ``1.0.0-beta.1``; see :doc:`../evidence/index` for the subsequent ``1.0.0-beta.2`` through ``1.0.0-beta.11`` release records and verification runs.
+This page records the initial readiness audit we ran before calling Guidedog a 1.0.0 beta, what we measured then, and what remained open at that checkpoint. It describes the state of 15 October 2026, at version ``1.0.0-beta.1``; see :doc:`../evidence/index` for the subsequent ``1.0.0-beta.2`` through ``1.0.0-beta.12`` release records and verification runs.
 
 What a beta promises
 --------------------

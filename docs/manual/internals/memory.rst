@@ -80,6 +80,34 @@ The anchor table follows the same idea: ``build_anchors_into`` rebuilds a table 
 - Lossy output owns its text. When the reStructuredText writer meets something reStructuredText cannot express, such as an image inside a Markdown paragraph, it reports a note whose arguments the report owns, and it builds the substitution definition's options as owned strings. These paths are rare and bounded by the document.
 - Output that grows past the largest document seen so far allocates once more, as every ``Vec`` does. So do new sources: an included file read for this conversion is an ``Arc<str>`` that the conversion owns.
 
+Allocator selection
+-------------------
+
+Rust 1.100 stabilizes allocator-aware ``Vec`` and ``Box`` operations through ``std::alloc::Allocator``.
+This selects how a collection obtains storage; it does not make existing allocations faster by itself.
+``Global`` uses the program's global allocator, while ``System`` explicitly selects the platform allocator.
+Applications could already choose a process allocator through ``GlobalAlloc`` before Rust 1.100.
+
+We keep the default allocator and reusable workspaces.
+The allocation regression test checks zero repeated allocations for the HTML and Typst sample conversions through all four built-in readers.
+A different allocator cannot remove work that those conversions already avoid.
+Making every workspace table allocator-generic would also change the public API, without controlling the allocations in ``String``, the embedded Typst compiler or Graphviz's C libraries.
+The host's budget therefore remains separate from allocation policy.
+
+We measure fresh and reused conversion storage with the ``measure_conversion`` example:
+
+.. code-block:: sh
+
+   cargo run --release -p guidedoc-examples --example measure_conversion -- \
+       document.rst rst html 1000 15
+
+Each CSV row records one batch, its input and output sizes and elapsed nanoseconds.
+Input loading and the first warm conversion occur outside the timer.
+Fresh batches include workspace construction and destruction; reused batches keep the same workspace.
+We keep the source, build profile and linked libraries fixed, alternate compiler versions and avoid competing builds when comparing results.
+Whole-command measurements additionally include process startup, file access and publication.
+The Rust 1.100 and Graphviz 16.1.1 measurements and allocator decision are recorded in :doc:`../evidence/rust-1.100-graphviz-16.1.1`.
+
 Limits bound the work
 ---------------------
 

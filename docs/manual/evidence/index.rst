@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`rust-1.100-graphviz-16.1.1`
+     - Rust 1.100 and Graphviz 16.1.1 port, compiler and allocator measurements, correctness checks and the retained allocation policy (13 November 2026)
    * - :doc:`release-1.0.0-beta.12`
      - Nisaba confinement and content rules, WebP image selection, linear MyST target resolution and verified five-platform publication (4 November 2026)
    * - :doc:`release-1.0.0-beta.11`
@@ -50,6 +52,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   rust-1.100-graphviz-16.1.1
    release-1.0.0-beta.12
    release-1.0.0-beta.11
    release-1.0.0-beta.10

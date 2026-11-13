@@ -73,11 +73,11 @@ pub(super) fn source_text(version: &str, commit: &str, rustc: &str, command: &st
         "Guidedog {version} for Windows x86-64\nCommit: {commit}\n\
          Source: https://github.com/insanai/guidedog/tree/v{version}\n\
          Toolchain: {rustc}\nBuild: {command}\n\
-         Typst 0.15.1 is embedded. Graphviz 16.1.0 DLLs are bundled.\n\
-         Graphviz source: https://gitlab.com/graphviz/graphviz/-/tree/16.1.0\n\
+         Typst 0.15.1 is embedded. Graphviz 16.1.1 DLLs are bundled.\n\
+         Graphviz source: https://gitlab.com/graphviz/graphviz/-/tree/16.1.1\n\
          Official runtime: https://graphviz.org/download/\n\
-         Archive: windows_10_cmake_Release_Graphviz-16.1.0-win64.zip\n\
-         SHA256: 733e49626c492242eb8dca30ea627b6ead20710e207998c7933b4909d92d6abc\n\
+         Archive: windows_10_cmake_Release_Graphviz-16.1.1-win64.zip\n\
+         SHA256: 72b1f3a9a1fd3f6e726478c1e044a95483a8fbddec13ba2fb395438d75d001b4\n\
          Licenses: LICENSE, NOTICE and COPYING-bravura.\n\
          Keep the extracted folder together, including DLLs, config8 and notices.\n"
     )

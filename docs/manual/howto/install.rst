@@ -64,12 +64,12 @@ The release archives link Graphviz statically, so they need no Graphviz on the m
 .. code-block:: sh
 
    cargo xtask graphviz
-   GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0 cargo build --release -p guidedog-cmd
+   GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.1 cargo build --release -p guidedog-cmd
    target/release/guidedog --version
 
-``cargo xtask graphviz`` downloads Graphviz 16.1.0 and Expat 2.7.1, checks each against its pinned SHA-256, and builds static libraries into ``target/graphviz/16.1.0``, the folder it prints. It needs a C and C++ compiler, ``make``, ``curl``, ``tar`` and ``xz``, and takes a few minutes. The build has only what Guidedog uses: the dot and neato layout plugins (dot, neato, fdp, sfdp, circo, twopi, osage, patchwork) and the core renderers (SVG and DOT), with no X11, cairo, gd, ltdl or zlib. So a static build renders SVG and laid-out DOT, but not PNG.
+``cargo xtask graphviz`` downloads Graphviz 16.1.1 and Expat 2.7.1, checks each against its pinned SHA-256, and builds static libraries into ``target/graphviz/16.1.1``, the folder it prints. It needs a C and C++ compiler, ``make``, ``curl``, ``tar`` and ``xz``, and takes a few minutes. The build has only what Guidedog uses: the dot and neato layout plugins (dot, neato, fdp, sfdp, circo, twopi, osage, patchwork) and the core renderers (SVG and DOT), with no X11, cairo, gd, ltdl or zlib. So a static build renders SVG and laid-out DOT, but not PNG.
 
-``GUIDEDOG_GRAPHVIZ_STATIC`` tells ``gd-graphdog``'s build script where the libraries are; the ``static-graphviz`` feature of ``gd-graphdog`` uses the default folder. ``guidedog --version`` then reports ``graphviz 16.1.0 (static)``.
+``GUIDEDOG_GRAPHVIZ_STATIC`` tells ``gd-graphdog``'s build script where the libraries are; the ``static-graphviz`` feature of ``gd-graphdog`` uses the default folder. ``guidedog --version`` then reports ``graphviz 16.1.1 (static)``.
 
 The executable is ``target/release/guidedog`` (``guidedog.exe`` on Windows). To run
 ``guidedog`` without its path, we put it on our ``PATH`` or install it into

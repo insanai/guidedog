@@ -199,9 +199,9 @@ fn build_json(release: &Release<'_>, name: &str, binary_sum: &str, sums: &str) -
         quoted(rustc),
         quoted(command),
         if platform.package == "windows-amd64" {
-            "16.1.0, bundled DLLs"
+            "16.1.1, bundled DLLs"
         } else {
-            "16.1.0, linked statically"
+            "16.1.1, linked statically"
         },
         quoted(&platform.requires.replace('\n', " ")),
     )

@@ -56,6 +56,31 @@ fn clusters_render() {
     assert_eq!(svg.matches(r#"class="edge""#).count(), 2);
 }
 
+#[cfg(graphviz_static)]
+#[test]
+fn a_cluster_and_an_ordinary_node_can_share_a_name() {
+    // Graphviz 16.1.1 fixes a heap overrun here (upstream issue 2769).
+    let source = "graph { graph [packmode=array]; \
+                  subgraph cluster_b2 { ph } cluster_b2 { xyz } }";
+    let svg = render_svg(source, Options::default());
+    assert_eq!(svg.matches(r#"class="cluster""#).count(), 1);
+    assert_eq!(svg.matches(r#"class="node""#).count(), 3);
+    for label in ["ph", "cluster_b2", "xyz"] {
+        assert!(svg.contains(&format!(">{label}</text>")));
+    }
+}
+
+#[cfg(graphviz_static)]
+#[test]
+fn a_labeled_flat_edge_at_rank_zero_renders() {
+    // Graphviz 16.1.1 fixes this dot crash (upstream issue 2756).
+    let source = "digraph { {rank=same; a; b; c} -> b; a -> b [label=label] }";
+    let svg = render_svg(source, Options::default());
+    assert_eq!(svg.matches(r#"class="node""#).count(), 3);
+    assert_eq!(svg.matches(r#"class="edge""#).count(), 4);
+    assert!(svg.contains(">label</text>"));
+}
+
 #[test]
 fn html_labels_render() {
     let source = r#"digraph { t [shape=plain label=<

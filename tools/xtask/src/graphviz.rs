@@ -23,29 +23,29 @@ Builds the static Graphviz libraries that release binaries link.
 
 Usage: cargo xtask graphviz [--out DIR] [--jobs N]
 
-  --out DIR   where the libraries are installed (default: target/graphviz/16.1.0)
+  --out DIR   where the libraries are installed (default: target/graphviz/16.1.1)
   --jobs N    parallel compile jobs for make (default: 4)
 
-Downloads Graphviz 16.1.0 and Expat 2.7.1 (checked against their pinned SHA-256),
+Downloads Graphviz 16.1.1 and Expat 2.7.1 (checked against their pinned SHA-256),
 builds them as static libraries with only what Guidedog needs, and prints the install
 folder. An install folder that is already complete is kept. Sources and logs stay in
 target/graphviz/work. Needs a C and C++ compiler, make, curl, tar and xz.
 
 Then build with the libraries linked in:
 
-  GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0 cargo build --release -p guidedog-cmd
+  GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.1 cargo build --release -p guidedog-cmd
 ";
 
 /// The Graphviz release that static builds pin. gd-graphdog's build script and its
 /// text-layout plugin (which reads Graphviz 16.1's `textspan_t`) expect this version.
-pub(crate) const GRAPHVIZ_VERSION: &str = "16.1.0";
+pub(crate) const GRAPHVIZ_VERSION: &str = "16.1.1";
 
 /// Where the Graphviz release tarball comes from, and its SHA-256.
 const GRAPHVIZ: Source = Source {
-    name: "graphviz-16.1.0",
+    name: "graphviz-16.1.1",
     url: "https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/\
-          16.1.0/graphviz-16.1.0.tar.xz",
-    sha256: "0f661718f3e5268dc3bad0fb53ab646605d26db70f4080799aff1dc2f61783c3",
+          16.1.1/graphviz-16.1.1.tar.xz",
+    sha256: "52e7fb9a57b52b5c67f41dba6504ba3231e118258779421cb8f4f99104de71f6",
 };
 
 /// The Expat release Graphviz is built with (MIT licence).

@@ -7,6 +7,8 @@ beside it.
 
 ## Unreleased
 
+- Pin static Graphviz and the bundled Windows runtime to 16.1.1, with verified upstream source and Windows archive checksums. This patch fixes cluster name collisions, several layout crashes and an out-of-bounds Windows font lookup.
+
 - Build with Rust 1.100.0 and require Rust 1.100 for workspace crates. Update iterator loops for the new Clippy checks without changing document semantics.
 
 ## 1.0.0-beta.12 - 2026-11-03

@@ -18,7 +18,7 @@ use std::path::{Path, PathBuf};
 
 /// The Graphviz version the static build pins. tools/xtask/src/graphviz.rs builds it, and
 /// src/builtin.rs reads its `textspan_t`, so the three change together.
-const VERSION: &str = "16.1.0";
+const VERSION: &str = "16.1.1";
 
 /// The archives in link order: each one only uses the ones after it.
 const ARCHIVES: [&str; 11] = [

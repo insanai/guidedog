@@ -42,8 +42,8 @@ serialized.
 
 ## Static Graphviz
 
-`cargo xtask graphviz` builds Graphviz 16.1.0 (with Expat) as static libraries into
-`target/graphviz/16.1.0`. With `GUIDEDOG_GRAPHVIZ_STATIC=<that folder>` (or the
+`cargo xtask graphviz` builds Graphviz 16.1.1 (with Expat) as static libraries into
+`target/graphviz/16.1.1`. With `GUIDEDOG_GRAPHVIZ_STATIC=<that folder>` (or the
 `static-graphviz` feature, which uses the default folder), `build.rs` links them instead
 of the shared libraries, `STATIC` is `true`, and the program needs no Graphviz at run
 time. The static build has the dot and neato layout plugins (all eight engines) and the

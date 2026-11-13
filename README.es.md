@@ -68,7 +68,7 @@ El ejecutable no está firmado: en macOS, quite la cuarentena de una descarga de
 
 ## Compilar desde las fuentes
 
-Instale Rust 1.100 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. (O compile Graphviz estáticamente, como hacen las versiones: `cargo xtask graphviz`, y después compile con `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`; así los programas no necesitan Graphviz en tiempo de ejecución). Después compile el espacio de trabajo:
+Instale Rust 1.100 o posterior (con [rustup](https://rustup.rs)), un compilador de C (las gramáticas de tree-sitter están escritas en C) y los archivos de desarrollo de Graphviz: `libgraphviz-dev` en Debian y Ubuntu, `graphviz-devel` en Fedora, `graphviz` de Homebrew en macOS. (O compile Graphviz estáticamente, como hacen las versiones: `cargo xtask graphviz`, y después compile con `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.1`; así los programas no necesitan Graphviz en tiempo de ejecución). Después compile el espacio de trabajo:
 
 ```sh
 cargo build --release -p guidedog-cmd

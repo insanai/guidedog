@@ -90,7 +90,7 @@ jobs:
     timeout-minutes: 120
     env:
       # gd-graphdog links the static Graphviz in this folder (see crates/gd-graphdog/build.rs).
-      GUIDEDOG_GRAPHVIZ_STATIC: ${{ github.workspace }}/target/graphviz/16.1.0
+      GUIDEDOG_GRAPHVIZ_STATIC: ${{ github.workspace }}/target/graphviz/16.1.1
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/prepare
@@ -99,7 +99,7 @@ jobs:
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         id: graphviz
         with:
-          path: target/graphviz/16.1.0
+          path: target/graphviz/16.1.1
           key: graphviz-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/xtask/src/graphviz.rs') }}
       - name: Build the static Graphviz
         if: steps.graphviz.outputs.cache-hit != 'true'

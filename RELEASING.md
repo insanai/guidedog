@@ -21,9 +21,9 @@ uploaded by hand, and a published release is never changed.
     agree (`cargo xtask release check-version`).
   - `qualify`: requires a successful Verify run for the exact commit being released. Verify already ran the full suite on Linux and macOS, formatting, the source limits, data tables, music font and corpus checks, Clippy, examples and credential-store checks. We reuse that result rather than compiling and running the full suite again. If it is missing, we run Verify for that commit and rerun Release after it passes.
   - `build`: per platform, natively on that platform, `cargo xtask release build` runs
-    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler, embedded Bravura 1.482 music font, and linked Pages, discussion, and static-site (`ssg`) plugins. On Linux and macOS, Graphviz 16.1.0 is linked
+    `cargo build --release --locked` for `guidedog`, with the embedded Typst compiler, embedded Bravura 1.482 music font, and linked Pages, discussion, and static-site (`ssg`) plugins. On Linux and macOS, Graphviz 16.1.1 is linked
     statically: `cargo xtask graphviz` builds it (cached between runs) and the build
-    sets `GUIDEDOG_GRAPHVIZ_STATIC`; on Windows, the verified official Graphviz 16.1.0 DLLs are bundled beside `guidedog.exe`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices (`LICENSE`, `COPYING`, `NOTICE`, `COPYING-bravura`, and on Unix `COPYING-graphviz` and `COPYING-expat`), `SOURCE.txt`, and a build manifest
+    sets `GUIDEDOG_GRAPHVIZ_STATIC`; on Windows, the verified official Graphviz 16.1.1 DLLs are bundled beside `guidedog.exe`. Full workspace tests run once on Linux and once on macOS in Verify; archive jobs do not recompile the suite with release optimization. `cargo xtask release package` packages `guidedog` with its linked libraries and plugins, with their notices (`LICENSE`, `COPYING`, `NOTICE`, `COPYING-bravura`, and on Unix `COPYING-graphviz` and `COPYING-expat`), `SOURCE.txt`, and a build manifest
     (`guidedog.build.json`).
   - `smoke`: each archive, unpacked on a fresh machine of its platform with nothing
     installed, runs quickstart, static-site presets (`guidedog ssg`), and translation extraction/catalog updates, and builds HTML and PDF with an empty
@@ -56,7 +56,7 @@ Each Unix archive is built natively, with the static Graphviz built on that plat
 (`cargo xtask graphviz`). Every archive carries Bravura's license (`COPYING-bravura`), and
 Unix archives also carry Graphviz's and Expat's licenses (`COPYING-graphviz`,
 `COPYING-expat`), while `SOURCE.txt` names their source tarballs with their SHA-256.
-Windows ships a ZIP with the official Graphviz 16.1.0 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages, graph rendering and music engraving smoke tests.
+Windows ships a ZIP with the official Graphviz 16.1.1 DLLs and configuration beside `guidedog.exe`. The prepare action verifies the upstream archive SHA-256. A fresh Windows runner extracts the ZIP, checks the programs against the manifest, and runs HTML, PDF, discussion, Pages, graph rendering and music engraving smoke tests.
 
 ## Build a release locally
 

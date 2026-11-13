@@ -26,7 +26,7 @@ cargo xtask verify-docutils DOCUTILS WORK [RECORD] # recheck them byte for byte
 | `site` | the landing page, manual (7 languages, PDF books) and discussions in one folder |
 | `fonts` | downloads with the installed `curl`, checks SHA-256 with gd-sha |
 | `music_font` | verifies the embedded Bravura 1.482 font, metadata and license against upstream digests |
-| `graphviz` | builds static Graphviz 16.1.0 and Expat 2.7.1 from verified tarballs |
+| `graphviz` | builds static Graphviz 16.1.1 and Expat 2.7.1 from verified tarballs |
 | `release/*` | the release workflow's steps and smoke tests |
 | `tables/unicode` | case folding, id folding, NFD, categories, rST punctuation |
 | `tables/entities` | HTML5 entities from WHATWG `entities.json` |

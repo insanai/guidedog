@@ -1,11 +1,11 @@
 Windows runtime notices
 
-The pinned official Graphviz 16.1.0 Windows distribution supplies the DLLs.
+The pinned official Graphviz 16.1.1 Windows distribution supplies the DLLs.
 We include its core SVG renderer and dot and neato layout plugins, together
 with their runtime dependencies. We omit the optional image and font renderers.
 
 Graphviz: Eclipse Public License 2.0, COPYING-graphviz.
-  Source: https://gitlab.com/graphviz/graphviz/-/tree/16.1.0
+  Source: https://gitlab.com/graphviz/graphviz/-/tree/16.1.1
 Expat: MIT, COPYING-expat. Source: https://github.com/libexpat/libexpat
 zlib: zlib license, COPYING-zlib. Source: https://github.com/madler/zlib
 PCRE2: BSD license, COPYING-pcre2. Source: https://github.com/PCRE2Project/pcre2

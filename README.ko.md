@@ -68,7 +68,7 @@ guidedog --version
 
 ## 소스에서 빌드
 
-Rust 1.99 이상([rustup](https://rustup.rs)으로 설치), C 컴파일러(tree-sitter 문법이 C로 작성되어 있음), Graphviz 개발 파일을 설치하세요. Debian과 Ubuntu에서는 `libgraphviz-dev`, Fedora에서는 `graphviz-devel`, macOS에서는 Homebrew의 `graphviz`입니다. (또는 공식 릴리스처럼 Graphviz를 정적으로 빌드할 수도 있습니다. `cargo xtask graphviz`를 실행한 뒤 `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`을 지정해 빌드하면 런타임에 Graphviz가 필요 없습니다.) 그런 다음 워크스페이스를 빌드합니다:
+Rust 1.100 이상([rustup](https://rustup.rs)으로 설치), C 컴파일러(tree-sitter 문법이 C로 작성되어 있음), Graphviz 개발 파일을 설치하세요. Debian과 Ubuntu에서는 `libgraphviz-dev`, Fedora에서는 `graphviz-devel`, macOS에서는 Homebrew의 `graphviz`입니다. (또는 공식 릴리스처럼 Graphviz를 정적으로 빌드할 수도 있습니다. `cargo xtask graphviz`를 실행한 뒤 `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0`을 지정해 빌드하면 런타임에 Graphviz가 필요 없습니다.) 그런 다음 워크스페이스를 빌드합니다:
 
 ```sh
 cargo build --release -p guidedog-cmd

@@ -68,7 +68,7 @@ Die ausführbare Datei ist nicht codesigniert: Unter macOS entfernen wir die Qua
 
 ## Aus dem Quellcode bauen
 
-Wir installieren Rust 1.99 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) sowie die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. (Alternativ lässt sich Graphviz wie in den Releases statisch bauen: `cargo xtask graphviz` und anschließend mit `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` kompilieren; die Programme benötigen dann zur Laufzeit kein installiertes Graphviz.) Anschließend bauen wir den Workspace:
+Wir installieren Rust 1.100 oder neuer (mit [rustup](https://rustup.rs)), einen C-Compiler (die Grammatiken von tree-sitter sind in C geschrieben) sowie die Entwicklungsdateien von Graphviz: `libgraphviz-dev` unter Debian und Ubuntu, `graphviz-devel` unter Fedora, `graphviz` aus Homebrew unter macOS. (Alternativ lässt sich Graphviz wie in den Releases statisch bauen: `cargo xtask graphviz` und anschließend mit `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` kompilieren; die Programme benötigen dann zur Laufzeit kein installiertes Graphviz.) Anschließend bauen wir den Workspace:
 
 ```sh
 cargo build --release -p guidedog-cmd

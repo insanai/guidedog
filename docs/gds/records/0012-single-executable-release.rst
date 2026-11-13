@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-10-15
-:gds-updated: 2026-10-15
+:gds-updated: 2026-11-13
 :gds-discussion: No external discussion URL assigned
 :gds-labels: ["architecture","release"]
 
@@ -54,7 +54,7 @@ Configuration files and publisher protocols stay compatible. Users of earlier se
 Acceptance criteria and implementation status
 ---------------------------------------------
 
-The workspace builds with Rust 1.99. Source limits, Clippy and workspace tests must pass. Release archives must pass the HTML, PDF, discussion and Pages smoke tests on every platform. The website and discussions must build with Guidedog. Publication evidence is recorded after the release workflow finishes.
+The workspace builds with Rust 1.100. Source limits, Clippy and workspace tests must pass. Release archives must pass the HTML, PDF, discussion and Pages smoke tests on every platform. The website and discussions must build with Guidedog. Publication evidence is recorded after the release workflow finishes.
 
 Open questions
 --------------

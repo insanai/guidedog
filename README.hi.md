@@ -68,7 +68,7 @@ guidedog --version
 
 ## सोर्स से बिल्ड करें
 
-Rust 1.99 या नया संस्करण ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें इंस्टॉल करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। (या रिलीज़ की तरह Graphviz को स्थिर रूप से बिल्ड करें: `cargo xtask graphviz`, फिर `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` के साथ बिल्ड करें; तब रनटाइम पर Graphviz की ज़रूरत नहीं रहती।) फिर वर्कस्पेस बिल्ड करें:
+Rust 1.100 या नया संस्करण ([rustup](https://rustup.rs) से), एक C कंपाइलर (tree-sitter के व्याकरण C में हैं), और Graphviz की डेवलपमेंट फ़ाइलें इंस्टॉल करें: Debian और Ubuntu पर `libgraphviz-dev`, Fedora पर `graphviz-devel`, macOS पर Homebrew से `graphviz`। (या रिलीज़ की तरह Graphviz को स्थिर रूप से बिल्ड करें: `cargo xtask graphviz`, फिर `GUIDEDOG_GRAPHVIZ_STATIC=target/graphviz/16.1.0` के साथ बिल्ड करें; तब रनटाइम पर Graphviz की ज़रूरत नहीं रहती।) फिर वर्कस्पेस बिल्ड करें:
 
 ```sh
 cargo build --release -p guidedog-cmd

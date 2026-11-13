@@ -520,9 +520,9 @@ impl Positions {
     /// sources it includes before that offset come first.
     fn place(&self, doc: Document<'_>, source: usize, offset: u32) -> u64 {
         let mut at = self.base[source] + u64::from(offset);
-        for c in source + 1..doc.sources().len() {
+        for (c, expanded) in self.expanded.iter().enumerate().skip(source + 1) {
             if included_in(doc, c, source) && doc.sources()[c].included_at.start < offset {
-                at += self.expanded[c];
+                at += expanded;
             }
         }
         at

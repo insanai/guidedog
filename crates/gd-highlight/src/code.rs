@@ -330,8 +330,7 @@ fn only_space_before(s: &Scanner<'_>) -> bool {
 fn bracket_end(s: &Scanner<'_>, from: usize, open: u8, close: u8) -> usize {
     let mut level = 0i32;
     let stop = s.limit.min(from + 4 * LOOKAHEAD);
-    for i in from..stop {
-        let c = s.bytes[i];
+    for (i, &c) in s.bytes.iter().enumerate().take(stop).skip(from) {
         if c == open {
             level += 1;
         } else if c == close {

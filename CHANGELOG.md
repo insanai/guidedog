@@ -7,6 +7,8 @@ beside it.
 
 ## Unreleased
 
+- Build with Rust 1.100.0 and require Rust 1.100 for workspace crates. Update iterator loops for the new Clippy checks without changing document semantics.
+
 ## 1.0.0-beta.12 - 2026-11-03
 
 - Resolve long runs of MyST labels in linear time by indexing the next content element once, while preserving comment skipping and unresolved trailing labels.

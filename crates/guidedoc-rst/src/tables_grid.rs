@@ -186,11 +186,11 @@ impl Parser<'_, '_> {
                 let Some((cb, cr)) = self.scan_cell(g, r, c)? else {
                     continue;
                 };
-                for col in c..cr {
-                    if g.done[col] != r as isize - 1 {
+                for done in &mut g.done[c..cr] {
+                    if *done != r as isize - 1 {
                         return Ok(Err("cells overlap"));
                     }
-                    g.done[col] = cb as isize - 1;
+                    *done = cb as isize - 1;
                 }
                 if g.cells.len() >= g.max_cells {
                     return Ok(Err("it has too many cells"));

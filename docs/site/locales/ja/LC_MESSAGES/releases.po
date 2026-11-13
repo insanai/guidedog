@@ -468,3 +468,27 @@ msgstr ""
 "<https://insanai.github.io/guidedog/discussions/records/0015-lilypond-music.html>`_ "
 "には承認済みの設計と検証結果が記録されており、展開されたすべてのプラットフォーム向けアーカイブは空の PATH "
 "でネイティブ楽譜浄書を検証しています。"
+
+#: ../../releases/1.0.0-beta.13.rst:8
+msgid "Guidedog 1.0.0-beta.13"
+msgstr "Guidedog 1.0.0-beta.13"
+
+#: ../../releases/1.0.0-beta.13.rst:11
+msgid "We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This release updates toolchain support and fixes diagram-rendering defects."
+msgstr "Guidedog を Rust 1.100.0 でビルドし、Graphviz 16.1.1 を同梱するようになりました。このリリースではツールチェーンのサポートを更新し、図の描画の不具合を修正します。"
+
+#: ../../releases/1.0.0-beta.13.rst:16
+msgid "Every workspace crate requires Rust 1.100 or later and keeps edition 2024. The build and tests handle the new Clippy checks and Cargo's changed artifact layout. The manual's plugin example is compiled through Cargo's public artifact messages."
+msgstr "ワークスペース内の各クレートには Rust 1.100 以降が必要で、エディションは 2024 のままです。ビルドとテストは新しい Clippy の検査と Cargo の成果物配置の変更に対応します。マニュアルのプラグイン例は、Cargo の公開された成果物メッセージを使ってコンパイルします。"
+
+#: ../../releases/1.0.0-beta.13.rst:20
+msgid "Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes. Unix archives link it statically, and Windows bundles its verified runtime. Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero."
+msgstr "Graphviz 16.1.1 は、クラスター名に関係するヒープ領域の境界超過と、レイアウト処理のいくつかのクラッシュを修正します。Unix のアーカイブでは静的にリンクし、Windows では検証済みのランタイムを同梱します。回帰テストは、クラスターとノードの名前の衝突、およびランクゼロのラベル付き水平エッジを確認します。"
+
+#: ../../releases/1.0.0-beta.13.rst:24
+msgid "We retain the existing process allocator and workspace buffer reuse. The measured performance differences between Rust 1.99 and 1.100 are insignificant overall. We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model."
+msgstr "既存のプロセスアロケーターとワークスペースのバッファー再利用を維持します。Rust 1.99 と 1.100 の実測性能差は、全体としてわずかです。新しいアロケーターモデルを導入せず、現在のツールチェーンと Graphviz の不具合修正を採用します。"
+
+#: ../../releases/1.0.0-beta.13.rst:28
+msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
+msgstr "`インストールガイド <https://insanai.github.io/guidedog/manual/howto/install.html>`_ は、ソースからのビルドとリリースのダウンロードを説明します。`ツールチェーンの分析 <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ は、測定結果とメモリー割り当ての判断を記録しています。"

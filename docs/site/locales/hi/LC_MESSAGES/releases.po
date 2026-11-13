@@ -541,3 +541,27 @@ msgstr ""
 "स्वीकृत डिज़ाइन और अर्हता प्रमाण दर्ज करता है, तथा हर अनपैक किया गया "
 "प्लेटफ़ॉर्म आर्काइव खाली PATH के साथ नेटिव संगीत स्वरलिपि टाइपसेटिंग की "
 "जाँच करता है।"
+
+#: ../../releases/1.0.0-beta.13.rst:8
+msgid "Guidedog 1.0.0-beta.13"
+msgstr "Guidedog 1.0.0-beta.13"
+
+#: ../../releases/1.0.0-beta.13.rst:11
+msgid "We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This release updates toolchain support and fixes diagram-rendering defects."
+msgstr "अब हम Guidedog को Rust 1.100.0 से बिल्ड करते हैं और Graphviz 16.1.1 साथ देते हैं। यह रिलीज़ टूलचेन समर्थन को अद्यतन करती है और आरेख रेंडर करने की त्रुटियाँ सुधारती है।"
+
+#: ../../releases/1.0.0-beta.13.rst:16
+msgid "Every workspace crate requires Rust 1.100 or later and keeps edition 2024. The build and tests handle the new Clippy checks and Cargo's changed artifact layout. The manual's plugin example is compiled through Cargo's public artifact messages."
+msgstr "वर्कस्पेस के हर क्रेट को Rust 1.100 या नया संस्करण चाहिए और उसका एडिशन 2024 ही रहता है। बिल्ड और परीक्षण Clippy की नई जाँचों तथा Cargo में आर्टिफ़ैक्ट के बदले स्थानों को संभालते हैं। मैनुअल का प्लगइन उदाहरण Cargo के सार्वजनिक आर्टिफ़ैक्ट संदेशों के माध्यम से संकलित होता है।"
+
+#: ../../releases/1.0.0-beta.13.rst:20
+msgid "Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes. Unix archives link it statically, and Windows bundles its verified runtime. Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero."
+msgstr "Graphviz 16.1.1 क्लस्टर नामों से जुड़े संभावित हीप ओवररन और लेआउट के कई क्रैश सुधारता है। Unix आर्काइव इसे स्थिर रूप से लिंक करते हैं और Windows में इसका सत्यापित रनटाइम शामिल है। रिग्रेशन परीक्षण क्लस्टर और नोड के समान नाम तथा रैंक शून्य पर लेबल वाली समतल एज की जाँच करते हैं।"
+
+#: ../../releases/1.0.0-beta.13.rst:24
+msgid "We retain the existing process allocator and workspace buffer reuse. The measured performance differences between Rust 1.99 and 1.100 are insignificant overall. We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model."
+msgstr "हम मौजूदा प्रोसेस एलोकेटर और वर्कस्पेस बफ़र का पुनः उपयोग बनाए रखते हैं। Rust 1.99 और 1.100 के बीच मापे गए प्रदर्शन अंतर कुल मिलाकर बहुत छोटे हैं। हम नए एलोकेटर मॉडल के बिना वर्तमान टूलचेन और Graphviz के सुधार अपनाते हैं।"
+
+#: ../../releases/1.0.0-beta.13.rst:28
+msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
+msgstr "`स्थापना मार्गदर्शिका <https://insanai.github.io/guidedog/manual/howto/install.html>`_ स्रोत से बिल्ड और रिलीज़ डाउनलोड समझाती है। `टूलचेन विश्लेषण <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ माप और मेमोरी आवंटन का निर्णय दर्ज करता है।"

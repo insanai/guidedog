@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:49+0000\n"
+"POT-Creation-Date: 2026-11-13 22:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -82,6 +82,30 @@ msgstr ""
 
 #: ../../releases/1.0.0-beta.12.rst:30
 msgid "`GDS 0018 <https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html>`_ records the design and its library interfaces."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:8
+msgid "Guidedog 1.0.0-beta.13"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:11
+msgid "We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This release updates toolchain support and fixes diagram-rendering defects."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:16
+msgid "Every workspace crate requires Rust 1.100 or later and keeps edition 2024. The build and tests handle the new Clippy checks and Cargo's changed artifact layout. The manual's plugin example is compiled through Cargo's public artifact messages."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:20
+msgid "Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes. Unix archives link it statically, and Windows bundles its verified runtime. Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:24
+msgid "We retain the existing process allocator and workspace buffer reuse. The measured performance differences between Rust 1.99 and 1.100 are insignificant overall. We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.13.rst:28
+msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
 msgstr ""
 
 #: ../../releases/1.0.0-beta.6.rst:8

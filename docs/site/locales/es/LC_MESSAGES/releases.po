@@ -566,3 +566,27 @@ msgstr ""
 "recoge el diseño aceptado y la evidencia de calificación, y cada archivo "
 "de plataforma descomprimido verifica el grabado musical nativo con un "
 "PATH vacío."
+
+#: ../../releases/1.0.0-beta.13.rst:8
+msgid "Guidedog 1.0.0-beta.13"
+msgstr "Guidedog 1.0.0-beta.13"
+
+#: ../../releases/1.0.0-beta.13.rst:11
+msgid "We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This release updates toolchain support and fixes diagram-rendering defects."
+msgstr "Ahora compilamos Guidedog con Rust 1.100.0 e incluimos Graphviz 16.1.1. Esta versión actualiza la compatibilidad con las herramientas de compilación y corrige defectos en la representación de diagramas."
+
+#: ../../releases/1.0.0-beta.13.rst:16
+msgid "Every workspace crate requires Rust 1.100 or later and keeps edition 2024. The build and tests handle the new Clippy checks and Cargo's changed artifact layout. The manual's plugin example is compiled through Cargo's public artifact messages."
+msgstr "Cada crate del espacio de trabajo requiere Rust 1.100 o posterior y conserva la edición 2024. La compilación y las pruebas contemplan las nuevas comprobaciones de Clippy y la nueva distribución de artefactos de Cargo. El ejemplo de complemento del manual se compila mediante los mensajes públicos de artefactos de Cargo."
+
+#: ../../releases/1.0.0-beta.13.rst:20
+msgid "Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes. Unix archives link it statically, and Windows bundles its verified runtime. Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero."
+msgstr "Graphviz 16.1.1 corrige un posible desbordamiento de memoria heap relacionado con nombres de grupos y varios fallos de disposición. Los archivos para Unix lo enlazan estáticamente y Windows incluye su entorno de ejecución verificado. Las pruebas de regresión cubren una colisión de nombres entre un grupo y un nodo, y una arista horizontal etiquetada en el rango cero."
+
+#: ../../releases/1.0.0-beta.13.rst:24
+msgid "We retain the existing process allocator and workspace buffer reuse. The measured performance differences between Rust 1.99 and 1.100 are insignificant overall. We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model."
+msgstr "Conservamos el asignador del proceso y la reutilización de búferes del espacio de trabajo. Las diferencias de rendimiento medidas entre Rust 1.99 y 1.100 son insignificantes en conjunto. Adoptamos las herramientas actuales y las correcciones de Graphviz sin un nuevo modelo de asignación de memoria."
+
+#: ../../releases/1.0.0-beta.13.rst:28
+msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
+msgstr "La `guía de instalación <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describe la compilación desde el código fuente y las descargas de versiones. El `análisis de las herramientas <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ recoge las mediciones y la decisión sobre asignación de memoria."

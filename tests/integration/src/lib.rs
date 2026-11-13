@@ -1,8 +1,8 @@
 //! Support for Guidedog's end-to-end tests: private scratch folders, the repository's
 //! own files, and the built `guidedog` program run as a user runs it.
 //!
-//! The programs are found beside the test executable, in the profile folder cargo builds
-//! into (`target/<profile>/`). `cargo test --workspace` builds them; running only this
+//! The programs are found in an ancestor of the test executable, in Cargo's public
+//! profile folder (`target/<profile>/`). `cargo test --workspace` builds them; running only this
 //! package needs `cargo build --workspace` first, which the panic message says.
 
 #![forbid(unsafe_code)]
@@ -31,8 +31,13 @@ pub fn repository_text(rel: &str) -> String {
 /// The folder cargo built the programs into: the test executable's profile folder.
 pub fn profile_dir() -> PathBuf {
     let exe = std::env::current_exe().unwrap();
-    // target/<profile>/deps/<test>-<hash>: two folders up.
-    exe.parent().and_then(Path::parent).unwrap().to_path_buf()
+    let program = format!("guidedog{}", std::env::consts::EXE_SUFFIX);
+    // Cargo 1.100 moved test executables. Find the public output, not a private depth.
+    exe.ancestors()
+        .skip(1)
+        .find(|dir| dir.join(&program).is_file())
+        .unwrap_or_else(|| panic!("Run `cargo build --workspace --all-targets` before testing."))
+        .to_path_buf()
 }
 
 /// The path of a built program of the workspace (`"guidedog"`). Panics

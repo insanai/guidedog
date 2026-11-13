@@ -79,7 +79,12 @@ fn the_commands_take_a_target_from_bind_to_live() {
 /// The folder cargo builds examples into: `target/<profile>/examples`.
 fn examples_dir() -> PathBuf {
     let exe = std::env::current_exe().unwrap();
-    exe.parent().unwrap().parent().unwrap().join("examples")
+    let fixture = format!("pages_fixture{}", std::env::consts::EXE_SUFFIX);
+    exe.ancestors()
+        .skip(1)
+        .map(|dir| dir.join("examples"))
+        .find(|dir| dir.join(&fixture).is_file())
+        .expect("Run `cargo build -p gd-pages --examples` before testing.")
 }
 
 /// Links (or copies) the fixture program into `dir` with its settings beside it.

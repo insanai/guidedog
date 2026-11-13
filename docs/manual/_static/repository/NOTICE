@@ -63,11 +63,11 @@ Rust crates compiled into the programs (versions as in Cargo.lock):
 C libraries linked statically into the release programs (built by `cargo xtask
 graphviz` from the pinned source tarballs, which each release also publishes):
 
-- Graphviz 16.1.0 (libgvc, libcgraph, libcdt, libpathplan, libxdot, the core,
+- Graphviz 16.1.1 (libgvc, libcgraph, libcdt, libpathplan, libxdot, the core,
   dot_layout and neato_layout plugins; crates/gd-graphdog): Eclipse Public License
   2.0; see COPYING-graphviz in the release archive, or COPYING
   in the Graphviz source. The additional permission above covers this combination.
-  Source: https://gitlab.com/graphviz/graphviz (release 16.1.0). Programs built from
+  Source: https://gitlab.com/graphviz/graphviz (release 16.1.1). Programs built from
   source without GUIDEDOG_GRAPHVIZ_STATIC link the system's shared Graphviz instead.
 - Expat 2.7.1 (used by Graphviz for HTML-like labels): MIT License; see COPYING-expat
   in the release archive. Source: https://github.com/libexpat/libexpat (R_2_7_1).

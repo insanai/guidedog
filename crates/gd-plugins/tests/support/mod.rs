@@ -10,7 +10,12 @@ use std::path::{Path, PathBuf};
 /// The folder cargo builds examples into: `target/<profile>/examples`.
 pub fn examples_dir() -> PathBuf {
     let exe = std::env::current_exe().unwrap();
-    exe.parent().unwrap().parent().unwrap().join("examples")
+    let fixture = format!("protocol_fixture{}", std::env::consts::EXE_SUFFIX);
+    exe.ancestors()
+        .skip(1)
+        .map(|dir| dir.join("examples"))
+        .find(|dir| dir.join(&fixture).is_file())
+        .expect("Run `cargo build -p gd-plugins --examples` before testing.")
 }
 
 /// A private folder removed when dropped, on the same disk as the example programs,

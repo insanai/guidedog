@@ -83,18 +83,7 @@ fn guide_callouts_and_custom_objects_build_both_formats() {
 #[test]
 fn guide_source_plugin_compiles_and_builds_both_formats() {
     let dir = project("directive-plugin");
-    let text = repository_text(GUIDE);
-    dir.write("chart.rs", &rst_code_blocks(&text, "rust")[0]);
-    let profile = guidedog_tests::profile_dir();
-    let program = dir.join(&format!("chart{}", std::env::consts::EXE_SUFFIX));
-    let mut rustc = std::process::Command::new("rustc");
-    rustc.args(["--edition=2024", "--crate-name=chart"]);
-    rustc.arg(dir.join("chart.rs")).arg("-o").arg(&program);
-    rustc
-        .arg("--extern")
-        .arg(format!("gd_plugins={}", profile.join("libgd_plugins.rlib").display()));
-    rustc.arg("-L").arg(format!("dependency={}", profile.join("deps").display()));
-    guidedog_tests::run_command(&mut rustc).expect(0);
+    let program = build_chart_plugin(&dir);
     cli(
         &dir.path,
         0,
@@ -132,6 +121,40 @@ fn guide_source_plugin_compiles_and_builds_both_formats() {
     lacks(&markdown, "data-type=\"latency\"");
     has(&dir.read("_build/pdf/book-en.typ"), "Latency Chart");
     assert!(dir.exists("_build/pdf/demo-en.pdf"));
+}
+
+/// Builds the manual's separate crate through Cargo's public artifact messages.
+fn build_chart_plugin(dir: &Scratch) -> std::path::PathBuf {
+    let source = rst_code_blocks(&repository_text(GUIDE), "rust");
+    dir.write("_build/plugin/src/main.rs", &source[0]);
+    let dependency = guidedog_tests::repository_root().join("crates/gd-plugins");
+    let dependency = gd_json::to_string(&gd_json::Value::String(dependency.display().to_string()));
+    dir.write(
+        "_build/plugin/Cargo.toml",
+        &format!(
+            "[package]\nname=\"chart\"\nversion=\"0.0.0\"\nedition=\"2024\"\n\
+             [workspace]\n[dependencies]\ngd-plugins={{path={dependency}}}\n"
+        ),
+    );
+    dir.write("_build/plugin/Cargo.lock", &repository_text("Cargo.lock"));
+    let mut cargo = std::process::Command::new("cargo");
+    cargo
+        .current_dir(dir.join("_build/plugin"))
+        .args(["build", "--offline", "--message-format=json", "--target-dir"])
+        .arg(dir.join("_build/plugin/target"));
+    let result = guidedog_tests::run_command(&mut cargo).expect(0);
+    result
+        .out
+        .lines()
+        .filter_map(|line| gd_json::parse(line).ok())
+        .find_map(|message| {
+            if message["target"]["name"].as_str() == Some("chart") {
+                message["executable"].as_str().map(std::path::PathBuf::from)
+            } else {
+                None
+            }
+        })
+        .expect("Cargo must report the chart executable.")
 }
 
 #[test]

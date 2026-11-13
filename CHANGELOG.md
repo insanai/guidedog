@@ -7,6 +7,10 @@ beside it.
 
 ## Unreleased
 
+## 1.0.0-beta.13 - 2026-11-13
+
+We adopt the current Rust toolchain and Graphviz correctness fixes. The existing allocator and workspace buffer reuse remain in place; the measured compiler performance differences are insignificant overall.
+
 - Pin static Graphviz and the bundled Windows runtime to 16.1.1, with verified upstream source and Windows archive checksums. This patch fixes cluster name collisions, several layout crashes and an out-of-bounds Windows font lookup.
 
 - Build with Rust 1.100.0 and require Rust 1.100 for workspace crates. Update iterator loops for the new Clippy checks without changing document semantics. Find test fixtures without assuming Cargo's private artifact-directory layout, and build the manual's plugin example through Cargo instead of locating rlibs by hand.

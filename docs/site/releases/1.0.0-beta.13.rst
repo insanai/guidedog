@@ -1,0 +1,29 @@
+:date: 2026-11-13
+:author: Guidedog contributors
+:category: releases
+:tags: rust, graphviz
+:summary: Support Rust 1.100 and package Graphviz 16.1.1 for current toolchain support and diagram correctness.
+:pdf: article
+
+Guidedog 1.0.0-beta.13
+======================
+
+We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1.
+This release updates toolchain support and fixes diagram-rendering defects.
+
+.. more::
+
+Every workspace crate requires Rust 1.100 or later and keeps edition 2024.
+The build and tests handle the new Clippy checks and Cargo's changed artifact layout.
+The manual's plugin example is compiled through Cargo's public artifact messages.
+
+Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes.
+Unix archives link it statically, and Windows bundles its verified runtime.
+Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero.
+
+We retain the existing process allocator and workspace buffer reuse.
+The measured performance differences between Rust 1.99 and 1.100 are insignificant overall.
+We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model.
+
+The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads.
+The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision.

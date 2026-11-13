@@ -1,14 +1,12 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.12 lets applications such as Nisaba choose what a build may reach separately from what reaches its output.
+Version 1.0.0-beta.13 updates the supported Rust toolchain and the packaged Graphviz runtime.
 
-- **Confinement and content rules.** Library callers can choose readable folders, network access, linked plugins, graph files and music files independently of raw content and unsafe URLs. The new `raw_content` and `unsafe_urls` project settings each accept `"allow"` or `"omit"`; a caller can impose its own rules or supply defaults.
-- **Project Typst in confined builds.** `--untrusted` now renders Typst diagrams and uses project templates and preambles inside the readable folders. Confined builds always use the embedded compiler, ignore configured external Typst programs and download no packages. Raw content, unsafe URLs, native plugins and graph/music file access remain restricted by `--untrusted`.
-- **Images suited to each output.** An image written as `name.*` prefers WebP over JPEG in HTML pages. PDF books continue to prefer JPEG, which Typst can store without decoding.
-- **MyST target runs.** Consecutive labels now resolve without scanning the remaining labels for every target, keeping large generated documents responsive.
-- **Confined inventories.** Local intersphinx inventories outside the readable folders are no longer read by a confined build, including one allowed to use the network.
+- **Rust 1.100.** Builds use Rust 1.100.0, and workspace crates require Rust 1.100 or later. The edition remains 2024. Clippy checks and Cargo's changed artifact layout are handled, including compilation of the manual's plugin example through Cargo's public artifact messages.
+- **Graphviz 16.1.1.** Unix archives link the new version statically, and Windows bundles its verified runtime. The patch fixes a potential heap overrun involving cluster names and several layout crashes. Regression tests cover cluster/node name collisions and labeled flat edges at rank zero.
+- **Existing allocation policy.** Workspace buffer reuse and the process allocator remain in place. Measurements found no significant overall performance difference between Rust 1.99 and 1.100. This release adopts the current toolchain and Graphviz correctness fixes; it makes no compiler-speed claim and adds no allocator model or dependency.
 
-The [configuration reference](https://insanai.github.io/guidedog/manual/reference/configuration.html), [GDS 0018](https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.12/CHANGELOG.md) describe the API changes, behavior and limits.
+The [installation guide](https://insanai.github.io/guidedog/manual/howto/install.html), [toolchain analysis](https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.13/CHANGELOG.md) describe the requirements, measurements and changes.
 
 ## Downloads
 
@@ -19,7 +17,7 @@ The [configuration reference](https://insanai.github.io/guidedog/manual/referenc
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.12-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.13-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

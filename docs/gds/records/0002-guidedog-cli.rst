@@ -4,7 +4,7 @@
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-09-29
-:gds-updated: 2026-10-31
+:gds-updated: 2026-11-13
 :gds-discussion: Local review; no external discussion URL assigned
 :gds-labels: ["cli"]
 
@@ -501,7 +501,7 @@ Historical checkpoint on 29 September 2026: phases 1 and 2 were complete; phase 
 complete for CommonMark and native Typst and partial for RST; phase 4 was implemented
 except the native Typst chapter contract; and phase 5's single binary worked on macOS and
 Linux while Windows runtime, worker isolation, and font-license review remained (see
-*Decisions still requiring implementation evidence* below for the current ``1.0.0-beta.12``
+*Decisions still requiring implementation evidence* below for the current ``1.0.0-beta.13``
 state).
 
 

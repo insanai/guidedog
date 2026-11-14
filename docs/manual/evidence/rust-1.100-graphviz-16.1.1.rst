@@ -3,7 +3,7 @@ Rust 1.100, Graphviz 16.1.1 and allocation measurements
 
 On 13 November 2026 we ported Guidedog to Rust 1.100.0 and pinned the packaged Graphviz runtime to 16.1.1.
 We measured compiler and allocator variants before choosing to retain the default process allocator.
-These changes are prepared for beta.13; the published beta.12 archives retain their original toolchain and libraries.
+These changes shipped in beta.13; the published beta.12 archives retain their original toolchain and libraries.
 
 What changed
 ------------
@@ -226,6 +226,7 @@ Its fresh-environment smoke tests passed HTML, PDF, Graphviz and Typst diagrams,
 All eighteen DLLs required by our Windows packager exist in the verified archive.
 Inspection of their PE import tables found no missing non-system runtime dependency.
 We did not execute Windows or macOS binaries on this Linux host; native platform CI remains necessary before a release.
+The completed five-platform release qualification is recorded in :doc:`release-1.0.0-beta.13`.
 
 Verification and reproduction
 -----------------------------

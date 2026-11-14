@@ -7,7 +7,7 @@ beside it.
 
 ## Unreleased
 
-## 1.0.0-beta.13 - 2026-11-13
+## 1.0.0-beta.13 - 2026-11-14
 
 We adopt the current Rust toolchain and Graphviz correctness fixes. The existing allocator and workspace buffer reuse remain in place; the measured compiler performance differences are insignificant overall.
 

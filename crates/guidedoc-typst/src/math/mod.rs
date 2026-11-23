@@ -18,6 +18,7 @@ use std::fmt;
 use guidedoc::{ContentPolicy, NodeId, arg_text};
 
 use crate::escape::write_string_body;
+use crate::mathml::translate_mathml;
 use crate::messages::{MATH_MATHML, MATH_OMITTED, MATH_UNSUPPORTED, MATH_VERBATIM};
 use crate::state::State;
 use symbols::{CommandKind, find_command};
@@ -117,7 +118,7 @@ struct Math<'s, 'o> {
 }
 
 /// Maps an ASCII character outside letters and digits to Typst math.
-fn ascii_math(c: u8) -> Option<&'static str> {
+pub(crate) fn ascii_math(c: u8) -> Option<&'static str> {
     Some(match c {
         b'+' => "+",
         b'-' => "-",
@@ -623,28 +624,53 @@ impl State<'_, '_> {
     pub(crate) fn render_math(&mut self, id: NodeId, display: bool) {
         let n = *self.doc.node(id);
         let latex = self.doc.text(n.text);
-        if guidedoc::is_mathml(self.doc, id) {
-            self.fail(MATH_MATHML, n.span, guidedoc::Arg::None);
-            self.emit("#raw(block: true, lang: \"xml\", ");
-            self.emit_string(latex);
-            self.emit(")\n");
-            return;
-        }
         let mut typst = std::mem::take(&mut self.math);
         typst.clear();
-        match translate_math(latex, &mut typst) {
-            Ok(()) => {
-                // Capture the prose face before Typst enters math mode. Math fonts do not
-                // shape complex-script text, even when it is supplied as a quoted string.
-                self.emit("#context { let gd-math-font = ");
-                self.emit("if type(text.font) == str { (text.font,) } else { text.font }; ");
-                self.emit(if display { "$ " } else { "$" });
-                self.emit(&typst);
-                self.emit(if display { " $ }\n" } else { "$ }" });
+        if guidedoc::is_mathml(self.doc, id) {
+            // The translation is generated markup, not raw Typst: it is written under
+            // every content policy (see the `mathml` module for why that is safe).
+            match translate_mathml(latex, &mut typst) {
+                Ok(_) => self.emit_math(&typst, display),
+                Err(e) => self.untranslatable_mathml(n.span, latex, &e.construct, display),
             }
-            Err(e) => self.untranslatable_math(n.span, latex, e.construct, display),
+        } else {
+            match translate_math(latex, &mut typst) {
+                Ok(()) => self.emit_math(&typst, display),
+                Err(e) => self.untranslatable_math(n.span, latex, e.construct, display),
+            }
         }
         self.math = typst;
+    }
+
+    /// Writes translated math between `$` delimiters, inline or displayed.
+    fn emit_math(&mut self, typst: &str, display: bool) {
+        // Capture the prose face before Typst enters math mode. Math fonts do not
+        // shape complex-script text, even when it is supplied as a quoted string.
+        self.emit("#context { let gd-math-font = ");
+        self.emit("if type(text.font) == str { (text.font,) } else { text.font }; ");
+        self.emit(if display { "$ " } else { "$" });
+        self.emit(typst);
+        self.emit(if display { " $ }\n" } else { "$ }" });
+    }
+
+    /// Shows the source of a MathML formula the translator refused, with a warning that
+    /// names the construct. The source is a string literal, so this is safe under every
+    /// policy, and one untranslatable formula does not fail a build.
+    fn untranslatable_mathml(
+        &mut self,
+        span: guidedoc::SourceSpan,
+        mathml: &str,
+        construct: &str,
+        display: bool,
+    ) {
+        self.fail(MATH_MATHML, span, arg_text(construct));
+        self.emit(if display {
+            "#raw(block: true, lang: \"xml\", "
+        } else {
+            "#raw(lang: \"xml\", "
+        });
+        self.emit_string(mathml);
+        self.emit(if display { ")\n" } else { ")" });
     }
 
     fn untranslatable_math(

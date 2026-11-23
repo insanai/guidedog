@@ -48,6 +48,7 @@ let typst = convert_text(&mut ws, &registry, "rst", "typst", "Title\n=====\n");
 | `render(ctx)` | the render function (preamble and settings only when `standalone`) |
 | `PREAMBLE`, `emit_preamble(out)` | the helper definitions; a book writes them once before body-only chapters |
 | `translate_math(latex, &mut String)` | the bounded LaTeX math adapter; `Err(MathError { construct })` names the first unsupported command or construct |
+| `translate_mathml(mathml, &mut String)` | the bounded MathML translator; it reads what `guidedoc::filter_mathml` keeps, and `Err(MathMlUnsupported { construct })` names the first element or bound it cannot write |
 | `write_markup_text`, `write_string_literal`, `is_label_safe` | the encoders: inert markup text, string literals for code, URLs, labels, and paths |
 | `MATH_UNSUPPORTED`, `RAW_REFUSED`, ... | the diagnostics, every one with a hint |
 
@@ -68,7 +69,8 @@ its source span.
 and scale-to-fit `music-fit` scores, `raster-density`, and `unengraved_score`),
 `notes.rs` (footnotes, citations, substitutions), `sphinx.rs`, `settings.rs` (standalone
 set rules), `escape.rs`, `math/` (translator, special commands and environments, the
-command table), `preamble.typ`.
+command table), `mathml/` (the tree of a filtered formula, tokens, layout elements, the
+character and reference tables), `preamble.typ`.
 
 ## Design notes
 
@@ -77,6 +79,13 @@ command table), `preamble.typ`.
 - **The math adapter is public** and writes to a `String`, returning
   `Result<(), MathError>`; the construct borrows the formula. Multi-byte characters
   after a backslash, as delimiters, or in `\text` are handled whole.
+- **MathML is translated, not passed through.** A formula marked `notation = mathml`
+  goes through the engine's MathML filter and then `translate_mathml`. Its text reaches
+  the output only as a table name, a single letter or number, an escaped character or a
+  string literal, so the result is generated markup and is written under every content
+  policy. A formula the translator refuses (`MAX_MATHML_ELEMENTS`, `MAX_MATHML_NESTING`,
+  an element outside MathML Core, an unknown named reference) shows its source with the
+  warning `typst.math.mathml`.
 - **Exhaustive dispatch.** One `route` and one `render_node` match over every
   `NodeKind`, with no catch-all; a kind met where its handler cannot write it fails the
   render with `core.render.kind`.

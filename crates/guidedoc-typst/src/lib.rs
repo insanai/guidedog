@@ -5,7 +5,9 @@
 //! followed by the body. Source text never becomes executable Typst: markup text escapes
 //! every ASCII punctuation character, and code, URLs, labels, and paths are string
 //! literals. Raw Typst is written only under `ContentPolicy::Allow`; LaTeX math goes
-//! through a bounded adapter ([`translate_math`]) whose failures follow the math policy.
+//! through a bounded adapter ([`translate_math`]) whose failures follow the math policy,
+//! and MathML through a bounded translator ([`translate_mathml`]) whose output is
+//! generated markup, written under every policy.
 //!
 //! ```
 //! use guidedoc::Registry;
@@ -21,6 +23,7 @@ mod dispatch;
 mod escape;
 mod inlines;
 mod math;
+mod mathml;
 mod messages;
 mod notes;
 mod settings;
@@ -35,6 +38,9 @@ use guidedoc::{Conformance, Emitter, Fail, ROOT, RenderContext, Renderer, stack_
 
 pub use escape::{SOURCE_LABEL, is_label_safe, write_markup_text, write_string_literal};
 pub use math::{MathError, translate_math};
+pub use mathml::{
+    MAX_MATHML_ELEMENTS, MAX_MATHML_NESTING, MathMlMath, MathMlUnsupported, translate_mathml,
+};
 pub use messages::{
     CITATION_MISSING, DEPTH_LIMIT, DIMENSION_IGNORED, FOOTNOTE_MISSING, IMAGE_REMOTE,
     LANGUAGE_INVALID, LINK_UNRESOLVED, MATH_MATHML, MATH_OMITTED, MATH_UNSUPPORTED, MATH_VERBATIM,

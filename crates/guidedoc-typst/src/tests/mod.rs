@@ -4,6 +4,7 @@
 
 mod escape;
 mod math;
+mod mathml;
 mod policy;
 mod render;
 mod sphinx;

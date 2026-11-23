@@ -127,3 +127,18 @@ fn sub_delimiters(given: &[String]) -> [u8; 2] {
         |i: usize, default: u8| given.get(i).and_then(|s| s.bytes().next()).unwrap_or(default);
     [first(0, b'{'), first(1, b'}')]
 }
+
+/// The command names the project's MathJax configuration defines, without the
+/// backslash: the keys of `tex.macros` in `mathjax3_config` and
+/// `mathjax4_config`. The math check takes them as known.
+pub(crate) fn math_macros(c: &Config) -> Vec<String> {
+    let mut names = Vec::new();
+    for text in [&c.mathjax.v3_config, &c.mathjax.v4_config] {
+        let Ok(value) = gd_json::parse(text) else { continue };
+        let Some(macros) = value.pointer("/tex/macros").and_then(|m| m.as_object()) else {
+            continue;
+        };
+        names.extend(macros.keys().cloned());
+    }
+    names
+}

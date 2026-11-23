@@ -32,6 +32,8 @@ pub(crate) struct Prepared {
     myst: MystSettings,
     roots: Vec<PathBuf>,
     digests: FileDigests,
+    /// The commands the MathJax configuration defines; the math check knows them.
+    math_macros: Vec<String>,
 }
 
 /// The digests of the files documents depend on, each computed once per build: every
@@ -98,6 +100,7 @@ impl Prepared {
             myst: crate::config::myst_settings(c, ctx.today),
             roots: gd_conf::readable_roots(c),
             digests: FileDigests::with_generated(sources),
+            math_macros: crate::config::math_macros(c),
         })
     }
 
@@ -228,11 +231,13 @@ impl<'a> Worker<'a> {
                 read_extension(&myst)
             }
         };
+        let math_macros: Vec<&str> = prepared.math_macros.iter().map(String::as_str).collect();
         let read = ReadOptions {
             // As Sphinx, whose document titles stay sections.
             promote_title: false,
             today: ctx.date,
             extension: Some(extension),
+            math_macros: &math_macros,
             ..ReadOptions::default()
         };
         let files =

@@ -30,6 +30,7 @@ const BUILD: &[&str] = &[
     "-c",
     "-d",
     "-D",
+    "--math",
     "-t",
     "-j",
     "--budget",
@@ -102,7 +103,7 @@ fn takes_value(command: &str, name: &str) -> bool {
         | "--disk-budget" | "--max-depth" | "--max-nodes" | "--stack-kib" | "--typst" | "-p"
         | "--project" | "--author" | "--version-name" | "-r" | "--release" | "-l"
         | "--language" | "--suffix" | "-o" | "--output" | "-w" | "--line-width" | "--pot-dir"
-        | "--locale-dir" | "--now" | "--host" => true,
+        | "--locale-dir" | "--now" | "--host" | "--math" => true,
         _ => false,
     }
 }
@@ -217,6 +218,12 @@ fn set_value(a: &mut ProjectArgs, command: &str, name: &str, value: &str) -> Res
         // Records use the build's own cache folder; -d is accepted for scripts.
         (_, "-d") => {}
         (_, "-D") => a.load.overrides.push(text),
+        // --math is html_math_renderer for this build, checked here so a wrong word is
+        // a usage error.
+        (_, "--math") => {
+            crate::parse::math_output(value)?;
+            a.load.overrides.push(format!("html_math_renderer={value}"));
+        }
         (_, "-t") => a.build.tags.push(text),
         (_, "--typst") => a.typst = Some(text),
         (_, "--host") => {

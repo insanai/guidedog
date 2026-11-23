@@ -149,6 +149,8 @@ const CONVERT: &str = "  USAGE
     guidedog convert guide.typ --output guide.pdf
     guidedog convert - --from commonmark --to html --output -
     guidedog convert page.md --from myst --output page.rst
+    guidedog convert - --from sphinx --to html --fragment --math=mathml \
+        --embed-pictures --keep-going --output -
 
   OPTIONS
     --from=rst|sphinx|commonmark|myst|typst
@@ -162,6 +164,14 @@ const CONVERT: &str = "  USAGE
     --title=TEXT --lang=TAG       Document title and language
     --number-sections             Number section headings
     --fragment                    Write the body only, not a complete document
+    --math=mathjax|mathml         HTML math: LaTeX for a script (default), or
+                                  MathML, which needs no script
+    --embed-pictures              Draw graphs, Typst diagrams and scores into the
+                                  HTML as data: URL images; no file is written
+    --max-pictures=N              Most embedded pictures (default 32)
+    --max-picture-kib=N           Most KiB of all embedded pictures (default 4096)
+    --keep-going                  Write the output although the content has
+                                  errors; they are still reported
     --typst=PATH                  Typst program (default: the embedded compiler)
     --font-path=DIR               Extra font directory; repeat for more
     --embedded-fonts-only         Ignore system fonts, for reproducible PDFs
@@ -274,6 +284,9 @@ const BUILD: &str = "  USAGE
     --stack-kib=N      Stack for nested content (default 512; at most what
                        the reading threads hold, 6144)
     -D name=value      Override a conf.toml setting
+    --math=mathjax|mathml
+                       HTML math: LaTeX for MathJax (default), or MathML,
+                       which needs no script (html_math_renderer)
     -t TAG             Define a tag for only directives
     -c DIR, -C         Use conf.toml from DIR, or none
     --typst=PATH       The Typst program for PDF

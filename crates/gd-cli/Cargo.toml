@@ -16,6 +16,10 @@ gd-host = { workspace = true, features = ["artifact"] }
 gd-report = { workspace = true }
 gd-clock = { workspace = true }
 gd-typst = { workspace = true }
+# `convert --math=mathml`: formulas typeset as MathML.
+gd-mathml = { workspace = true }
+# `convert --embed-pictures`: graphs, Typst diagrams and scores drawn into the output.
+gd-link = { workspace = true }
 gd-plugins = { workspace = true }
 gd-conf = { workspace = true }
 gd-env = { workspace = true }

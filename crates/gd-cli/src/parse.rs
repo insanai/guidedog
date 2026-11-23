@@ -11,7 +11,8 @@ use crate::args::{Word, Words, command_word, no_value, positive, unknown_option,
 use crate::args::{with_suggestion, without};
 use crate::command::Parsed;
 use crate::command::{
-    CapabilitiesCommand, ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand, Output,
+    CapabilitiesCommand, ColorMode, Command, ConvertCommand, Diagnostics, FormatsCommand,
+    MathOutput, Output,
 };
 use crate::extension::{Extension, first_words, parse_extension};
 
@@ -314,6 +315,11 @@ const CONVERT_OPTIONS: &[&str] = &[
     "--lang",
     "--fragment",
     "--number-sections",
+    "--math",
+    "--embed-pictures",
+    "--max-pictures",
+    "--max-picture-kib",
+    "--keep-going",
     "--typst",
     "--budget",
     "--max-depth",
@@ -378,6 +384,8 @@ fn convert_option<'a>(
         "--strict" => Some(&mut c.strict),
         "--fragment" => Some(&mut c.fragment),
         "--number-sections" => Some(&mut c.number_sections),
+        "--embed-pictures" => Some(&mut c.embed_pictures),
+        "--keep-going" => Some(&mut c.keep_going),
         "--offline" => Some(&mut c.offline),
         "--embedded-fonts-only" => Some(&mut c.embedded_fonts_only),
         _ => None,
@@ -396,6 +404,7 @@ fn convert_option<'a>(
         "--to" => a.to = value.to_string(),
         "-o" | "--output" => a.output = value.to_string(),
         "--raw" => a.raw = value.to_string(),
+        "--math" => c.math = math_output(value)?,
         "--emit-typst" => c.emit_typst = Some(PathBuf::from(value)),
         "--title" => c.title = value.to_string(),
         "--lang" => c.lang = value.to_string(),
@@ -418,6 +427,10 @@ fn convert_number(c: &mut ConvertCommand, name: &str, value: &str) -> Result<(),
                 )
             })?);
         }
+        "--max-pictures" => c.max_pictures = Some(positive(name, value, usize::MAX)?),
+        "--max-picture-kib" => {
+            c.max_picture_kib = Some(positive(name, value, usize::MAX >> 10)?);
+        }
         "--max-depth" => c.max_depth = Some(positive(name, value, usize::MAX)?),
         "--max-nodes" => c.max_nodes = Some(positive(name, value, usize::MAX)?),
         _ => {
@@ -434,6 +447,17 @@ fn convert_number(c: &mut ConvertCommand, name: &str, value: &str) -> Result<(),
         }
     }
     Ok(())
+}
+
+/// The math output `--math` names.
+pub(crate) fn math_output(value: &str) -> Result<MathOutput, Problem> {
+    MathOutput::from_name(value).ok_or_else(|| {
+        usage(
+            "UNKNOWN MATH OUTPUT",
+            format!("`{value}` is not a math output."),
+            with_suggestion("Use --math=mathjax or --math=mathml.", value, ["mathjax", "mathml"]),
+        )
+    })
 }
 
 /// Checks the input count and resolves the formats from the options and suffixes.
@@ -471,8 +495,35 @@ fn finish_convert(a: ConvertArgs) -> Result<ConvertCommand, Problem> {
             "Convert Typst input with --to html or --to pdf.",
         ));
     }
+    html_only(&c)?;
     c.raw = raw_policy(&a.raw)?;
     Ok(c)
+}
+
+/// Refuses the options that shape HTML when the output is not HTML written by Guidedog.
+fn html_only(c: &ConvertCommand) -> Result<(), Problem> {
+    let html = c.to == Target::Html && c.from != Format::Typst;
+    let option = if c.math == MathOutput::Mathml {
+        "--math=mathml"
+    } else if c.embed_pictures {
+        "--embed-pictures"
+    } else if c.max_pictures.is_some() || c.max_picture_kib.is_some() {
+        "--max-pictures and --max-picture-kib"
+    } else {
+        return Ok(());
+    };
+    if html && (c.embed_pictures || !option.starts_with("--max")) {
+        return Ok(());
+    }
+    let (message, hint) = if html {
+        ("The picture limits bound the pictures --embed-pictures embeds.", "Add --embed-pictures.")
+    } else {
+        (
+            "This option shapes the HTML Guidedog writes from reStructuredText or Markdown.",
+            "Use it with --to html, or remove it.",
+        )
+    };
+    Err(usage("OPTION NEEDS HTML OUTPUT", format!("{option}: {message}"), hint))
 }
 
 fn suffix(path: &str) -> String {

@@ -150,6 +150,16 @@ pub struct ConvertCommand {
     pub fragment: bool,
     /// `--number-sections`.
     pub number_sections: bool,
+    /// `--math`: how HTML shows formulas.
+    pub math: MathOutput,
+    /// `--embed-pictures`: draw graphs, Typst diagrams and scores into the HTML.
+    pub embed_pictures: bool,
+    /// `--max-pictures`: how many pictures `--embed-pictures` embeds.
+    pub max_pictures: Option<usize>,
+    /// `--max-picture-kib`: the size of all embedded pictures together, in KiB.
+    pub max_picture_kib: Option<usize>,
+    /// `--keep-going`: write the output although the content has errors.
+    pub keep_going: bool,
     /// `--typst`: the Typst program, `typst` for the embedded compiler.
     pub typst: String,
     /// `--font-path`, repeatable.
@@ -168,6 +178,27 @@ pub struct ConvertCommand {
     pub max_nodes: Option<usize>,
     /// `--stack-kib`.
     pub stack_kib: Option<usize>,
+}
+
+/// `--math`: how HTML output shows formulas.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum MathOutput {
+    /// LaTeX in delimiters, for a script such as MathJax or KaTeX to typeset.
+    #[default]
+    Mathjax,
+    /// MathML Core, which needs no script.
+    Mathml,
+}
+
+impl MathOutput {
+    /// The output `name` selects (`mathjax` or `mathml`); `None` for another word.
+    pub fn from_name(name: &str) -> Option<MathOutput> {
+        match name {
+            "mathjax" => Some(MathOutput::Mathjax),
+            "mathml" => Some(MathOutput::Mathml),
+            _ => None,
+        }
+    }
 }
 
 /// What a build does when it reaches its memory budget.

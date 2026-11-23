@@ -1,11 +1,12 @@
 //! `guidedog convert` and `guidedog formats`: the commands that need no project.
 
 use std::fmt::Write;
+use std::path::Path;
 
 use gd_host::{ArtifactRequest, Delivered};
-use guidedoc::{Conformance, Registry};
+use guidedoc::{Builder, Conformance, Document, Pass, PassOutcome, Registry};
 
-use crate::command::{ConvertCommand, FormatsCommand};
+use crate::command::{ConvertCommand, FormatsCommand, MathOutput};
 use crate::console::Console;
 
 /// Converts one file as `c` says, reports what happened, and returns the exit status.
@@ -16,6 +17,7 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     let mut policy = guidedoc::default_policy();
     policy.raw = c.raw;
     policy.strict = c.strict;
+    policy.keep_documents_with_errors = c.keep_going;
     // Writing source again keeps the quotes and dashes as written (no smart quotes);
     // MyST is read with the Sphinx layer, so its roles and directives are understood.
     let settings = if c.to == gd_host::Target::Rst {
@@ -26,6 +28,18 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
     let reader = c.from.reader().unwrap_or("rst");
     let (ui, _) = gd_i18n::ui_translator(&c.lang, &[], false);
     let labels = gd_i18n::fill_labels(&ui);
+    let mathml = (c.math == MathOutput::Mathml).then(gd_mathml::MathMl::new);
+    let embed = c.embed_pictures.then(|| (gd_link::Embedder::new(), embed_options(c)));
+    let draw = |doc: Document<'_>, b: &mut Builder<'_>| match &embed {
+        Some((embedder, options)) => embedder.embed(doc, b, options),
+        None => PassOutcome::Unchanged,
+    };
+    let typeset = |doc: Document<'_>, b: &mut Builder<'_>| match &mathml {
+        Some(math) => math.prepare(doc, b),
+        None => PassOutcome::Unchanged,
+    };
+    let passes =
+        [Pass { name: "embed-pictures", run: &draw }, Pass { name: "mathml", run: &typeset }];
     let request = ArtifactRequest {
         input: &c.input,
         output: &c.output,
@@ -42,8 +56,13 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
             language: &c.lang,
             section_numbers: c.number_sections,
             standalone: !c.fragment,
+            math_writer: mathml.as_ref().map(|math| math as &dyn guidedoc::MathWriter),
+            // A complete page carries the rules Typst's MathML needs; a fragment's host
+            // adds them to its own style sheet.
+            stylesheet: if mathml.is_some() { gd_mathml::MATHML_CSS } else { "" },
             ..guidedoc::RenderOptions::default()
         },
+        passes: if embed.is_some() || mathml.is_some() { &passes } else { &[] },
         typst_program: &c.typst,
         typst_options: gd_typst::Options {
             offline: c.offline,
@@ -56,6 +75,11 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         ..ArtifactRequest::default()
     };
     let result = gd_host::convert_artifact(&guidedoc_defaults::registry(), &request);
+    report_conversion(console, result)
+}
+
+/// Prints the reports and the outcome of a conversion; returns the exit status.
+fn report_conversion(console: &mut Console<'_>, result: gd_host::ArtifactResult) -> i32 {
     let consequence = if result.exit != 0 { "No output was written." } else { "" };
     for report in &result.reports {
         let error = report.severity == gd_report::Severity::Error;
@@ -75,6 +99,24 @@ pub(crate) fn convert(console: &mut Console<'_>, c: &ConvertCommand) -> i32 {
         Delivered::Nothing => {}
     }
     0
+}
+
+/// How `--embed-pictures` draws: a Typst diagram reads below the input's folder, and
+/// nothing when the input is standard input; fonts and packages follow the Typst options.
+fn embed_options(c: &ConvertCommand) -> gd_link::EmbedOptions {
+    let defaults = gd_link::EmbedOptions::default();
+    let folder = Path::new(&c.input).parent().unwrap_or(Path::new(""));
+    let folder = if folder.as_os_str().is_empty() { Path::new(".") } else { folder };
+    gd_link::EmbedOptions {
+        root: (c.input != "-").then(|| folder.canonicalize().ok()).flatten(),
+        markdown: matches!(c.from, gd_host::Format::Commonmark | gd_host::Format::Myst),
+        offline: c.offline,
+        embedded_fonts_only: c.embedded_fonts_only,
+        font_paths: c.font_paths.clone(),
+        package_cache: c.package_cache.clone(),
+        max_pictures: c.max_pictures.unwrap_or(defaults.max_pictures),
+        max_bytes: c.max_picture_kib.map_or(defaults.max_bytes, |kib| kib << 10),
+    }
 }
 
 fn conversion_limits(c: &ConvertCommand) -> guidedoc::Limits {

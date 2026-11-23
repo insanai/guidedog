@@ -5,7 +5,7 @@ use std::fmt;
 use std::path::{Path, PathBuf};
 
 use gd_report::Report;
-use guidedoc::{Limits, Policy, ReadOptions, Registry, RenderOptions, Request, Source};
+use guidedoc::{Limits, Pass, Policy, ReadOptions, Registry, RenderOptions, Request, Source};
 
 use crate::budget::{Budget, DEFAULT_BUDGET, Ledger, budget_problem, limits_within};
 use crate::confine::Files;
@@ -96,6 +96,8 @@ pub struct ArtifactRequest<'a> {
     pub typst_program: &'a str,
     /// Typst packages and fonts; `reserve` is set by the route (it charges the budget).
     pub typst_options: gd_typst::Options<'a>,
+    /// Transforms run between reading and rendering (embedded pictures, typeset math).
+    pub passes: &'a [Pass<'a>],
     /// Approved roots for included files; the input's folder when empty.
     pub roots: &'a [PathBuf],
     /// Memory budget in bytes for what the route holds; 0 is `DEFAULT_BUDGET`.
@@ -189,10 +191,10 @@ pub fn convert_artifact(registry: &Registry, req: &ArtifactRequest<'_>) -> Artif
         render: req.render,
         policy: req.policy,
         limits: limits_within(req.limits, budget.limit()),
+        passes: req.passes,
         resources: Some(&files),
         cancel: Some(cancel_probe()),
         source_map: req.to == Target::Pdf,
-        ..Request::default()
     };
     let mut session = Session::new();
     let generated = session.run(registry, &request).map(str::to_owned);
@@ -243,7 +245,7 @@ fn emit_typst(
     if req.to == Target::Pdf {
         return publish(path, generated.as_bytes(), req.force);
     }
-    let typst_request = Request { renderer: "typst", source_map: false, ..*request };
+    let typst_request = Request { renderer: "typst", source_map: false, passes: &[], ..*request };
     let mut session = Session::new();
     match session.run(registry, &typst_request) {
         Ok(typst) => publish(path, typst.as_bytes(), req.force),

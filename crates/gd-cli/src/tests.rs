@@ -146,6 +146,46 @@ fn convert_writes_restructuredtext_from_myst_or_sphinx() {
 }
 
 #[test]
+fn convert_reads_the_options_of_an_html_fragment() {
+    let args = [
+        "convert",
+        "-",
+        "--from=sphinx",
+        "--to=html",
+        "-o",
+        "-",
+        "--fragment",
+        "--math=mathml",
+        "--embed-pictures",
+        "--max-pictures=4",
+        "--max-picture-kib",
+        "512",
+        "--keep-going",
+    ];
+    let Ok(Command::Convert(c)) = parse(&args) else { panic!("not convert") };
+    assert_eq!(c.math, crate::command::MathOutput::Mathml);
+    assert!(c.embed_pictures && c.keep_going && c.fragment);
+    assert_eq!((c.max_pictures, c.max_picture_kib), (Some(4), Some(512)));
+    let Ok(Command::Convert(c)) = parse(&["convert", "a.rst", "-o", "a.html"]) else { panic!() };
+    assert_eq!(c.math, crate::command::MathOutput::Mathjax);
+    assert!(!c.embed_pictures && !c.keep_going);
+    assert_eq!(problem(&["convert", "a.rst", "-o", "a.html", "--math=tex"]).title, UNKNOWN_MATH);
+    for wrong in [
+        &["convert", "a.rst", "-o", "a.pdf", "--math=mathml"][..],
+        &["convert", "a.rst", "-o", "a.rst", "--embed-pictures"][..],
+        &["convert", "a.typ", "-o", "a.html", "--embed-pictures"][..],
+        &["convert", "a.rst", "-o", "a.html", "--max-pictures=2"][..],
+    ] {
+        assert_eq!(problem(wrong).title, "OPTION NEEDS HTML OUTPUT", "{wrong:?}");
+    }
+    let Ok(Command::Build(b)) = parse(&["build", "html", ".", "--math=mathml"]) else { panic!() };
+    assert_eq!(b.load.overrides, ["html_math_renderer=mathml"]);
+    assert_eq!(problem(&["build", "html", ".", "--math=svg"]).title, UNKNOWN_MATH);
+}
+
+const UNKNOWN_MATH: &str = "UNKNOWN MATH OUTPUT";
+
+#[test]
 fn convert_usage_problems_explain_themselves() {
     assert_eq!(problem(&["convert"]).title, "CONVERT NEEDS ONE INPUT");
     assert_eq!(problem(&["convert", "a", "b", "-o", "x.html"]).title, "CONVERT NEEDS ONE INPUT");

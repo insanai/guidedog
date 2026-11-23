@@ -11,6 +11,7 @@ mod capacity;
 mod directives;
 mod inventories;
 mod limits;
+mod mathml_pdf;
 mod music;
 mod publication;
 mod sphinx;

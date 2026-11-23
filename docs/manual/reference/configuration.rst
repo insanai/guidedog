@@ -375,6 +375,10 @@ Numbering and mathematics
      - boolean
      - ``true``
      - With ``numfig``, number equations by section.
+   * - ``html_math_renderer``
+     - string
+     - ``"mathjax"``
+     - How HTML pages show formulas: ``"mathjax"``, or ``"mathml"`` for MathML that needs no script (see :doc:`../topics/mathematics`). ``--math`` sets it for one build.
    * - ``mathjax_path``
      - string
      - MathJax 4 on jsDelivr

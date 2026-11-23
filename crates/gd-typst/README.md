@@ -9,6 +9,7 @@ an installed, pinned `typst` program.
 | `backend.version()`, `.is_pinned()`, `.is_embedded()` | against `PINNED_VERSION` |
 | `compile_file(&backend, source, root, output, &Options)` | `Result<Compiled, Error>` |
 | `compile_text(&backend, text, root, output, &Options)` | generated text, no file beside the sources |
+| `compile_bytes(text, root, &Options)` | generated text to bytes in memory; embedded compiler only, else `Error::NotEmbedded` |
 | `Options { target, offline, package_cache, embedded_fonts_only, font_paths, read_roots, reserve, source_path, observe_file }` | `Default`: PDF, online, system fonts, anything below the root |
 | `Diagnostic::report(source) -> gd_report::Report`, `.render(source)` | Elm-style with excerpt and carets |
 | `Error::{Compile, Launch, Io, OutsideRoot, ...}`, `.report()` | codes `typst.*` |

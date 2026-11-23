@@ -135,9 +135,9 @@ Directives
      - done
      - ``literalinclude_selection``, ``literalinclude_pyobject_and_dedent``, ``literalinclude_diff``, ``literalinclude_tab_width_and_errors``
    * - math
-     - label, name, class, nowrap, no-wrap
+     - label, name, class, nowrap, no-wrap, notation (Guidedog's own)
      - done
-     - ``math_directive_labels``, ``math_number_all_labels_every_equation``
+     - ``math_directive_labels``, ``math_number_all_labels_every_equation``, ``math_notation_marks_mathml``
    * - todo, todolist
      - class, name
      - done

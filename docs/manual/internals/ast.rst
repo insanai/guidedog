@@ -680,7 +680,7 @@ Other Sphinx constructs use existing kinds:
    those publication fields (``gd_env::publication_field``) from the leading ``FieldList``
    so they do not render as body fields.
 -  ``math`` with ``:label:``: MathBlock with Id ``equation-<label>``; ``:nowrap:`` gives
-   ``nowrap``.
+   ``nowrap``, and ``:notation: mathml`` gives ``notation`` with the value ``mathml``: the text is then MathML, not LaTeX.
 -  Info fields: a FieldList directly in a DescContent is rebuilt as Sphinx's
    DocFieldTransformer does for the object's domain and type. It keeps its attributes; a
    field of a known type is Field{Custom ``docfield`` = Sphinx's type name, such as

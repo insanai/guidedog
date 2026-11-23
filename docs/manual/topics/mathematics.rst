@@ -35,6 +35,71 @@ The HTML builder supplies MathJax markup. The PDF renderer translates the
 supported LaTeX subset to Typst mathematics.
 An unsupported PDF command is reported. Arbitrary LaTeX packages are not evaluated.
 
+Faults in a formula
+-------------------
+
+Guidedog checks every LaTeX formula once, when it reads the document.
+The check does not depend on the output: an HTML build with MathJax, a MathML build, ``guidedog convert`` and a PDF all give the same report.
+A fault is a warning. The page is still written, with the formula as we wrote it.
+
+.. code-block:: text
+
+   -- WARNING: UNKNOWN MATH COMMAND [math.command.unknown] ---------- page.rst:1:15
+
+   I do not know the LaTeX math command `\fraction`. A page shows it as an error or
+   as text.
+
+   1| Inline :math:`\fraction{a}{b}` and more.
+                    ^^^^^^^^^
+
+   Hint: Did you mean `\frac`?
+
+The marker stands under the offending text, and the hint proposes the correction where one is close.
+Only the first fault of a formula is reported.
+
+.. list-table:: Math faults
+   :header-rows: 1
+   :widths: 34 66
+
+   * - Code
+     - Fault
+   * - ``math.command.unknown``
+     - A command that neither MathJax nor Guidedog knows, such as ``\fraction`` or ``\aplha``. The hint names the closest known command.
+   * - ``math.environment.unknown``
+     - ``\begin{algin}``: an environment nobody knows. The hint names the closest one.
+   * - ``math.brace.unbalanced``
+     - A ``{`` that no ``}`` closes, or a ``}`` that closes nothing.
+   * - ``math.environment.unclosed``
+     - ``\begin{x}`` without ``\end{x}``, or ``\end{x}`` without ``\begin{x}``.
+   * - ``math.environment.mismatch``
+     - ``\end{y}`` where ``\begin{x}`` is open.
+   * - ``math.delimiter.unpaired``
+     - ``\left`` without ``\right``, or the reverse.
+   * - ``math.argument.missing``
+     - A command with fewer arguments than it takes, such as ``\frac{a}``.
+   * - ``math.alignment.outside``
+     - ``&`` outside an environment, or ``\\`` in inline math.
+
+A command is unknown only when no output can typeset it.
+The check knows the commands of MathJax's base, AMS and autoloaded packages, such as ``\color``, ``\cancel`` and ``\ce``.
+Some of them cannot become Typst mathematics. That is a narrower fault, and only the output that needs Typst reports it: ``typst.math.unsupported`` for a PDF, ``mathml.math.unsupported`` for MathML.
+A MathJax page gets no report for them.
+
+A command we define is known.
+``\newcommand``, ``\renewcommand``, ``\providecommand``, ``\def``, ``\let``, ``\DeclareMathOperator`` and ``\newenvironment`` in a formula define a name for the rest of the document.
+A project also names its MathJax macros in ``conf.toml``, and every document knows them:
+
+.. code-block:: toml
+
+   [mathjax3_config.tex.macros]
+   RR = "{\\mathbb{R}}"
+
+A displayed formula with ``\\`` is wrapped in an alignment, as Sphinx does, so ``&`` and ``\\`` are fine there.
+With ``:nowrap:`` nothing is wrapped, and ``&`` needs its own environment.
+The work is bounded: a formula longer than 64 KiB is not checked, and a document gets at most 64 math reports.
+``-W`` and ``--strict`` treat these warnings as any other warning.
+A formula written as MathML is not checked as LaTeX.
+
 A small proof
 -------------
 
@@ -79,3 +144,58 @@ To serve a local copy, we place it in ``_static`` and set:
 JavaScript is needed here to typeset web equations.
 Without it, their source remains visible. PDF equations do not need browser JavaScript.
 See the `MathJax component contract <https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_.
+
+MathML without a script
+-----------------------
+
+MathJax is the default. We can ask for MathML instead:
+
+.. code-block:: toml
+
+   html_math_renderer = "mathml"
+
+``guidedog build html --math=mathml`` does the same for one build, and ``guidedog convert --math=mathml`` for one file.
+Every formula is then written as a MathML ``math`` element, which current browsers show themselves.
+The page loads no MathJax, and it is readable with JavaScript off.
+Equation numbers, labels and ``:eq:`` references work as before.
+
+.. code-block:: html
+
+   <span class="math"><math><msup><mi>s</mi><mn>2</mn></msup></math></span>
+
+Guidedog translates the LaTeX as it does for the PDF, and the embedded Typst compiler writes the MathML.
+All formulas of a page are typeset in one run, and equal formulas are typeset once.
+The elements are those of MathML Core, and no element has a ``style`` or ``id`` attribute.
+A build adds ``_static/mathml.css``, a few rules for aligned equations and cases, to the pages that have a formula.
+
+Some formulas cannot be MathML.
+A LaTeX command the translation does not know is one case (``mathml.math.unsupported``).
+A construct MathML Core cannot draw, such as ``\boxed``, ``\phantom``, ``\overline`` or ``\cancel``, is another (``mathml.math.lossy``).
+Such a formula is not lost: the page shows its LaTeX in the usual markup, and a warning points at it.
+In a MathML build no script typesets that LaTeX, so we rewrite the formula or keep MathJax for the project.
+
+Formulas written as MathML
+--------------------------
+
+We can also write a displayed formula in MathML itself, with the ``notation`` option:
+
+.. code-block:: rst
+
+   .. math::
+      :notation: mathml
+      :label: half
+
+      <math><mfrac><mi>a</mi><mn>2</mn></mfrac></math>
+
+The content is one ``math`` element.
+HTML output passes it through a filter, whatever the math renderer is.
+The filter keeps the presentation elements of MathML Core and their plain attributes.
+It leaves out everything else, such as ``style``, ``id``, ``href``, event attributes and foreign elements, and reports ``html.mathml.dropped``.
+Content that is not one well-formed ``math`` element is shown as code, with ``html.mathml.invalid``.
+The equation keeps its label and number.
+
+The PDF and text outputs cannot typeset MathML.
+The PDF shows the source as code and reports ``typst.math.mathml``; text output shows the source.
+For a formula that must appear in the book, we write LaTeX.
+The ``math`` role has no such option: inline math is always LaTeX.
+Raw HTML is a different matter: a ``math`` element inside ``raw`` content is passed or refused as a whole by the raw content rule, not filtered.

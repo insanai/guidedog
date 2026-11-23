@@ -230,6 +230,8 @@ Builders:
      - Read documents on ``N`` threads, or one per core.
    * - ``-D name=value``
      - Override a ``conf.toml`` setting for this build (``-D language=de``); repeatable.
+   * - ``--math=mathjax|mathml``
+     - How HTML pages show formulas in this build: MathJax (the default), or MathML with no script. It is ``-D html_math_renderer=VALUE``.
        ``-D table.key=value`` sets one key of a table setting, such as ``html_context``,
        and keeps its other keys, as sphinx-build does.
    * - ``-t TAG``
@@ -450,6 +452,14 @@ Conversion never opens the score file; conversion to RST preserves its directive
      - Number section headings.
    * - ``--fragment``
      - Write the body only, not a complete document.
+   * - ``--math=mathjax|mathml``
+     - HTML only. ``mathjax`` (the default) writes each formula's LaTeX between MathJax delimiters. ``mathml`` writes a ``math`` element, which a browser shows without a script.
+   * - ``--embed-pictures``
+     - HTML only. Draw ``graphviz``, ``typst-diagram`` and inline ``lilypond`` content, and write each as an image whose ``src`` is a ``data:`` URL.
+   * - ``--max-pictures=N``, ``--max-picture-kib=N``
+     - With ``--embed-pictures``: the most pictures embedded (default: ``32``), and the most bytes they may have together before encoding (default: ``4096`` KiB).
+   * - ``--keep-going``
+     - Write the output even when the document has errors, and report them.
    * - ``--typst=PATH``
      - The Typst program (default: the embedded compiler, else ``typst`` on ``PATH``).
    * - ``--font-path=DIR``
@@ -470,6 +480,38 @@ Conversion never opens the score file; conversion to RST preserves its directive
 The exit status is 0 for success, 1 for invalid or refused content, 2 for usage, 3 for
 a limit, 4 for a file or Typst failure, and 5 for an internal error. A failed conversion
 writes no output.
+
+A document with an error is such a failure.
+An unknown directive or role, a missing ``include`` or ``literalinclude`` file, and a reference without a target are errors, and each report ends with "No output was written".
+With ``--keep-going`` the output is written all the same, the errors are reported, and the exit status is 0.
+The part in error is left out or marked: an unresolved reference becomes ``<span class="problematic">``.
+A program that shows a draft uses ``--keep-going`` and shows the reports beside the page.
+``--strict`` still fails on any warning.
+
+HTML fragments for another page
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A program that shows the HTML inside its own page uses ``--fragment``.
+Two options make the fragment complete without a script and without files beside it.
+
+.. code-block:: sh
+
+   guidedog convert - --from sphinx --to html --fragment --offline \
+       --math=mathml --embed-pictures --output - < page.rst
+
+``--math=mathml`` writes inline math as ``<span class="math"><math>...</math></span>`` and displayed math as ``<div class="math"><math display="block">...</math></div>``.
+The ``id`` of a labeled equation stays on the ``div``.
+A formula that cannot be written as MathML keeps its LaTeX in the same wrapper, and a warning names it (see :doc:`../topics/mathematics`).
+A complete page (without ``--fragment``) carries the style rules for aligned equations; a fragment does not, and the host page adds them when it needs them.
+
+``--embed-pictures`` draws each picture as a build does, and writes ``<img src="data:image/svg+xml;base64,..." alt="..." class="graphviz">``.
+The class is ``graphviz``, ``typst-diagram`` or ``lilypond-music``.
+A picture with a caption stands in a ``figure`` with a ``figcaption``.
+In Markdown, a ``dot`` or ``graphviz`` fence is a graph too.
+The drawing is confined: a graph opens no file, a Typst diagram reads only below the folder of the input file (nothing at all when the input is standard input), no program is started, and ``--offline`` forbids package downloads.
+A score named by a file argument is not read, as before.
+A picture that fails to draw, or that passes ``--max-pictures`` or ``--max-picture-kib``, stays a code block, and a warning says why; the conversion still succeeds.
+An embedded graph does not follow the page's dark mode, because an image cannot see the page's styles.
 
 guidedog formats
 ----------------

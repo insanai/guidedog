@@ -24,6 +24,7 @@ let items = gd_link::nav_for_toctree(&view, doc, 0, NavOptions::default());
 | `todo_order` | the documents a todolist copies from |
 | `adapt_graph`, `graph_adaptive`, `GRAPH_ADAPTIVE_CSS` | the adaptive graph theme |
 | `MusicSource`, `MusicFonts`, `load_music_source` | native `lilypond` music loading and engraving |
+| `Embedder`, `EmbedOptions`, `EMBED_GRAPH`, `EMBED_TYPST`, `EMBED_MUSIC`, `EMBED_LIMIT` | a pass for one document without a project: graphs, Typst diagrams and inline scores drawn and embedded as SVG `data:` images, within count and size bounds |
 | `module_page`, `MODULES_FOLDER`, `viewcode_pages` | sphinx.ext.viewcode's source pages (gd-site writes them) |
 | `discussion_field`, `discussion_prefix` | discussion metadata |
 

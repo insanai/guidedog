@@ -148,7 +148,14 @@ ctx.put_scratch(work);
 - **Text pool as bytes, output as bytes.** Readers may push bytes one at a time;
   validation checks that the pool is UTF-8 and that every `Text` lies on character
   boundaries, and the engine checks the output is UTF-8 before returning it.
-- **Traits for caller code**: `ResourceProvider`, `Highlighter`, and closures for passes
+- **Math check.** After a reader finishes, the engine checks every LaTeX formula once and
+  reports its first fault as a warning (`math.command.unknown` with "Did you mean",
+  `math.environment.*`, `math.brace.unbalanced`, `math.delimiter.unpaired`,
+  `math.argument.missing`, `math.alignment.outside`). `ReadOptions::check_math` turns it
+  off and `ReadOptions::math_macros` names the host's macros. `check_math(latex,
+  &MathCheck)` checks one formula alone and returns a `MathFault` with byte offsets,
+  the subject and the hint; the work is one bounded pass.
+- **Traits for caller code**: `ResourceProvider`, `Highlighter`, `MathWriter`, and closures for passes
   and cancellation. Reader settings are a typed `&dyn Any` (`read_extension`,
   `ctx.reader_settings::<T>()`).
 - **Sources.** The main source is copied into a reused workspace buffer; included and

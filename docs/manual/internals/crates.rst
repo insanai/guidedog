@@ -194,13 +194,15 @@ Internal crates
 
 Every other package is internal:
 
-- the host and project layers: ``gd-host``, ``gd-conf``, ``gd-env``, ``gd-outputs``, ``gd-serve``, ``gd-i18n``, ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-site``, ``gd-book``, ``gd-intl``, ``gd-migrate``, ``gd-pages`` and ``gd-project``;
+- the host and project layers: ``gd-host``, ``gd-conf``, ``gd-env``, ``gd-outputs``, ``gd-serve``, ``gd-i18n``, ``gd-read``, ``gd-resolve``, ``gd-link``, ``gd-mathml``, ``gd-site``, ``gd-book``, ``gd-intl``, ``gd-migrate``, ``gd-pages`` and ``gd-project``;
 - the command line and its services: ``gd-cli``, ``gd-capabilities``, ``gd-theme``, ``gd-discussion``, ``gd-ssg``, ``gd-fetch``, ``gd-git``, ``gd-typst`` and ``gd-clock``;
 - the programs under ``cmd/``, the tools under ``tools/``, the examples under ``examples/`` and the end-to-end tests under ``tests/integration``.
 
 ``gd-theme`` embeds the built-in HTML and Typst templates (``layout.html``, ``article.html``, ``landing.html``, ``book.typ``, ``discussion.typ``, ``article.typ``, ``theme.typ``) and the browser assets (``guidedog.css``, ``guidedog.js``, ``typography.js``) so that ``quickstart``, ``gd-site`` and ``gd-book`` share one source without a runtime data folder. Its ``pack`` module encodes, decodes, and verifies deterministic ``.gdt`` theme archives and ``guidedog-theme.lock`` files offline.
 
 ``gd-ssg`` implements the linked ``guidedog ssg`` plugin and authoring surface: site presets (``project``, ``journal``, ``research``), surgical front-matter and field-list transitions (``new``, ``draft``, ``schedule``, ``publish``, ``status``), explicit SHA-256-pinned ``.gdt`` theme installation, and multi-project ``[[site.mounts]]`` website assembly (``guidedog ssg build``). It owns no renderer; mounted builds run through the standard Guidedog project pipeline.
+
+``gd-mathml`` writes formulas as MathML Core. It translates a formula's LaTeX with ``guidedoc-typst``, compiles all formulas of a document in one run of the embedded Typst compiler, and passes each result through the MathML filter of ``guidedoc-html``. It is the only crate that joins the HTML renderer to the compiler, so ``guidedoc-html`` stays free of Typst.
 
 ``gd-typst`` embeds the Typst compiler and runs it both for PDF books and articles and for ``typst-diagram`` SVG and PNG figures. It also exposes lazy text-font handles and bounded standalone SVG rasterization for native music. Keeping it internal keeps Typst's large dependency tree out of every reusable crate: ``guidedoc-typst`` writes Typst source as text, and only the program compiles it.
 

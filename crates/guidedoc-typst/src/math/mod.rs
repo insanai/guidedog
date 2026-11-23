@@ -23,6 +23,8 @@ use crate::state::State;
 use symbols::{CommandKind, find_command};
 
 #[cfg(test)]
+pub(crate) use commands::ENVIRONMENTS;
+#[cfg(test)]
 pub(crate) use symbols::{COMMANDS, CommandKind as Kind};
 
 /// The deepest nesting of groups and atoms the adapter follows.

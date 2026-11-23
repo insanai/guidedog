@@ -162,11 +162,25 @@ pub struct ReadOptions<'a> {
     pub today: &'a str,
     /// The reader's own settings; `None` means its defaults.
     pub extension: Option<ReadExtension<'a>>,
+    /// Check every LaTeX formula once after reading and warn about its first fault
+    /// (`math.*`), whatever the output is.
+    pub check_math: bool,
+    /// Math commands the host defines, without the backslash (MathJax `macros`); the
+    /// math check takes them as known.
+    pub math_macros: &'a [&'a str],
 }
 
-/// Returns the read options: title promotion on, tab width 8, no reader settings.
+/// Returns the read options: title promotion on, tab width 8, no reader settings, the
+/// math check on.
 pub fn default_read_options() -> ReadOptions<'static> {
-    ReadOptions { promote_title: true, tab_width: 8, today: "", extension: None }
+    ReadOptions {
+        promote_title: true,
+        tab_width: 8,
+        today: "",
+        extension: None,
+        check_math: true,
+        math_macros: &[],
+    }
 }
 
 impl Default for ReadOptions<'_> {

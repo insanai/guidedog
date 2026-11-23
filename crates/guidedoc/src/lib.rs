@@ -25,6 +25,8 @@ mod document;
 mod dump;
 mod emit;
 mod kinds;
+mod math_check;
+mod math_names;
 mod media;
 mod name_map;
 mod nfd;
@@ -59,6 +61,12 @@ pub use document::{Children, Document};
 pub use dump::{dump_to_string, dump_tree};
 pub use emit::{EmitMode, Emitter};
 pub use kinds::{admonition_name, child_allowed, content_model, kind_name};
+pub use math_check::{
+    MATH_ALIGNMENT, MATH_ARGUMENT, MATH_BRACE, MATH_COMMAND_UNKNOWN, MATH_DELIMITER,
+    MATH_ENVIRONMENT_MISMATCH, MATH_ENVIRONMENT_UNCLOSED, MATH_ENVIRONMENT_UNKNOWN,
+    MAX_FORMULA_BYTES, MathCheck, MathChecker, MathFault, check_math, is_math_command,
+    is_math_environment, suggest_math_command, suggest_math_environment,
+};
 pub use media::{MediaKind, media_kind};
 pub use name_map::NameMap;
 pub use nfd::{nfd_first, normalize_nfd, normalize_nfd_into};

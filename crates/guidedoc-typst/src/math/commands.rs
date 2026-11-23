@@ -34,7 +34,7 @@ const DELIMITERS: [(&str, &str); 25] = [
 
 /// How an environment's content is written.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum EnvKind {
+pub(crate) enum EnvKind {
     Matrix,
     /// A matrix whose column specification is skipped.
     Array,
@@ -45,7 +45,7 @@ enum EnvKind {
 }
 
 /// The supported environments and the call that opens them.
-const ENVIRONMENTS: [(&str, EnvKind, &str); 30] = [
+pub(crate) const ENVIRONMENTS: [(&str, EnvKind, &str); 30] = [
     ("matrix", EnvKind::Matrix, "mat(delim: #none, "),
     ("smallmatrix", EnvKind::Matrix, "mat(delim: #none, "),
     ("pmatrix", EnvKind::Matrix, "mat(delim: \"(\", "),

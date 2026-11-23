@@ -158,3 +158,38 @@ fn math_output_compiles() {
     source.push_str("$ #gd-math-sans-text(gd-math-font, \"named text\") $\n}");
     expect_compiles("math", &source, false);
 }
+
+// The engine's math check must know every name the adapter translates; otherwise a
+// formula that makes a good PDF would get an "unknown command" warning.
+#[test]
+fn the_math_check_knows_what_the_adapter_translates() {
+    for command in crate::math::COMMANDS {
+        assert!(guidedoc::is_math_command(command.name), "\\{}", command.name);
+    }
+    for (name, _, _) in crate::math::ENVIRONMENTS {
+        assert!(guidedoc::is_math_environment(name), "{name}");
+    }
+    let special = [
+        "sqrt",
+        "left",
+        "middle",
+        "right",
+        "begin",
+        "end",
+        "operatorname",
+        "not",
+        "pmod",
+        "overset",
+        "underset",
+        "stackrel",
+        "boxed",
+        "phantom",
+    ];
+    for name in special {
+        assert!(guidedoc::is_math_command(name), "\\{name}");
+        let mut typst = String::new();
+        let formula = format!("\\{name}");
+        let refused = crate::translate_math(&formula, &mut typst).err().map(|e| e.construct);
+        assert_ne!(refused, Some(formula.as_str()), "the adapter does not know \\{name}");
+    }
+}

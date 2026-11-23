@@ -39,6 +39,8 @@ fn corpus() -> PathBuf {
 fn settings_for(names: &[&str]) -> (ReadOptions<'static>, Settings, Policy) {
     let mut options = default_read_options();
     options.today = "2026-09-29";
+    // Docutils does not check formulas; the corpus holds one with an unclosed brace.
+    options.check_math = false;
     let mut settings = Settings::default();
     let mut policy = trusted_policy();
     for &s in names {

@@ -34,7 +34,12 @@ pub fn read_document<'w>(
 /// result, since the builder knows what ran out.
 fn run_reader(ws: &mut Workspace, reader: &Reader, request: &Request<'_>) -> Result<(), Fail> {
     let mut ctx = ws.begin_read(request)?;
-    let result = (reader.read)(&mut ctx).and_then(|()| ctx.b.finish());
+    let result = (reader.read)(&mut ctx).and_then(|()| {
+        if request.read.check_math {
+            crate::math_check::check_formulas(&mut ctx);
+        }
+        ctx.b.finish()
+    });
     match result {
         Err(fail) if !ctx.b.is_ok() => {
             Err(Fail { status: ctx.b.status(), need: ctx.b.need(), ..fail })

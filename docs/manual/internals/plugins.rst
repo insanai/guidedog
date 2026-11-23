@@ -254,10 +254,36 @@ Machine registry
 ``[[plugins]]`` table has ``id``, ``name``, ``version``, absolute ``path``,
 ``sha256``, ``protocol = "1.0"``, ``capabilities``, ``registered`` (UTC date) and, for
 build programs only, ``protocol_name = "guidedog-build-plugin"`` and ``hooks``. A program that adds commands also has ``command_protocol = "1.0"`` and ``commands``, an array of inline tables with ``path``, ``summary``, ``help`` and ``options`` (each ``{ name, value, summary }``). Entries without them are read as adding none.
-Mutations take ``plugins.toml.lock`` with ``File::try_lock`` (separate opens conflict
-even within a process), then write ``plugins.toml.next``, sync it, and rename it over
-the registry. ``inspect_entry`` accepts only absolute paths to ELF, Mach-O or PE files
+Mutations take ``plugins.toml.lock`` with ``files::lock_exclusive_private`` (see "File
+locks" below), read the registry, write ``plugins.toml.next``, sync it, and rename it
+over the registry. A reader takes no lock: it sees the old registry or the new one. ``inspect_entry`` accepts only absolute paths to ELF, Mach-O or PE files
 and runs the program's handshake; ``verify_entry`` re-hashes it before use.
+
+File locks
+----------
+
+Every command that changes a small piece of state on the machine takes an advisory lock on a lock file first: the registry, a publisher's settings and targets in ``gd-pages``, a discussion catalog, a site's sources and a whole-site build in ``gd-ssg``. They all take it with one function, ``gd_plugins::files::lock_exclusive`` (or ``lock_exclusive_private``, which makes the lock file readable only by its user). It asks once and never waits: a lock that is held is ``LockError::Held``, which each caller reports as its own problem (``plugins.busy``, ``pages.busy``, ``PREFIX.busy``, ``ssg.conflict``, ``ssg.site``).
+
+.. code-block:: rust
+
+   use gd_plugins::files::{LockError, lock_exclusive, write_atomically};
+
+   let _lock = match lock_exclusive(&dir.join("state.lock")) {
+       Ok(lock) => lock,
+       Err(LockError::Held) => return Err("another command is changing the state".into()),
+       Err(LockError::Io(e)) => return Err(e.to_string()),
+   };
+   let state = dir.join("state.toml");
+   let old = std::fs::read_to_string(&state).unwrap_or_default(); // read under the lock
+   let new = format!("{old}changed = true\n");
+   write_atomically(&state, new.as_bytes()).map_err(|(_, e)| e.to_string())?;
+   // the lock is released here: unlock, then close
+
+The lock is ``std::fs::File::try_lock``: ``flock`` on Unix, ``LockFileEx`` on Windows. Separate opens conflict, so the lock excludes other processes and other threads of the same process. The system releases it when its holder dies.
+
+One rule makes it correct: we unlock before we close. On Unix the lock belongs to the open file, and a child process holds a copy of every descriptor from its creation until it starts its program. A holder that only closes its descriptor has therefore not released the lock while such a copy lives, and the next command is told that a lock nobody holds is held. This happened when one thread registered a plugin while another started a plugin program. An explicit unlock releases the lock for every copy at once.
+
+GDS 0019 models the lock, the takers, the children and crashes as a transition system and proves, in Lean, that two holders never coexist, that a command is refused only while a holder exists (or died an instant ago with a child still starting), that a crashed holder's lock ends with its children's copies, that readers see whole files, and that no update is lost. The proofs are in ``docs/gds/proofs`` and ``cargo xtask proofs`` checks them. The tests of ``files::lock`` enumerate the same model with a few takers, and reproduce the old defect without timing by duplicating the lock's descriptor.
 
 Alternatives considered
 -----------------------

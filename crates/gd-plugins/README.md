@@ -141,9 +141,13 @@ local-folder publisher), `examples/protocol_fixture.rs` (faulty programs for tes
   version the traits.
 - **Served plugins load once.** `serve` takes the plugin by value (no `Clone` needed),
   so after a failed `load` the program refuses another load; hosts never retry anyway.
-- **Small surface:** std covers pipes and handles on every platform, locking is
-  `std::fs::File::try_lock`, and JSON goes through gd-json, so the crate exports no
-  helpers for them.
+- **Small surface:** std covers pipes and handles on every platform and JSON goes
+  through gd-json, so the crate exports no helpers for them.
+- **One file lock.** `files::lock_exclusive` (and `lock_exclusive_private`) takes an
+  advisory lock on a lock file without waiting; `LockError::Held` is a lock another
+  process or thread holds. Dropping the `FileLock` unlocks and then closes the file, so
+  a child process that still holds a copy of the descriptor cannot keep a released lock
+  alive. GDS 0019 proves the algorithm in Lean (`docs/gds/proofs`).
 - **`Problem` is one pointer wide:** its fields live in a boxed `ProblemData`, reached
   through `Deref` (`p.code`, `p.exit = 2`), so `Result<T, Problem>` stays small and no
   author needs to allow `clippy::result_large_err`. Build with `Problem::new(..).hint(..)`

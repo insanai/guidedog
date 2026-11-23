@@ -23,10 +23,10 @@ Transactions
 ------------
 
 ``lock_catalog`` returns a ``Lock`` released on drop. ``apply`` and ``recover`` require it,
-so an unlocked write does not compile. The lock is ``std::fs::File::try_lock`` (flock). A
-process that starts a child holds copies of every descriptor between fork and exec, so a
-just-released lock can look taken. ``lock_catalog`` retries for up to 200 ms before
-reporting ``PREFIX.busy``.
+so an unlocked write does not compile. The lock is ``gd_plugins::files::lock_exclusive``
+(GDS 0019): it asks once, and a lock another command holds is ``PREFIX.busy`` at once.
+Dropping the ``Lock`` unlocks before the file closes, so a child process that still holds
+a copy of the descriptor cannot make a released lock look taken.
 
 ``apply`` checks every change (safe path, unchanged original, whole record or balanced
 index), writes the journal ``.PREFIX-journal.json``, then replaces

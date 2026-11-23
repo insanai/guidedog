@@ -179,7 +179,7 @@ An ``--untrusted`` build uses the project template too, since Typst reads only t
 When an update is interrupted
 -----------------------------
 
-Commands that change records hold the catalog's lock, ``.eds.lock``. An update of several
+Commands that change records hold the catalog's lock, ``.eds.lock``. A command that finds the lock held by another command says ``eds.busy`` at once and changes nothing; we run it again when the other command has finished. An update of several
 files first writes a journal, ``.eds-journal.json``. If it stops part way, the next
 command says so:
 

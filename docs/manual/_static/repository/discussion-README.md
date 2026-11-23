@@ -57,8 +57,8 @@ program `--typst` names), staged and themed like the HTML and PDF of a current c
 - No allocator watch or `discussion.memory`: Rust aborts on allocation failure, so the
   tests sweep interruptions over `apply` instead of allocation refusals.
 - `apply` and `recover` take the `Lock`, so a change cannot be written unlocked; the lock
-  uses `File::try_lock` (flock) and retries for 200 ms (forked children briefly hold
-  copies of descriptors).
+  is `gd_plugins::files::lock_exclusive` (GDS 0019), which asks once and reports a held
+  lock at once.
 - `Change { before: Option, after: Option }` says whether a file existed before and
   after (the journal keeps the JSON form older releases wrote); `Catalog` carries its folder; `Record` keeps `Sections`, no
   text; one `Options` split into `NewDraft`, `Decision`, `BuildOptions`, `Init`.

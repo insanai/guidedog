@@ -105,6 +105,36 @@ fn discussions_state_change(dir: &std::path::Path) -> Result<(), gd_discussion::
     Ok(())
 }
 
+/// The plugin internals' fragment on file locks: `dir` is the folder of the state.
+#[rustfmt::skip] // a twin keeps the manual's exact text
+fn file_lock_update(dir: &std::path::Path) -> Result<(), String> {
+    // manual: docs/manual/internals/plugins.rst#1
+    use gd_plugins::files::{LockError, lock_exclusive, write_atomically};
+
+    let _lock = match lock_exclusive(&dir.join("state.lock")) {
+        Ok(lock) => lock,
+        Err(LockError::Held) => return Err("another command is changing the state".into()),
+        Err(LockError::Io(e)) => return Err(e.to_string()),
+    };
+    let state = dir.join("state.toml");
+    let old = std::fs::read_to_string(&state).unwrap_or_default(); // read under the lock
+    let new = format!("{old}changed = true\n");
+    write_atomically(&state, new.as_bytes()).map_err(|(_, e)| e.to_string())?;
+    // the lock is released here: unlock, then close
+    // end manual
+    Ok(())
+}
+
+#[test]
+fn the_file_lock_example_updates_the_state() {
+    let dir = gd_plugins::files::make_temp_dir(&std::env::temp_dir(), "manual-lock").unwrap();
+    file_lock_update(&dir).unwrap();
+    file_lock_update(&dir).unwrap();
+    let text = std::fs::read_to_string(dir.join("state.toml")).unwrap();
+    assert_eq!(text, "changed = true\nchanged = true\n");
+    std::fs::remove_dir_all(&dir).unwrap();
+}
+
 #[test]
 #[rustfmt::skip] // a twin keeps the manual's exact text
 fn the_engine_example_runs() {

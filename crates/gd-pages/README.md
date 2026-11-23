@@ -91,7 +91,7 @@ unknown (run `recover`), 130 cancelled.
   cannot be pointed away from GitHub by the environment; only code chooses `Roots`. The
   protocol tests run `examples/pages_fixture.rs`, which reads a fixture file beside it.
 - **`State` value** owns the state; `StateLock` releases its lock on drop
-  (`File::try_lock`), and `Secret` zeroes itself on drop.
+  (`gd_plugins::files::lock_exclusive_private`, GDS 0019), and `Secret` zeroes itself on drop.
 - **Types instead of sentinels.** `SiteSource` names one source, never two strings of
   which one must be empty; `Option` for a missing branch head, adopted commit and observed commit;
   `BuildState` instead of `found`/`readable` flags; `PushOutcome` carries its problem.

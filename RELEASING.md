@@ -5,6 +5,8 @@ uploaded by hand, and a published release is never changed.
 
 ## Workflows
 
+The Lean proofs of the design records (`docs/gds/proofs`) are not part of a workflow, because the runners have no Lean. Run `cargo xtask proofs` before a release that changes a proved record, its proofs or the code they describe.
+
 - **Verify** (`.github/workflows/ci.yml`) runs on every push to `main` and every pull
   request, on Linux (x86-64) and macOS (Apple silicon): `cargo fmt --all --check`, the source limits
   (`cargo run -p check`), the data tables (`cargo xtask tables --check`), the pinned music font check

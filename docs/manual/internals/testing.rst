@@ -17,6 +17,7 @@ Running the tests
    cargo xtask tables --check              # the data tables match tools/data
    cargo xtask check-music-font            # Bravura font and metadata digests
    cargo run -p music-check                # 63-score music geometry, SVG and PNG corpus
+   cargo xtask proofs                      # the Lean proofs of the design records
    cargo test -p guidedog-tests --test gates     # only the quality gates
    cargo test -p guidedog-tests --test projects  # one end-to-end group
 
@@ -26,6 +27,8 @@ builds them. To run only ``guidedog-tests``, run ``cargo build --workspace`` fir
 test that finds a program missing says so instead of failing obscurely. Every test
 works in a private temporary folder and sets ``GUIDEDOG_CONFIG_DIR`` and ``NO_COLOR``,
 so tests run in parallel and never touch the machine's plugin registry.
+
+``cargo xtask proofs`` checks the Lean proofs of the design records in ``docs/gds/proofs`` (GDS 0019 so far): it builds them with ``lake build``, refuses a proof left open, and reads the axioms each theorem depends on, of which only Lean's standard three may appear. It needs Lean's ``lake`` on ``PATH`` or in ``~/.elan/bin``; the proofs use Lean 4.19 and its core library alone. The Verify workflow does not install Lean, so we run this task by hand when a record's model, its proofs or the code they describe change.
 
 Which crate tests what
 ----------------------

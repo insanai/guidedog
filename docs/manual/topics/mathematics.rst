@@ -194,8 +194,34 @@ It leaves out everything else, such as ``style``, ``id``, ``href``, event attrib
 Content that is not one well-formed ``math`` element is shown as code, with ``html.mathml.invalid``.
 The equation keeps its label and number.
 
-The PDF and text outputs cannot typeset MathML.
-The PDF shows the source as code and reports ``typst.math.mathml``; text output shows the source.
-For a formula that must appear in the book, we write LaTeX.
+The PDF typesets the formula too.
+Guidedog reads the same filtered MathML Core and translates it to Typst math, so the book shows a real formula with its number, and ``:eq:`` links to it.
+
+.. code-block:: text
+
+   <mfrac><mi>a</mi><mn>2</mn></mfrac>                        frac(a, 2)
+   <munderover><mo>&sum;</mo><mi>i</mi><mi>n</mi></munderover>  attach(limits(sum), b: i, t: n)
+   <mrow><mo>(</mo><mtable>...</mtable><mo>)</mo></mrow>      mat(delim: "(", ...)
+
+The translation knows every element the filter keeps.
+Fractions, roots, scripts, limits, accents and prescripts become the Typst calls of the same meaning.
+A table between fences is a matrix, a table after a lone ``{`` is ``cases``, and a table that is the whole formula is an aligned equation of several lines.
+A fraction with ``linethickness="0"`` between parentheses is a binomial.
+Fences around a row grow with their content.
+The ``mathvariant`` attribute selects bold, italic, double-struck, script, fraktur, sans-serif, monospace or upright letters.
+Greek letters, operators and arrows are written by their Typst names; any other character is written as itself.
+A ``semantics`` element shows its first child, and its annotations are passed over.
+
+No text of the formula can become Typst code.
+Every character of it is written as a known name, a single letter or number, an escaped character, or a string.
+For this reason the translation is also written in an ``--untrusted`` build, where raw Typst is left out.
+
+The translator reads at most 256 KiB, 4096 elements and 48 levels of nesting in one formula.
+A formula beyond these bounds, one with an element outside MathML Core such as ``menclose``, or one with a named character reference Guidedog does not know, is not translated.
+The PDF then shows its source as code and reports ``typst.math.mathml``, which names what could not be translated.
+This is a warning: the build goes on.
+A numeric reference such as ``&#x2211;`` always works.
+
+Text output shows the source, and ``--to rst`` keeps the option, so a converted document builds the same formula.
 The ``math`` role has no such option: inline math is always LaTeX.
 Raw HTML is a different matter: a ``math`` element inside ``raw`` content is passed or refused as a whole by the raw content rule, not filtered.

@@ -9,7 +9,7 @@ use gd_resolve::BuildView;
 use gd_toml::Data;
 
 use crate::escape::push_escaped;
-use crate::mathjax::mathjax_scripts;
+use crate::mathjax::{MATHML_STYLESHEET, has_mathml, mathjax_scripts};
 use crate::nav::{TocOptions, outline_html, sidebar_html};
 use crate::templates::PageState;
 
@@ -158,7 +158,11 @@ fn project_names(view: &BuildView<'_>, ctx: &Value) {
 /// scripts.
 fn file_names(view: &BuildView<'_>, ctx: &Value, body: &str, root: &str) {
     let html = &view.config.html;
-    ctx.set("css_files", file_list(root, &["pygments.css", "guidedog.css"], &html.css_files));
+    let mut own = vec!["pygments.css", "guidedog.css"];
+    if has_mathml(view.config, body) {
+        own.push(MATHML_STYLESHEET);
+    }
+    ctx.set("css_files", file_list(root, &own, &html.css_files));
     let js = file_list(root, &["guidedog.js", "typography.js"], &html.js_files);
     mathjax_scripts(view.config, &js, body, root);
     ctx.set("script_files", js.clone());

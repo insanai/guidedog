@@ -12,13 +12,23 @@ use crate::escape::push_escaped;
 /// The class the renderer gives math written for MathJax.
 const MATH_CLASS: &str = "class=\"math notranslate nohighlight\"";
 
+/// The stylesheet a page with MathML links: the rules Typst's MathML needs.
+pub(crate) const MATHML_STYLESHEET: &str = "mathml.css";
+
+/// Whether the page shows MathML and so links [`MATHML_STYLESHEET`].
+pub(crate) fn has_mathml(config: &Config, body: &str) -> bool {
+    config.math_is_mathml() && body.contains("<math")
+}
+
 /// Appends MathJax's scripts to a page's `js_files` when its `body` has math. A local
 /// `mathjax_path` is relative to the output root, reached from the page by `root`
 /// (`"../"`); a URL or an absolute path is kept as written. The configuration file is
 /// read when the page is laid out; one that cannot be read is left out (gd-conf checked
 /// it when conf.toml loaded).
 pub(crate) fn mathjax_scripts(config: &Config, files: &Value, body: &str, root: &str) {
-    if !body.contains(MATH_CLASS) {
+    // With html_math_renderer = "mathml" formulas are MathML and need no script. A
+    // formula that stayed LaTeX is shown as written; the build reported it.
+    if config.math_is_mathml() || !body.contains(MATH_CLASS) {
         return;
     }
     let m = &config.mathjax;

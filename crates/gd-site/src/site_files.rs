@@ -68,8 +68,8 @@ pub(crate) fn write_site_files(
     write_index_pages(site, unit, reports)
 }
 
-/// guidedog.css, guidedog.js, typography.js and pygments.css, unless `html_static_path`
-/// has its own.
+/// guidedog.css, guidedog.js, typography.js and pygments.css, and mathml.css when
+/// formulas are MathML, unless `html_static_path` has its own.
 fn write_theme_files(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Problem> {
     let c = view.config;
     let project_has = |name: &str| {
@@ -86,6 +86,10 @@ fn write_theme_files(view: &BuildView<'_>, unit: &mut Unit<'_>) -> Result<(), Pr
         if !project_has(name) {
             unit.emit_text(&format!("_static/{name}"), text)?;
         }
+    }
+    let mathml = crate::mathjax::MATHML_STYLESHEET;
+    if c.math_is_mathml() && !project_has(mathml) {
+        unit.emit_text(&format!("_static/{mathml}"), gd_mathml::MATHML_CSS)?;
     }
     Ok(())
 }

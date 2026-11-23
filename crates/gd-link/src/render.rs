@@ -17,15 +17,17 @@ use guidedoc::{
 use crate::page::Page;
 
 /// What one rendering thread owns: the workspace pages are linked and rendered in, a
-/// second one for the documents a todolist copies from, and its Graphviz context,
-/// started on the first graph. Make one per worker and reuse it for every page it
-/// renders; its buffers keep their capacity.
+/// second one for the documents a todolist copies from, its Graphviz context, started
+/// on the first graph, and the formulas it typeset as MathML. Make one per worker and
+/// reuse it for every page it renders; its buffers keep their capacity.
 #[derive(Default)]
 pub struct Worker {
     pub(crate) ws: Workspace,
     spare: Workspace,
     graphs: OnceCell<Option<Context>>,
     engraver: gd_engrave::Engraver,
+    /// The formulas this worker typeset as MathML, kept between its pages.
+    math: gd_mathml::MathMl,
 }
 
 impl std::fmt::Debug for Worker {
@@ -102,7 +104,8 @@ pub fn source_location(
 /// The renderer settings a page uses for an output: language, permalinks, section
 /// number suffix, MathJax's delimiters in HTML, source positions in a preview, and in
 /// the book and singlehtml the document's key before every anchor. The caller adds
-/// the highlighter and the translated labels.
+/// the highlighter and the translated labels; rendering the page adds the MathML math
+/// writer when `html_math_renderer` asks for it.
 pub fn render_options<'b>(
     view: &BuildView<'b>,
     doc: DocId,
@@ -168,7 +171,11 @@ pub(crate) fn run_page(
     let Some(object) = &info.object else {
         return failed(out, no_object(&info.relative));
     };
-    let Worker { ws, spare, graphs, engraver } = worker;
+    let Worker { ws, spare, graphs, engraver, math } = worker;
+    // With html_math_renderer = "mathml", an HTML page's formulas are typeset after
+    // the link pass, all in one compiler run, and the renderer writes them.
+    let mathml = renderer.is_some_and(|r| r.id == "html") && view.config.math_is_mathml();
+    let math = mathml.then_some(&*math);
     if let Err(e) = view.objects.load_object(ws, object, view.limits) {
         return failed(out, e.problem);
     }
@@ -190,8 +197,11 @@ pub(crate) fn run_page(
     page.borrow_mut().excerpt = excerpt.is_some();
     let run =
         |doc: Document<'_>, b: &mut Builder<'_>| -> PassOutcome { page.borrow_mut().link(doc, b) };
-    let mut linked =
-        guidedoc::transform_document(ws, &[Pass { name: "link", run: &run }], view.limits).is_ok();
+    let typeset = |doc: Document<'_>, b: &mut Builder<'_>| -> PassOutcome {
+        math.map_or(PassOutcome::Unchanged, |math| math.prepare(doc, b))
+    };
+    let passes = [Pass { name: "link", run: &run }, Pass { name: "mathml", run: &typeset }];
+    let mut linked = guidedoc::transform_document(ws, &passes, view.limits).is_ok();
     let page = page.into_inner();
     out.assets = page.assets;
     out.trace = page.trace;
@@ -201,16 +211,7 @@ pub(crate) fn run_page(
         out.trace = crate::excerpts::source_trace(&info.docname, out.trace);
     }
     let rendered = match renderer {
-        Some(renderer) if linked => {
-            let render = Request {
-                render: request.options,
-                policy: *view.policy,
-                limits: *view.limits,
-                source_map,
-                ..Request::default()
-            };
-            guidedoc::render_document(ws, renderer, &render).map(str::to_string).ok()
-        }
+        Some(renderer) if linked => render_linked(view, ws, renderer, request, math, source_map),
         _ => linked.then(String::new),
     };
     let mut rendered_reports = gd_host::describe_all(ws);
@@ -223,6 +224,30 @@ pub(crate) fn run_page(
         None => out.failed = true,
     }
     out
+}
+
+/// Renders the linked document in `ws`; `math`, when given, writes the formulas it
+/// prepared. None when the renderer fails; the workspace holds the reports.
+fn render_linked(
+    view: &BuildView<'_>,
+    ws: &mut guidedoc::Workspace,
+    renderer: &guidedoc::Renderer,
+    request: &PageRequest<'_>,
+    math: Option<&gd_mathml::MathMl>,
+    source_map: bool,
+) -> Option<String> {
+    let options = RenderOptions {
+        math_writer: math.map(|math| math as &dyn guidedoc::MathWriter),
+        ..request.options
+    };
+    let render = Request {
+        render: options,
+        policy: *view.policy,
+        limits: *view.limits,
+        source_map,
+        ..Request::default()
+    };
+    guidedoc::render_document(ws, renderer, &render).map(str::to_string).ok()
 }
 
 /// What rendering a page that was made found, the way Sphinx reports it: each problem

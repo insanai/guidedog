@@ -48,6 +48,9 @@ Before, built from the commit of 1.0.0-beta.14, 34 of 1000 runs failed, each wit
 After, none of 1000 runs failed.
 The binary after the change has one more test, which starts programs on two threads while two other threads register and unregister 100 times each.
 A test that needs no timing shows the defect directly: it duplicates the lock's descriptor, which shares the open file as a child's copy does, releases the lock, and takes it again.
+A second test closes a lock file without unlocking while a copy lives, to show the leak.
+On 2026-11-23 that test itself met the leak on macOS (Apple silicon) in the verification workflow: a child that another test of the same binary had started held one more copy when the test expected the lock to be free.
+This is one more observation of the defect, on a second platform; the test now waits for the release (commit ``827e39c``), and the library did not change.
 
 *What was there.*
 Five places locked this way, and the example publisher a sixth.
@@ -655,6 +658,7 @@ Review history
 --------------
 
 * 2026-11-23: Written with the implementation, after the registry test failed on the macOS runner of the verification workflow. The maintainer asked for a design that removes the race instead of a retry, for a record of its own and for proofs in Lean.
+* 2026-11-23: After release 1.0.0-beta.15 was prepared, the test ``closing_alone_leaves_the_lock_with_a_copy`` failed once on the macOS runner of the verification workflow, because it closes without unlocking and so was open to the leak it shows. The test was corrected to wait for the release; the evidence in *Motivation and scope* records the observation.
 
 References
 ----------

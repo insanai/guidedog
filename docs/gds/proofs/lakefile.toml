@@ -1,0 +1,9 @@
+# Machine-checked proofs of the theorems the GDS records state. Check them with
+# `cargo xtask proofs`, or `lake build` in this directory; they use Lean's core library
+# alone.
+name = "gds"
+version = "0.1.0"
+defaultTargets = ["Gds"]
+
+[[lean_lib]]
+name = "Gds"

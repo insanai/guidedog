@@ -18,6 +18,7 @@ mod fsutil;
 mod graphviz;
 mod music_font;
 mod process;
+mod proofs;
 mod release;
 mod site;
 mod sphinxdiff;
@@ -47,6 +48,8 @@ Tasks:
   rstref [--ids] DOCUTILS FIXTURES_DIR [SOURCE...]
                      store the Docutils reference trees (or ids.txt) of the RST
                      conformance corpus, with a pinned Python Docutils
+  proofs             check the Lean proofs of the design records: they build, leave no
+                     proof open and use no axiom beyond Lean's standard ones
   release <STEP>     one step of a release (build, package, checksums, source, formula,
                      publish, check-version, check-run, credential-store, smoke,
                      smoke-discussion, smoke-pages, plugin-compatibility)
@@ -116,6 +119,7 @@ fn run(args: &[String]) -> Result<()> {
         Some("fetch-fonts") => fonts::main(rest),
         Some("check-music-font") => music_font::main(rest),
         Some("graphviz") => graphviz::main(rest),
+        Some("proofs") => proofs::main(rest),
         Some("release") => release::main(rest),
         Some("rstref") => docutils::main(rest),
         Some("sphinxdiff") => sphinxdiff::main(rest),
@@ -128,6 +132,7 @@ fn run(args: &[String]) -> Result<()> {
                 "fetch-fonts",
                 "check-music-font",
                 "graphviz",
+                "proofs",
                 "release",
                 "rstref",
                 "sphinxdiff",

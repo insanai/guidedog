@@ -27,6 +27,7 @@ mod emit;
 mod kinds;
 mod math_check;
 mod math_names;
+mod mathml;
 mod media;
 mod name_map;
 mod nfd;
@@ -66,6 +67,10 @@ pub use math_check::{
     MATH_ENVIRONMENT_MISMATCH, MATH_ENVIRONMENT_UNCLOSED, MATH_ENVIRONMENT_UNKNOWN,
     MAX_FORMULA_BYTES, MathCheck, MathChecker, MathFault, check_math, is_math_command,
     is_math_environment, suggest_math_command, suggest_math_environment,
+};
+pub use mathml::{
+    MATHML_ATTRIBUTES, MATHML_ELEMENTS, MAX_MATHML_BYTES, MAX_MATHML_DEPTH, MathMlDropped,
+    MathMlError, MathMlOptions, filter_mathml,
 };
 pub use media::{MediaKind, media_kind};
 pub use name_map::NameMap;

@@ -232,7 +232,11 @@ fn extract(formulas: &mut [Formula<'_>], batch: &[usize], html: &str) {
 /// One formula's MathML as the filter passes it. Typst's `style` attributes
 /// (`math-shift`) are dropped; anything else outside MathML Core refuses the formula.
 fn filtered(mathml: &str, display: bool) -> Typeset {
-    let options = MathMlOptions { block: Some(display), quiet_attributes: &["style"] };
+    let options = MathMlOptions {
+        block: Some(display),
+        quiet_attributes: &["style"],
+        ..MathMlOptions::default()
+    };
     let mut out = String::with_capacity(mathml.len());
     match filter_mathml(mathml, &options, &mut out) {
         Ok(dropped) if dropped.count == 0 => Ok(out.into_boxed_str()),

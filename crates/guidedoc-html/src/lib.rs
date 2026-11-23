@@ -18,7 +18,6 @@ mod document;
 mod escape;
 mod fields;
 mod inlines;
-mod mathml;
 mod notes;
 mod positions;
 mod sections;
@@ -34,7 +33,8 @@ use guidedoc::{
 
 use state::{Html, HtmlWork};
 
-pub use mathml::{
+// The MathML filter is the engine's; HTML is where its output is written as it is.
+pub use guidedoc::{
     MATHML_ATTRIBUTES, MATHML_ELEMENTS, MAX_MATHML_BYTES, MAX_MATHML_DEPTH, MathMlDropped,
     MathMlError, MathMlOptions, filter_mathml,
 };

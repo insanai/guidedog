@@ -77,5 +77,5 @@ localized `unengraved_score` notice.
   renderer allocates its small working state (anchors, stack) per render.
 - Highlighting goes through the `guidedoc::Highlighter` trait.
 - Math goes through `guidedoc::MathWriter` when `RenderOptions::math_writer` is set: the writer's markup replaces the LaTeX inside the usual `math` wrapper, and a formula it declines is written as before. Without a writer the output is unchanged.
-- `filter_mathml(input, &MathMlOptions, &mut out)` copies one `math` element, keeping only `MATHML_ELEMENTS` and `MATHML_ATTRIBUTES` (at most 256 KiB, 128 levels). A formula marked `notation = mathml` is written through it (`MATHML_DROPPED`, `MATHML_INVALID`).
+- `filter_mathml(input, &MathMlOptions, &mut out)`, the engine's filter re-exported here, copies one `math` element, keeping only `MATHML_ELEMENTS` and `MATHML_ATTRIBUTES` (at most 256 KiB, 128 levels). A formula marked `notation = mathml` is written through it (`MATHML_DROPPED`, `MATHML_INVALID`).
 - An SVG `data:` URL is let through as an `img` source only, never as a link or an `object`.

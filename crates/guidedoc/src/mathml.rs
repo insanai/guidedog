@@ -1,10 +1,14 @@
-//! The MathML filter: it passes MathML Core through to HTML and drops everything else.
+//! The MathML filter: it passes MathML Core through and drops everything else.
 //!
 //! MathML reaches a page from two places: an author writes it (the `math` directive
-//! and role with the `mathml` notation), or a math writer makes it from LaTeX. Both go
-//! through this filter, so a page holds only the elements and attributes named here,
-//! whatever the input was. The filter is a single pass over the text with a bounded
-//! stack; it never panics and never copies a tag it does not know.
+//! with the `mathml` notation), or a math writer makes it from LaTeX. Both go through
+//! this filter, so a page holds only the elements and attributes named here, whatever
+//! the input was. The filter is a single pass over the text with a bounded stack; it
+//! never panics and never copies a tag it does not know.
+//!
+//! The filter lives in the engine because every renderer reads MathML through it: the
+//! HTML renderer writes what it keeps, and the Typst renderer translates what it keeps
+//! to Typst math. So there is one allowlist, and one reader of text an author wrote.
 //!
 //! What is kept:
 //!
@@ -96,6 +100,8 @@ pub struct MathMlOptions<'a> {
     pub block: Option<bool>,
     /// Attributes dropped without being counted (`xmlns` always is).
     pub quiet_attributes: &'a [&'a str],
+    /// Elements dropped, with all they contain, without being counted.
+    pub quiet_elements: &'a [&'a str],
 }
 
 /// What the filter left out of a formula it wrote.
@@ -105,6 +111,9 @@ pub struct MathMlDropped {
     pub count: usize,
     /// The first of them: an element as `<name>`, an attribute as its name.
     pub first: String,
+    /// The first dropped element, as `<name>`; empty when no element was dropped. A
+    /// dropped element takes content out of the formula; a dropped attribute does not.
+    pub first_element: String,
 }
 
 /// Why the filter wrote nothing.
@@ -307,8 +316,13 @@ impl<'s> Filter<'s, '_, '_> {
         }
         let known = MATHML_ELEMENTS.binary_search(&tag.name).is_ok();
         if !known || (!root && tag.name == "math") {
-            let name = format!("<{}>", tag.name);
-            self.drop_one(&name);
+            if !self.options.quiet_elements.contains(&tag.name) {
+                let name = format!("<{}>", tag.name);
+                self.drop_one(&name);
+                if self.dropped.first_element.is_empty() {
+                    self.dropped.first_element = name;
+                }
+            }
             if !tag.empty {
                 self.skipping = 1;
             }
@@ -469,6 +483,7 @@ mod tests {
         assert_eq!(out, "<math><mi mathvariant=\"normal\">x</mi><mo>+</mo><mi>y</mi></math>");
         assert_eq!(dropped.count, 6);
         assert_eq!(dropped.first, "onclick");
+        assert_eq!(dropped.first_element, "<script>");
     }
 
     #[test]
@@ -482,8 +497,13 @@ mod tests {
     #[test]
     fn the_display_attribute_follows_the_options() {
         let mut out = String::new();
-        let block = MathMlOptions { block: Some(true), quiet_attributes: &["style"] };
-        let dropped = filter_mathml("<math><mi style=\"x\">x</mi></math>", &block, &mut out);
+        let block = MathMlOptions {
+            block: Some(true),
+            quiet_attributes: &["style"],
+            quiet_elements: &["annotation-xml"],
+        };
+        let quiet = "<math><mi style=\"x\">x</mi><annotation-xml><b>y</b></annotation-xml></math>";
+        let dropped = filter_mathml(quiet, &block, &mut out);
         assert_eq!(out, "<math display=\"block\"><mi>x</mi></math>");
         assert_eq!(dropped.map(|d| d.count), Ok(0));
         out.clear();

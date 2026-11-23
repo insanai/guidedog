@@ -155,6 +155,10 @@ ctx.put_scratch(work);
   off and `ReadOptions::math_macros` names the host's macros. `check_math(latex,
   &MathCheck)` checks one formula alone and returns a `MathFault` with byte offsets,
   the subject and the hint; the work is one bounded pass.
+- **MathML filter.** `filter_mathml(input, &MathMlOptions, &mut out)` copies one `math`
+  element and keeps only `MATHML_ELEMENTS` and `MATHML_ATTRIBUTES`, within
+  `MAX_MATHML_BYTES` and `MAX_MATHML_DEPTH`. It is the one reader of MathML an author
+  wrote: the HTML renderer writes what it keeps, and the Typst renderer translates it.
 - **Traits for caller code**: `ResourceProvider`, `Highlighter`, `MathWriter`, and closures for passes
   and cancellation. Reader settings are a typed `&dyn Any` (`read_extension`,
   `ctx.reader_settings::<T>()`).

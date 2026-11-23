@@ -1,9 +1,11 @@
 //! Literal blocks, with captions, line numbers, emphasized lines, and highlighting, and
 //! displayed math.
 
-use guidedoc::{Arg, AttributeKey, Label, MathStyle, NodeId, arg_int, arg_text, label};
+use guidedoc::{
+    Arg, AttributeKey, Label, MathMlOptions, MathStyle, NodeId, arg_int, arg_text, filter_mathml,
+    label,
+};
 
-use crate::mathml::{MathMlOptions, filter_mathml};
 use crate::state::Html;
 use crate::walk::Visit;
 use crate::{MATHML_DROPPED, MATHML_INVALID};

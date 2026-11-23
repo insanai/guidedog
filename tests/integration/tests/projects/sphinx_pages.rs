@@ -384,6 +384,47 @@ fn math_follows_sphinx_mathjax() {
     lacks(&dir.read("_build/html/other.html"), "mathjax");
 }
 
+/// With html_math_renderer = "mathml" (or --math=mathml) formulas are MathML: the
+/// equation keeps its number and :eq: its link, the page loads no MathJax and links
+/// the style rules; a formula that cannot be MathML stays LaTeX, with a warning.
+#[test]
+fn math_as_mathml_needs_no_script() {
+    let dir = project("mathml");
+    dir.write(
+        "index.rst",
+        "Demo\n====\n\nInline :math:`a^2` and :math:`\\color{red} x`.\n\n.. math::\n   \
+         :label: pyth\n\n   c^2 = a^2 + b^2\n\nSee :eq:`pyth`.\n",
+    );
+    dir.write("conf.toml", "project = \"Demo\"\nhtml_math_renderer = \"mathml\"\n");
+    let r = build(&dir.path, 0, &["html"]);
+    let page = dir.read("_build/html/index.html");
+    has(
+        &page,
+        "<span class=\"math notranslate nohighlight\"><math><msup><mi>𝑎</mi><mn>2</mn></msup>\
+         </math></span>",
+    );
+    has(&page, "<span class=\"eqno\">(1)<a class=\"headerlink\" href=\"#equation-pyth\"");
+    has(&page, "</span><math display=\"block\"><msup><mi>𝑐</mi><mn>2</mn></msup><mo>=</mo>");
+    has(&page, "See <a href=\"#equation-pyth\">(1)</a>");
+    has(&page, "<span class=\"math notranslate nohighlight\">\\(\\color{red} x\\)</span>");
+    lacks(&page, "mathjax");
+    has(&page, "href=\"_static/mathml.css\"");
+    has(&dir.read("_build/html/_static/mathml.css"), "mtable.multiline-equation mtd");
+    has(&r.err, "mathml.math.unsupported");
+    // The flag selects the renderer for one build; the default is MathJax again.
+    dir.write("conf.toml", "project = \"Demo\"\n");
+    build(&dir.path, 0, &["html", "--math=mathml"]);
+    has(&dir.read("_build/html/index.html"), "<math display=\"block\">");
+    build(&dir.path, 0, &["html"]);
+    let page = dir.read("_build/html/index.html");
+    has(&page, "\\[c^2 = a^2 + b^2\\]");
+    has(&page, "mathjax");
+    lacks(&page, "mathml.css");
+    dir.write("conf.toml", "project = \"Demo\"\nhtml_math_renderer = \"katex\"\n");
+    let r = build(&dir.path, 2, &["html"]);
+    has(&r.err, "html_math_renderer");
+}
+
 /// A module declared first thing in a section gives the section its id, as Sphinx's
 /// MoveModuleTargets does; the title's id stays as a second one.
 #[test]

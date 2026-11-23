@@ -10,7 +10,9 @@
 
 mod autodoc;
 mod convert;
+mod fragments;
 mod incremental;
+mod math;
 mod plugins;
 mod repository;
 

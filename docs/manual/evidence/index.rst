@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.14`
+     - Script-free MathML, authored MathML in PDF, embedded pictures, the math check and five-platform publication (2026-11-23)
    * - :doc:`release-1.0.0-beta.13`
      - Rust 1.100 support, Graphviz 16.1.1, unchanged allocation policy and verified five-platform publication (2026-11-14)
    * - :doc:`rust-1.100-graphviz-16.1.1`
@@ -54,6 +56,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   release-1.0.0-beta.14
    release-1.0.0-beta.13
    rust-1.100-graphviz-16.1.1
    release-1.0.0-beta.12

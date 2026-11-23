@@ -2,7 +2,9 @@
 //! displaymath node; the argument, when present, is the first equation group, and groups
 //! stay separated by blank lines in the text. A `:label:` (or `:name:`) gives Id
 //! "equation-<label>" in Docutils' id form; an empty `:label:`, and math_number_all for
-//! every equation without one, labels it "docname:N".
+//! every equation without one, labels it "docname:N". With `:notation: mathml` the
+//! content is MathML, which the HTML renderer filters and the other renderers show as
+//! source.
 
 use guidedoc::{AttributeKey, Fail, NodeKind};
 use guidedoc_rst::{Directive, Parser, trim_blank_end};
@@ -37,6 +39,10 @@ pub(crate) fn math_directive(
     }
     if d.has_option("nowrap") || d.has_option("no-wrap") {
         p.custom(id, "nowrap", "1")?;
+    }
+    // `:notation: mathml`: the content is one MathML `math` element, not LaTeX.
+    if d.option_value("notation").as_deref() == Some("mathml") {
+        p.custom(id, guidedoc::MATH_NOTATION_ATTRIBUTE, "mathml")?;
     }
     let start = p.ctx.b.text_open();
     p.push_lines(&d.arg, "\n")?;

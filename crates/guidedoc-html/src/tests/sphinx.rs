@@ -493,3 +493,28 @@ fn a_math_writer_replaces_the_latex_and_keeps_numbers() {
     has(&r, "<span class=\"math notranslate nohighlight\"><math><mi>ok</mi></math></span>");
     has(&r, "<span class=\"math notranslate nohighlight\">\\(x\\)</span>");
 }
+
+fn authored_mathml(b: &mut Builder<'_>) -> Result<(), Fail> {
+    let good = leaf(b, K::MathBlock, "<math><mi id=\"x\">a</mi><b>bold</b></math>")?;
+    b.add_custom_attribute(good, guidedoc::MATH_NOTATION_ATTRIBUTE, "mathml")?;
+    b.add_attribute_string(good, A::Id, "equation-a")?;
+    b.add_custom_attribute(good, "number", "1")?;
+    let bad = leaf(b, K::MathBlock, "<mi>a</mi>")?;
+    b.add_custom_attribute(bad, guidedoc::MATH_NOTATION_ATTRIBUTE, "mathml")
+}
+
+// A formula written as MathML goes through the filter, whatever the math style and
+// whether or not a math writer is set; text that is no math element is shown as code.
+#[test]
+fn authored_mathml_is_filtered_not_passed_through() {
+    for options in [frag(), RenderOptions { math_writer: Some(&FakeMath), ..frag() }] {
+        let r = render(authored_mathml, options);
+        assert_eq!(r.status, Status::Ok);
+        has(&r, "<div id=\"equation-a\" class=\"math\"><span class=\"eqno\">(1)");
+        has(&r, "</span><math display=\"block\"><mi>a</mi></math></div>");
+        has(&r, "<div class=\"math\"><pre>&lt;mi&gt;a&lt;/mi&gt;</pre></div>");
+        lacks(&r, "bold");
+        assert_eq!(r.code, "html.mathml.dropped");
+        assert_eq!(r.warnings, 2);
+    }
+}

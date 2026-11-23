@@ -170,6 +170,7 @@ const OPTS_MATH: &[OptSpec] = &[
     opt("class", OptType::Class),
     opt("nowrap", OptType::Flag),
     opt("no-wrap", OptType::Flag),
+    choice("notation", "latex mathml"),
 ];
 
 /// The core directives. Names with a domain live in the domains' tables.

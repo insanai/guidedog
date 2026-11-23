@@ -36,6 +36,18 @@ pub const MATH_VERBATIM: Message = Message {
     hint: "Rewrite the formula with supported commands to typeset it.",
 };
 
+/// A formula written as MathML, which the Typst renderer does not typeset.
+pub const MATH_MATHML: Message = Message {
+    code: "typst.math.mathml",
+    severity: Severity::Warning,
+    status: Status::Unsupported,
+    title: "MATHML KEPT AS SOURCE",
+    message: "This formula is written as MathML, which I cannot typeset in a PDF; its \
+              source is shown as text.",
+    hint: "Write the formula in LaTeX for PDF output, or give both and choose with the \
+           only directive.",
+};
+
 /// Raw Typst under the refuse policy.
 pub const RAW_REFUSED: Message = Message {
     code: "typst.raw.refused",

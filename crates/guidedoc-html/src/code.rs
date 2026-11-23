@@ -1,10 +1,12 @@
 //! Literal blocks, with captions, line numbers, emphasized lines, and highlighting, and
 //! displayed math.
 
-use guidedoc::{AttributeKey, Label, MathStyle, NodeId, label};
+use guidedoc::{Arg, AttributeKey, Label, MathStyle, NodeId, arg_int, arg_text, label};
 
+use crate::mathml::{MathMlOptions, filter_mathml};
 use crate::state::Html;
 use crate::walk::Visit;
+use crate::{MATHML_DROPPED, MATHML_INVALID};
 
 impl Html<'_, '_> {
     /// Writes a literal block. The reference profile keeps CommonMark's
@@ -162,6 +164,11 @@ impl Html<'_, '_> {
         let o = self.options;
         let sphinx = o.math == MathStyle::Sphinx;
         self.line_open("div", id, if sphinx { "math notranslate nohighlight" } else { "math" });
+        if guidedoc::is_mathml(self.doc, id) {
+            self.write_authored_mathml(id);
+            self.line_close("div");
+            return Visit::Skip;
+        }
         let nowrap = self.custom(id, "nowrap") == "1";
         let text = self.doc.node_text(id);
         if sphinx && nowrap && self.options.math_writer.is_none() {
@@ -193,6 +200,39 @@ impl Html<'_, '_> {
         }
         self.line_close("div");
         Visit::Skip
+    }
+
+    /// Writes a formula the author wrote as MathML: its equation number, then what the
+    /// MathML filter keeps. Parts outside MathML Core are left out with a warning; text
+    /// that is not one `math` element is shown as code, with a warning.
+    fn write_authored_mathml(&mut self, id: NodeId) {
+        let number = self.custom(id, "number");
+        if self.has_anchor(id) && !number.is_empty() {
+            self.w.put("<span class=\"eqno\">(");
+            self.w.esc(number);
+            self.w.put_byte(b')');
+            self.headerlink(Some(id), label(self.options, Label::LinkEquation));
+            self.w.put("</span>");
+        }
+        let span = self.doc.node(id).span;
+        let source = self.doc.node_text(id);
+        let options = MathMlOptions { block: Some(true), ..MathMlOptions::default() };
+        let mut mathml = String::new();
+        match filter_mathml(source, &options, &mut mathml) {
+            Ok(dropped) => {
+                if dropped.count > 0 {
+                    let count = arg_int(i64::try_from(dropped.count).unwrap_or(i64::MAX));
+                    self.w.fail(MATHML_DROPPED, span, arg_text(&dropped.first), count);
+                }
+                self.w.put(&mathml);
+            }
+            Err(error) => {
+                self.w.fail(MATHML_INVALID, span, arg_text(&error.to_string()), Arg::None);
+                self.w.put("<pre>");
+                self.w.esc(source);
+                self.w.put("</pre>");
+            }
+        }
     }
 
     /// Writes displayed math as Sphinx's mathjax extension does: parts separated by

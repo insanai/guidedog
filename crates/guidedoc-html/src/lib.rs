@@ -152,6 +152,27 @@ pub const URL_OMITTED: Message = Message {
     hint: "Use an http, https, or relative URL instead.",
 };
 
+/// MathML an author wrote, with parts outside MathML Core left out.
+pub const MATHML_DROPPED: Message = Message {
+    code: "html.mathml.dropped",
+    severity: Severity::Warning,
+    status: Status::Policy,
+    title: "MATHML PARTS LEFT OUT",
+    message: "This MathML has {1} element(s) or attribute(s) outside MathML Core, the \
+              first {0}; they were left out.",
+    hint: "Use MathML Core presentation elements, without style, id, links or scripts.",
+};
+
+/// MathML an author wrote that is not one well-formed `math` element.
+pub const MATHML_INVALID: Message = Message {
+    code: "html.mathml.invalid",
+    severity: Severity::Warning,
+    status: Status::InvalidInput,
+    title: "MATHML NOT WRITTEN",
+    message: "I cannot write this MathML: {0}. Its source is shown as code.",
+    hint: "Write one <math> element with every tag closed, at most 256 KiB.",
+};
+
 /// A reference that leads nowhere.
 pub const UNRESOLVED: Message = Message {
     code: "html.reference.unresolved",

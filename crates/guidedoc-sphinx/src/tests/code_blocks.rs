@@ -190,6 +190,23 @@ fn math_directive_labels() {
     );
 }
 
+// `:notation: mathml` marks the block; `latex` is the default and marks nothing.
+#[test]
+fn math_notation_marks_mathml() {
+    expect_dump(
+        concat!(
+            ".. math::\n   :notation: mathml\n\n   <math><mi>x</mi></math>\n\n",
+            ".. math::\n   :notation: latex\n\n   x\n",
+        ),
+        concat!(
+            "document value=1\n",
+            "  math-block \"<math><mi>x</mi></math>\" @notation=\"mathml\"\n",
+            "  math-block \"x\"\n",
+        ),
+        None,
+    );
+}
+
 #[test]
 fn math_number_all_labels_every_equation() {
     let mut config = Config::default();

@@ -209,6 +209,9 @@ impl Writer<'_, '_> {
         if self.custom(id, "nowrap").is_some() {
             options.push(("nowrap", String::new()));
         }
+        if guidedoc::is_mathml(self.doc, id) {
+            options.push(("notation", "mathml".to_string()));
+        }
         self.common_options(id, &[], &mut options);
         self.directive_head("math", "", &options);
         self.text_lines(id);

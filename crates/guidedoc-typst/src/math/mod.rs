@@ -18,7 +18,7 @@ use std::fmt;
 use guidedoc::{ContentPolicy, NodeId, arg_text};
 
 use crate::escape::write_string_body;
-use crate::messages::{MATH_OMITTED, MATH_UNSUPPORTED, MATH_VERBATIM};
+use crate::messages::{MATH_MATHML, MATH_OMITTED, MATH_UNSUPPORTED, MATH_VERBATIM};
 use crate::state::State;
 use symbols::{CommandKind, find_command};
 
@@ -621,6 +621,13 @@ impl State<'_, '_> {
     pub(crate) fn render_math(&mut self, id: NodeId, display: bool) {
         let n = *self.doc.node(id);
         let latex = self.doc.text(n.text);
+        if guidedoc::is_mathml(self.doc, id) {
+            self.fail(MATH_MATHML, n.span, guidedoc::Arg::None);
+            self.emit("#raw(block: true, lang: \"xml\", ");
+            self.emit_string(latex);
+            self.emit(")\n");
+            return;
+        }
         let mut typst = std::mem::take(&mut self.math);
         typst.clear();
         match translate_math(latex, &mut typst) {

@@ -155,15 +155,16 @@ impl Html<'_, '_> {
         }
     }
 
-    /// Writes display math for MathJax or KaTeX. A numbered equation shows its number,
-    /// as Sphinx does: `<span class="eqno">(1)<a class="headerlink">`.
+    /// Writes display math for MathJax or KaTeX, or through the caller's math writer. A
+    /// numbered equation shows its number, as Sphinx does:
+    /// `<span class="eqno">(1)<a class="headerlink">`.
     pub fn enter_math_block(&mut self, id: NodeId) -> Visit {
         let o = self.options;
         let sphinx = o.math == MathStyle::Sphinx;
         self.line_open("div", id, if sphinx { "math notranslate nohighlight" } else { "math" });
         let nowrap = self.custom(id, "nowrap") == "1";
         let text = self.doc.node_text(id);
-        if sphinx && nowrap {
+        if sphinx && nowrap && self.options.math_writer.is_none() {
             self.w.esc(text); // as Sphinx: the text alone, without a number.
             self.line_close("div");
             return Visit::Skip;
@@ -176,7 +177,9 @@ impl Html<'_, '_> {
             self.headerlink(Some(id), label(o, Label::LinkEquation));
             self.w.put("</span>");
         }
-        if nowrap {
+        if self.w.write_math(text, true) {
+            // The math writer typeset it; nothing is left for a script.
+        } else if nowrap {
             self.w.esc(text);
         } else if sphinx {
             let [open, close] = o.math_display;

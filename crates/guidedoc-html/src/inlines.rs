@@ -32,6 +32,10 @@ impl Html<'_, '_> {
         self.open_tag("span", id, class);
         self.w.put_byte(b'>');
         self.write_aliases(id);
+        if self.w.write_math(self.doc.node_text(id), false) {
+            self.w.put("</span>");
+            return Visit::Skip;
+        }
         let [open, close] = o.math_inline;
         self.w.put(if sphinx && !open.is_empty() { open } else { "\\(" });
         self.w.esc(self.doc.node_text(id));

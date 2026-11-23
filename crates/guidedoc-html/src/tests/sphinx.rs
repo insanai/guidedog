@@ -450,3 +450,46 @@ fn math_in_sphinx_style() {
     let plain = render(sphinx_math, frag());
     has(&plain, "<span class=\"math\">\\(a&lt;b\\)</span>");
 }
+
+/// A math writer that typesets every formula but "x".
+struct FakeMath;
+
+impl guidedoc::MathWriter for FakeMath {
+    fn write_math(&self, latex: &str, display: bool, out: &mut guidedoc::Emitter<'_>) -> bool {
+        if latex == "x" {
+            return false;
+        }
+        out.emit(if display { "<math display=\"block\">" } else { "<math>" });
+        out.emit("<mi>ok</mi></math>");
+        true
+    }
+}
+
+fn numbered_math(b: &mut Builder<'_>) -> Result<(), Fail> {
+    open(b, K::Paragraph)?;
+    leaf(b, K::Math, "a<b")?;
+    leaf(b, K::Math, "x")?;
+    shut(b)?;
+    let numbered = leaf(b, K::MathBlock, "e = f")?;
+    b.add_attribute_string(numbered, A::Id, "equation-e")?;
+    b.add_custom_attribute(numbered, "number", "3")?;
+    leaf(b, K::MathBlock, "x").map(|_| ())
+}
+
+// A math writer's markup replaces the LaTeX inside the usual wrapper, the equation
+// number stays, and a formula the writer refuses is written as without one.
+#[test]
+fn a_math_writer_replaces_the_latex_and_keeps_numbers() {
+    let options = RenderOptions { math_writer: Some(&FakeMath), ..frag() };
+    let r = render(numbered_math, options);
+    assert_eq!(r.status, Status::Ok);
+    has(&r, "<span class=\"math\"><math><mi>ok</mi></math></span>");
+    has(&r, "<span class=\"math\">\\(x\\)</span>");
+    has(&r, "<div id=\"equation-e\" class=\"math\"><span class=\"eqno\">(3)");
+    has(&r, "</span><math display=\"block\"><mi>ok</mi></math></div>");
+    has(&r, "<div class=\"math\">\\[x\\]</div>");
+    let sphinx = RenderOptions { math: MathStyle::Sphinx, ..options };
+    let r = render(numbered_math, sphinx);
+    has(&r, "<span class=\"math notranslate nohighlight\"><math><mi>ok</mi></math></span>");
+    has(&r, "<span class=\"math notranslate nohighlight\">\\(x\\)</span>");
+}

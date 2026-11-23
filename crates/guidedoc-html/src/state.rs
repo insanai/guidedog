@@ -93,6 +93,18 @@ impl<'c, 'a> Writer<'c, 'a> {
         true
     }
 
+    /// Runs the caller's math writer on a formula; false means it wrote nothing.
+    pub fn write_math(&mut self, latex: &str, display: bool) -> bool {
+        let Some(writer) = self.ctx.options.math_writer else {
+            return false;
+        };
+        if !writer.write_math(latex, display, &mut self.ctx.out) {
+            return false;
+        }
+        self.last = 0;
+        true
+    }
+
     /// Reports `m`, as a warning when the policy keeps documents with content errors;
     /// an error also fails the render with its status.
     pub fn fail(&mut self, m: Message, span: SourceSpan, a: Arg, b: Arg) {

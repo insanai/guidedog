@@ -10,8 +10,8 @@ time, members of classes outside the source roots) is a `Message` naming the obj
 
 ```toml
 [dependencies]
-gd-autodoc = "1.0.0-beta.14"
-gd-pyscan = "1.0.0-beta.14"
+gd-autodoc = "1.0.0-beta.15"
+gd-pyscan = "1.0.0-beta.15"
 ```
 
 We generate the `autoclass` output for a class:

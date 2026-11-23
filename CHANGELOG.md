@@ -7,6 +7,8 @@ beside it.
 
 ## Unreleased
 
+## 1.0.0-beta.15 - 2026-11-23
+
 We fix a race in the file locks: a command could be told that the plugin registry, a publisher's state or a discussion catalog was busy when no command held its lock. One lock, proved correct in Lean, now serves every command (GDS 0019).
 
 - Fix `plugins.busy`, `pages.busy`, `PREFIX.busy`, `ssg.conflict` and `ssg.site` reported for a lock nobody held. On Unix the lock belongs to the open file, and a child process holds a copy of every descriptor from its creation until it starts its program; a holder that only closed its lock file had not released the lock while such a copy lived. This showed when one thread changed the registry while another started a plugin program. A holder now unlocks before it closes, which releases the lock for every copy at once.

@@ -10,7 +10,7 @@ domain.
 
 ```toml
 [dependencies]
-gd-rustdoc = "1.0.0-beta.14"
+gd-rustdoc = "1.0.0-beta.15"
 ```
 
 We write the reStructuredText pages for the crate in the current folder:

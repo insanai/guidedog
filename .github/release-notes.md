@@ -1,14 +1,13 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.14 adds mathematics that needs no script, self-contained HTML fragments, and a check of every formula.
+Version 1.0.0-beta.15 fixes a race in the file locks, and gives every command one lock that is proved correct.
 
-- **MathML output.** `html_math_renderer = "mathml"`, `guidedog build --math=mathml` and `guidedog convert --math=mathml` write each formula as a MathML Core `math` element, so a page loads no MathJax and is readable with JavaScript off. Equation numbers, labels and `:eq:` references keep working. MathJax stays the default, and its output is unchanged. A formula that cannot be MathML keeps its LaTeX, with a warning.
-- **Formulas written as MathML.** The `math` directive takes `:notation: mathml`. HTML writes the formula through an allowlist filter for MathML Core. PDF translates the same filtered MathML to Typst math, so the book shows a typeset, numbered formula; a formula the bounded translator cannot write shows its source, with a warning that names the cause.
-- **Pictures inside a fragment.** `guidedog convert --embed-pictures` draws graphs, Typst diagrams and inline scores under the confinement of a build and writes them as SVG `data:` images, within `--max-pictures` and `--max-picture-kib`. A picture that fails or passes a bound stays code, with a warning.
-- **Output despite errors.** `guidedog convert --keep-going` writes the output and still reports the errors of a document with an unknown directive or role, a missing included file or an unresolved reference.
-- **A math check for every output.** Each LaTeX formula is checked once when a document is read. A warning points at the first fault and proposes a correction, such as "Did you mean `\frac`?". A command MathJax typesets is never reported as unknown. These are warnings, so `-W` and `--strict` builds that held such formulas now fail on them.
+- **No false "busy".** A command could be told that the plugin registry, a publisher's state, a discussion catalog or a site folder was busy when no command held its lock (`plugins.busy`, `pages.busy`, `PREFIX.busy`, `ssg.conflict`, `ssg.site`). On Unix a lock belongs to the open file, and a child process holds a copy of every descriptor until it starts its program; a holder that only closed its lock file had not released the lock while such a copy lived. A holder now unlocks before it closes, which releases the lock for every copy at once.
+- **One lock.** `gd_plugins::files::lock_exclusive` and `lock_exclusive_private`, with `FileLock` and `LockError`, take an advisory lock on a lock file without waiting and release it when the `FileLock` drops. The registry, `gd-pages`, `gd-discussion`, both locks of `gd-ssg` and the example publisher use it. Problem codes, messages, exit statuses and lock file names are unchanged.
+- **No waiting in `lock_catalog`.** `gd_discussion::lock_catalog` reports a lock another command holds at once, as the other commands do; it no longer asks again for 200 ms.
+- **Proofs.** GDS 0019, "File locks", models the lock, the takers, child processes and crashes. It proves mutual exclusion, no false refusal, crash recovery, and that readers see whole files and no update is lost. Lean 4.19 checks the proofs with its core library alone (`docs/gds/proofs`), and `cargo xtask proofs` runs the check. Tests enumerate the same model and reproduce the defect without timing.
 
-The [mathematics guide](https://insanai.github.io/guidedog/manual/topics/mathematics.html), [command reference](https://insanai.github.io/guidedog/manual/reference/cli.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.14/CHANGELOG.md) describe the options, bounds and library interfaces.
+[GDS 0019](https://insanai.github.io/guidedog/discussions/records/0019-file-locks.html), the [plugin internals](https://insanai.github.io/guidedog/manual/internals/plugins.html) and the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.15/CHANGELOG.md) describe the defect, the lock and the proofs.
 
 ## Downloads
 
@@ -19,7 +18,7 @@ The [mathematics guide](https://insanai.github.io/guidedog/manual/topics/mathema
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.14-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.15-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

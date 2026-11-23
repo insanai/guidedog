@@ -7,9 +7,9 @@ structure, or the CommonMark reference renderer's bytes for conformance tests.
 
 ```toml
 [dependencies]
-guidedoc-html = "1.0.0-beta.14"
-guidedoc = "1.0.0-beta.14"
-guidedoc-commonmark = "1.0.0-beta.14"
+guidedoc-html = "1.0.0-beta.15"
+guidedoc = "1.0.0-beta.15"
+guidedoc-commonmark = "1.0.0-beta.15"
 ```
 
 We render CommonMark as HTML:

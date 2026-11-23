@@ -7,7 +7,7 @@ configurations. Depends only on `gd-report`.
 
 ```toml
 [dependencies]
-gd-toml = "1.0.0-beta.14"
+gd-toml = "1.0.0-beta.15"
 ```
 
 We read a setting and write the table back:

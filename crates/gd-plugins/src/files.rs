@@ -1,6 +1,7 @@
 //! Private folders and files, and files replaced in one step: what a host or a publisher
 //! needs to keep state (a registry, tokens, a frozen site) that only its user may read.
 //! Where the system has permissions, folders are made `0700` and files `0600`.
+//! [`lock_exclusive`] serializes the commands that change such state.
 //!
 //! ```
 //! let dir = gd_plugins::files::make_temp_dir(&std::env::temp_dir(), "doc-example")?;
@@ -14,6 +15,10 @@ use std::fs;
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
+
+mod lock;
+
+pub use lock::{FileLock, LockError, lock_exclusive, lock_exclusive_private};
 
 /// Creates `dir` and its missing parents, readable only by the user. A folder that
 /// exists already is kept as it is. Fails with the error of the folder that could not
@@ -62,11 +67,17 @@ pub fn create_private(path: &Path) -> io::Result<fs::File> {
 /// renames it over `path`, so a reader sees the old file or the new one, never a part.
 /// On failure the file beside is removed, and the error comes with the path that
 /// failed: the file beside when writing it failed, `path` when the rename did.
+///
+/// Two writers of one `path` must not run at once, since they share the file beside:
+/// hold the [`FileLock`] of that state while reading it and writing it back.
 pub fn write_atomically(path: &Path, data: &[u8]) -> Result<(), (PathBuf, io::Error)> {
     let mut next = path.as_os_str().to_owned();
     next.push(".next");
     let next = PathBuf::from(next);
+    // Transition `draft` (GDS 0019): a file a crashed writer left is removed, and the
+    // new one starts empty.
     let _ = fs::remove_file(&next);
+    // Transition `sync`: every byte written and synced.
     let written = create_private(&next).and_then(|mut f| {
         f.write_all(data)?;
         f.sync_all()
@@ -75,6 +86,8 @@ pub fn write_atomically(path: &Path, data: &[u8]) -> Result<(), (PathBuf, io::Er
         let _ = fs::remove_file(&next);
         return Err((next, e));
     }
+    // Transition `rename`: readers see the old file until this step and the new one
+    // after it.
     if let Err(e) = fs::rename(&next, path) {
         let _ = fs::remove_file(&next);
         return Err((path.to_path_buf(), e));

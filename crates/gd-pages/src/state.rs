@@ -14,7 +14,7 @@
 //! Every file is written beside its place and renamed over it, so a reader sees the old
 //! file or the new one.
 
-use std::fs::{self, File};
+use std::fs;
 use std::path::{Path, PathBuf};
 
 use gd_plugins::Problem;
@@ -22,7 +22,9 @@ use gd_toml::{Table, Value};
 
 use crate::config::quoted;
 use crate::problem::{io_problem, problem};
-use gd_plugins::files::{create_private_dir, write_atomically};
+use gd_plugins::files::{
+    FileLock, LockError, create_private_dir, lock_exclusive_private, write_atomically,
+};
 
 const MAX_STATE_BYTES: u64 = 1024 * 1024;
 const PROFILES_ABOUT: &str = "Credential profiles: each names a token in the credential store.";
@@ -99,17 +101,7 @@ pub struct State {
 /// A lock on a target or the settings; dropping it releases the lock.
 #[derive(Debug)]
 pub struct StateLock {
-    file: File,
-}
-
-impl Drop for StateLock {
-    /// Unlocks before the file closes. Closing alone is not enough: the lock belongs to
-    /// the open file, which a child process started meanwhile by another thread also
-    /// holds until it runs its program, so the lock would outlive this value. Unlocking
-    /// releases it for every holder of the open file at once.
-    fn drop(&mut self) {
-        let _ = self.file.unlock();
-    }
+    _file: FileLock,
 }
 
 /// Names a target's files: its repository ID and branch, with the branch's slashes
@@ -270,14 +262,9 @@ impl State {
     pub fn lock(&self, key: &str) -> Result<StateLock, Problem> {
         let path = self.dir.join(format!("{key}.lock"));
         let shown = path.display().to_string();
-        let mut options = fs::OpenOptions::new();
-        options.read(true).write(true).create(true).truncate(false);
-        #[cfg(unix)]
-        std::os::unix::fs::OpenOptionsExt::mode(&mut options, 0o600);
-        let file = options.open(&path).map_err(|e| io_problem(&shown, &e))?;
-        match file.try_lock() {
-            Ok(()) => Ok(StateLock { file }),
-            Err(fs::TryLockError::WouldBlock) => Err(problem(
+        match lock_exclusive_private(&path) {
+            Ok(file) => Ok(StateLock { _file: file }),
+            Err(LockError::Held) => Err(problem(
                 "pages.busy",
                 "Another publication of this target is running",
                 &shown,
@@ -285,7 +272,7 @@ impl State {
                  process.",
                 "Wait for it to finish, or stop it, then run the command again.",
             )),
-            Err(fs::TryLockError::Error(e)) => Err(io_problem(&shown, &e)),
+            Err(LockError::Io(e)) => Err(io_problem(&shown, &e)),
         }
     }
 

@@ -10,7 +10,7 @@ pub struct MusicSource {
 /// Shared immutable music tables, or the load failure to report at each affected directive.
 #[derive(Debug)]
 pub struct MusicFonts<'a> {
-    pub(super) loaded: Result<gd_engrave::Fonts<'a>, gd_score::Error>,
+    pub(crate) loaded: Result<gd_engrave::Fonts<'a>, gd_score::Error>,
 }
 
 impl MusicSource {
@@ -35,12 +35,16 @@ impl MusicSource {
 /// Loads build-owned font handles through the same policy used for PDF compilation.
 /// Call once before rendering worker threads, then borrow its tables through PageRequest.
 pub fn load_music_source(config: &Config) -> MusicSource {
-    let options = gd_typst::Options {
+    load_music_fonts(&gd_typst::Options {
         embedded_fonts_only: config.pdf.fonts == "embedded",
         font_paths: config.pdf.font_paths.iter().map(|p| config.source_dir.join(p)).collect(),
         ..Default::default()
-    };
-    let fonts = gd_typst::load_text_fonts(&options)
+    })
+}
+
+/// Loads the font handles Typst would use with `options` (its font settings only).
+pub(crate) fn load_music_fonts(options: &gd_typst::Options<'_>) -> MusicSource {
+    let fonts = gd_typst::load_text_fonts(options)
         .faces
         .into_iter()
         .map(|face| {

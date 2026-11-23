@@ -26,6 +26,7 @@
 #![cfg_attr(test, allow(clippy::unwrap_used))]
 
 mod discussion;
+mod embed;
 mod excerpt_copy;
 mod excerpts;
 mod extlinks;
@@ -50,6 +51,7 @@ mod typst;
 mod xref;
 
 pub use discussion::{Discussion, discussion_field, discussion_prefix, discussion_record};
+pub use embed::{EMBED_GRAPH, EMBED_LIMIT, EMBED_MUSIC, EMBED_TYPST, EmbedOptions, Embedder};
 pub use excerpts::{Excerpt, render_excerpt};
 pub use graph_theme::{
     ADAPTIVE_CLASS, AdaptError, GRAPH_ADAPTIVE_CSS, adapt_graph, graph_adaptive,

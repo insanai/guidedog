@@ -7,6 +7,7 @@ mod keys;
 mod options;
 mod source;
 
+pub(crate) use fonts::load_music_fonts;
 pub use fonts::{MusicFonts, MusicSource, load_music_source};
 
 use gd_engrave::{Engraving, Fonts};

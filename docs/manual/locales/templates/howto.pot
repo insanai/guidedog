@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 20:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -153,7 +153,7 @@ msgid "When an update is interrupted"
 msgstr ""
 
 #: ../../howto/discussions.rst:182
-msgid "Commands that change records hold the catalog's lock, ``.eds.lock``. An update of several files first writes a journal, ``.eds-journal.json``. If it stops part way, the next command says so:"
+msgid "Commands that change records hold the catalog's lock, ``.eds.lock``. A command that finds the lock held by another command says ``eds.busy`` at once and changes nothing; we run it again when the other command has finished. An update of several files first writes a journal, ``.eds-journal.json``. If it stops part way, the next command says so:"
 msgstr ""
 
 #: ../../howto/discussions.rst:191

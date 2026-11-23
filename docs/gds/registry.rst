@@ -68,6 +68,6 @@ Discussion registry
      - committed
    * - 0019
      - :doc:`records/0019-file-locks`
-     - discussion
+     - committed
 
 .. gds-generated-end

@@ -1,6 +1,6 @@
 :gds-number: 0019
 :gds-title: File locks
-:gds-state: discussion
+:gds-state: committed
 :gds-type: Standards Track
 :gds-authors: ["Vikrant Rathore"]
 :gds-created: 2026-11-23
@@ -691,3 +691,23 @@ GDS 0008, GitHub Pages publishing, and GDS 0009, the native plugin API and regis
 
    2026-11-23: prediscussion -> discussion. Assigned a permanent number and
    opened for discussion.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-23: discussion -> accepted. The maintainer asked for this record with
+   the fix of the file lock race, and for its release in Guidedog 1.0.0-beta.15;
+   the design is implemented.
+
+.. rubric:: Lifecycle event
+
+::
+
+   2026-11-23: accepted -> committed. Ship the implemented file lock in Guidedog
+   1.0.0-beta.15, as the maintainer asked. gd_plugins::files::lock, used by the
+   registry, gd-pages, gd-discussion, gd-ssg and the example publisher; its
+   exhaustive model test and descriptor-copy test; the registry stress test in
+   crates/gd-plugins/tests/publishers.rs; 13 theorems in docs/gds/proofs checked
+   by cargo xtask proofs with Lean 4.19; the test binary run 1000 times without
+   a failure (section Motivation).

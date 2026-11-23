@@ -64,11 +64,12 @@ pub use name_map::NameMap;
 pub use nfd::{nfd_first, normalize_nfd, normalize_nfd_into};
 pub use object::{load_object, write_object};
 pub use options::{
-    ContentPolicy, ENGLISH_LABELS, Highlighter, LABEL_COUNT, Label, Labels, Limits, MapEntry,
-    MathStyle, Pass, PassFn, PassOutcome, Policy, ReadExtension, ReadOptions, RenderOptions,
-    Request, Resource, ResourceProvider, ResourceStatus, SCORE_FILE_ATTRIBUTE, Source,
-    admonition_label, default_limits, default_policy, default_read_options, default_request,
-    label, read_extension, split_label, trusted_policy, unengraved_score,
+    ContentPolicy, ENGLISH_LABELS, Highlighter, LABEL_COUNT, Label, Labels, Limits,
+    MATH_NOTATION_ATTRIBUTE, MapEntry, MathStyle, MathWriter, Pass, PassFn, PassOutcome, Policy,
+    ReadExtension, ReadOptions, RenderOptions, Request, Resource, ResourceProvider,
+    ResourceStatus, SCORE_FILE_ATTRIBUTE, Source, admonition_label, default_limits,
+    default_policy, default_read_options, default_request, is_mathml, label, read_extension,
+    split_label, trusted_policy, unengraved_score,
 };
 pub use positions::{PositionCache, SourcePositions, relative_source};
 pub use report::{

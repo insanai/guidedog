@@ -349,6 +349,15 @@ pub trait Highlighter {
     fn highlight(&self, language: &str, code: &str, out: &mut Emitter<'_>) -> bool;
 }
 
+/// Writes one formula as markup that needs no script, such as MathML. It belongs to
+/// the caller's trust boundary: what it writes goes into the page as it is. It returns
+/// false, having written nothing, to let the renderer write the formula's LaTeX in its
+/// usual markup instead.
+pub trait MathWriter {
+    /// Writes the formula `latex` (inline, or displayed when `display`) into `out`.
+    fn write_math(&self, latex: &str, display: bool, out: &mut Emitter<'_>) -> bool;
+}
+
 /// Options every renderer understands. `Default` is a standalone document in English.
 #[derive(Clone, Copy)]
 pub struct RenderOptions<'a> {
@@ -382,6 +391,9 @@ pub struct RenderOptions<'a> {
     pub math_inline: [&'a str; 2],
     /// HTML displayed math delimiters with `MathStyle::Sphinx`; empty: `\[` `\]`.
     pub math_display: [&'a str; 2],
+    /// HTML: writes each formula as script-free markup (MathML); `None`, or a formula
+    /// it refuses, writes the LaTeX as `math` says.
+    pub math_writer: Option<&'a dyn MathWriter>,
     /// Preview source positions (see [`SourcePositions`]): HTML block elements carry
     /// `data-gd-source="<source>:<start>-<end>"`, and Typst writes each block's position
     /// as labelled metadata, so a preview maps a click back to the source. `None` writes
@@ -407,6 +419,7 @@ impl Default for RenderOptions<'_> {
             math: MathStyle::Plain,
             math_inline: ["", ""],
             math_display: ["", ""],
+            math_writer: None,
             source_positions: None,
         }
     }
@@ -423,6 +436,7 @@ impl fmt::Debug for RenderOptions<'_> {
             .field("highlighter", &self.highlighter.is_some())
             .field("labels", &self.labels.is_some())
             .field("math", &self.math)
+            .field("math_writer", &self.math_writer.is_some())
             .finish_non_exhaustive()
     }
 }
@@ -433,6 +447,17 @@ pub fn label<'a>(options: &RenderOptions<'a>, l: Label) -> &'a str {
         Some(words) if !words.get(l).is_empty() => words.get(l),
         _ => ENGLISH_LABELS[l as usize],
     }
+}
+
+/// The custom attribute of a formula that is not written in LaTeX. Its only value is
+/// `mathml`: the node's text is then one MathML `math` element (see [`is_mathml`]).
+pub const MATH_NOTATION_ATTRIBUTE: &str = "notation";
+
+/// Tells whether the formula `id` is written as MathML, not LaTeX. The HTML renderer
+/// passes its MathML Core through a filter; renderers that cannot typeset MathML show
+/// its source.
+pub fn is_mathml(doc: Document<'_>, id: crate::NodeId) -> bool {
+    doc.custom_attribute(id, MATH_NOTATION_ATTRIBUTE) == Some("mathml")
 }
 
 /// The custom attribute a `lilypond` directive with a file argument carries. The reader

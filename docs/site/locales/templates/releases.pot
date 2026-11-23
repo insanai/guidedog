@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 22:49+0000\n"
+"POT-Creation-Date: 2026-11-23 17:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -106,6 +106,34 @@ msgstr ""
 
 #: ../../releases/1.0.0-beta.13.rst:28
 msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:8
+msgid "Guidedog 1.0.0-beta.14"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:11
+msgid "Guidedog can now write formulas as MathML, which a browser shows without a script. An application that shows converted pages inside its own can also ask for a self-contained HTML fragment."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:16
+msgid "The setting ``html_math_renderer = \"mathml\"`` writes each formula as a MathML Core ``math`` element. ``guidedog build --math=mathml`` does the same for one build, and ``guidedog convert --math=mathml`` for one file. The page loads no MathJax, and equation numbers, labels and ``:eq:`` references keep working. MathJax stays the default, and its output is unchanged."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:21
+msgid "The ``math`` directive takes ``:notation: mathml`` for a formula written in MathML itself. HTML writes it through an allowlist filter for MathML Core. PDF translates the same filtered MathML to Typst math, so the book shows a typeset, numbered formula."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:25
+msgid "``guidedog convert --embed-pictures`` draws graphs, Typst diagrams and inline scores into the HTML as SVG ``data:`` images. The drawing runs under the confinement of a build, within bounds on the count and size of the pictures. ``guidedog convert --keep-going`` writes the output of a document with errors and still reports them."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:29
+msgid "Every LaTeX formula is now checked once when a document is read, whatever the output is. A warning points at the first fault and proposes a correction. A command MathJax typesets is never reported as unknown. These are warnings, so a build with ``-W`` that held such a formula now fails on it."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.14.rst:34
+msgid "The `mathematics guide <https://insanai.github.io/guidedog/manual/topics/mathematics.html>`_ describes both math renderers, MathML notation and the math check. The `command reference <https://insanai.github.io/guidedog/manual/reference/cli.html>`_ lists the new options and their bounds."
 msgstr ""
 
 #: ../../releases/1.0.0-beta.6.rst:8

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 17:30+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ko\n"
@@ -270,16 +270,6 @@ msgstr ""
 "16,384픽셀로 제한됩니다."
 
 #: ../../topics/diagrams.rst:209
-#| msgid ""
-#| "A failed drawing remains visible as source with a warning "
-#| "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
-#| "directive sources report ``sphinx.graphviz.source`` or "
-#| "``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
-#| "must prevent publication. ``--untrusted`` refuses Typst compilation "
-#| "and external Graphviz resources and retains the source. Text builds "
-#| "show source without compiling a drawing. The "
-#| ":doc:`../howto/typst-diagrams` guide lists every option, source limit "
-#| "and migration step for existing figure files."
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -291,7 +281,13 @@ msgid ""
 "builds show source without compiling a drawing. The "
 ":doc:`../howto/typst-diagrams` guide lists every option, source limit and "
 "migration step for existing figure files."
-msgstr "그리기에 실패하면 소스가 경고와 함께 표시됩니다(``build.graphviz`` 또는 ``build.typst-diagram``; 지시문 소스가 없거나 중복되면 ``sphinx.graphviz.source`` 또는 ``sphinx.typst.source``\\ 를 보고합니다). 다이어그램 누락이 게시를 막아야 할 때는 ``-W``\\ 로 빌드합니다. ``--untrusted``\\ 도 내장 컴파일러로 Typst 다이어그램을 컴파일합니다. 이 컴파일러는 소스 폴더만 읽고 패키지를 다운로드하지 않으며, Graphviz 그래프가 지정하는 파일은 거부합니다. 텍스트 빌드는 그림을 컴파일하지 않고 소스를 표시합니다. :doc:`../howto/typst-diagrams` 안내서에 모든 옵션, 소스 제한과 기존 그림 파일의 이전 절차가 있습니다."
+msgstr ""
+"그리기에 실패하면 소스가 경고와 함께 표시됩니다(``build.graphviz`` 또는 ``build.typst-diagram``; "
+"지시문 소스가 없거나 중복되면 ``sphinx.graphviz.source`` 또는 ``sphinx.typst.source``\\ "
+"를 보고합니다). 다이어그램 누락이 게시를 막아야 할 때는 ``-W``\\ 로 빌드합니다. ``--untrusted``\\ 도 내장 "
+"컴파일러로 Typst 다이어그램을 컴파일합니다. 이 컴파일러는 소스 폴더만 읽고 패키지를 다운로드하지 않으며, Graphviz "
+"그래프가 지정하는 파일은 거부합니다. 텍스트 빌드는 그림을 컴파일하지 않고 소스를 표시합니다. "
+":doc:`../howto/typst-diagrams` 안내서에 모든 옵션, 소스 제한과 기존 그림 파일의 이전 절차가 있습니다."
 
 #: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
@@ -947,10 +943,162 @@ msgstr ""
 "않는 PDF 명령은 보고하며 임의의 LaTeX 패키지는 실행하지 않습니다."
 
 #: ../../topics/mathematics.rst:38
+msgid "Faults in a formula"
+msgstr "수식의 오류"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Guidedog checks every LaTeX formula once, when it reads the document. The "
+"check does not depend on the output: an HTML build with MathJax, a MathML "
+"build, ``guidedog convert`` and a PDF all give the same report. A fault "
+"is a warning. The page is still written, with the formula as we wrote it."
+msgstr ""
+"Guidedog은 문서를 읽을 때 모든 LaTeX 수식을 한 번씩 검사합니다. 검사는 출력과 무관합니다. MathJax를 쓰는 "
+"HTML 빌드, MathML 빌드, ``guidedog convert``, PDF가 모두 같은 보고를 냅니다. 수식의 오류는 "
+"경고입니다. 페이지는 우리가 쓴 수식 그대로 쓰입니다."
+
+#: ../../topics/mathematics.rst:57
+msgid ""
+"The marker stands under the offending text, and the hint proposes the "
+"correction where one is close. Only the first fault of a formula is "
+"reported."
+msgstr ""
+"표시는 문제가 있는 텍스트 아래에 놓이고, 가까운 후보가 있으면 힌트가 수정안을 제시합니다. 수식마다 첫 번째 오류만 보고합니다."
+
+#: ../../topics/mathematics.rst:60
+msgid "Math faults"
+msgstr "수식 오류"
+
+#: ../../topics/mathematics.rst:64
+msgid "Code"
+msgstr "코드"
+
+#: ../../topics/mathematics.rst:65
+msgid "Fault"
+msgstr "오류"
+
+#: ../../topics/mathematics.rst:66
+msgid "``math.command.unknown``"
+msgstr "``math.command.unknown``"
+
+#: ../../topics/mathematics.rst:67
+msgid ""
+"A command that neither MathJax nor Guidedog knows, such as ``\\fraction`` "
+"or ``\\aplha``. The hint names the closest known command."
+msgstr ""
+"``\\fraction``\\ 이나 ``\\aplha``\\ 처럼 MathJax도 Guidedog도 모르는 명령입니다. 힌트는 가장 "
+"가까운 알려진 명령을 알려 줍니다."
+
+#: ../../topics/mathematics.rst:68
+msgid "``math.environment.unknown``"
+msgstr "``math.environment.unknown``"
+
+#: ../../topics/mathematics.rst:69
+msgid ""
+"``\\begin{algin}``: an environment nobody knows. The hint names the "
+"closest one."
+msgstr "``\\begin{algin}``: 아무도 모르는 환경입니다. 힌트는 가장 가까운 환경을 알려 줍니다."
+
+#: ../../topics/mathematics.rst:70
+msgid "``math.brace.unbalanced``"
+msgstr "``math.brace.unbalanced``"
+
+#: ../../topics/mathematics.rst:71
+msgid "A ``{`` that no ``}`` closes, or a ``}`` that closes nothing."
+msgstr "``}``\\ 로 닫히지 않은 ``{``, 또는 아무것도 닫지 않는 ``}``\\ 입니다."
+
+#: ../../topics/mathematics.rst:72
+msgid "``math.environment.unclosed``"
+msgstr "``math.environment.unclosed``"
+
+#: ../../topics/mathematics.rst:73
+msgid ""
+"``\\begin{x}`` without ``\\end{x}``, or ``\\end{x}`` without "
+"``\\begin{x}``."
+msgstr ""
+"``\\end{x}`` 없는 ``\\begin{x}``, 또는 ``\\begin{x}`` 없는 ``\\end{x}``\\ 입니다."
+
+#: ../../topics/mathematics.rst:74
+msgid "``math.environment.mismatch``"
+msgstr "``math.environment.mismatch``"
+
+#: ../../topics/mathematics.rst:75
+msgid "``\\end{y}`` where ``\\begin{x}`` is open."
+msgstr "``\\begin{x}``\\ 가 열려 있는 곳에 ``\\end{y}``\\ 가 있습니다."
+
+#: ../../topics/mathematics.rst:76
+msgid "``math.delimiter.unpaired``"
+msgstr "``math.delimiter.unpaired``"
+
+#: ../../topics/mathematics.rst:77
+msgid "``\\left`` without ``\\right``, or the reverse."
+msgstr "``\\right`` 없는 ``\\left``, 또는 그 반대입니다."
+
+#: ../../topics/mathematics.rst:78
+msgid "``math.argument.missing``"
+msgstr "``math.argument.missing``"
+
+#: ../../topics/mathematics.rst:79
+msgid "A command with fewer arguments than it takes, such as ``\\frac{a}``."
+msgstr "``\\frac{a}``\\ 처럼 필요한 것보다 인수가 적은 명령입니다."
+
+#: ../../topics/mathematics.rst:80
+msgid "``math.alignment.outside``"
+msgstr "``math.alignment.outside``"
+
+#: ../../topics/mathematics.rst:81
+msgid "``&`` outside an environment, or ``\\\\`` in inline math."
+msgstr "환경 밖의 ``&``, 또는 인라인 수식 안의 ``\\\\``\\ 입니다."
+
+#: ../../topics/mathematics.rst:83
+msgid ""
+"A command is unknown only when no output can typeset it. The check knows "
+"the commands of MathJax's base, AMS and autoloaded packages, such as "
+"``\\color``, ``\\cancel`` and ``\\ce``. Some of them cannot become Typst "
+"mathematics. That is a narrower fault, and only the output that needs "
+"Typst reports it: ``typst.math.unsupported`` for a PDF, "
+"``mathml.math.unsupported`` for MathML. A MathJax page gets no report for "
+"them."
+msgstr ""
+"어떤 출력도 조판할 수 없을 때에만 명령을 알 수 없다고 합니다. 검사는 ``\\color``, ``\\cancel``, "
+"``\\ce``\\ 처럼 MathJax의 base, AMS, 자동 로드 패키지에 있는 명령을 압니다. 그중 일부는 Typst 수식이 "
+"될 수 없습니다. 이것은 더 좁은 오류이며, Typst가 필요한 출력만 보고합니다. PDF에서는 "
+"``typst.math.unsupported``, MathML에서는 ``mathml.math.unsupported``\\ 입니다. "
+"MathJax 페이지는 이에 대한 보고를 받지 않습니다."
+
+#: ../../topics/mathematics.rst:88
+msgid ""
+"A command we define is known. ``\\newcommand``, ``\\renewcommand``, "
+"``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator`` and "
+"``\\newenvironment`` in a formula define a name for the rest of the "
+"document. A project also names its MathJax macros in ``conf.toml``, and "
+"every document knows them:"
+msgstr ""
+"우리가 정의한 명령은 알려진 명령입니다. 수식 안의 ``\\newcommand``, ``\\renewcommand``, "
+"``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator``, "
+"``\\newenvironment``\\ 는 문서의 나머지 부분에서 쓸 이름을 정의합니다. 프로젝트는 MathJax 매크로를 "
+"``conf.toml``\\ 에도 적으며, 모든 문서가 그것을 압니다."
+
+#: ../../topics/mathematics.rst:97
+msgid ""
+"A displayed formula with ``\\\\`` is wrapped in an alignment, as Sphinx "
+"does, so ``&`` and ``\\\\`` are fine there. With ``:nowrap:`` nothing is "
+"wrapped, and ``&`` needs its own environment. The work is bounded: a "
+"formula longer than 64 KiB is not checked, and a document gets at most 64 "
+"math reports. ``-W`` and ``--strict`` treat these warnings as any other "
+"warning. A formula written as MathML is not checked as LaTeX."
+msgstr ""
+"``\\\\``\\ 가 있는 디스플레이 수식은 Sphinx처럼 정렬 환경으로 감싸므로, 거기서는 ``&``\\ 와 "
+"``\\\\``\\ 를 써도 됩니다. ``:nowrap:``\\ 을 쓰면 아무것도 감싸지 않으며, ``&``\\ 에는 자체 환경이 "
+"필요합니다. 작업량에는 한도가 있습니다. 64 KiB보다 긴 수식은 검사하지 않고, 문서 하나가 받는 수식 보고는 최대 "
+"64개입니다. ``-W``\\ 와 ``--strict``\\ 는 이 경고를 다른 경고와 똑같이 다룹니다. MathML로 쓴 수식은 "
+"LaTeX로 검사하지 않습니다."
+
+#: ../../topics/mathematics.rst:103
 msgid "A small proof"
 msgstr "간단한 증명"
 
-#: ../../topics/mathematics.rst:41
+#: ../../topics/mathematics.rst:106
 msgid ""
 "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
 "its limit. Let :math:`n` be a requested allocation. Assume all three "
@@ -959,19 +1107,19 @@ msgstr ""
 "계상된 바이트를 :math:`U`\\ , 한도를 :math:`B`\\ , 요청량을 :math:`n`\\ 이라 합시다. 모두 음수가 "
 "아니고 :math:`U \\le B`\\ 라고 가정합니다."
 
-#: ../../topics/mathematics.rst:45
+#: ../../topics/mathematics.rst:110
 msgid "**Admission rule.** Admit the request exactly when"
 msgstr "**허용 규칙.** 다음 조건이 성립할 때만 요청을 허용합니다."
 
-#: ../../topics/mathematics.rst:47
+#: ../../topics/mathematics.rst:112
 msgid "n \\le B - U."
 msgstr "n \\le B - U."
 
-#: ../../topics/mathematics.rst:52
+#: ../../topics/mathematics.rst:117
 msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
 msgstr "**명제.** 허용된 요청은 :math:`U + n \\le B`\\ 를 유지합니다."
 
-#: ../../topics/mathematics.rst:54
+#: ../../topics/mathematics.rst:119
 msgid ""
 "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
 "result is :math:`U+n \\le B`. The implementation tests the subtraction "
@@ -982,7 +1130,7 @@ msgstr ""
 "입니다. 구현은 뺄셈 형태를 검사하며 정수 오버플로가 가능한 :math:`U+n`\\ 을 먼저 계산하지 않습니다. 증명과 연산 "
 "순서가 일치합니다."
 
-#: ../../topics/mathematics.rst:59
+#: ../../topics/mathematics.rst:124
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
 "the Typst compiler's internal allocations. A proof is only as strong as "
@@ -991,11 +1139,11 @@ msgstr ""
 "**경계.** 이 수치는 호스트가 계상한 저장 공간만 다룹니다. Typst 컴파일러 내부의 할당은 제한하지 않습니다. 증명은 스스로 "
 "밝힌 경계만큼만 유효합니다."
 
-#: ../../topics/mathematics.rst:63
+#: ../../topics/mathematics.rst:128
 msgid "HTML setup"
 msgstr "HTML 설정"
 
-#: ../../topics/mathematics.rst:66
+#: ../../topics/mathematics.rst:131
 msgid ""
 "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
 "loaded only on pages containing mathematics. It makes these pages "
@@ -1005,7 +1153,7 @@ msgstr ""
 "이 프로젝트는 MathJax 3.2.2와 SVG 글꼴 데이터를 포함하며 수식이 있는 페이지에서만 불러옵니다. 빌드 뒤 오프라인에서도 "
 "읽을 수 있고 그림 스크립트나 웹 글꼴 서비스가 필요 없습니다."
 
-#: ../../topics/mathematics.rst:71
+#: ../../topics/mathematics.rst:136
 msgid ""
 "For our own projects, the default uses MathJax from a CDN. To serve a "
 "local copy, we place it in ``_static`` and set:"
@@ -1013,7 +1161,7 @@ msgstr ""
 "일반 프로젝트에서는 기본적으로 CDN의 MathJax를 사용합니다. 로컬 사본을 제공하려면 ``_static``\\ 에 넣고 다음과 "
 "같이 설정합니다:"
 
-#: ../../topics/mathematics.rst:79
+#: ../../topics/mathematics.rst:144
 msgid ""
 "JavaScript is needed here to typeset web equations. Without it, their "
 "source remains visible. PDF equations do not need browser JavaScript. See "
@@ -1024,6 +1172,151 @@ msgstr ""
 "없습니다. `MathJax 구성 요소 계약 "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ 을 "
 "참고하세요."
+
+#: ../../topics/mathematics.rst:148
+msgid "MathML without a script"
+msgstr "스크립트 없는 MathML"
+
+#: ../../topics/mathematics.rst:151
+msgid "MathJax is the default. We can ask for MathML instead:"
+msgstr "기본값은 MathJax입니다. 대신 MathML을 요청할 수 있습니다."
+
+#: ../../topics/mathematics.rst:157
+msgid ""
+"``guidedog build html --math=mathml`` does the same for one build, and "
+"``guidedog convert --math=mathml`` for one file. Every formula is then "
+"written as a MathML ``math`` element, which current browsers show "
+"themselves. The page loads no MathJax, and it is readable with JavaScript "
+"off. Equation numbers, labels and ``:eq:`` references work as before."
+msgstr ""
+"``guidedog build html --math=mathml``\\ 은 한 번의 빌드에, ``guidedog convert "
+"--math=mathml``\\ 은 파일 하나에 같은 일을 합니다. 그러면 모든 수식이 MathML ``math`` 요소로 쓰이고, "
+"최신 브라우저가 직접 표시합니다. 페이지는 MathJax를 불러오지 않으며, JavaScript를 꺼도 읽을 수 있습니다. 수식 "
+"번호, 레이블, ``:eq:`` 참조는 이전과 같이 동작합니다."
+
+#: ../../topics/mathematics.rst:166
+msgid ""
+"Guidedog translates the LaTeX as it does for the PDF, and the embedded "
+"Typst compiler writes the MathML. All formulas of a page are typeset in "
+"one run, and equal formulas are typeset once. The elements are those of "
+"MathML Core, and no element has a ``style`` or ``id`` attribute. A build "
+"adds ``_static/mathml.css``, a few rules for aligned equations and cases, "
+"to the pages that have a formula."
+msgstr ""
+"Guidedog은 PDF에서 하듯이 LaTeX를 변환하고, 내장 Typst 컴파일러가 MathML을 씁니다. 한 페이지의 모든 "
+"수식은 한 번의 실행으로 조판하며, 같은 수식은 한 번만 조판합니다. 요소는 MathML Core의 요소이며, 어떤 요소에도 "
+"``style``\\ 이나 ``id`` 속성이 없습니다. 빌드는 수식이 있는 페이지에 ``_static/mathml.css``\\ "
+"를 추가합니다. 정렬된 수식과 경우 나누기를 위한 몇 가지 규칙입니다."
+
+#: ../../topics/mathematics.rst:171
+msgid ""
+"Some formulas cannot be MathML. A LaTeX command the translation does not "
+"know is one case (``mathml.math.unsupported``). A construct MathML Core "
+"cannot draw, such as ``\\boxed``, ``\\phantom``, ``\\overline`` or "
+"``\\cancel``, is another (``mathml.math.lossy``). Such a formula is not "
+"lost: the page shows its LaTeX in the usual markup, and a warning points "
+"at it. In a MathML build no script typesets that LaTeX, so we rewrite the "
+"formula or keep MathJax for the project."
+msgstr ""
+"MathML이 될 수 없는 수식도 있습니다. 변환이 모르는 LaTeX 명령이 한 가지 "
+"경우입니다(``mathml.math.unsupported``). ``\\boxed``, ``\\phantom``, "
+"``\\overline``, ``\\cancel``\\ 처럼 MathML Core가 그릴 수 없는 구조가 또 한 가지 "
+"경우입니다(``mathml.math.lossy``). 그런 수식도 사라지지 않습니다. 페이지는 평소의 마크업으로 LaTeX를 보여 "
+"주고, 경고가 그 수식을 가리킵니다. MathML 빌드에서는 그 LaTeX를 조판할 스크립트가 없으므로, 수식을 고쳐 쓰거나 "
+"프로젝트에 MathJax를 유지합니다."
+
+#: ../../topics/mathematics.rst:177
+msgid "Formulas written as MathML"
+msgstr "MathML로 쓴 수식"
+
+#: ../../topics/mathematics.rst:180
+msgid ""
+"We can also write a displayed formula in MathML itself, with the "
+"``notation`` option:"
+msgstr "``notation`` 옵션을 쓰면 디스플레이 수식을 MathML 자체로 쓸 수도 있습니다."
+
+#: ../../topics/mathematics.rst:190
+msgid ""
+"The content is one ``math`` element. HTML output passes it through a "
+"filter, whatever the math renderer is. The filter keeps the presentation "
+"elements of MathML Core and their plain attributes. It leaves out "
+"everything else, such as ``style``, ``id``, ``href``, event attributes "
+"and foreign elements, and reports ``html.mathml.dropped``. Content that "
+"is not one well-formed ``math`` element is shown as code, with "
+"``html.mathml.invalid``. The equation keeps its label and number."
+msgstr ""
+"내용은 ``math`` 요소 하나입니다. HTML 출력은 수식 렌더러가 무엇이든 이것을 필터에 통과시킵니다. 필터는 MathML "
+"Core의 표현 요소와 그 단순한 속성을 남깁니다. ``style``, ``id``, ``href``, 이벤트 속성, 외부 요소 "
+"같은 나머지는 모두 빼고 ``html.mathml.dropped``\\ 를 보고합니다. 형식이 올바른 하나의 ``math`` 요소가 "
+"아닌 내용은 코드로 표시하고 ``html.mathml.invalid``\\ 를 보고합니다. 수식의 레이블과 번호는 유지됩니다."
+
+#: ../../topics/mathematics.rst:197
+msgid ""
+"The PDF typesets the formula too. Guidedog reads the same filtered MathML "
+"Core and translates it to Typst math, so the book shows a real formula "
+"with its number, and ``:eq:`` links to it."
+msgstr ""
+"PDF도 이 수식을 조판합니다. Guidedog은 필터를 거친 같은 MathML Core를 읽어 Typst 수식으로 변환하므로, "
+"책에는 번호가 붙은 실제 수식이 나오고 ``:eq:``\\ 가 거기로 연결됩니다."
+
+#: ../../topics/mathematics.rst:206
+msgid ""
+"The translation knows every element the filter keeps. Fractions, roots, "
+"scripts, limits, accents and prescripts become the Typst calls of the "
+"same meaning. A table between fences is a matrix, a table after a lone "
+"``{`` is ``cases``, and a table that is the whole formula is an aligned "
+"equation of several lines. A fraction with ``linethickness=\"0\"`` "
+"between parentheses is a binomial. Fences around a row grow with their "
+"content. The ``mathvariant`` attribute selects bold, italic, "
+"double-struck, script, fraktur, sans-serif, monospace or upright letters. "
+"Greek letters, operators and arrows are written by their Typst names; any "
+"other character is written as itself. A ``semantics`` element shows its "
+"first child, and its annotations are passed over."
+msgstr ""
+"변환은 필터가 남기는 모든 요소를 압니다. 분수, 근호, 첨자, 위아래 한계, 악센트, 앞첨자는 같은 뜻의 Typst 호출이 "
+"됩니다. 구분 기호 사이의 표는 행렬이고, 홀로 있는 ``{`` 뒤의 표는 ``cases``\\ 이며, 수식 전체를 이루는 표는 "
+"여러 줄의 정렬 수식입니다. 둥근 괄호 사이에 있는 ``linethickness=\"0\"`` 분수는 이항 계수입니다. 행을 둘러싼 "
+"구분 기호는 내용에 맞춰 커집니다. ``mathvariant`` 속성은 굵은 글꼴, 기울임, 칠판 볼드, 필기체, 프락투어, "
+"산세리프, 고정폭, 바로 선 글자를 고릅니다. 그리스 문자, 연산자, 화살표는 Typst 이름으로 쓰고, 그 밖의 문자는 그대로 "
+"씁니다. ``semantics`` 요소는 첫 번째 자식을 보여 주며, 주석은 건너뜁니다."
+
+#: ../../topics/mathematics.rst:215
+msgid ""
+"No text of the formula can become Typst code. Every character of it is "
+"written as a known name, a single letter or number, an escaped character, "
+"or a string. For this reason the translation is also written in an "
+"``--untrusted`` build, where raw Typst is left out."
+msgstr ""
+"수식의 어떤 텍스트도 Typst 코드가 될 수 없습니다. 수식의 모든 문자는 알려진 이름, 글자 하나 또는 수 하나, 이스케이프한 "
+"문자, 문자열 중 하나로 쓰입니다. 그래서 원시 Typst를 빼는 ``--untrusted`` 빌드에서도 이 변환 결과는 쓰입니다."
+
+#: ../../topics/mathematics.rst:219
+msgid ""
+"The translator reads at most 256 KiB, 4096 elements and 48 levels of "
+"nesting in one formula. A formula beyond these bounds, one with an "
+"element outside MathML Core such as ``menclose``, or one with a named "
+"character reference Guidedog does not know, is not translated. The PDF "
+"then shows its source as code and reports ``typst.math.mathml``, which "
+"names what could not be translated. This is a warning: the build goes on. "
+"A numeric reference such as ``&#x2211;`` always works."
+msgstr ""
+"변환기는 수식 하나에서 최대 256 KiB, 요소 4096개, 중첩 48단계까지 읽습니다. 이 한도를 넘는 수식, "
+"``menclose``\\ 처럼 MathML Core 밖의 요소가 있는 수식, Guidedog이 모르는 이름 있는 문자 참조가 있는 "
+"수식은 변환하지 않습니다. 그러면 PDF는 그 원본을 코드로 보여 주고 ``typst.math.mathml``\\ 을 보고하며, 이 "
+"보고는 변환하지 못한 것을 알려 줍니다. 이것은 경고이며, 빌드는 계속됩니다. ``&#x2211;`` 같은 숫자 참조는 언제나 "
+"동작합니다."
+
+#: ../../topics/mathematics.rst:225
+msgid ""
+"Text output shows the source, and ``--to rst`` keeps the option, so a "
+"converted document builds the same formula. The ``math`` role has no such "
+"option: inline math is always LaTeX. Raw HTML is a different matter: a "
+"``math`` element inside ``raw`` content is passed or refused as a whole "
+"by the raw content rule, not filtered."
+msgstr ""
+"텍스트 출력은 원본을 보여 주고, ``--to rst``\\ 는 이 옵션을 유지하므로, 변환한 문서도 같은 수식을 빌드합니다. "
+"``math`` 역할에는 이런 옵션이 없습니다. 인라인 수식은 언제나 LaTeX입니다. 원시 HTML은 다른 문제입니다. "
+"``raw`` 콘텐츠 안의 ``math`` 요소는 원시 콘텐츠 규칙에 따라 통째로 통과하거나 거부되며, 필터를 거치지 않습니다."
 
 #: ../../topics/music.rst:1
 msgid "Music notation"

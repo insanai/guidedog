@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 17:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -647,47 +647,199 @@ msgid "The relation is :eq:`area-square`. Guidedog gives a labeled equation a st
 msgstr ""
 
 #: ../../topics/mathematics.rst:38
-msgid "A small proof"
+msgid "Faults in a formula"
 msgstr ""
 
 #: ../../topics/mathematics.rst:41
-msgid "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be its limit. Let :math:`n` be a requested allocation. Assume all three values are nonnegative and :math:`U \\le B`."
+msgid "Guidedog checks every LaTeX formula once, when it reads the document. The check does not depend on the output: an HTML build with MathJax, a MathML build, ``guidedog convert`` and a PDF all give the same report. A fault is a warning. The page is still written, with the formula as we wrote it."
 msgstr ""
 
-#: ../../topics/mathematics.rst:45
-msgid "**Admission rule.** Admit the request exactly when"
+#: ../../topics/mathematics.rst:57
+msgid "The marker stands under the offending text, and the hint proposes the correction where one is close. Only the first fault of a formula is reported."
 msgstr ""
 
-#: ../../topics/mathematics.rst:47
-msgid "n \\le B - U."
+#: ../../topics/mathematics.rst:60
+msgid "Math faults"
 msgstr ""
 
-#: ../../topics/mathematics.rst:52
-msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
+#: ../../topics/mathematics.rst:64
+msgid "Code"
 msgstr ""
 
-#: ../../topics/mathematics.rst:54
-msgid "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The result is :math:`U+n \\le B`. The implementation tests the subtraction form. It does not first compute :math:`U+n`, which could overflow a machine integer. The proof and the arithmetic order agree."
-msgstr ""
-
-#: ../../topics/mathematics.rst:59
-msgid "**Boundary.** This accounts for charged host storage. It does not bound the Typst compiler's internal allocations. A proof is only as strong as the boundary it states."
-msgstr ""
-
-#: ../../topics/mathematics.rst:63
-msgid "HTML setup"
+#: ../../topics/mathematics.rst:65
+msgid "Fault"
 msgstr ""
 
 #: ../../topics/mathematics.rst:66
-msgid "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is loaded only on pages containing mathematics. It makes these pages readable offline after a build. No diagram script or web font service is required."
+msgid "``math.command.unknown``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:67
+msgid "A command that neither MathJax nor Guidedog knows, such as ``\\fraction`` or ``\\aplha``. The hint names the closest known command."
+msgstr ""
+
+#: ../../topics/mathematics.rst:68
+msgid "``math.environment.unknown``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:69
+msgid "``\\begin{algin}``: an environment nobody knows. The hint names the closest one."
+msgstr ""
+
+#: ../../topics/mathematics.rst:70
+msgid "``math.brace.unbalanced``"
 msgstr ""
 
 #: ../../topics/mathematics.rst:71
-msgid "For our own projects, the default uses MathJax from a CDN. To serve a local copy, we place it in ``_static`` and set:"
+msgid "A ``{`` that no ``}`` closes, or a ``}`` that closes nothing."
+msgstr ""
+
+#: ../../topics/mathematics.rst:72
+msgid "``math.environment.unclosed``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:73
+msgid "``\\begin{x}`` without ``\\end{x}``, or ``\\end{x}`` without ``\\begin{x}``."
+msgstr ""
+
+#: ../../topics/mathematics.rst:74
+msgid "``math.environment.mismatch``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:75
+msgid "``\\end{y}`` where ``\\begin{x}`` is open."
+msgstr ""
+
+#: ../../topics/mathematics.rst:76
+msgid "``math.delimiter.unpaired``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:77
+msgid "``\\left`` without ``\\right``, or the reverse."
+msgstr ""
+
+#: ../../topics/mathematics.rst:78
+msgid "``math.argument.missing``"
 msgstr ""
 
 #: ../../topics/mathematics.rst:79
+msgid "A command with fewer arguments than it takes, such as ``\\frac{a}``."
+msgstr ""
+
+#: ../../topics/mathematics.rst:80
+msgid "``math.alignment.outside``"
+msgstr ""
+
+#: ../../topics/mathematics.rst:81
+msgid "``&`` outside an environment, or ``\\\\`` in inline math."
+msgstr ""
+
+#: ../../topics/mathematics.rst:83
+msgid "A command is unknown only when no output can typeset it. The check knows the commands of MathJax's base, AMS and autoloaded packages, such as ``\\color``, ``\\cancel`` and ``\\ce``. Some of them cannot become Typst mathematics. That is a narrower fault, and only the output that needs Typst reports it: ``typst.math.unsupported`` for a PDF, ``mathml.math.unsupported`` for MathML. A MathJax page gets no report for them."
+msgstr ""
+
+#: ../../topics/mathematics.rst:88
+msgid "A command we define is known. ``\\newcommand``, ``\\renewcommand``, ``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator`` and ``\\newenvironment`` in a formula define a name for the rest of the document. A project also names its MathJax macros in ``conf.toml``, and every document knows them:"
+msgstr ""
+
+#: ../../topics/mathematics.rst:97
+msgid "A displayed formula with ``\\\\`` is wrapped in an alignment, as Sphinx does, so ``&`` and ``\\\\`` are fine there. With ``:nowrap:`` nothing is wrapped, and ``&`` needs its own environment. The work is bounded: a formula longer than 64 KiB is not checked, and a document gets at most 64 math reports. ``-W`` and ``--strict`` treat these warnings as any other warning. A formula written as MathML is not checked as LaTeX."
+msgstr ""
+
+#: ../../topics/mathematics.rst:103
+msgid "A small proof"
+msgstr ""
+
+#: ../../topics/mathematics.rst:106
+msgid "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be its limit. Let :math:`n` be a requested allocation. Assume all three values are nonnegative and :math:`U \\le B`."
+msgstr ""
+
+#: ../../topics/mathematics.rst:110
+msgid "**Admission rule.** Admit the request exactly when"
+msgstr ""
+
+#: ../../topics/mathematics.rst:112
+msgid "n \\le B - U."
+msgstr ""
+
+#: ../../topics/mathematics.rst:117
+msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
+msgstr ""
+
+#: ../../topics/mathematics.rst:119
+msgid "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The result is :math:`U+n \\le B`. The implementation tests the subtraction form. It does not first compute :math:`U+n`, which could overflow a machine integer. The proof and the arithmetic order agree."
+msgstr ""
+
+#: ../../topics/mathematics.rst:124
+msgid "**Boundary.** This accounts for charged host storage. It does not bound the Typst compiler's internal allocations. A proof is only as strong as the boundary it states."
+msgstr ""
+
+#: ../../topics/mathematics.rst:128
+msgid "HTML setup"
+msgstr ""
+
+#: ../../topics/mathematics.rst:131
+msgid "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is loaded only on pages containing mathematics. It makes these pages readable offline after a build. No diagram script or web font service is required."
+msgstr ""
+
+#: ../../topics/mathematics.rst:136
+msgid "For our own projects, the default uses MathJax from a CDN. To serve a local copy, we place it in ``_static`` and set:"
+msgstr ""
+
+#: ../../topics/mathematics.rst:144
 msgid "JavaScript is needed here to typeset web equations. Without it, their source remains visible. PDF equations do not need browser JavaScript. See the `MathJax component contract <https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_."
+msgstr ""
+
+#: ../../topics/mathematics.rst:148
+msgid "MathML without a script"
+msgstr ""
+
+#: ../../topics/mathematics.rst:151
+msgid "MathJax is the default. We can ask for MathML instead:"
+msgstr ""
+
+#: ../../topics/mathematics.rst:157
+msgid "``guidedog build html --math=mathml`` does the same for one build, and ``guidedog convert --math=mathml`` for one file. Every formula is then written as a MathML ``math`` element, which current browsers show themselves. The page loads no MathJax, and it is readable with JavaScript off. Equation numbers, labels and ``:eq:`` references work as before."
+msgstr ""
+
+#: ../../topics/mathematics.rst:166
+msgid "Guidedog translates the LaTeX as it does for the PDF, and the embedded Typst compiler writes the MathML. All formulas of a page are typeset in one run, and equal formulas are typeset once. The elements are those of MathML Core, and no element has a ``style`` or ``id`` attribute. A build adds ``_static/mathml.css``, a few rules for aligned equations and cases, to the pages that have a formula."
+msgstr ""
+
+#: ../../topics/mathematics.rst:171
+msgid "Some formulas cannot be MathML. A LaTeX command the translation does not know is one case (``mathml.math.unsupported``). A construct MathML Core cannot draw, such as ``\\boxed``, ``\\phantom``, ``\\overline`` or ``\\cancel``, is another (``mathml.math.lossy``). Such a formula is not lost: the page shows its LaTeX in the usual markup, and a warning points at it. In a MathML build no script typesets that LaTeX, so we rewrite the formula or keep MathJax for the project."
+msgstr ""
+
+#: ../../topics/mathematics.rst:177
+msgid "Formulas written as MathML"
+msgstr ""
+
+#: ../../topics/mathematics.rst:180
+msgid "We can also write a displayed formula in MathML itself, with the ``notation`` option:"
+msgstr ""
+
+#: ../../topics/mathematics.rst:190
+msgid "The content is one ``math`` element. HTML output passes it through a filter, whatever the math renderer is. The filter keeps the presentation elements of MathML Core and their plain attributes. It leaves out everything else, such as ``style``, ``id``, ``href``, event attributes and foreign elements, and reports ``html.mathml.dropped``. Content that is not one well-formed ``math`` element is shown as code, with ``html.mathml.invalid``. The equation keeps its label and number."
+msgstr ""
+
+#: ../../topics/mathematics.rst:197
+msgid "The PDF typesets the formula too. Guidedog reads the same filtered MathML Core and translates it to Typst math, so the book shows a real formula with its number, and ``:eq:`` links to it."
+msgstr ""
+
+#: ../../topics/mathematics.rst:206
+msgid "The translation knows every element the filter keeps. Fractions, roots, scripts, limits, accents and prescripts become the Typst calls of the same meaning. A table between fences is a matrix, a table after a lone ``{`` is ``cases``, and a table that is the whole formula is an aligned equation of several lines. A fraction with ``linethickness=\"0\"`` between parentheses is a binomial. Fences around a row grow with their content. The ``mathvariant`` attribute selects bold, italic, double-struck, script, fraktur, sans-serif, monospace or upright letters. Greek letters, operators and arrows are written by their Typst names; any other character is written as itself. A ``semantics`` element shows its first child, and its annotations are passed over."
+msgstr ""
+
+#: ../../topics/mathematics.rst:215
+msgid "No text of the formula can become Typst code. Every character of it is written as a known name, a single letter or number, an escaped character, or a string. For this reason the translation is also written in an ``--untrusted`` build, where raw Typst is left out."
+msgstr ""
+
+#: ../../topics/mathematics.rst:219
+msgid "The translator reads at most 256 KiB, 4096 elements and 48 levels of nesting in one formula. A formula beyond these bounds, one with an element outside MathML Core such as ``menclose``, or one with a named character reference Guidedog does not know, is not translated. The PDF then shows its source as code and reports ``typst.math.mathml``, which names what could not be translated. This is a warning: the build goes on. A numeric reference such as ``&#x2211;`` always works."
+msgstr ""
+
+#: ../../topics/mathematics.rst:225
+msgid "Text output shows the source, and ``--to rst`` keeps the option, so a converted document builds the same formula. The ``math`` role has no such option: inline math is always LaTeX. Raw HTML is a different matter: a ``math`` element inside ``raw`` content is passed or refused as a whole by the raw content rule, not filtered."
 msgstr ""
 
 #: ../../topics/music.rst:1

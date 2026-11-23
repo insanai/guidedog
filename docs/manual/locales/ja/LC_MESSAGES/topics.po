@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 17:30+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -268,16 +268,6 @@ msgstr ""
 "ページである必要があり、PNG は 1,600 万ピクセル、各辺 16,384 ピクセルまでです。"
 
 #: ../../topics/diagrams.rst:209
-#| msgid ""
-#| "A failed drawing remains visible as source with a warning "
-#| "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
-#| "directive sources report ``sphinx.graphviz.source`` or "
-#| "``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
-#| "must prevent publication. ``--untrusted`` refuses Typst compilation "
-#| "and external Graphviz resources and retains the source. Text builds "
-#| "show source without compiling a drawing. The "
-#| ":doc:`../howto/typst-diagrams` guide lists every option, source limit "
-#| "and migration step for existing figure files."
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -289,7 +279,13 @@ msgid ""
 "builds show source without compiling a drawing. The "
 ":doc:`../howto/typst-diagrams` guide lists every option, source limit and "
 "migration step for existing figure files."
-msgstr "図の生成に失敗すると、警告付きのソースを表示します（``build.graphviz`` または ``build.typst-diagram``。ディレクティブのソースがない場合や重複する場合は ``sphinx.graphviz.source`` または ``sphinx.typst.source``）。図の欠落で公開を止めたい場合は ``-W`` でビルドします。``--untrusted`` も組み込みコンパイラでTypst図をコンパイルします。このコンパイラはソースフォルダだけを読み、パッケージをダウンロードせず、Graphvizのグラフが指定するファイルは拒否します。テキストビルドは図をコンパイルせずソースを表示します。:doc:`../howto/typst-diagrams` に全オプション、ソース制限、既存画像ファイルからの移行手順があります。"
+msgstr ""
+"図の生成に失敗すると、警告付きのソースを表示します（``build.graphviz`` または "
+"``build.typst-diagram``。ディレクティブのソースがない場合や重複する場合は "
+"``sphinx.graphviz.source`` または ``sphinx.typst.source``）。図の欠落で公開を止めたい場合は "
+"``-W`` でビルドします。``--untrusted`` "
+"も組み込みコンパイラでTypst図をコンパイルします。このコンパイラはソースフォルダだけを読み、パッケージをダウンロードせず、Graphvizのグラフが指定するファイルは拒否します。テキストビルドは図をコンパイルせずソースを表示します。:doc:`../howto/typst-diagrams` "
+"に全オプション、ソース制限、既存画像ファイルからの移行手順があります。"
 
 #: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
@@ -935,10 +931,162 @@ msgstr ""
 "コマンドは診断として報告され、任意の LaTeX パッケージが評価されることはありません。"
 
 #: ../../topics/mathematics.rst:38
+msgid "Faults in a formula"
+msgstr "数式の誤り"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Guidedog checks every LaTeX formula once, when it reads the document. The "
+"check does not depend on the output: an HTML build with MathJax, a MathML "
+"build, ``guidedog convert`` and a PDF all give the same report. A fault "
+"is a warning. The page is still written, with the formula as we wrote it."
+msgstr ""
+"Guidedog は、ドキュメントを読み込むときに、すべての LaTeX 数式を 1 回ずつ検査します。検査は出力に依存しません。MathJax "
+"を使う HTML ビルド、MathML ビルド、 ``guidedog convert``\\ 、PDF "
+"のいずれでも同じ報告になります。数式の誤りは警告です。ページは、書いたとおりの数式のまま書き出されます。"
+
+#: ../../topics/mathematics.rst:57
+msgid ""
+"The marker stands under the offending text, and the hint proposes the "
+"correction where one is close. Only the first fault of a formula is "
+"reported."
+msgstr ""
+"マーカーは問題のあるテキストの下に付き、近い候補がある場合はヒントが修正案を示します。1 つの数式につき、最初の誤りだけが報告されます。"
+
+#: ../../topics/mathematics.rst:60
+msgid "Math faults"
+msgstr "数式の誤り"
+
+#: ../../topics/mathematics.rst:64
+msgid "Code"
+msgstr "コード"
+
+#: ../../topics/mathematics.rst:65
+msgid "Fault"
+msgstr "誤り"
+
+#: ../../topics/mathematics.rst:66
+msgid "``math.command.unknown``"
+msgstr "``math.command.unknown``"
+
+#: ../../topics/mathematics.rst:67
+msgid ""
+"A command that neither MathJax nor Guidedog knows, such as ``\\fraction`` "
+"or ``\\aplha``. The hint names the closest known command."
+msgstr ""
+"``\\fraction`` や ``\\aplha`` のように、MathJax も Guidedog "
+"も知らないコマンドです。ヒントは、最も近い既知のコマンドを示します。"
+
+#: ../../topics/mathematics.rst:68
+msgid "``math.environment.unknown``"
+msgstr "``math.environment.unknown``"
+
+#: ../../topics/mathematics.rst:69
+msgid ""
+"``\\begin{algin}``: an environment nobody knows. The hint names the "
+"closest one."
+msgstr "``\\begin{algin}``\\ : どの出力も知らない環境です。ヒントは最も近い環境を示します。"
+
+#: ../../topics/mathematics.rst:70
+msgid "``math.brace.unbalanced``"
+msgstr "``math.brace.unbalanced``"
+
+#: ../../topics/mathematics.rst:71
+msgid "A ``{`` that no ``}`` closes, or a ``}`` that closes nothing."
+msgstr "``}`` で閉じられていない ``{``\\ 、または何も閉じていない ``}`` です。"
+
+#: ../../topics/mathematics.rst:72
+msgid "``math.environment.unclosed``"
+msgstr "``math.environment.unclosed``"
+
+#: ../../topics/mathematics.rst:73
+msgid ""
+"``\\begin{x}`` without ``\\end{x}``, or ``\\end{x}`` without "
+"``\\begin{x}``."
+msgstr ""
+"``\\end{x}`` のない ``\\begin{x}``\\ 、または ``\\begin{x}`` のない ``\\end{x}`` です。"
+
+#: ../../topics/mathematics.rst:74
+msgid "``math.environment.mismatch``"
+msgstr "``math.environment.mismatch``"
+
+#: ../../topics/mathematics.rst:75
+msgid "``\\end{y}`` where ``\\begin{x}`` is open."
+msgstr "``\\begin{x}`` が開いているところに ``\\end{y}`` があります。"
+
+#: ../../topics/mathematics.rst:76
+msgid "``math.delimiter.unpaired``"
+msgstr "``math.delimiter.unpaired``"
+
+#: ../../topics/mathematics.rst:77
+msgid "``\\left`` without ``\\right``, or the reverse."
+msgstr "``\\right`` のない ``\\left``\\ 、またはその逆です。"
+
+#: ../../topics/mathematics.rst:78
+msgid "``math.argument.missing``"
+msgstr "``math.argument.missing``"
+
+#: ../../topics/mathematics.rst:79
+msgid "A command with fewer arguments than it takes, such as ``\\frac{a}``."
+msgstr "``\\frac{a}`` のように、必要な数より引数が少ないコマンドです。"
+
+#: ../../topics/mathematics.rst:80
+msgid "``math.alignment.outside``"
+msgstr "``math.alignment.outside``"
+
+#: ../../topics/mathematics.rst:81
+msgid "``&`` outside an environment, or ``\\\\`` in inline math."
+msgstr "環境の外にある ``&``\\ 、またはインライン数式の中の ``\\\\`` です。"
+
+#: ../../topics/mathematics.rst:83
+msgid ""
+"A command is unknown only when no output can typeset it. The check knows "
+"the commands of MathJax's base, AMS and autoloaded packages, such as "
+"``\\color``, ``\\cancel`` and ``\\ce``. Some of them cannot become Typst "
+"mathematics. That is a narrower fault, and only the output that needs "
+"Typst reports it: ``typst.math.unsupported`` for a PDF, "
+"``mathml.math.unsupported`` for MathML. A MathJax page gets no report for "
+"them."
+msgstr ""
+"コマンドが未知とされるのは、どの出力でも組版できない場合だけです。検査は、 ``\\color``\\ 、\\ ``\\cancel``\\ "
+"、\\ ``\\ce`` など、MathJax の base、AMS、自動読み込みパッケージのコマンドを知っています。その一部は Typst "
+"の数式に変換できません。これはより狭い範囲の誤りであり、Typst を必要とする出力だけが報告します。PDF では "
+"``typst.math.unsupported``\\ 、MathML では ``mathml.math.unsupported`` "
+"です。MathJax のページでは、これらは報告されません。"
+
+#: ../../topics/mathematics.rst:88
+msgid ""
+"A command we define is known. ``\\newcommand``, ``\\renewcommand``, "
+"``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator`` and "
+"``\\newenvironment`` in a formula define a name for the rest of the "
+"document. A project also names its MathJax macros in ``conf.toml``, and "
+"every document knows them:"
+msgstr ""
+"私たちが定義したコマンドは既知です。数式の中の ``\\newcommand``\\ 、\\ ``\\renewcommand``\\ 、\\ "
+"``\\providecommand``\\ 、\\ ``\\def``\\ 、\\ ``\\let``\\ 、\\ "
+"``\\DeclareMathOperator``\\ 、\\ ``\\newenvironment`` "
+"は、ドキュメントの残りの部分に対して名前を定義します。プロジェクトは MathJax のマクロを ``conf.toml`` "
+"にも記述でき、すべてのドキュメントがそれを認識します。"
+
+#: ../../topics/mathematics.rst:97
+msgid ""
+"A displayed formula with ``\\\\`` is wrapped in an alignment, as Sphinx "
+"does, so ``&`` and ``\\\\`` are fine there. With ``:nowrap:`` nothing is "
+"wrapped, and ``&`` needs its own environment. The work is bounded: a "
+"formula longer than 64 KiB is not checked, and a document gets at most 64 "
+"math reports. ``-W`` and ``--strict`` treat these warnings as any other "
+"warning. A formula written as MathML is not checked as LaTeX."
+msgstr ""
+"``\\\\`` を含む別行立ての数式は、Sphinx と同様に整列環境で包まれるため、そこでは ``&`` と ``\\\\`` を使えます。 "
+"``:nowrap:`` を指定すると何も包まれず、 ``&`` には専用の環境が必要です。検査の作業量には上限があります。64 KiB "
+"を超える数式は検査されず、1 つのドキュメントが受け取る数式の報告は最大 64 件です。 ``-W`` と ``--strict`` "
+"は、これらの警告をほかの警告と同じように扱います。MathML として書かれた数式は、LaTeX としては検査されません。"
+
+#: ../../topics/mathematics.rst:103
 msgid "A small proof"
 msgstr "小さな証明"
 
-#: ../../topics/mathematics.rst:41
+#: ../../topics/mathematics.rst:106
 msgid ""
 "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
 "its limit. Let :math:`n` be a requested allocation. Assume all three "
@@ -947,19 +1095,19 @@ msgstr ""
 "予算に計上済みのバイト数を :math:`U`、上限を :math:`B`、要求された割り当て量を :math:`n` とします。3 "
 "つの値はすべて非負で、:math:`U \\le B` であると仮定します。"
 
-#: ../../topics/mathematics.rst:45
+#: ../../topics/mathematics.rst:110
 msgid "**Admission rule.** Admit the request exactly when"
 msgstr "**受け入れ規則。** 次の条件が成り立つ場合に限り、要求を受け入れます。"
 
-#: ../../topics/mathematics.rst:47
+#: ../../topics/mathematics.rst:112
 msgid "n \\le B - U."
 msgstr "n \\le B - U."
 
-#: ../../topics/mathematics.rst:52
+#: ../../topics/mathematics.rst:117
 msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
 msgstr "**命題。** 受け入れられた要求は :math:`U + n \\le B` を保ちます。"
 
-#: ../../topics/mathematics.rst:54
+#: ../../topics/mathematics.rst:119
 msgid ""
 "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
 "result is :math:`U+n \\le B`. The implementation tests the subtraction "
@@ -970,7 +1118,7 @@ msgstr ""
 "が得られます。実装は減算の形を検査し、マシン整数の桁あふれを起こし得る :math:`U+n` "
 "を先には計算しません。証明と算術演算の順序は一致しています。"
 
-#: ../../topics/mathematics.rst:59
+#: ../../topics/mathematics.rst:124
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
 "the Typst compiler's internal allocations. A proof is only as strong as "
@@ -979,11 +1127,11 @@ msgstr ""
 "**境界。** 対象は計上したホストの記憶領域で、Typst "
 "コンパイラー内部の割り当ては制限しません。証明が成り立つのは、明記した境界の範囲内だけです。"
 
-#: ../../topics/mathematics.rst:63
+#: ../../topics/mathematics.rst:128
 msgid "HTML setup"
 msgstr "HTML の設定"
 
-#: ../../topics/mathematics.rst:66
+#: ../../topics/mathematics.rst:131
 msgid ""
 "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
 "loaded only on pages containing mathematics. It makes these pages "
@@ -994,7 +1142,7 @@ msgstr ""
 "フォントデータを同梱し、数式を含むページでのみ読み込みます。ビルド後はオフラインでもそのまま閲覧でき、外部の図スクリプトや Web "
 "フォントサービスは不要です。"
 
-#: ../../topics/mathematics.rst:71
+#: ../../topics/mathematics.rst:136
 msgid ""
 "For our own projects, the default uses MathJax from a CDN. To serve a "
 "local copy, we place it in ``_static`` and set:"
@@ -1002,7 +1150,7 @@ msgstr ""
 "自分のプロジェクトでは、既定で CDN の MathJax を使います。ローカルのコピーを配信するには、``_static`` "
 "に置いて次のように設定します。"
 
-#: ../../topics/mathematics.rst:79
+#: ../../topics/mathematics.rst:144
 msgid ""
 "JavaScript is needed here to typeset web equations. Without it, their "
 "source remains visible. PDF equations do not need browser JavaScript. See "
@@ -1013,6 +1161,154 @@ msgstr ""
 "JavaScript は不要です。詳しくは `MathJax コンポーネント契約 "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_ "
 "を参照してください。"
+
+#: ../../topics/mathematics.rst:148
+msgid "MathML without a script"
+msgstr "スクリプトなしの MathML"
+
+#: ../../topics/mathematics.rst:151
+msgid "MathJax is the default. We can ask for MathML instead:"
+msgstr "既定は MathJax です。代わりに MathML を指定できます。"
+
+#: ../../topics/mathematics.rst:157
+msgid ""
+"``guidedog build html --math=mathml`` does the same for one build, and "
+"``guidedog convert --math=mathml`` for one file. Every formula is then "
+"written as a MathML ``math`` element, which current browsers show "
+"themselves. The page loads no MathJax, and it is readable with JavaScript "
+"off. Equation numbers, labels and ``:eq:`` references work as before."
+msgstr ""
+"``guidedog build html --math=mathml`` は 1 回のビルドに対して、 ``guidedog convert "
+"--math=mathml`` は 1 つのファイルに対して同じことを行います。このとき、すべての数式は MathML の ``math`` "
+"要素として書き出され、現在のブラウザーがそのまま表示します。ページは MathJax を読み込まず、JavaScript "
+"を無効にしても読めます。数式番号、ラベル、 ``:eq:`` 参照は、これまでどおり機能します。"
+
+#: ../../topics/mathematics.rst:166
+msgid ""
+"Guidedog translates the LaTeX as it does for the PDF, and the embedded "
+"Typst compiler writes the MathML. All formulas of a page are typeset in "
+"one run, and equal formulas are typeset once. The elements are those of "
+"MathML Core, and no element has a ``style`` or ``id`` attribute. A build "
+"adds ``_static/mathml.css``, a few rules for aligned equations and cases, "
+"to the pages that have a formula."
+msgstr ""
+"Guidedog は PDF の場合と同じように LaTeX を変換し、組み込みの Typst コンパイラーが MathML を書き出します。1 "
+"ページのすべての数式は 1 回の実行で組版され、同じ数式は 1 度だけ組版されます。要素は MathML Core のものであり、 "
+"``style`` 属性や ``id`` 属性を持つ要素はありません。ビルドは、数式のあるページに ``_static/mathml.css`` "
+"を追加します。これは、整列した数式と場合分けのためのいくつかの規則です。"
+
+#: ../../topics/mathematics.rst:171
+msgid ""
+"Some formulas cannot be MathML. A LaTeX command the translation does not "
+"know is one case (``mathml.math.unsupported``). A construct MathML Core "
+"cannot draw, such as ``\\boxed``, ``\\phantom``, ``\\overline`` or "
+"``\\cancel``, is another (``mathml.math.lossy``). Such a formula is not "
+"lost: the page shows its LaTeX in the usual markup, and a warning points "
+"at it. In a MathML build no script typesets that LaTeX, so we rewrite the "
+"formula or keep MathJax for the project."
+msgstr ""
+"MathML にできない数式もあります。変換が知らない LaTeX コマンドがその 1 つです "
+"(``mathml.math.unsupported``)。 ``\\boxed``\\ 、\\ ``\\phantom``\\ 、\\ "
+"``\\overline``\\ 、\\ ``\\cancel`` のように、MathML Core では描けない構造がもう 1 つです "
+"(``mathml.math.lossy``)。そのような数式も失われません。ページは通常のマークアップで LaTeX "
+"を表示し、警告がその数式を示します。MathML ビルドでは、その LaTeX を組版するスクリプトがないため、数式を書き直すか、プロジェクトで "
+"MathJax を使い続けます。"
+
+#: ../../topics/mathematics.rst:177
+msgid "Formulas written as MathML"
+msgstr "MathML で書いた数式"
+
+#: ../../topics/mathematics.rst:180
+msgid ""
+"We can also write a displayed formula in MathML itself, with the "
+"``notation`` option:"
+msgstr "``notation`` オプションを使うと、別行立ての数式を MathML そのもので書くこともできます。"
+
+#: ../../topics/mathematics.rst:190
+msgid ""
+"The content is one ``math`` element. HTML output passes it through a "
+"filter, whatever the math renderer is. The filter keeps the presentation "
+"elements of MathML Core and their plain attributes. It leaves out "
+"everything else, such as ``style``, ``id``, ``href``, event attributes "
+"and foreign elements, and reports ``html.mathml.dropped``. Content that "
+"is not one well-formed ``math`` element is shown as code, with "
+"``html.mathml.invalid``. The equation keeps its label and number."
+msgstr ""
+"内容は 1 つの ``math`` 要素です。HTML "
+"出力は、数式レンダラーが何であっても、これをフィルターに通します。フィルターは、MathML Core "
+"のプレゼンテーション要素と、その単純な属性を残します。 ``style``\\ 、\\ ``id``\\ 、\\ ``href``\\ "
+"、イベント属性、外部の要素など、それ以外はすべて取り除き、 ``html.mathml.dropped`` を報告します。整形式の単一の "
+"``math`` 要素でない内容はコードとして表示され、 ``html.mathml.invalid`` "
+"が報告されます。数式のラベルと番号は保たれます。"
+
+#: ../../topics/mathematics.rst:197
+msgid ""
+"The PDF typesets the formula too. Guidedog reads the same filtered MathML "
+"Core and translates it to Typst math, so the book shows a real formula "
+"with its number, and ``:eq:`` links to it."
+msgstr ""
+"PDF でもこの数式が組版されます。Guidedog は、フィルターを通した同じ MathML Core を読み、Typst "
+"の数式に変換します。そのため、本には番号付きの本物の数式が表示され、 ``:eq:`` がそこにリンクします。"
+
+#: ../../topics/mathematics.rst:206
+msgid ""
+"The translation knows every element the filter keeps. Fractions, roots, "
+"scripts, limits, accents and prescripts become the Typst calls of the "
+"same meaning. A table between fences is a matrix, a table after a lone "
+"``{`` is ``cases``, and a table that is the whole formula is an aligned "
+"equation of several lines. A fraction with ``linethickness=\"0\"`` "
+"between parentheses is a binomial. Fences around a row grow with their "
+"content. The ``mathvariant`` attribute selects bold, italic, "
+"double-struck, script, fraktur, sans-serif, monospace or upright letters. "
+"Greek letters, operators and arrows are written by their Typst names; any "
+"other character is written as itself. A ``semantics`` element shows its "
+"first child, and its annotations are passed over."
+msgstr ""
+"変換は、フィルターが残すすべての要素を扱えます。分数、根号、添字、上下の極限、アクセント、前置添字は、同じ意味の Typst "
+"の呼び出しになります。区切り記号に挟まれた表は行列、単独の ``{`` に続く表は ``cases``\\ "
+"、数式全体を占める表は複数行の整列数式になります。丸括弧に挟まれた ``linethickness=\"0\"`` "
+"の分数は二項係数です。行を囲む区切り記号は、内容に合わせて伸びます。 ``mathvariant`` "
+"属性は、太字、斜体、黒板太字、筆記体、フラクトゥール、サンセリフ、等幅、立体の文字を選びます。ギリシャ文字、演算子、矢印は Typst "
+"の名前で書き出され、それ以外の文字はそのまま書き出されます。 ``semantics`` 要素は最初の子を表示し、注釈は無視されます。"
+
+#: ../../topics/mathematics.rst:215
+msgid ""
+"No text of the formula can become Typst code. Every character of it is "
+"written as a known name, a single letter or number, an escaped character, "
+"or a string. For this reason the translation is also written in an "
+"``--untrusted`` build, where raw Typst is left out."
+msgstr ""
+"数式のテキストが Typst "
+"のコードになることはありません。数式の各文字は、既知の名前、単一の文字または数、エスケープした文字、文字列のいずれかとして書き出されます。このため、生の "
+"Typst が省かれる ``--untrusted`` ビルドでも、変換結果は書き出されます。"
+
+#: ../../topics/mathematics.rst:219
+msgid ""
+"The translator reads at most 256 KiB, 4096 elements and 48 levels of "
+"nesting in one formula. A formula beyond these bounds, one with an "
+"element outside MathML Core such as ``menclose``, or one with a named "
+"character reference Guidedog does not know, is not translated. The PDF "
+"then shows its source as code and reports ``typst.math.mathml``, which "
+"names what could not be translated. This is a warning: the build goes on. "
+"A numeric reference such as ``&#x2211;`` always works."
+msgstr ""
+"変換器が 1 つの数式で読むのは、最大 256 KiB、4096 要素、48 段の入れ子までです。この上限を超える数式、 ``menclose`` "
+"のような MathML Core 外の要素を含む数式、Guidedog が知らない名前付き文字参照を含む数式は変換されません。その場合、PDF "
+"はソースをコードとして表示し、 ``typst.math.mathml`` "
+"を報告します。この報告は、変換できなかったものを示します。これは警告であり、ビルドは続行されます。 ``&#x2211;`` "
+"のような数値参照は常に使えます。"
+
+#: ../../topics/mathematics.rst:225
+msgid ""
+"Text output shows the source, and ``--to rst`` keeps the option, so a "
+"converted document builds the same formula. The ``math`` role has no such "
+"option: inline math is always LaTeX. Raw HTML is a different matter: a "
+"``math`` element inside ``raw`` content is passed or refused as a whole "
+"by the raw content rule, not filtered."
+msgstr ""
+"テキスト出力はソースを表示し、 ``--to rst`` はこのオプションを保つため、変換後のドキュメントからも同じ数式がビルドされます。 "
+"``math`` ロールにはこのオプションはありません。インライン数式は常に LaTeX です。生の HTML は別の扱いです。 ``raw`` "
+"コンテンツの中の ``math`` 要素は、生コンテンツの規則によって全体が通されるか拒否され、フィルターにはかけられません。"
 
 #: ../../topics/music.rst:1
 msgid "Music notation"

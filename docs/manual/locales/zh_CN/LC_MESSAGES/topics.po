@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 17:30+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -260,16 +260,6 @@ msgstr ""
 "像素。"
 
 #: ../../topics/diagrams.rst:209
-#| msgid ""
-#| "A failed drawing remains visible as source with a warning "
-#| "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
-#| "directive sources report ``sphinx.graphviz.source`` or "
-#| "``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
-#| "must prevent publication. ``--untrusted`` refuses Typst compilation "
-#| "and external Graphviz resources and retains the source. Text builds "
-#| "show source without compiling a drawing. The "
-#| ":doc:`../howto/typst-diagrams` guide lists every option, source limit "
-#| "and migration step for existing figure files."
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -281,7 +271,13 @@ msgid ""
 "builds show source without compiling a drawing. The "
 ":doc:`../howto/typst-diagrams` guide lists every option, source limit and "
 "migration step for existing figure files."
-msgstr "绘制失败时，源码仍可见并带有警告（``build.graphviz`` 或 ``build.typst-diagram``；缺少或重复的指令源码会报告 ``sphinx.graphviz.source`` 或 ``sphinx.typst.source``）。当缺图必须阻止发布时，我们使用 ``-W`` 构建。``--untrusted`` 仍用嵌入式编译器编译 Typst 图，该编译器只读取源文件夹且不下载包；Graphviz 图指定的文件则被拒绝。文本构建显示源码而不编译图。:doc:`../howto/typst-diagrams` 指南列出每个选项、源码限制和迁移已有图文件的步骤。"
+msgstr ""
+"绘制失败时，源码仍可见并带有警告（``build.graphviz`` 或 "
+"``build.typst-diagram``；缺少或重复的指令源码会报告 ``sphinx.graphviz.source`` 或 "
+"``sphinx.typst.source``）。当缺图必须阻止发布时，我们使用 ``-W`` 构建。``--untrusted`` "
+"仍用嵌入式编译器编译 Typst 图，该编译器只读取源文件夹且不下载包；Graphviz "
+"图指定的文件则被拒绝。文本构建显示源码而不编译图。:doc:`../howto/typst-diagrams` "
+"指南列出每个选项、源码限制和迁移已有图文件的步骤。"
 
 #: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
@@ -906,10 +902,159 @@ msgstr ""
 "渲染器则将受支持的 LaTeX 子集转换为 Typst 数学公式。不受支持的 PDF 命令会报错提示，且绝不执行任意 LaTeX 宏包。"
 
 #: ../../topics/mathematics.rst:38
+msgid "Faults in a formula"
+msgstr "公式中的错误"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Guidedog checks every LaTeX formula once, when it reads the document. The "
+"check does not depend on the output: an HTML build with MathJax, a MathML "
+"build, ``guidedog convert`` and a PDF all give the same report. A fault "
+"is a warning. The page is still written, with the formula as we wrote it."
+msgstr ""
+"Guidedog 在读取文档时对每个 LaTeX 公式检查一次。检查与输出无关：使用 MathJax 的 HTML 构建、MathML 构建、\\ "
+"``guidedog convert`` 和 PDF 给出的报告相同。公式中的错误是一条警告。页面仍会写出，公式保持我们所写的样子。"
+
+#: ../../topics/mathematics.rst:57
+msgid ""
+"The marker stands under the offending text, and the hint proposes the "
+"correction where one is close. Only the first fault of a formula is "
+"reported."
+msgstr "标记位于出错的文本之下；有相近的写法时，提示会给出更正建议。每个公式只报告第一个错误。"
+
+#: ../../topics/mathematics.rst:60
+msgid "Math faults"
+msgstr "公式错误"
+
+#: ../../topics/mathematics.rst:64
+msgid "Code"
+msgstr "代码"
+
+#: ../../topics/mathematics.rst:65
+msgid "Fault"
+msgstr "错误"
+
+#: ../../topics/mathematics.rst:66
+msgid "``math.command.unknown``"
+msgstr "``math.command.unknown``"
+
+#: ../../topics/mathematics.rst:67
+msgid ""
+"A command that neither MathJax nor Guidedog knows, such as ``\\fraction`` "
+"or ``\\aplha``. The hint names the closest known command."
+msgstr ""
+"MathJax 和 Guidedog 都不认识的命令，例如 ``\\fraction`` 或 ``\\aplha``\\ "
+"。提示给出最接近的已知命令。"
+
+#: ../../topics/mathematics.rst:68
+msgid "``math.environment.unknown``"
+msgstr "``math.environment.unknown``"
+
+#: ../../topics/mathematics.rst:69
+msgid ""
+"``\\begin{algin}``: an environment nobody knows. The hint names the "
+"closest one."
+msgstr "``\\begin{algin}``\\ ：没有任何一方认识的环境。提示给出最接近的环境。"
+
+#: ../../topics/mathematics.rst:70
+msgid "``math.brace.unbalanced``"
+msgstr "``math.brace.unbalanced``"
+
+#: ../../topics/mathematics.rst:71
+msgid "A ``{`` that no ``}`` closes, or a ``}`` that closes nothing."
+msgstr "没有 ``}`` 闭合的 ``{``\\ ，或没有闭合任何内容的 ``}``\\ 。"
+
+#: ../../topics/mathematics.rst:72
+msgid "``math.environment.unclosed``"
+msgstr "``math.environment.unclosed``"
+
+#: ../../topics/mathematics.rst:73
+msgid ""
+"``\\begin{x}`` without ``\\end{x}``, or ``\\end{x}`` without "
+"``\\begin{x}``."
+msgstr ""
+"有 ``\\begin{x}`` 而没有 ``\\end{x}``\\ ，或有 ``\\end{x}`` 而没有 ``\\begin{x}``\\ "
+"。"
+
+#: ../../topics/mathematics.rst:74
+msgid "``math.environment.mismatch``"
+msgstr "``math.environment.mismatch``"
+
+#: ../../topics/mathematics.rst:75
+msgid "``\\end{y}`` where ``\\begin{x}`` is open."
+msgstr "在 ``\\begin{x}`` 尚未闭合时出现 ``\\end{y}``\\ 。"
+
+#: ../../topics/mathematics.rst:76
+msgid "``math.delimiter.unpaired``"
+msgstr "``math.delimiter.unpaired``"
+
+#: ../../topics/mathematics.rst:77
+msgid "``\\left`` without ``\\right``, or the reverse."
+msgstr "有 ``\\left`` 而没有 ``\\right``\\ ，或者相反。"
+
+#: ../../topics/mathematics.rst:78
+msgid "``math.argument.missing``"
+msgstr "``math.argument.missing``"
+
+#: ../../topics/mathematics.rst:79
+msgid "A command with fewer arguments than it takes, such as ``\\frac{a}``."
+msgstr "参数少于所需数量的命令，例如 ``\\frac{a}``\\ 。"
+
+#: ../../topics/mathematics.rst:80
+msgid "``math.alignment.outside``"
+msgstr "``math.alignment.outside``"
+
+#: ../../topics/mathematics.rst:81
+msgid "``&`` outside an environment, or ``\\\\`` in inline math."
+msgstr "环境之外的 ``&``\\ ，或行内公式中的 ``\\\\``\\ 。"
+
+#: ../../topics/mathematics.rst:83
+msgid ""
+"A command is unknown only when no output can typeset it. The check knows "
+"the commands of MathJax's base, AMS and autoloaded packages, such as "
+"``\\color``, ``\\cancel`` and ``\\ce``. Some of them cannot become Typst "
+"mathematics. That is a narrower fault, and only the output that needs "
+"Typst reports it: ``typst.math.unsupported`` for a PDF, "
+"``mathml.math.unsupported`` for MathML. A MathJax page gets no report for "
+"them."
+msgstr ""
+"只有在任何输出都无法排版时，命令才算未知。检查认识 MathJax 的 base、AMS 和自动加载宏包中的命令，例如 ``\\color``\\ "
+"、\\ ``\\cancel`` 和 ``\\ce``\\ 。其中有些无法变成 Typst 数学公式。这是范围更小的错误，只有需要 Typst "
+"的输出才报告它：PDF 报告 ``typst.math.unsupported``\\ ，MathML 报告 "
+"``mathml.math.unsupported``\\ 。MathJax 页面不会收到这类报告。"
+
+#: ../../topics/mathematics.rst:88
+msgid ""
+"A command we define is known. ``\\newcommand``, ``\\renewcommand``, "
+"``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator`` and "
+"``\\newenvironment`` in a formula define a name for the rest of the "
+"document. A project also names its MathJax macros in ``conf.toml``, and "
+"every document knows them:"
+msgstr ""
+"我们自己定义的命令是已知的。公式中的 ``\\newcommand``\\ 、\\ ``\\renewcommand``\\ 、\\ "
+"``\\providecommand``\\ 、\\ ``\\def``\\ 、\\ ``\\let``\\ 、\\ "
+"``\\DeclareMathOperator`` 和 ``\\newenvironment`` 定义的名称在文档的其余部分有效。项目还可以在 "
+"``conf.toml`` 中列出它的 MathJax 宏，每个文档都认识它们："
+
+#: ../../topics/mathematics.rst:97
+msgid ""
+"A displayed formula with ``\\\\`` is wrapped in an alignment, as Sphinx "
+"does, so ``&`` and ``\\\\`` are fine there. With ``:nowrap:`` nothing is "
+"wrapped, and ``&`` needs its own environment. The work is bounded: a "
+"formula longer than 64 KiB is not checked, and a document gets at most 64 "
+"math reports. ``-W`` and ``--strict`` treat these warnings as any other "
+"warning. A formula written as MathML is not checked as LaTeX."
+msgstr ""
+"带有 ``\\\\`` 的独立公式会像 Sphinx 那样包在对齐环境中，因此其中可以使用 ``&`` 和 ``\\\\``\\ 。使用 "
+"``:nowrap:`` 时不做任何包装，\\ ``&`` 需要有自己的环境。检查的工作量有上限：超过 64 KiB "
+"的公式不检查，一个文档最多得到 64 条公式报告。\\ ``-W`` 和 ``--strict`` 对待这些警告与对待其他警告相同。写成 "
+"MathML 的公式不按 LaTeX 检查。"
+
+#: ../../topics/mathematics.rst:103
 msgid "A small proof"
 msgstr "一个简短的证明"
 
-#: ../../topics/mathematics.rst:41
+#: ../../topics/mathematics.rst:106
 msgid ""
 "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
 "its limit. Let :math:`n` be a requested allocation. Assume all three "
@@ -918,19 +1063,19 @@ msgstr ""
 "设 :math:`U` 为已计入预算的字节数，\\ :math:`B` 为上限，\\ :math:`n` 为申请分配量。假设三者均非负，且 "
 ":math:`U \\le B`\\ 。"
 
-#: ../../topics/mathematics.rst:45
+#: ../../topics/mathematics.rst:110
 msgid "**Admission rule.** Admit the request exactly when"
 msgstr "**准入规则。**\\ 当且仅当以下条件成立时，接受请求："
 
-#: ../../topics/mathematics.rst:47
+#: ../../topics/mathematics.rst:112
 msgid "n \\le B - U."
 msgstr "n \\le B - U."
 
-#: ../../topics/mathematics.rst:52
+#: ../../topics/mathematics.rst:117
 msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
 msgstr "**命题。**\\ 接受请求后，仍有 :math:`U + n \\le B`\\ 。"
 
-#: ../../topics/mathematics.rst:54
+#: ../../topics/mathematics.rst:119
 msgid ""
 "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
 "result is :math:`U+n \\le B`. The implementation tests the subtraction "
@@ -940,18 +1085,18 @@ msgstr ""
 "**证明。**\\ 在 :eq:`budget-admission` 两边加 :math:`U`\\ ，得到 :math:`U+n \\le "
 "B`\\ 。实现检查减法形式，不先计算可能使机器整数溢出的 :math:`U+n`\\ 。证明与运算顺序一致。"
 
-#: ../../topics/mathematics.rst:59
+#: ../../topics/mathematics.rst:124
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
 "the Typst compiler's internal allocations. A proof is only as strong as "
 "the boundary it states."
 msgstr "**边界。**\\ 这里只计入已核算的宿主存储，并不限制 Typst 编译器的内部分配。证明的效力取决于它所声明的边界。"
 
-#: ../../topics/mathematics.rst:63
+#: ../../topics/mathematics.rst:128
 msgid "HTML setup"
 msgstr "HTML 设置"
 
-#: ../../topics/mathematics.rst:66
+#: ../../topics/mathematics.rst:131
 msgid ""
 "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
 "loaded only on pages containing mathematics. It makes these pages "
@@ -960,13 +1105,13 @@ msgid ""
 msgstr ""
 "这些项目随附 MathJax 3.2.2 及 SVG 字体数据，仅在含数学公式的页面加载。构建后离线也可阅读，无需图示脚本或网络字体服务。"
 
-#: ../../topics/mathematics.rst:71
+#: ../../topics/mathematics.rst:136
 msgid ""
 "For our own projects, the default uses MathJax from a CDN. To serve a "
 "local copy, we place it in ``_static`` and set:"
 msgstr "在我们自己的项目中，默认从 CDN 加载 MathJax。要使用本地副本，把它放进 ``_static``，然后设置："
 
-#: ../../topics/mathematics.rst:79
+#: ../../topics/mathematics.rst:144
 msgid ""
 "JavaScript is needed here to typeset web equations. Without it, their "
 "source remains visible. PDF equations do not need browser JavaScript. See "
@@ -975,6 +1120,146 @@ msgid ""
 msgstr ""
 "Web 公式需要 JavaScript 排版；关闭时仍显示源文。PDF 公式不依赖浏览器 JavaScript。见 `MathJax 组件契约 "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ 。"
+
+#: ../../topics/mathematics.rst:148
+msgid "MathML without a script"
+msgstr "不需要脚本的 MathML"
+
+#: ../../topics/mathematics.rst:151
+msgid "MathJax is the default. We can ask for MathML instead:"
+msgstr "MathJax 是默认方式。我们也可以改用 MathML："
+
+#: ../../topics/mathematics.rst:157
+msgid ""
+"``guidedog build html --math=mathml`` does the same for one build, and "
+"``guidedog convert --math=mathml`` for one file. Every formula is then "
+"written as a MathML ``math`` element, which current browsers show "
+"themselves. The page loads no MathJax, and it is readable with JavaScript "
+"off. Equation numbers, labels and ``:eq:`` references work as before."
+msgstr ""
+"``guidedog build html --math=mathml`` 对单次构建起同样的作用，\\ ``guidedog convert "
+"--math=mathml`` 则对单个文件起作用。这时每个公式都写成 MathML 的 ``math`` "
+"元素，当前的浏览器可以直接显示。页面不加载 MathJax，关闭 JavaScript 也能阅读。公式编号、标签和 ``:eq:`` 引用照常工作。"
+
+#: ../../topics/mathematics.rst:166
+msgid ""
+"Guidedog translates the LaTeX as it does for the PDF, and the embedded "
+"Typst compiler writes the MathML. All formulas of a page are typeset in "
+"one run, and equal formulas are typeset once. The elements are those of "
+"MathML Core, and no element has a ``style`` or ``id`` attribute. A build "
+"adds ``_static/mathml.css``, a few rules for aligned equations and cases, "
+"to the pages that have a formula."
+msgstr ""
+"Guidedog 像生成 PDF 时那样转换 LaTeX，再由内嵌的 Typst 编译器写出 "
+"MathML。一个页面的所有公式在一次运行中排版，相同的公式只排版一次。元素都属于 MathML Core，任何元素都不带 ``style`` 或 "
+"``id`` 属性。构建会为含有公式的页面添加 ``_static/mathml.css``\\ ，其中是对齐公式和分段函数所需的几条规则。"
+
+#: ../../topics/mathematics.rst:171
+msgid ""
+"Some formulas cannot be MathML. A LaTeX command the translation does not "
+"know is one case (``mathml.math.unsupported``). A construct MathML Core "
+"cannot draw, such as ``\\boxed``, ``\\phantom``, ``\\overline`` or "
+"``\\cancel``, is another (``mathml.math.lossy``). Such a formula is not "
+"lost: the page shows its LaTeX in the usual markup, and a warning points "
+"at it. In a MathML build no script typesets that LaTeX, so we rewrite the "
+"formula or keep MathJax for the project."
+msgstr ""
+"有些公式无法写成 MathML。一种情况是转换不认识某个 LaTeX 命令（``mathml.math.unsupported``\\ "
+"）。另一种情况是 MathML Core 无法绘制的结构，例如 ``\\boxed``\\ 、\\ ``\\phantom``\\ 、\\ "
+"``\\overline`` 或 ``\\cancel``\\ （``mathml.math.lossy``\\ "
+"）。这样的公式不会丢失：页面用通常的标记显示它的 LaTeX，并有一条警告指向它。在 MathML 构建中没有脚本来排版这段 "
+"LaTeX，所以我们改写公式，或者让项目继续使用 MathJax。"
+
+#: ../../topics/mathematics.rst:177
+msgid "Formulas written as MathML"
+msgstr "用 MathML 书写的公式"
+
+#: ../../topics/mathematics.rst:180
+msgid ""
+"We can also write a displayed formula in MathML itself, with the "
+"``notation`` option:"
+msgstr "我们也可以用 ``notation`` 选项，直接用 MathML 书写独立公式："
+
+#: ../../topics/mathematics.rst:190
+msgid ""
+"The content is one ``math`` element. HTML output passes it through a "
+"filter, whatever the math renderer is. The filter keeps the presentation "
+"elements of MathML Core and their plain attributes. It leaves out "
+"everything else, such as ``style``, ``id``, ``href``, event attributes "
+"and foreign elements, and reports ``html.mathml.dropped``. Content that "
+"is not one well-formed ``math`` element is shown as code, with "
+"``html.mathml.invalid``. The equation keeps its label and number."
+msgstr ""
+"内容是一个 ``math`` 元素。无论使用哪种公式渲染方式，HTML 输出都会让它经过一个过滤器。过滤器保留 MathML Core "
+"的呈现元素及其简单属性。其余内容一律去掉，例如 ``style``\\ 、\\ ``id``\\ 、\\ ``href``\\ "
+"、事件属性和外来元素，并报告 ``html.mathml.dropped``\\ 。不是单个格式良好的 ``math`` "
+"元素的内容会显示为代码，并报告 ``html.mathml.invalid``\\ 。公式保留它的标签和编号。"
+
+#: ../../topics/mathematics.rst:197
+msgid ""
+"The PDF typesets the formula too. Guidedog reads the same filtered MathML "
+"Core and translates it to Typst math, so the book shows a real formula "
+"with its number, and ``:eq:`` links to it."
+msgstr ""
+"PDF 同样会排版这个公式。Guidedog 读取同一份经过过滤的 MathML Core，并把它转换为 Typst "
+"数学公式，因此书中显示的是带编号的真正公式，\\ ``:eq:`` 也会链接到它。"
+
+#: ../../topics/mathematics.rst:206
+msgid ""
+"The translation knows every element the filter keeps. Fractions, roots, "
+"scripts, limits, accents and prescripts become the Typst calls of the "
+"same meaning. A table between fences is a matrix, a table after a lone "
+"``{`` is ``cases``, and a table that is the whole formula is an aligned "
+"equation of several lines. A fraction with ``linethickness=\"0\"`` "
+"between parentheses is a binomial. Fences around a row grow with their "
+"content. The ``mathvariant`` attribute selects bold, italic, "
+"double-struck, script, fraktur, sans-serif, monospace or upright letters. "
+"Greek letters, operators and arrows are written by their Typst names; any "
+"other character is written as itself. A ``semantics`` element shows its "
+"first child, and its annotations are passed over."
+msgstr ""
+"转换认识过滤器保留的每一个元素。分式、根式、上下标、上下限、重音符号和前置上下标都变成含义相同的 Typst "
+"调用。定界符之间的表格是矩阵，单独一个 ``{`` 之后的表格是 ``cases``\\ ，占据整个公式的表格是多行对齐公式。圆括号之间带有 "
+"``linethickness=\"0\"`` 的分式是二项式系数。包围一行的定界符随内容伸缩。\\ ``mathvariant`` "
+"属性选择粗体、斜体、双线体、花体、哥特体、无衬线体、等宽体或直立体字母。希腊字母、运算符和箭头按它们的 Typst "
+"名称写出；其他字符都按原样写出。\\ ``semantics`` 元素显示它的第一个子元素，其注解被略过。"
+
+#: ../../topics/mathematics.rst:215
+msgid ""
+"No text of the formula can become Typst code. Every character of it is "
+"written as a known name, a single letter or number, an escaped character, "
+"or a string. For this reason the translation is also written in an "
+"``--untrusted`` build, where raw Typst is left out."
+msgstr ""
+"公式中的任何文本都不可能变成 Typst 代码。它的每个字符都写成已知的名称、单个字母或数字、转义字符或字符串。因此，在省略原始 Typst 的 "
+"``--untrusted`` 构建中，这种转换结果同样会写出。"
+
+#: ../../topics/mathematics.rst:219
+msgid ""
+"The translator reads at most 256 KiB, 4096 elements and 48 levels of "
+"nesting in one formula. A formula beyond these bounds, one with an "
+"element outside MathML Core such as ``menclose``, or one with a named "
+"character reference Guidedog does not know, is not translated. The PDF "
+"then shows its source as code and reports ``typst.math.mathml``, which "
+"names what could not be translated. This is a warning: the build goes on. "
+"A numeric reference such as ``&#x2211;`` always works."
+msgstr ""
+"转换器在一个公式中最多读取 256 KiB、4096 个元素和 48 层嵌套。超出这些上限的公式、含有 ``menclose`` 这类 "
+"MathML Core 之外元素的公式，或含有 Guidedog 不认识的命名字符引用的公式，都不会被转换。这时 PDF "
+"把它的源文本显示为代码，并报告 ``typst.math.mathml``\\ ，其中指出无法转换的内容。这是一条警告：构建继续进行。\\ "
+"``&#x2211;`` 这样的数字引用始终可用。"
+
+#: ../../topics/mathematics.rst:225
+msgid ""
+"Text output shows the source, and ``--to rst`` keeps the option, so a "
+"converted document builds the same formula. The ``math`` role has no such "
+"option: inline math is always LaTeX. Raw HTML is a different matter: a "
+"``math`` element inside ``raw`` content is passed or refused as a whole "
+"by the raw content rule, not filtered."
+msgstr ""
+"文本输出显示源文本，\\ ``--to rst`` 保留该选项，因此转换后的文档会构建出相同的公式。\\ ``math`` "
+"角色没有这个选项：行内公式始终是 LaTeX。原始 HTML 则是另一回事：\\ ``raw`` 内容中的 ``math`` "
+"元素由原始内容规则整体放行或拒绝，不经过过滤。"
 
 #: ../../topics/music.rst:1
 msgid "Music notation"

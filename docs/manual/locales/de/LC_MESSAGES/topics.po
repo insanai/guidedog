@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:38+0000\n"
+"POT-Creation-Date: 2026-11-23 17:30+0000\n"
 "PO-Revision-Date: 2026-10-11 00:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -314,16 +314,6 @@ msgstr ""
 "Seite begrenzt."
 
 #: ../../topics/diagrams.rst:209
-#| msgid ""
-#| "A failed drawing remains visible as source with a warning "
-#| "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
-#| "directive sources report ``sphinx.graphviz.source`` or "
-#| "``sphinx.typst.source``). We build with ``-W`` when a missing diagram "
-#| "must prevent publication. ``--untrusted`` refuses Typst compilation "
-#| "and external Graphviz resources and retains the source. Text builds "
-#| "show source without compiling a drawing. The "
-#| ":doc:`../howto/typst-diagrams` guide lists every option, source limit "
-#| "and migration step for existing figure files."
 msgid ""
 "A failed drawing remains visible as source with a warning "
 "(``build.graphviz`` or ``build.typst-diagram``; missing or duplicate "
@@ -335,7 +325,18 @@ msgid ""
 "builds show source without compiling a drawing. The "
 ":doc:`../howto/typst-diagrams` guide lists every option, source limit and "
 "migration step for existing figure files."
-msgstr "Eine fehlgeschlagene Zeichnung bleibt mit einer Warnung als Quelltext sichtbar (``build.graphviz`` oder ``build.typst-diagram``; fehlende oder doppelte Direktivenquellen melden ``sphinx.graphviz.source`` oder ``sphinx.typst.source``). Wir bauen mit ``-W``, wenn ein fehlendes Diagramm die Veröffentlichung verhindern muss. ``--untrusted`` übersetzt Typst-Diagramme weiterhin mit dem eingebetteten Compiler, der nur den Quellordner liest und keine Pakete herunterlädt; von einem Graphviz-Graphen benannte Dateien werden abgewiesen. Text-Builds zeigen den Quelltext ohne Zeichnungsübersetzung. Der Leitfaden :doc:`../howto/typst-diagrams` nennt alle Optionen, Quellgrenzen und Migrationsschritte für vorhandene Abbildungsdateien."
+msgstr ""
+"Eine fehlgeschlagene Zeichnung bleibt mit einer Warnung als Quelltext "
+"sichtbar (``build.graphviz`` oder ``build.typst-diagram``; fehlende oder "
+"doppelte Direktivenquellen melden ``sphinx.graphviz.source`` oder "
+"``sphinx.typst.source``). Wir bauen mit ``-W``, wenn ein fehlendes "
+"Diagramm die Veröffentlichung verhindern muss. ``--untrusted`` übersetzt "
+"Typst-Diagramme weiterhin mit dem eingebetteten Compiler, der nur den "
+"Quellordner liest und keine Pakete herunterlädt; von einem "
+"Graphviz-Graphen benannte Dateien werden abgewiesen. Text-Builds zeigen "
+"den Quelltext ohne Zeichnungsübersetzung. Der Leitfaden "
+":doc:`../howto/typst-diagrams` nennt alle Optionen, Quellgrenzen und "
+"Migrationsschritte für vorhandene Abbildungsdateien."
 
 #: ../../topics/diagrams.rst:215
 msgid "Light, dark and print"
@@ -1066,10 +1067,178 @@ msgstr ""
 "wird gemeldet. Beliebige LaTeX-Pakete werden nicht ausgewertet."
 
 #: ../../topics/mathematics.rst:38
+msgid "Faults in a formula"
+msgstr "Fehler in einer Formel"
+
+#: ../../topics/mathematics.rst:41
+msgid ""
+"Guidedog checks every LaTeX formula once, when it reads the document. The "
+"check does not depend on the output: an HTML build with MathJax, a MathML "
+"build, ``guidedog convert`` and a PDF all give the same report. A fault "
+"is a warning. The page is still written, with the formula as we wrote it."
+msgstr ""
+"Guidedog prüft jede LaTeX-Formel einmal, beim Lesen des Dokuments. Die "
+"Prüfung hängt nicht von der Ausgabe ab: Ein HTML-Build mit MathJax, ein "
+"MathML-Build, ``guidedog convert`` und ein PDF liefern dieselbe Meldung. "
+"Ein Fehler in einer Formel ist eine Warnung. Die Seite wird trotzdem "
+"geschrieben, mit der Formel, wie wir sie geschrieben haben."
+
+#: ../../topics/mathematics.rst:57
+msgid ""
+"The marker stands under the offending text, and the hint proposes the "
+"correction where one is close. Only the first fault of a formula is "
+"reported."
+msgstr ""
+"Die Markierung steht unter dem fehlerhaften Text, und der Hinweis schlägt "
+"die Korrektur vor, wenn eine naheliegt. Nur der erste Fehler einer Formel "
+"wird gemeldet."
+
+#: ../../topics/mathematics.rst:60
+msgid "Math faults"
+msgstr "Fehler in Formeln"
+
+#: ../../topics/mathematics.rst:64
+msgid "Code"
+msgstr "Code"
+
+#: ../../topics/mathematics.rst:65
+msgid "Fault"
+msgstr "Fehler"
+
+#: ../../topics/mathematics.rst:66
+msgid "``math.command.unknown``"
+msgstr "``math.command.unknown``"
+
+#: ../../topics/mathematics.rst:67
+msgid ""
+"A command that neither MathJax nor Guidedog knows, such as ``\\fraction`` "
+"or ``\\aplha``. The hint names the closest known command."
+msgstr ""
+"Ein Befehl, den weder MathJax noch Guidedog kennt, etwa ``\\fraction`` "
+"oder ``\\aplha``. Der Hinweis nennt den ähnlichsten bekannten Befehl."
+
+#: ../../topics/mathematics.rst:68
+msgid "``math.environment.unknown``"
+msgstr "``math.environment.unknown``"
+
+#: ../../topics/mathematics.rst:69
+msgid ""
+"``\\begin{algin}``: an environment nobody knows. The hint names the "
+"closest one."
+msgstr ""
+"``\\begin{algin}``: eine Umgebung, die niemand kennt. Der Hinweis nennt "
+"die ähnlichste."
+
+#: ../../topics/mathematics.rst:70
+msgid "``math.brace.unbalanced``"
+msgstr "``math.brace.unbalanced``"
+
+#: ../../topics/mathematics.rst:71
+msgid "A ``{`` that no ``}`` closes, or a ``}`` that closes nothing."
+msgstr ""
+"Eine ``{``, die keine ``}`` schließt, oder eine ``}``, die nichts "
+"schließt."
+
+#: ../../topics/mathematics.rst:72
+msgid "``math.environment.unclosed``"
+msgstr "``math.environment.unclosed``"
+
+#: ../../topics/mathematics.rst:73
+msgid ""
+"``\\begin{x}`` without ``\\end{x}``, or ``\\end{x}`` without "
+"``\\begin{x}``."
+msgstr ""
+"``\\begin{x}`` ohne ``\\end{x}`` oder ``\\end{x}`` ohne ``\\begin{x}``."
+
+#: ../../topics/mathematics.rst:74
+msgid "``math.environment.mismatch``"
+msgstr "``math.environment.mismatch``"
+
+#: ../../topics/mathematics.rst:75
+msgid "``\\end{y}`` where ``\\begin{x}`` is open."
+msgstr "``\\end{y}``, während ``\\begin{x}`` offen ist."
+
+#: ../../topics/mathematics.rst:76
+msgid "``math.delimiter.unpaired``"
+msgstr "``math.delimiter.unpaired``"
+
+#: ../../topics/mathematics.rst:77
+msgid "``\\left`` without ``\\right``, or the reverse."
+msgstr "``\\left`` ohne ``\\right`` oder umgekehrt."
+
+#: ../../topics/mathematics.rst:78
+msgid "``math.argument.missing``"
+msgstr "``math.argument.missing``"
+
+#: ../../topics/mathematics.rst:79
+msgid "A command with fewer arguments than it takes, such as ``\\frac{a}``."
+msgstr ""
+"Ein Befehl mit weniger Argumenten, als er verlangt, etwa ``\\frac{a}``."
+
+#: ../../topics/mathematics.rst:80
+msgid "``math.alignment.outside``"
+msgstr "``math.alignment.outside``"
+
+#: ../../topics/mathematics.rst:81
+msgid "``&`` outside an environment, or ``\\\\`` in inline math."
+msgstr "``&`` außerhalb einer Umgebung oder ``\\\\`` in Inline-Mathematik."
+
+#: ../../topics/mathematics.rst:83
+msgid ""
+"A command is unknown only when no output can typeset it. The check knows "
+"the commands of MathJax's base, AMS and autoloaded packages, such as "
+"``\\color``, ``\\cancel`` and ``\\ce``. Some of them cannot become Typst "
+"mathematics. That is a narrower fault, and only the output that needs "
+"Typst reports it: ``typst.math.unsupported`` for a PDF, "
+"``mathml.math.unsupported`` for MathML. A MathJax page gets no report for "
+"them."
+msgstr ""
+"Ein Befehl ist nur dann unbekannt, wenn keine Ausgabe ihn setzen kann. "
+"Die Prüfung kennt die Befehle der Basis-, AMS- und automatisch geladenen "
+"Pakete von MathJax, etwa ``\\color``, ``\\cancel`` und ``\\ce``. Einige "
+"davon lassen sich nicht in Typst-Mathematik übersetzen. Das ist ein "
+"engerer Fehler, und nur die Ausgabe, die Typst braucht, meldet ihn: "
+"``typst.math.unsupported`` für ein PDF, ``mathml.math.unsupported`` für "
+"MathML. Eine MathJax-Seite erhält dafür keine Meldung."
+
+#: ../../topics/mathematics.rst:88
+msgid ""
+"A command we define is known. ``\\newcommand``, ``\\renewcommand``, "
+"``\\providecommand``, ``\\def``, ``\\let``, ``\\DeclareMathOperator`` and "
+"``\\newenvironment`` in a formula define a name for the rest of the "
+"document. A project also names its MathJax macros in ``conf.toml``, and "
+"every document knows them:"
+msgstr ""
+"Ein Befehl, den wir definieren, ist bekannt. ``\\newcommand``, "
+"``\\renewcommand``, ``\\providecommand``, ``\\def``, ``\\let``, "
+"``\\DeclareMathOperator`` und ``\\newenvironment`` in einer Formel "
+"definieren einen Namen für den Rest des Dokuments. Ein Projekt nennt "
+"seine MathJax-Makros außerdem in ``conf.toml``, und jedes Dokument kennt "
+"sie:"
+
+#: ../../topics/mathematics.rst:97
+msgid ""
+"A displayed formula with ``\\\\`` is wrapped in an alignment, as Sphinx "
+"does, so ``&`` and ``\\\\`` are fine there. With ``:nowrap:`` nothing is "
+"wrapped, and ``&`` needs its own environment. The work is bounded: a "
+"formula longer than 64 KiB is not checked, and a document gets at most 64 "
+"math reports. ``-W`` and ``--strict`` treat these warnings as any other "
+"warning. A formula written as MathML is not checked as LaTeX."
+msgstr ""
+"Eine abgesetzte Formel mit ``\\\\`` wird wie bei Sphinx in eine "
+"Ausrichtung eingeschlossen, daher sind ``&`` und ``\\\\`` dort in "
+"Ordnung. Mit ``:nowrap:`` wird nichts eingeschlossen, und ``&`` braucht "
+"eine eigene Umgebung. Der Aufwand ist begrenzt: Eine Formel über 64 KiB "
+"wird nicht geprüft, und ein Dokument erhält höchstens 64 Meldungen zu "
+"Formeln. ``-W`` und ``--strict`` behandeln diese Warnungen wie jede "
+"andere Warnung. Eine als MathML geschriebene Formel wird nicht als LaTeX "
+"geprüft."
+
+#: ../../topics/mathematics.rst:103
 msgid "A small proof"
 msgstr "Ein kleiner Beweis"
 
-#: ../../topics/mathematics.rst:41
+#: ../../topics/mathematics.rst:106
 msgid ""
 "Let :math:`U` be the bytes already charged to a budget. Let :math:`B` be "
 "its limit. Let :math:`n` be a requested allocation. Assume all three "
@@ -1079,20 +1248,20 @@ msgstr ""
 "angefragte Allokation. Alle Werte seien nicht negativ und :math:`U \\le "
 "B`\\ ."
 
-#: ../../topics/mathematics.rst:45
+#: ../../topics/mathematics.rst:110
 msgid "**Admission rule.** Admit the request exactly when"
 msgstr "**Zulassungsregel.** Die Anfrage wird genau dann zugelassen, wenn"
 
-#: ../../topics/mathematics.rst:47
+#: ../../topics/mathematics.rst:112
 msgid "n \\le B - U."
 msgstr "n \\le B - U."
 
-#: ../../topics/mathematics.rst:52
+#: ../../topics/mathematics.rst:117
 msgid "**Claim.** An admitted request preserves :math:`U + n \\le B`."
 msgstr ""
 "**Behauptung.** Eine zugelassene Anfrage erhält :math:`U + n \\le B`\\ ."
 
-#: ../../topics/mathematics.rst:54
+#: ../../topics/mathematics.rst:119
 msgid ""
 "**Proof.** Add :math:`U` to both sides of :eq:`budget-admission`. The "
 "result is :math:`U+n \\le B`. The implementation tests the subtraction "
@@ -1104,7 +1273,7 @@ msgstr ""
 "prüft die Subtraktionsform, statt zuerst das potenziell überlaufende "
 ":math:`U+n` zu berechnen. Beweis und Rechenfolge stimmen überein."
 
-#: ../../topics/mathematics.rst:59
+#: ../../topics/mathematics.rst:124
 msgid ""
 "**Boundary.** This accounts for charged host storage. It does not bound "
 "the Typst compiler's internal allocations. A proof is only as strong as "
@@ -1114,11 +1283,11 @@ msgstr ""
 "internen Allokationen des Typst-Compilers begrenzt es nicht. Ein Beweis "
 "ist nur so stark wie die Grenze, die er angibt."
 
-#: ../../topics/mathematics.rst:63
+#: ../../topics/mathematics.rst:128
 msgid "HTML setup"
 msgstr "HTML-Konfiguration"
 
-#: ../../topics/mathematics.rst:66
+#: ../../topics/mathematics.rst:131
 msgid ""
 "These projects bundle MathJax 3.2.2 with its SVG font data. The bundle is "
 "loaded only on pages containing mathematics. It makes these pages "
@@ -1129,7 +1298,7 @@ msgstr ""
 "nur auf Mathematikseiten. Nach dem Build sind sie offline lesbar. "
 "Diagrammskripte oder Webschriftendienste sind nicht erforderlich."
 
-#: ../../topics/mathematics.rst:71
+#: ../../topics/mathematics.rst:136
 msgid ""
 "For our own projects, the default uses MathJax from a CDN. To serve a "
 "local copy, we place it in ``_static`` and set:"
@@ -1137,7 +1306,7 @@ msgstr ""
 "In unseren eigenen Projekten lädt die Voreinstellung MathJax von einem "
 "CDN. Für eine lokale Kopie legen wir sie in ``_static`` ab und setzen:"
 
-#: ../../topics/mathematics.rst:79
+#: ../../topics/mathematics.rst:144
 msgid ""
 "JavaScript is needed here to typeset web equations. Without it, their "
 "source remains visible. PDF equations do not need browser JavaScript. See "
@@ -1148,6 +1317,182 @@ msgstr ""
 "sichtbar. PDF-Formeln brauchen kein Browser-JavaScript. Siehe den "
 "`MathJax-Komponentenvertrag "
 "<https://docs.mathjax.org/en/v3.2/web/components/combined.html>`_\\ ."
+
+#: ../../topics/mathematics.rst:148
+msgid "MathML without a script"
+msgstr "MathML ohne Skript"
+
+#: ../../topics/mathematics.rst:151
+msgid "MathJax is the default. We can ask for MathML instead:"
+msgstr "MathJax ist der Standard. Stattdessen können wir MathML verlangen:"
+
+#: ../../topics/mathematics.rst:157
+msgid ""
+"``guidedog build html --math=mathml`` does the same for one build, and "
+"``guidedog convert --math=mathml`` for one file. Every formula is then "
+"written as a MathML ``math`` element, which current browsers show "
+"themselves. The page loads no MathJax, and it is readable with JavaScript "
+"off. Equation numbers, labels and ``:eq:`` references work as before."
+msgstr ""
+"``guidedog build html --math=mathml`` bewirkt dasselbe für einen "
+"einzelnen Build, ``guidedog convert --math=mathml`` für eine einzelne "
+"Datei. Jede Formel wird dann als MathML-Element ``math`` geschrieben, das "
+"aktuelle Browser selbst anzeigen. Die Seite lädt kein MathJax und ist "
+"auch ohne JavaScript lesbar. Gleichungsnummern, Labels und "
+"``:eq:``-Verweise funktionieren wie zuvor."
+
+#: ../../topics/mathematics.rst:166
+msgid ""
+"Guidedog translates the LaTeX as it does for the PDF, and the embedded "
+"Typst compiler writes the MathML. All formulas of a page are typeset in "
+"one run, and equal formulas are typeset once. The elements are those of "
+"MathML Core, and no element has a ``style`` or ``id`` attribute. A build "
+"adds ``_static/mathml.css``, a few rules for aligned equations and cases, "
+"to the pages that have a formula."
+msgstr ""
+"Guidedog übersetzt das LaTeX wie für das PDF, und der eingebettete "
+"Typst-Compiler schreibt das MathML. Alle Formeln einer Seite werden in "
+"einem Durchlauf gesetzt, gleiche Formeln nur einmal. Die Elemente sind "
+"die von MathML Core, und kein Element hat ein ``style``- oder "
+"``id``-Attribut. Ein Build fügt den Seiten mit einer Formel "
+"``_static/mathml.css`` hinzu, einige Regeln für ausgerichtete Gleichungen "
+"und Fallunterscheidungen."
+
+#: ../../topics/mathematics.rst:171
+msgid ""
+"Some formulas cannot be MathML. A LaTeX command the translation does not "
+"know is one case (``mathml.math.unsupported``). A construct MathML Core "
+"cannot draw, such as ``\\boxed``, ``\\phantom``, ``\\overline`` or "
+"``\\cancel``, is another (``mathml.math.lossy``). Such a formula is not "
+"lost: the page shows its LaTeX in the usual markup, and a warning points "
+"at it. In a MathML build no script typesets that LaTeX, so we rewrite the "
+"formula or keep MathJax for the project."
+msgstr ""
+"Manche Formeln lassen sich nicht als MathML schreiben. Ein LaTeX-Befehl, "
+"den die Übersetzung nicht kennt, ist ein Fall "
+"(``mathml.math.unsupported``). Ein Konstrukt, das MathML Core nicht "
+"darstellen kann, etwa ``\\boxed``, ``\\phantom``, ``\\overline`` oder "
+"``\\cancel``, ist ein weiterer (``mathml.math.lossy``). Eine solche "
+"Formel geht nicht verloren: Die Seite zeigt ihr LaTeX im üblichen Markup, "
+"und eine Warnung weist darauf hin. In einem MathML-Build setzt kein "
+"Skript dieses LaTeX, daher schreiben wir die Formel um oder behalten "
+"MathJax für das Projekt."
+
+#: ../../topics/mathematics.rst:177
+msgid "Formulas written as MathML"
+msgstr "Als MathML geschriebene Formeln"
+
+#: ../../topics/mathematics.rst:180
+msgid ""
+"We can also write a displayed formula in MathML itself, with the "
+"``notation`` option:"
+msgstr ""
+"Mit der Option ``notation`` können wir eine abgesetzte Formel auch direkt "
+"in MathML schreiben:"
+
+#: ../../topics/mathematics.rst:190
+msgid ""
+"The content is one ``math`` element. HTML output passes it through a "
+"filter, whatever the math renderer is. The filter keeps the presentation "
+"elements of MathML Core and their plain attributes. It leaves out "
+"everything else, such as ``style``, ``id``, ``href``, event attributes "
+"and foreign elements, and reports ``html.mathml.dropped``. Content that "
+"is not one well-formed ``math`` element is shown as code, with "
+"``html.mathml.invalid``. The equation keeps its label and number."
+msgstr ""
+"Der Inhalt ist ein einzelnes ``math``-Element. Die HTML-Ausgabe leitet es "
+"durch einen Filter, unabhängig vom Math-Renderer. Der Filter behält die "
+"Präsentationselemente von MathML Core und ihre einfachen Attribute. Alles "
+"andere lässt er weg, etwa ``style``, ``id``, ``href``, Ereignisattribute "
+"und fremde Elemente, und meldet ``html.mathml.dropped``. Inhalt, der kein "
+"einzelnes wohlgeformtes ``math``-Element ist, wird als Code gezeigt, mit "
+"``html.mathml.invalid``. Die Gleichung behält Label und Nummer."
+
+#: ../../topics/mathematics.rst:197
+msgid ""
+"The PDF typesets the formula too. Guidedog reads the same filtered MathML "
+"Core and translates it to Typst math, so the book shows a real formula "
+"with its number, and ``:eq:`` links to it."
+msgstr ""
+"Auch das PDF setzt die Formel. Guidedog liest dasselbe gefilterte MathML "
+"Core und übersetzt es in Typst-Mathematik; das Buch zeigt also eine echte "
+"Formel mit ihrer Nummer, und ``:eq:`` verweist darauf."
+
+#: ../../topics/mathematics.rst:206
+msgid ""
+"The translation knows every element the filter keeps. Fractions, roots, "
+"scripts, limits, accents and prescripts become the Typst calls of the "
+"same meaning. A table between fences is a matrix, a table after a lone "
+"``{`` is ``cases``, and a table that is the whole formula is an aligned "
+"equation of several lines. A fraction with ``linethickness=\"0\"`` "
+"between parentheses is a binomial. Fences around a row grow with their "
+"content. The ``mathvariant`` attribute selects bold, italic, "
+"double-struck, script, fraktur, sans-serif, monospace or upright letters. "
+"Greek letters, operators and arrows are written by their Typst names; any "
+"other character is written as itself. A ``semantics`` element shows its "
+"first child, and its annotations are passed over."
+msgstr ""
+"Die Übersetzung kennt jedes Element, das der Filter behält. Brüche, "
+"Wurzeln, Hoch- und Tiefstellungen, Grenzen, Akzente und vorangestellte "
+"Indizes werden zu den Typst-Aufrufen gleicher Bedeutung. Eine Tabelle "
+"zwischen Klammern ist eine Matrix, eine Tabelle nach einer einzelnen "
+"``{`` ist ``cases``, und eine Tabelle, die die ganze Formel ausmacht, ist "
+"eine ausgerichtete Gleichung über mehrere Zeilen. Ein Bruch mit "
+"``linethickness=\"0\"`` zwischen runden Klammern ist ein "
+"Binomialkoeffizient. Klammern um eine Zeile wachsen mit ihrem Inhalt. Das "
+"Attribut ``mathvariant`` wählt fette, kursive, doppelt gestrichene, "
+"Skript-, Fraktur-, serifenlose, nichtproportionale oder aufrechte "
+"Buchstaben. Griechische Buchstaben, Operatoren und Pfeile werden mit "
+"ihren Typst-Namen geschrieben; jedes andere Zeichen wird als es selbst "
+"geschrieben. Ein ``semantics``-Element zeigt sein erstes Kind, und seine "
+"Annotationen werden übergangen."
+
+#: ../../topics/mathematics.rst:215
+msgid ""
+"No text of the formula can become Typst code. Every character of it is "
+"written as a known name, a single letter or number, an escaped character, "
+"or a string. For this reason the translation is also written in an "
+"``--untrusted`` build, where raw Typst is left out."
+msgstr ""
+"Kein Text der Formel kann zu Typst-Code werden. Jedes ihrer Zeichen wird "
+"als bekannter Name, als einzelner Buchstabe oder einzelne Zahl, als "
+"maskiertes Zeichen oder als Zeichenkette geschrieben. Deshalb wird die "
+"Übersetzung auch in einem Build mit ``--untrusted`` geschrieben, in dem "
+"rohes Typst weggelassen wird."
+
+#: ../../topics/mathematics.rst:219
+msgid ""
+"The translator reads at most 256 KiB, 4096 elements and 48 levels of "
+"nesting in one formula. A formula beyond these bounds, one with an "
+"element outside MathML Core such as ``menclose``, or one with a named "
+"character reference Guidedog does not know, is not translated. The PDF "
+"then shows its source as code and reports ``typst.math.mathml``, which "
+"names what could not be translated. This is a warning: the build goes on. "
+"A numeric reference such as ``&#x2211;`` always works."
+msgstr ""
+"Der Übersetzer liest in einer Formel höchstens 256 KiB, 4096 Elemente und "
+"48 Verschachtelungsebenen. Eine Formel jenseits dieser Grenzen, eine mit "
+"einem Element außerhalb von MathML Core wie ``menclose`` oder eine mit "
+"einer benannten Zeichenreferenz, die Guidedog nicht kennt, wird nicht "
+"übersetzt. Das PDF zeigt dann ihren Quelltext als Code und meldet "
+"``typst.math.mathml``; die Meldung nennt, was sich nicht übersetzen ließ. "
+"Das ist eine Warnung: Der Build läuft weiter. Eine numerische Referenz "
+"wie ``&#x2211;`` funktioniert immer."
+
+#: ../../topics/mathematics.rst:225
+msgid ""
+"Text output shows the source, and ``--to rst`` keeps the option, so a "
+"converted document builds the same formula. The ``math`` role has no such "
+"option: inline math is always LaTeX. Raw HTML is a different matter: a "
+"``math`` element inside ``raw`` content is passed or refused as a whole "
+"by the raw content rule, not filtered."
+msgstr ""
+"Die Textausgabe zeigt den Quelltext, und ``--to rst`` behält die Option, "
+"sodass ein konvertiertes Dokument dieselbe Formel baut. Die Rolle "
+"``math`` hat keine solche Option: Inline-Mathematik ist immer LaTeX. "
+"Rohes HTML ist etwas anderes: Ein ``math``-Element in ``raw``-Inhalt wird "
+"von der Regel für rohe Inhalte als Ganzes durchgelassen oder abgelehnt, "
+"nicht gefiltert."
 
 #: ../../topics/music.rst:1
 msgid "Music notation"

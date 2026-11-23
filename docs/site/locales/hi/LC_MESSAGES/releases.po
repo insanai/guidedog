@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-03 23:49+0000\n"
+"POT-Creation-Date: 2026-11-23 17:31+0000\n"
 "PO-Revision-Date: 2026-10-17 02:05+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -209,7 +209,9 @@ msgstr ""
 msgid ""
 "Long runs of MyST labels now resolve without scanning the remaining "
 "labels for every target."
-msgstr "MyST लेबल की लंबी शृंखलाएँ अब हर लक्ष्य के लिए बचे हुए लेबल दोबारा खोजे बिना हल होती हैं।"
+msgstr ""
+"MyST लेबल की लंबी शृंखलाएँ अब हर लक्ष्य के लिए बचे हुए लेबल दोबारा खोजे "
+"बिना हल होती हैं।"
 
 #: ../../releases/1.0.0-beta.12.rst:30
 msgid ""
@@ -220,6 +222,152 @@ msgstr ""
 "`GDS 0018 "
 "<https://insanai.github.io/guidedog/discussions/records/0018-confinement-and-content-rules.html>`_ "
 "डिज़ाइन और उसके पुस्तकालय इंटरफ़ेस दर्ज करता है।"
+
+#: ../../releases/1.0.0-beta.13.rst:8
+msgid "Guidedog 1.0.0-beta.13"
+msgstr "Guidedog 1.0.0-beta.13"
+
+#: ../../releases/1.0.0-beta.13.rst:11
+msgid ""
+"We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This "
+"release updates toolchain support and fixes diagram-rendering defects."
+msgstr ""
+"अब हम Guidedog को Rust 1.100.0 से बिल्ड करते हैं और Graphviz 16.1.1 साथ "
+"देते हैं। यह रिलीज़ टूलचेन समर्थन को अद्यतन करती है और आरेख रेंडर करने की "
+"त्रुटियाँ सुधारती है।"
+
+#: ../../releases/1.0.0-beta.13.rst:16
+msgid ""
+"Every workspace crate requires Rust 1.100 or later and keeps edition "
+"2024. The build and tests handle the new Clippy checks and Cargo's "
+"changed artifact layout. The manual's plugin example is compiled through "
+"Cargo's public artifact messages."
+msgstr ""
+"वर्कस्पेस के हर क्रेट को Rust 1.100 या नया संस्करण चाहिए और उसका एडिशन "
+"2024 ही रहता है। बिल्ड और परीक्षण Clippy की नई जाँचों तथा Cargo में "
+"आर्टिफ़ैक्ट के बदले स्थानों को संभालते हैं। मैनुअल का प्लगइन उदाहरण Cargo "
+"के सार्वजनिक आर्टिफ़ैक्ट संदेशों के माध्यम से संकलित होता है।"
+
+#: ../../releases/1.0.0-beta.13.rst:20
+msgid ""
+"Graphviz 16.1.1 fixes a potential heap overrun involving cluster names "
+"and several layout crashes. Unix archives link it statically, and Windows "
+"bundles its verified runtime. Regression tests cover a cluster/node name "
+"collision and a labeled flat edge at rank zero."
+msgstr ""
+"Graphviz 16.1.1 क्लस्टर नामों से जुड़े संभावित हीप ओवररन और लेआउट के कई "
+"क्रैश सुधारता है। Unix आर्काइव इसे स्थिर रूप से लिंक करते हैं और Windows "
+"में इसका सत्यापित रनटाइम शामिल है। रिग्रेशन परीक्षण क्लस्टर और नोड के "
+"समान नाम तथा रैंक शून्य पर लेबल वाली समतल एज की जाँच करते हैं।"
+
+#: ../../releases/1.0.0-beta.13.rst:24
+msgid ""
+"We retain the existing process allocator and workspace buffer reuse. The "
+"measured performance differences between Rust 1.99 and 1.100 are "
+"insignificant overall. We adopt the current toolchain and Graphviz "
+"correctness fixes, with no new allocator model."
+msgstr ""
+"हम मौजूदा प्रोसेस एलोकेटर और वर्कस्पेस बफ़र का पुनः उपयोग बनाए रखते हैं। "
+"Rust 1.99 और 1.100 के बीच मापे गए प्रदर्शन अंतर कुल मिलाकर बहुत छोटे हैं। "
+"हम नए एलोकेटर मॉडल के बिना वर्तमान टूलचेन और Graphviz के सुधार अपनाते हैं।"
+
+#: ../../releases/1.0.0-beta.13.rst:28
+msgid ""
+"The `installation guide "
+"<https://insanai.github.io/guidedog/manual/howto/install.html>`_ "
+"describes source builds and release downloads. The `toolchain analysis "
+"<https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ "
+"records the measurements and allocation decision."
+msgstr ""
+"`स्थापना मार्गदर्शिका "
+"<https://insanai.github.io/guidedog/manual/howto/install.html>`_ स्रोत से "
+"बिल्ड और रिलीज़ डाउनलोड समझाती है। `टूलचेन विश्लेषण "
+"<https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ "
+"माप और मेमोरी आवंटन का निर्णय दर्ज करता है।"
+
+#: ../../releases/1.0.0-beta.14.rst:8
+msgid "Guidedog 1.0.0-beta.14"
+msgstr "Guidedog 1.0.0-beta.14"
+
+#: ../../releases/1.0.0-beta.14.rst:11
+msgid ""
+"Guidedog can now write formulas as MathML, which a browser shows without "
+"a script. An application that shows converted pages inside its own can "
+"also ask for a self-contained HTML fragment."
+msgstr ""
+"Guidedog अब सूत्रों को MathML के रूप में लिख सकता है, जिसे ब्राउज़र बिना "
+"स्क्रिप्ट के दिखाता है। जो एप्लिकेशन रूपांतरित पेजों को अपने पेज के भीतर "
+"दिखाता है, वह एक स्व-निहित HTML फ़्रैगमेंट भी माँग सकता है।"
+
+#: ../../releases/1.0.0-beta.14.rst:16
+msgid ""
+"The setting ``html_math_renderer = \"mathml\"`` writes each formula as a "
+"MathML Core ``math`` element. ``guidedog build --math=mathml`` does the "
+"same for one build, and ``guidedog convert --math=mathml`` for one file. "
+"The page loads no MathJax, and equation numbers, labels and ``:eq:`` "
+"references keep working. MathJax stays the default, and its output is "
+"unchanged."
+msgstr ""
+"सेटिंग ``html_math_renderer = \"mathml\"`` हर सूत्र को MathML Core के "
+"``math`` तत्व के रूप में लिखती है। ``guidedog build --math=mathml`` एक "
+"बिल्ड के लिए यही करता है, और ``guidedog convert --math=mathml`` एक फ़ाइल "
+"के लिए। पेज MathJax लोड नहीं करता, और समीकरण संख्याएँ, लेबल और ``:eq:`` "
+"संदर्भ काम करते रहते हैं। MathJax डिफ़ॉल्ट बना रहता है, और उसका आउटपुट "
+"नहीं बदला है।"
+
+#: ../../releases/1.0.0-beta.14.rst:21
+msgid ""
+"The ``math`` directive takes ``:notation: mathml`` for a formula written "
+"in MathML itself. HTML writes it through an allowlist filter for MathML "
+"Core. PDF translates the same filtered MathML to Typst math, so the book "
+"shows a typeset, numbered formula."
+msgstr ""
+"``math`` निर्देश सीधे MathML में लिखे सूत्र के लिए ``:notation: mathml`` "
+"लेता है। HTML इसे MathML Core के अनुमति-सूची फ़िल्टर से गुज़ारकर लिखता "
+"है। PDF उसी फ़िल्टर किए हुए MathML को Typst गणित में बदलता है, इसलिए "
+"किताब में टाइपसेट किया हुआ, संख्या वाला सूत्र दिखता है।"
+
+#: ../../releases/1.0.0-beta.14.rst:25
+msgid ""
+"``guidedog convert --embed-pictures`` draws graphs, Typst diagrams and "
+"inline scores into the HTML as SVG ``data:`` images. The drawing runs "
+"under the confinement of a build, within bounds on the count and size of "
+"the pictures. ``guidedog convert --keep-going`` writes the output of a "
+"document with errors and still reports them."
+msgstr ""
+"``guidedog convert --embed-pictures`` ग्राफ़, Typst आरेख और इनलाइन स्कोर "
+"के चित्र बनाकर उन्हें SVG ``data:`` छवियों के रूप में HTML में लिखता है। "
+"चित्र बनाना बिल्ड की पाबंदियों के अंतर्गत, चित्रों की संख्या और आकार की "
+"सीमाओं के भीतर चलता है। ``guidedog convert --keep-going`` त्रुटियों वाले "
+"दस्तावेज़ का आउटपुट लिखता है और फिर भी उनकी सूचना देता है।"
+
+#: ../../releases/1.0.0-beta.14.rst:29
+msgid ""
+"Every LaTeX formula is now checked once when a document is read, whatever "
+"the output is. A warning points at the first fault and proposes a "
+"correction. A command MathJax typesets is never reported as unknown. "
+"These are warnings, so a build with ``-W`` that held such a formula now "
+"fails on it."
+msgstr ""
+"अब हर LaTeX सूत्र दस्तावेज़ पढ़ते समय एक बार जाँचा जाता है, आउटपुट चाहे "
+"जो हो। चेतावनी पहले दोष की ओर संकेत करती है और सुधार सुझाती है। जिस कमांड "
+"को MathJax टाइपसेट करता है, उसे कभी अज्ञात नहीं बताया जाता। ये चेतावनियाँ "
+"हैं, इसलिए ``-W`` वाला जो बिल्ड ऐसा सूत्र रखता था, वह अब विफल होता है।"
+
+#: ../../releases/1.0.0-beta.14.rst:34
+msgid ""
+"The `mathematics guide "
+"<https://insanai.github.io/guidedog/manual/topics/mathematics.html>`_ "
+"describes both math renderers, MathML notation and the math check. The "
+"`command reference "
+"<https://insanai.github.io/guidedog/manual/reference/cli.html>`_ lists "
+"the new options and their bounds."
+msgstr ""
+"`गणित मार्गदर्शिका "
+"<https://insanai.github.io/guidedog/manual/topics/mathematics.html>`_ "
+"दोनों गणित रेंडरर, MathML संकेतन और गणित जाँच का वर्णन करती है। `कमांड "
+"संदर्भ <https://insanai.github.io/guidedog/manual/reference/cli.html>`_ "
+"नए विकल्प और उनकी सीमाएँ सूचीबद्ध करता है।"
 
 #: ../../releases/1.0.0-beta.6.rst:8
 msgid "Guidedog 1.0.0-beta.6"
@@ -541,27 +689,3 @@ msgstr ""
 "स्वीकृत डिज़ाइन और अर्हता प्रमाण दर्ज करता है, तथा हर अनपैक किया गया "
 "प्लेटफ़ॉर्म आर्काइव खाली PATH के साथ नेटिव संगीत स्वरलिपि टाइपसेटिंग की "
 "जाँच करता है।"
-
-#: ../../releases/1.0.0-beta.13.rst:8
-msgid "Guidedog 1.0.0-beta.13"
-msgstr "Guidedog 1.0.0-beta.13"
-
-#: ../../releases/1.0.0-beta.13.rst:11
-msgid "We now build Guidedog with Rust 1.100.0 and package Graphviz 16.1.1. This release updates toolchain support and fixes diagram-rendering defects."
-msgstr "अब हम Guidedog को Rust 1.100.0 से बिल्ड करते हैं और Graphviz 16.1.1 साथ देते हैं। यह रिलीज़ टूलचेन समर्थन को अद्यतन करती है और आरेख रेंडर करने की त्रुटियाँ सुधारती है।"
-
-#: ../../releases/1.0.0-beta.13.rst:16
-msgid "Every workspace crate requires Rust 1.100 or later and keeps edition 2024. The build and tests handle the new Clippy checks and Cargo's changed artifact layout. The manual's plugin example is compiled through Cargo's public artifact messages."
-msgstr "वर्कस्पेस के हर क्रेट को Rust 1.100 या नया संस्करण चाहिए और उसका एडिशन 2024 ही रहता है। बिल्ड और परीक्षण Clippy की नई जाँचों तथा Cargo में आर्टिफ़ैक्ट के बदले स्थानों को संभालते हैं। मैनुअल का प्लगइन उदाहरण Cargo के सार्वजनिक आर्टिफ़ैक्ट संदेशों के माध्यम से संकलित होता है।"
-
-#: ../../releases/1.0.0-beta.13.rst:20
-msgid "Graphviz 16.1.1 fixes a potential heap overrun involving cluster names and several layout crashes. Unix archives link it statically, and Windows bundles its verified runtime. Regression tests cover a cluster/node name collision and a labeled flat edge at rank zero."
-msgstr "Graphviz 16.1.1 क्लस्टर नामों से जुड़े संभावित हीप ओवररन और लेआउट के कई क्रैश सुधारता है। Unix आर्काइव इसे स्थिर रूप से लिंक करते हैं और Windows में इसका सत्यापित रनटाइम शामिल है। रिग्रेशन परीक्षण क्लस्टर और नोड के समान नाम तथा रैंक शून्य पर लेबल वाली समतल एज की जाँच करते हैं।"
-
-#: ../../releases/1.0.0-beta.13.rst:24
-msgid "We retain the existing process allocator and workspace buffer reuse. The measured performance differences between Rust 1.99 and 1.100 are insignificant overall. We adopt the current toolchain and Graphviz correctness fixes, with no new allocator model."
-msgstr "हम मौजूदा प्रोसेस एलोकेटर और वर्कस्पेस बफ़र का पुनः उपयोग बनाए रखते हैं। Rust 1.99 और 1.100 के बीच मापे गए प्रदर्शन अंतर कुल मिलाकर बहुत छोटे हैं। हम नए एलोकेटर मॉडल के बिना वर्तमान टूलचेन और Graphviz के सुधार अपनाते हैं।"
-
-#: ../../releases/1.0.0-beta.13.rst:28
-msgid "The `installation guide <https://insanai.github.io/guidedog/manual/howto/install.html>`_ describes source builds and release downloads. The `toolchain analysis <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ records the measurements and allocation decision."
-msgstr "`स्थापना मार्गदर्शिका <https://insanai.github.io/guidedog/manual/howto/install.html>`_ स्रोत से बिल्ड और रिलीज़ डाउनलोड समझाती है। `टूलचेन विश्लेषण <https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html>`_ माप और मेमोरी आवंटन का निर्णय दर्ज करता है।"

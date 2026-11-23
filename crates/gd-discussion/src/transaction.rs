@@ -12,7 +12,8 @@ use crate::metadata::read_record;
 use crate::problem::{io_problem, shown};
 use crate::{MAX_INDEX_BYTES, MAX_JOURNAL_BYTES, Prefix, Problem, Result, exists, read_text};
 use gd_json::{Object, Value};
-use std::fs::{File, OpenOptions};
+use gd_plugins::files::{FileLock, LockError, lock_exclusive};
+use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -42,7 +43,7 @@ pub struct Plan {
 /// releases it. A kernel lock is released even when the process crashes.
 #[derive(Debug)]
 pub struct Lock {
-    _file: File,
+    _file: FileLock,
     dir: PathBuf,
     prefix: Prefix,
 }
@@ -60,8 +61,8 @@ impl Lock {
 }
 
 /// Takes the lock of the catalog in `dir` (`.PREFIX.lock`). Another command holding it
-/// is `PREFIX.busy`. The lock file is kept: removing it would let two processes lock
-/// different files at one path.
+/// is `PREFIX.busy`, reported at once. The lock file is kept: removing it would let two
+/// processes lock different files at one path.
 pub fn lock_catalog(dir: &Path, prefix: &Prefix) -> Result<Lock> {
     let path = dir.join(format!(".{prefix}.lock"));
     if std::fs::symlink_metadata(&path).is_ok_and(|info| !info.is_file()) {
@@ -74,38 +75,19 @@ pub fn lock_catalog(dir: &Path, prefix: &Prefix) -> Result<Lock> {
         )
         .exit(4));
     }
-    let file = OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(&path)
-        .map_err(|e| io_problem(prefix.as_str(), &path, &e))?;
-    // A process starting another program holds a copy of every descriptor for a moment
-    // (between fork and exec), so a lock just released may look taken: retry briefly.
-    for _ in 0..LOCK_ATTEMPTS {
-        match file.try_lock() {
-            Ok(()) => {
-                return Ok(Lock { _file: file, dir: dir.to_path_buf(), prefix: prefix.clone() });
-            }
-            Err(std::fs::TryLockError::WouldBlock) => std::thread::sleep(LOCK_PAUSE),
-            Err(std::fs::TryLockError::Error(e)) => {
-                return Err(io_problem(prefix.as_str(), &path, &e));
-            }
-        }
+    match lock_exclusive(&path) {
+        Ok(file) => Ok(Lock { _file: file, dir: dir.to_path_buf(), prefix: prefix.clone() }),
+        Err(LockError::Io(e)) => Err(io_problem(prefix.as_str(), &path, &e)),
+        Err(LockError::Held) => Err(Problem::new(
+            prefix.code("busy"),
+            "Another discussion command is working",
+            shown(dir),
+            "The discussion directory is locked.",
+            "Wait for the other command, then retry.",
+        )
+        .exit(4)),
     }
-    Err(Problem::new(
-        prefix.code("busy"),
-        "Another discussion command is working",
-        shown(dir),
-        "The discussion directory is locked.",
-        "Wait for the other command, then retry.",
-    )
-    .exit(4))
 }
-
-const LOCK_ATTEMPTS: u32 = 20;
-const LOCK_PAUSE: std::time::Duration = std::time::Duration::from_millis(10);
 
 /// The journal of an update in progress: `.PREFIX-journal.json`.
 pub(crate) fn journal_path(dir: &Path, prefix: &Prefix) -> PathBuf {

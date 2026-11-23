@@ -16,6 +16,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
+use gd_plugins::files::{FileLock, LockError, lock_exclusive};
 use gd_plugins::{
     Capabilities, Change, ChangeKind, LoadOptions, Loaded, Outcome, Plan, Problem, Publisher,
     PublisherInfo, Snapshot, SnapshotMode, SnapshotOptions, Source, State,
@@ -28,7 +29,7 @@ const MARK: &str = ".guidedog-publication";
 #[derive(Debug, Default)]
 struct Folder {
     target: PathBuf,
-    lock: Option<fs::File>,
+    lock: Option<FileLock>,
 }
 
 impl Clone for Folder {
@@ -160,14 +161,6 @@ impl Folder {
     }
 }
 
-impl Drop for Folder {
-    fn drop(&mut self) {
-        if let Some(lock) = self.lock.take() {
-            let _ = lock.unlock();
-        }
-    }
-}
-
 /// The configuration's folder, absolute; configured paths are relative to it.
 fn configuration_folder(config: &Path) -> Result<PathBuf, Problem> {
     let base = config.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
@@ -184,30 +177,24 @@ fn configuration_folder(config: &Path) -> Result<PathBuf, Problem> {
 }
 
 /// Holds an exclusive lock beside the target for the session.
-fn lock_target(target: &Path) -> Result<fs::File, Problem> {
+fn lock_target(target: &Path) -> Result<FileLock, Problem> {
     if let Some(parent) = target.parent() {
         fs::create_dir_all(parent).map_err(|_| write_problem(target))?;
     }
     let mut name = target.as_os_str().to_owned();
     name.push(".lock");
-    let lock = fs::OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(PathBuf::from(name))
-        .map_err(|_| write_problem(target))?;
-    if lock.try_lock().is_err() {
-        return Err(Problem::new(
+    match lock_exclusive(Path::new(&name)) {
+        Ok(lock) => Ok(lock),
+        Err(LockError::Io(_)) => Err(write_problem(target)),
+        Err(LockError::Held) => Err(Problem::new(
             "folder.busy",
             "Another publisher holds the folder",
             "A publication to this folder is already running.",
         )
         .hint("Wait for the other publication to finish, then run guidedog publish again.")
         .path(&target.to_string_lossy())
-        .exit(4));
+        .exit(4)),
     }
-    Ok(lock)
 }
 
 fn config_problem(path: &str, message: &str, hint: &str) -> Problem {

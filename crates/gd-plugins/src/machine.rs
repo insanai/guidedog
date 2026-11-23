@@ -14,7 +14,9 @@ use std::path::{Path, PathBuf};
 use gd_toml::{Table, Value};
 
 use crate::command::validate_commands;
-use crate::files::{create_private_dir, write_atomically};
+use crate::files::{
+    FileLock, LockError, create_private_dir, lock_exclusive_private, write_atomically,
+};
 use crate::problem::{self, Problem};
 use crate::process_build::build_plugin_of;
 use crate::process_command::select_command_version;
@@ -357,6 +359,8 @@ pub fn register(path: &Path, entry: &MachineEntry) -> Result<(), Problem> {
         return Err(problem::contract(&entry.id, hint));
     }
     let _lock = machine_lock(path)?;
+    // Transition `read` (GDS 0019): under the lock, so the registry we change is the
+    // one we write back over.
     let mut machine = read_machine(path)?;
     if machine.find(&entry.id).is_some() {
         let id = &entry.id;
@@ -393,28 +397,24 @@ pub fn unregister(path: &Path, id: &str) -> Result<(), Problem> {
     write_machine(path, &machine.entries)
 }
 
-/// Takes the registry's lock file, nonblocking; the lock lasts until the file closes.
-/// Separate opens conflict even within one process.
-pub(crate) fn machine_lock(path: &Path) -> Result<fs::File, Problem> {
+/// Takes the registry's lock, without waiting; dropping it releases the lock. A lock
+/// another command or thread holds is `plugins.busy`. [`lock_exclusive_private`] says
+/// why a lock just released is never reported as held.
+pub(crate) fn machine_lock(path: &Path) -> Result<FileLock, Problem> {
     make_private_dirs(path)?;
     let name = lock_path(path);
-    let shown = name.to_string_lossy();
-    let mut options = fs::OpenOptions::new();
-    options.read(true).write(true).create(true).truncate(false);
-    #[cfg(unix)]
-    std::os::unix::fs::OpenOptionsExt::mode(&mut options, 0o600);
-    let file = options.open(&name).map_err(|e| problem::io(&shown, &e))?;
-    if file.try_lock().is_err() {
-        return Err(Problem::new(
+    match lock_exclusive_private(&name) {
+        Ok(lock) => Ok(lock),
+        Err(LockError::Io(e)) => Err(problem::io(&name.to_string_lossy(), &e)),
+        Err(LockError::Held) => Err(Problem::new(
             "plugins.busy",
             "The registry is being changed",
             "Another command holds the registry's lock.",
         )
         .hint("Wait for that command to finish, then register or unregister again.")
         .path(&path.to_string_lossy())
-        .exit(4));
+        .exit(4)),
     }
-    Ok(file)
 }
 
 fn lock_path(path: &Path) -> PathBuf {

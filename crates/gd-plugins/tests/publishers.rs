@@ -114,3 +114,39 @@ fn publisher_process_failures_are_bounded_and_truthful() {
     assert_eq!(p.code, "plugins.timeout");
     assert!(p.hint.contains("recover"));
 }
+
+// GDS 0019: starting plugin programs on other threads must not make a registry nobody
+// else changes look busy. Each of two threads registers and unregisters in a registry
+// of its own, so any `plugins.busy` is a false one.
+#[test]
+fn starting_programs_never_makes_a_registry_look_busy() {
+    let root = Scratch::new("registry-stress");
+    let program = root.program("publisher", "folder-publisher");
+    let entry = inspect_entry(&program).unwrap();
+    let stop = std::sync::atomic::AtomicBool::new(false);
+    std::thread::scope(|scope| {
+        for _ in 0..2 {
+            scope.spawn(|| {
+                while !stop.load(std::sync::atomic::Ordering::Relaxed) {
+                    inspect_program(&program, Duration::from_secs(30)).unwrap();
+                }
+            });
+        }
+        let changers: Vec<_> = (0..2)
+            .map(|n| {
+                let registry = root.join(&format!("state-{n}/plugins.toml"));
+                let entry = &entry;
+                scope.spawn(move || {
+                    for _ in 0..100 {
+                        register(&registry, entry).map_err(|p| p.code.clone())?;
+                        unregister(&registry, &entry.id).map_err(|p| p.code.clone())?;
+                    }
+                    Ok::<(), String>(())
+                })
+            })
+            .collect();
+        let results: Vec<_> = changers.into_iter().map(|c| c.join().unwrap()).collect();
+        stop.store(true, std::sync::atomic::Ordering::Relaxed);
+        assert_eq!(results, [Ok(()), Ok(())]);
+    });
+}

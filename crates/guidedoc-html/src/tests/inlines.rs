@@ -110,6 +110,49 @@ fn unsafe_urls_follow_the_policy() {
     );
 }
 
+// An SVG data: URL is an image's source under the default policy, where a browser runs
+// none of its scripts, and stays refused as a link and as an interactive object.
+#[test]
+fn svg_data_urls_are_let_through_only_as_image_sources() {
+    const SVG: &str = "data:image/svg+xml;base64,PHN2Zy8+";
+    let image = render_with(
+        |b| {
+            link(b, K::Image, SVG, LinkKind::External)?;
+            shut(b)
+        },
+        frag(),
+        default_policy(),
+        |_| {},
+    );
+    assert_eq!(image.status, Status::Ok);
+    assert_eq!(image.html, "<img src=\"data:image/svg+xml;base64,PHN2Zy8+\" alt=\"\" />\n");
+    let linked = render_with(
+        |b| {
+            open(b, K::Paragraph)?;
+            link(b, K::Link, SVG, LinkKind::External)?;
+            text(b, "x")?;
+            shut(b)?;
+            shut(b)
+        },
+        frag(),
+        default_policy(),
+        |_| {},
+    );
+    assert_eq!(linked.code, "html.url.unsafe");
+    let object = render_with(
+        |b| {
+            link(b, K::Image, SVG, LinkKind::External)?;
+            let id = b.current().ok_or_else(|| Fail::new(Status::Internal))?;
+            b.add_custom_attribute(id, "interactive", "1")?;
+            shut(b)
+        },
+        frag(),
+        default_policy(),
+        |_| {},
+    );
+    assert_eq!(object.code, "html.url.unsafe");
+}
+
 fn raw_with_format(b: &mut Builder<'_>) -> Result<(), Fail> {
     let id = leaf(b, K::RawBlock, "<div>x</div>\n")?;
     b.add_attribute_string(id, A::Format, "html")?;

@@ -137,7 +137,7 @@ impl Html<'_, '_> {
         }
         self.w.put("<img");
         // A src fallback becomes an implicit 1x candidate and defeats the density hint.
-        if (!dense || !self.write_dense_image(id)) && !self.write_target("src", id) {
+        if (!dense || !self.write_dense_image(id)) && !self.write_image_source(id) {
             self.w.put(" src=\"\"");
         }
         self.w.put(" alt=\"");

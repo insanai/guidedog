@@ -119,10 +119,29 @@ pub(crate) fn url_unsafe(dest: &str) -> bool {
     }
 }
 
+/// Tells whether `dest` is an SVG image as a base64 `data:` URL.
+fn svg_data(dest: &str) -> bool {
+    const PREFIX: &str = "data:image/svg+xml;base64,";
+    dest.len() > PREFIX.len()
+        && dest.as_bytes()[..PREFIX.len()].eq_ignore_ascii_case(PREFIX.as_bytes())
+}
+
 impl Html<'_, '_> {
     /// Writes ` attr="url"` for a link-like node, applying resolution and the URL
     /// policy. It returns false when the attribute was left out.
     pub fn write_target(&mut self, attr: &str, id: NodeId) -> bool {
+        self.write_target_as(attr, id, false)
+    }
+
+    /// Writes ` src="url"` of an `img` element. An SVG `data:` URL is let through
+    /// here and nowhere else: a browser shows an SVG image without running its scripts
+    /// or loading what it names, while the same URL as a link or an object would run
+    /// them. A drawing embedded in a fragment arrives this way.
+    pub fn write_image_source(&mut self, id: NodeId) -> bool {
+        self.write_target_as("src", id, true)
+    }
+
+    fn write_target_as(&mut self, attr: &str, id: NodeId, image: bool) -> bool {
         let l = self.doc.link_info(id).unwrap_or(LinkInfo::UNRESOLVED);
         let dest = self.doc.text(l.destination);
         let span = self.doc.node(id).span;
@@ -144,7 +163,7 @@ impl Html<'_, '_> {
             }
             LinkKind::External | LinkKind::Project | LinkKind::Email => {}
         }
-        if l.kind != LinkKind::Email && url_unsafe(dest) {
+        if l.kind != LinkKind::Email && url_unsafe(dest) && !(image && svg_data(dest)) {
             match self.policy.unsafe_urls {
                 ContentPolicy::Refuse => {
                     self.w.fail(URL_UNSAFE, span, arg_span(span), guidedoc::Arg::None);

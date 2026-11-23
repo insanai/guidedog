@@ -24,5 +24,6 @@ Discussion reading order
    records/0016-guitar-tablature
    records/0017-source-maps-and-capabilities
    records/0018-confinement-and-content-rules
+   records/0019-file-locks
 
 .. gds-generated-end

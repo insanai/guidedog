@@ -52,6 +52,10 @@ Records:
   - [GDS 0013: Static Publishing](records/0013-static-site-generation.rst)
   - [GDS 0014: Typst Diagrams](records/0014-typst-diagrams.rst)
   - [GDS 0015: Engraved LilyPond Music](records/0015-lilypond-music.rst)
+  - [GDS 0016: Guitar Tablature](records/0016-guitar-tablature.rst)
+  - [GDS 0017: Editable Source Maps and Capability Reporting](records/0017-source-maps-and-capabilities.rst)
+  - [GDS 0018: Confinement and Content Rules](records/0018-confinement-and-content-rules.rst)
+  - [GDS 0019: File Locks](records/0019-file-locks.rst)
 
 New drafts are created with number `XXXXX` (e.g. `guidedog dsc new "Feature title"`). Permanent numbers are assigned upon promotion into discussion.
 
@@ -62,6 +66,8 @@ All GDS metadata modifications (`new`, `promote`, `state`, and `index`) use tran
   - Use `--dry-run` to preview planned changes before applying them.
   - Lifecycle state changes require a clear rationale string.
   - If a command is interrupted, `guidedog dsc recover --rollback` safely restores prior state from the journal.
+
+[GDS 0019](records/0019-file-locks.rst) states theorems, and `proofs/` holds their Lean proofs (Lean 4.19, core library only). `cargo xtask proofs` builds them and checks that no proof is open and no theorem uses an axiom beyond Lean's standard ones.
 
 Related documentation: the [user manual](../manual/) and the crate cheat sheets
 (`crates/*/README.md`).

@@ -101,6 +101,14 @@ fn check_paths(
 
 /// Checks the MathJax settings as Sphinx does when it installs MathJax.
 fn check_mathjax(config: &Config, path: &str) -> Result<(), Problem> {
+    let renderer = config.html.math_renderer.as_str();
+    if !matches!(renderer, "mathjax" | "mathml") {
+        return Err(invalid(
+            path,
+            format!("html_math_renderer: `{renderer}` is not a math renderer."),
+            "Write html_math_renderer = \"mathjax\" or \"mathml\".",
+        ));
+    }
     let m = &config.mathjax;
     if m.inline.len() != 2 || m.display.len() != 2 {
         return Err(invalid(

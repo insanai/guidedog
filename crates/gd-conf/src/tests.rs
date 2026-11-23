@@ -42,6 +42,23 @@ pub(super) fn load_text(text: &str) -> (Config, Vec<String>, String) {
     (c, warnings.into_iter().map(|w| w.code).collect(), problem)
 }
 
+// MathJax is the math renderer unless the project asks for MathML.
+#[test]
+fn the_math_renderer_is_mathjax_or_mathml() {
+    let (c, _, problem) = load_text("project = \"Demo\"\n");
+    assert_eq!((c.html.math_renderer.as_str(), c.math_is_mathml(), problem.as_str()), {
+        ("mathjax", false, "")
+    });
+    let (c, _, problem) = load_text("html_math_renderer = \"mathml\"\n");
+    assert!(c.math_is_mathml() && problem.is_empty(), "{problem}");
+    let mut c = Config::new("/no/such/project", "/no/such/project/_build");
+    let mut w = Vec::new();
+    assert!(apply_override(&mut c, "html_math_renderer=katex", &mut w, false).is_ok());
+    let problem = check_config(&mut c, "conf.toml", &mut w).unwrap_err();
+    assert!(problem.message.contains("`katex` is not a math renderer"), "{}", problem.message);
+    assert!(problem.hint.contains("\"mathjax\" or \"mathml\""), "{}", problem.hint);
+}
+
 #[test]
 fn configuration_follows_conf_py() {
     let (c, warnings, problem) = load_text(

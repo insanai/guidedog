@@ -355,6 +355,7 @@ pub static SETTINGS: &[Setting] = &[
         kind: SettingKind::OptionalString,
         store: Store::OptionalString(|c| &mut c.html.last_updated_fmt),
     },
+    text("html_math_renderer", |c| &mut c.html.math_renderer),
     flag("html_permalinks", |c| &mut c.html.permalinks),
     text("html_permalinks_icon", |c| &mut c.html.permalinks_icon),
     flag("html_use_index", |c| &mut c.html.use_index),

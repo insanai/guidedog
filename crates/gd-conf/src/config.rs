@@ -387,6 +387,8 @@ pub struct HtmlConfig {
     pub js_files: Vec<String>,
     /// `html_last_updated_fmt`: `None`: no date; `Some("")`: the default format.
     pub last_updated_fmt: Option<String>,
+    /// `html_math_renderer`: `mathjax` (LaTeX for a script) or `mathml` (no script).
+    pub math_renderer: String,
     /// `html_permalinks`.
     pub permalinks: bool,
     /// `html_permalinks_icon`.
@@ -536,6 +538,12 @@ fn strings(items: &[&str]) -> Vec<String> {
 }
 
 impl Config {
+    /// Whether HTML pages show formulas as MathML (`html_math_renderer = "mathml"`),
+    /// which needs no script, instead of LaTeX for MathJax.
+    pub fn math_is_mathml(&self) -> bool {
+        self.html.math_renderer == "mathml"
+    }
+
     /// The configuration before conf.toml: Sphinx's defaults, for a project whose
     /// sources are in `source_dir` (also conf.toml's folder) and whose outputs go to
     /// `build_dir`.
@@ -771,6 +779,7 @@ impl Default for HtmlConfig {
             css_files: Vec::new(),
             js_files: Vec::new(),
             last_updated_fmt: None,
+            math_renderer: "mathjax".into(),
             permalinks: true,
             permalinks_icon: "\u{b6}".into(),
             use_index: true,

@@ -35,6 +35,29 @@ pub(crate) fn compile(
     output: &Path,
     options: &Options<'_>,
 ) -> Result<Compiled, Error> {
+    let (artifact, compiled) = export(root, main, text, options)?;
+    std::fs::write(output, &artifact)
+        .map_err(|err| Error::Io { path: output.to_path_buf(), message: err.to_string() })?;
+    Ok(compiled)
+}
+
+/// Compiles generated `text` and returns the artifact's bytes, writing no file.
+pub(crate) fn compile_to_memory(
+    root: &Path,
+    main: Option<&str>,
+    text: &str,
+    options: &Options<'_>,
+) -> Result<(Vec<u8>, Compiled), Error> {
+    export(root, main, Some(text), options)
+}
+
+/// Compiles and exports, and returns the artifact with what the compile reported.
+fn export(
+    root: &Path,
+    main: Option<&str>,
+    text: Option<&str>,
+    options: &Options<'_>,
+) -> Result<(Vec<u8>, Compiled), Error> {
     let world = make_world(root, main, text, options).ok_or(Error::InvalidRequest)?;
     let compiled = catch_unwind(AssertUnwindSafe(|| run(&world, options.target, options.marks)));
     // Typst memoizes layout in a process-wide cache that only grows. A build compiles
@@ -50,9 +73,7 @@ pub(crate) fn compile(
     if options.reserve.is_some_and(|reserve| !reserve(artifact.len())) {
         return Err(Error::OutputTooLarge { bytes: artifact.len() });
     }
-    std::fs::write(output, &artifact)
-        .map_err(|err| Error::Io { path: output.to_path_buf(), message: err.to_string() })?;
-    Ok(Compiled { diagnostics, detail, pages, marks })
+    Ok((artifact, Compiled { diagnostics, detail, pages, marks }))
 }
 
 fn detail_of(diagnostics: &[Diagnostic]) -> String {

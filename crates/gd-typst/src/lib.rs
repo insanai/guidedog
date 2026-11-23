@@ -282,18 +282,34 @@ pub fn compile_text(
 ) -> Result<Compiled, Error> {
     match backend {
         Backend::Embedded => {
-            let main = match &options.source_path {
-                Some(path) => Some(rooted_path(root, path).ok_or_else(|| Error::OutsideRoot {
-                    source: path.clone(),
-                    root: root.to_path_buf(),
-                })?),
-                None => None,
-            };
+            let main = generated_main(root, options)?;
             embedded_compile(root, main.as_deref(), Some(text), output, options)
         }
         Backend::Program { path, .. } => {
             cli::run(path, cli::Input::Text(text), root, output, options)
         }
+    }
+}
+
+/// Compiles generated Typst `text` with the embedded compiler and returns the artifact
+/// as bytes, with the warnings; no file is written. Relative paths in the text resolve
+/// against `root`. Diagrams and formulas embedded in a page use it. It fails like
+/// [`compile_file`], and with [`Error::NotEmbedded`] in a build without the compiler.
+pub fn compile_bytes(
+    text: &str,
+    root: &Path,
+    options: &Options<'_>,
+) -> Result<(Vec<u8>, Compiled), Error> {
+    let main = generated_main(root, options)?;
+    embedded_bytes(root, main.as_deref(), text, options)
+}
+
+/// The root-relative path generated text is compiled at: `source_path`, when given.
+fn generated_main(root: &Path, options: &Options<'_>) -> Result<Option<String>, Error> {
+    let Some(path) = &options.source_path else { return Ok(None) };
+    match rooted_path(root, path) {
+        Some(main) => Ok(Some(main)),
+        None => Err(Error::OutsideRoot { source: path.clone(), root: root.to_path_buf() }),
     }
 }
 
@@ -350,6 +366,26 @@ fn embedded_compile(
     _output: &Path,
     _options: &Options<'_>,
 ) -> Result<Compiled, Error> {
+    Err(Error::NotEmbedded)
+}
+
+#[cfg(feature = "embedded")]
+fn embedded_bytes(
+    root: &Path,
+    main: Option<&str>,
+    text: &str,
+    options: &Options<'_>,
+) -> Result<(Vec<u8>, Compiled), Error> {
+    embedded::compile_to_memory(root, main, text, options)
+}
+
+#[cfg(not(feature = "embedded"))]
+fn embedded_bytes(
+    _root: &Path,
+    _main: Option<&str>,
+    _text: &str,
+    _options: &Options<'_>,
+) -> Result<(Vec<u8>, Compiled), Error> {
     Err(Error::NotEmbedded)
 }
 

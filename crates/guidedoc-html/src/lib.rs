@@ -18,6 +18,7 @@ mod document;
 mod escape;
 mod fields;
 mod inlines;
+mod mathml;
 mod notes;
 mod positions;
 mod sections;
@@ -33,6 +34,10 @@ use guidedoc::{
 
 use state::{Html, HtmlWork};
 
+pub use mathml::{
+    MATHML_ATTRIBUTES, MATHML_ELEMENTS, MAX_MATHML_BYTES, MAX_MATHML_DEPTH, MathMlDropped,
+    MathMlError, MathMlOptions, filter_mathml,
+};
 pub use positions::SOURCE_ATTRIBUTE;
 
 /// The renderer's version: the project version every crate inherits.

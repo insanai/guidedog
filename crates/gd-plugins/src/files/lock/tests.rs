@@ -49,7 +49,17 @@ fn closing_alone_leaves_the_lock_with_a_copy() {
     drop(file);
     assert!(is_held(&path), "nobody holds the lock, and it is refused");
     drop(copy);
-    assert!(!is_held(&path), "the last close releases it");
+    // This test closes without unlocking, so it is open to the very defect it shows:
+    // a child that another test starts at this instant holds one more copy until it
+    // execs. We therefore wait for the release instead of expecting it at once.
+    let started = std::time::Instant::now();
+    while is_held(&path) {
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(10),
+            "the last close releases it"
+        );
+        std::thread::yield_now();
+    }
 }
 
 #[test]

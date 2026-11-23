@@ -7,6 +7,13 @@ beside it.
 
 ## Unreleased
 
+We fix a race in the file locks: a command could be told that the plugin registry, a publisher's state or a discussion catalog was busy when no command held its lock. One lock, proved correct in Lean, now serves every command (GDS 0019).
+
+- Fix `plugins.busy`, `pages.busy`, `PREFIX.busy`, `ssg.conflict` and `ssg.site` reported for a lock nobody held. On Unix the lock belongs to the open file, and a child process holds a copy of every descriptor from its creation until it starts its program; a holder that only closed its lock file had not released the lock while such a copy lived. This showed when one thread changed the registry while another started a plugin program. A holder now unlocks before it closes, which releases the lock for every copy at once.
+- Add `gd_plugins::files::lock_exclusive` and `lock_exclusive_private`, with `FileLock` and `LockError`: an advisory lock on a lock file, taken without waiting and released when the `FileLock` drops. The registry, `gd-pages`, `gd-discussion`, both locks of `gd-ssg` and the example publisher use it, so the algorithm exists once. Problem codes, messages, exit statuses and lock file names are unchanged.
+- `gd_discussion::lock_catalog` no longer asks again for 200 ms: it reports a lock another command holds at once, as the other commands do.
+- Add GDS 0019, "File locks", with a model of the lock, the takers, child processes and crashes, and proofs of mutual exclusion, of no false refusal, of crash recovery, and that readers see whole files and no update is lost. The proofs are checked by Lean 4.19 with its core library alone (`docs/gds/proofs`). The new `cargo xtask proofs` builds them, refuses an open proof and checks the axioms each theorem depends on. Tests enumerate the same model with every interleaving of a few takers, and reproduce the defect without timing.
+
 ## 1.0.0-beta.14 - 2026-11-23
 
 We add script-free mathematics and self-contained HTML fragments for applications that show converted pages inside their own, and a math check for every output. MathJax stays the default, and its output is unchanged.

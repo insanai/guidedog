@@ -52,6 +52,8 @@ const LAYERS: &[(&str, u8)] = &[
     ("guidedoc-edit", 1),
     // 2: the built-in registry and its highlighter adapter.
     ("guidedoc-defaults", 2),
+    // 2: formulas as MathML, over the Typst renderer's math adapter and the compiler.
+    ("gd-mathml", 2),
     // 3: the host: files, configuration, environment, outputs, serving, translation.
     ("gd-host", 3),
     ("gd-conf", 3),

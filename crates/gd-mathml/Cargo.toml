@@ -1,0 +1,24 @@
+[package]
+name = "gd-mathml"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+publish = false
+description = "Formulas as MathML Core: LaTeX through the Typst adapter and compiler."
+
+[dependencies]
+guidedoc = { workspace = true }
+# The MathML filter every formula passes before it reaches a page.
+guidedoc-html = { workspace = true }
+# `translate_math`, the bounded LaTeX to Typst math adapter.
+guidedoc-typst = { workspace = true }
+# The embedded compiler, whose HTML export writes MathML Core.
+gd-typst = { workspace = true }
+
+[dev-dependencies]
+# The tests read reStructuredText and write HTML through the built-in registry.
+guidedoc-defaults = { workspace = true }
+
+[lints]
+workspace = true

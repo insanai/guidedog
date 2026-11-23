@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 
 use gd_host::{Problem, io_problem};
+use gd_plugins::files::{LockError, lock_exclusive};
 
 static NEXT: AtomicU64 = AtomicU64::new(0);
 
@@ -25,14 +26,10 @@ pub(crate) fn write_source(path: &Path, before: Option<&str>, after: &str) -> Re
     if std::fs::symlink_metadata(&lock_path).is_ok_and(|m| !m.is_file()) {
         return Err(conflict(path, "The publication lock is not a regular file."));
     }
-    let lock = OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(&lock_path)
-        .map_err(|e| io_problem(&lock_path, &e))?;
-    lock.try_lock().map_err(|_| conflict(path, "Another publication command holds the lock."))?;
+    let lock = lock_exclusive(&lock_path).map_err(|e| match e {
+        LockError::Held => conflict(path, "Another publication command holds the lock."),
+        LockError::Io(e) => io_problem(&lock_path, &e),
+    })?;
     if let Some(before) = before {
         let current = crate::lifecycle::read_source(path)?;
         if current != before {

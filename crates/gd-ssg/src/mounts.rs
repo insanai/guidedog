@@ -5,6 +5,7 @@ use std::path::{Path, PathBuf};
 use gd_conf::{Config, SiteEdition, SiteMount};
 use gd_host::{Budget, Problem, io_problem};
 use gd_plugins::BuildRequest;
+use gd_plugins::files::{LockError, lock_exclusive};
 
 /// Controls one whole-site build. Project and edition overrides remain in conf.toml.
 #[derive(Debug, Clone, Default)]
@@ -40,15 +41,11 @@ pub fn build_site(
     let work = config.build_dir.join("ssg-projects");
     std::fs::create_dir_all(&work).map_err(|e| io_problem(&work, &e))?;
     let lock_path = work.join("site.lock");
-    let lock = std::fs::OpenOptions::new()
-        .read(true)
-        .write(true)
-        .create(true)
-        .truncate(false)
-        .open(&lock_path)
-        .map_err(|e| io_problem(&lock_path, &e))?;
-    lock.try_lock()
-        .map_err(|_| problem(root, "Another site build holds the publication lock."))?;
+    // Held to the end of the build, while it starts plugin programs (GDS 0019).
+    let _lock = lock_exclusive(&lock_path).map_err(|e| match e {
+        LockError::Held => problem(root, "Another site build holds the publication lock."),
+        LockError::Io(e) => io_problem(&lock_path, &e),
+    })?;
     let now = fixed_clock(&options.now)?;
     let mut mounted = Vec::new();
     let mounts = if config.site.mounts.is_empty() {

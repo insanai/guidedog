@@ -7,6 +7,10 @@ beside it.
 
 ## Unreleased
 
+## 1.0.0-beta.14 - 2026-11-23
+
+We add script-free mathematics and self-contained HTML fragments for applications that show converted pages inside their own, and a math check for every output. MathJax stays the default, and its output is unchanged.
+
 - Add MathML as a second way to show formulas in HTML, beside MathJax, which stays the default. `html_math_renderer = "mathml"` in conf.toml, `guidedog build --math=mathml` and `guidedog convert --math=mathml` write each formula as a MathML Core `math` element (`display="block"` for displayed math), so a page needs no script. Equation numbers, labels and `:eq:` keep working; a MathML build loads no MathJax and links `_static/mathml.css`. A formula that cannot be MathML keeps its LaTeX in the usual markup, with a warning (`mathml.math.unsupported`, `mathml.math.lossy`, `mathml.math.failed`, `mathml.math.limit`).
 - The new internal crate `gd-mathml` does this with `guidedoc-typst`'s `translate_math` and the embedded Typst compiler's HTML export: one compiler run for all formulas of a document, a cache for equal formulas, and bounds on formula size and count. Hosts use `gd_mathml::MathMl` as a pass and as the new `guidedoc::RenderOptions::math_writer` (trait `guidedoc::MathWriter`). `gd_typst::compile_bytes` compiles generated text in memory.
 - Add `guidedoc::filter_mathml`, a bounded allowlist filter for MathML Core (`MATHML_ELEMENTS`, `MATHML_ATTRIBUTES`), also exported by `guidedoc-html`. No `style`, `id`, link or event attribute passes it.

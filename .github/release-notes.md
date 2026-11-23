@@ -1,12 +1,14 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.13 updates the supported Rust toolchain and the packaged Graphviz runtime.
+Version 1.0.0-beta.14 adds mathematics that needs no script, self-contained HTML fragments, and a check of every formula.
 
-- **Rust 1.100.** Builds use Rust 1.100.0, and workspace crates require Rust 1.100 or later. The edition remains 2024. Clippy checks and Cargo's changed artifact layout are handled, including compilation of the manual's plugin example through Cargo's public artifact messages.
-- **Graphviz 16.1.1.** Unix archives link the new version statically, and Windows bundles its verified runtime. The patch fixes a potential heap overrun involving cluster names and several layout crashes. Regression tests cover cluster/node name collisions and labeled flat edges at rank zero.
-- **Existing allocation policy.** Workspace buffer reuse and the process allocator remain in place. Measurements found no significant overall performance difference between Rust 1.99 and 1.100. This release adopts the current toolchain and Graphviz correctness fixes; it makes no compiler-speed claim and adds no allocator model or dependency.
+- **MathML output.** `html_math_renderer = "mathml"`, `guidedog build --math=mathml` and `guidedog convert --math=mathml` write each formula as a MathML Core `math` element, so a page loads no MathJax and is readable with JavaScript off. Equation numbers, labels and `:eq:` references keep working. MathJax stays the default, and its output is unchanged. A formula that cannot be MathML keeps its LaTeX, with a warning.
+- **Formulas written as MathML.** The `math` directive takes `:notation: mathml`. HTML writes the formula through an allowlist filter for MathML Core. PDF translates the same filtered MathML to Typst math, so the book shows a typeset, numbered formula; a formula the bounded translator cannot write shows its source, with a warning that names the cause.
+- **Pictures inside a fragment.** `guidedog convert --embed-pictures` draws graphs, Typst diagrams and inline scores under the confinement of a build and writes them as SVG `data:` images, within `--max-pictures` and `--max-picture-kib`. A picture that fails or passes a bound stays code, with a warning.
+- **Output despite errors.** `guidedog convert --keep-going` writes the output and still reports the errors of a document with an unknown directive or role, a missing included file or an unresolved reference.
+- **A math check for every output.** Each LaTeX formula is checked once when a document is read. A warning points at the first fault and proposes a correction, such as "Did you mean `\frac`?". A command MathJax typesets is never reported as unknown. These are warnings, so `-W` and `--strict` builds that held such formulas now fail on them.
 
-The [installation guide](https://insanai.github.io/guidedog/manual/howto/install.html), [toolchain analysis](https://insanai.github.io/guidedog/manual/evidence/rust-1.100-graphviz-16.1.1.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.13/CHANGELOG.md) describe the requirements, measurements and changes.
+The [mathematics guide](https://insanai.github.io/guidedog/manual/topics/mathematics.html), [command reference](https://insanai.github.io/guidedog/manual/reference/cli.html) and [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.14/CHANGELOG.md) describe the options, bounds and library interfaces.
 
 ## Downloads
 
@@ -17,7 +19,7 @@ The [installation guide](https://insanai.github.io/guidedog/manual/howto/install
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.13-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.14-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

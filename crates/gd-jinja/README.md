@@ -8,7 +8,7 @@ library only. Design notes: `docs/manual/internals/jinja.rst`.
 
 ```toml
 [dependencies]
-gd-jinja = "1.0.0-beta.13"
+gd-jinja = "1.0.0-beta.14"
 ```
 
 We render a template with autoescaping:

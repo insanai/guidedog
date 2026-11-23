@@ -9,6 +9,8 @@ Each record is dated. It describes what we built or checked on that day, with th
 
    * - Record
      - What it shows
+   * - :doc:`release-1.0.0-beta.15`
+     - The file lock race fixed, one lock for every command, proofs checked by Lean and five-platform publication (2026-11-23)
    * - :doc:`release-1.0.0-beta.14`
      - Script-free MathML, authored MathML in PDF, embedded pictures, the math check and five-platform publication (2026-11-23)
    * - :doc:`release-1.0.0-beta.13`
@@ -56,6 +58,7 @@ Each record is dated. It describes what we built or checked on that day, with th
    :hidden:
 
    manuals
+   release-1.0.0-beta.15
    release-1.0.0-beta.14
    release-1.0.0-beta.13
    rust-1.100-graphviz-16.1.1

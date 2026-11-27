@@ -290,6 +290,8 @@ const BUILD: &str = "  USAGE
     -t TAG             Define a tag for only directives
     -c DIR, -C         Use conf.toml from DIR, or none
     --typst=PATH       The Typst program for PDF
+    --peak-memory-file=FILE
+                       At the end, write the peak memory in bytes to FILE
     -v                 Also show notes (Docutils' info messages)
     -q                 Only warnings and errors
     --host IP          serve: bind address (default 127.0.0.1; 0.0.0.0 for network access)

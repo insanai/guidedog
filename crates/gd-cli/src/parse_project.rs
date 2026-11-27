@@ -41,6 +41,7 @@ const BUILD: &[&str] = &[
     "--stack-kib",
     "-v",
     "--typst",
+    "--peak-memory-file",
 ];
 
 const QUICKSTART: &[&str] = &[
@@ -103,7 +104,7 @@ fn takes_value(command: &str, name: &str) -> bool {
         | "--disk-budget" | "--max-depth" | "--max-nodes" | "--stack-kib" | "--typst" | "-p"
         | "--project" | "--author" | "--version-name" | "-r" | "--release" | "-l"
         | "--language" | "--suffix" | "-o" | "--output" | "-w" | "--line-width" | "--pot-dir"
-        | "--locale-dir" | "--now" | "--host" | "--math" => true,
+        | "--locale-dir" | "--now" | "--host" | "--math" | "--peak-memory-file" => true,
         _ => false,
     }
 }
@@ -117,6 +118,7 @@ struct ProjectArgs {
     verbose: u32,
     memory: MemoryMode,
     typst: Option<String>,
+    peak_memory_file: Option<PathBuf>,
     port: Option<u16>,
     host: Option<std::net::IpAddr>,
     load: LoadOptions,
@@ -226,6 +228,7 @@ fn set_value(a: &mut ProjectArgs, command: &str, name: &str, value: &str) -> Res
         }
         (_, "-t") => a.build.tags.push(text),
         (_, "--typst") => a.typst = Some(text),
+        (_, "--peak-memory-file") => a.peak_memory_file = Some(PathBuf::from(value)),
         (_, "--host") => {
             a.host = Some(value.parse().map_err(|_| {
                 usage(
@@ -384,6 +387,7 @@ fn typed_build(a: &mut ProjectArgs, dir: PathBuf, kind: BuilderKind) -> BuildCom
         memory: a.memory,
         verbose: a.verbose,
         typst: a.typst.take(),
+        peak_memory_file: a.peak_memory_file.take(),
     }
 }
 

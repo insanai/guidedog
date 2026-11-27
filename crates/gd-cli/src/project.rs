@@ -26,6 +26,16 @@ pub(crate) fn build(console: &mut Console<'_>, command: &BuildCommand, linked: &
     }
 }
 
+/// Writes the process's peak memory, in bytes, to the file `--peak-memory-file` names,
+/// for a parent such as `ssg build` that weighs its jobs (GDS 0020). A system that does
+/// not report the peak gets no file, and a file that cannot be written is left out too:
+/// the parent then treats the peak as unknown.
+pub(crate) fn write_peak_memory(command: &BuildCommand) {
+    if let (Some(path), Some(peak)) = (&command.peak_memory_file, gd_host::peak_memory()) {
+        let _ = std::fs::write(path, peak.to_string());
+    }
+}
+
 /// Loads the project `command` names, with `--typst` applied.
 /// A failure is reported, and its status returned.
 fn load(

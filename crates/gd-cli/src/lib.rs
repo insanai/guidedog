@@ -142,7 +142,11 @@ fn execute(
         Command::Capabilities(c) => capabilities::capabilities(console, c, linked),
         Command::Convert(c) => convert::convert(console, c),
         Command::Quickstart(q) => project::quickstart(console, q),
-        Command::Build(b) => project::build(console, b, linked),
+        Command::Build(b) => {
+            let status = project::build(console, b, linked);
+            project::write_peak_memory(b);
+            status
+        }
         Command::Serve(s) => project::serve(console, s, linked),
         Command::Clean(c) => project::clean(console, c, linked),
         Command::Migrate(m) => project::migrate(console, m),

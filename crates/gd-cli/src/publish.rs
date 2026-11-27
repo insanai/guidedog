@@ -114,6 +114,7 @@ fn freeze_site(
         memory: crate::command::MemoryMode::Ask,
         verbose: 0,
         typst: None,
+        peak_memory_file: None,
     };
     let status = crate::project::build(console, &build, linked);
     if status != 0 {

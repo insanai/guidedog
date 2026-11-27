@@ -159,6 +159,7 @@ fn build_command(request: &BuildRequest) -> Result<BuildCommand, Problem> {
         memory: MemoryMode::Ask,
         verbose: 0,
         typst: None,
+        peak_memory_file: None,
     })
 }
 

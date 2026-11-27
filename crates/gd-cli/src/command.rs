@@ -230,6 +230,9 @@ pub struct BuildCommand {
     pub verbose: u32,
     /// `--typst`: overrides `typst` in conf.toml.
     pub typst: Option<String>,
+    /// `--peak-memory-file`: where to write the process's peak memory in bytes when the
+    /// build ends (GDS 0020).
+    pub peak_memory_file: Option<PathBuf>,
 }
 
 /// `guidedog serve`: the HTML build it repeats, and the listen address.

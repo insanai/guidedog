@@ -7,6 +7,14 @@ beside it.
 
 ## Unreleased
 
+Site builds build their editions at the same time, as many as fit in memory (GDS 0020). The Guidedog website builds in 13 s instead of 56 to 66 s from an empty build folder, and publishes the same files.
+
+- `guidedog ssg build` builds each edition in a `guidedog build` child process, as many at once as fit in nine tenths of the memory available and as the processors allow. An edition weighs its peak memory at its last build, kept in `_build/ssg-projects/memory.toml`, with a quarter more; an edition heavier than the capacity is built alone. A failure stops the start of further editions, and the first failing edition in plan order is reported, as before. Reports follow in the order of the editions. `--jobs=N` limits the editions at once, and `--jobs=1` builds one after another in the `guidedog` process, as before.
+- Every project build locks its records folder (`build.lock`): a second build of the same output stops with `build.busy` (exit 4) instead of mixing its files with the first. The default layout's builders share one records folder, so `guidedog build html` and `guidedog build pdf` of one project no longer run at once.
+- `guidedog build --peak-memory-file=FILE` writes the build's peak memory in bytes when it ends.
+- Linux, macOS and Windows behave the same: `gd_host::available_memory` reads `MemAvailable` lowered to the control group's limit (cgroup v2) on Linux, `vm_stat` on macOS and `GlobalMemoryStatusEx` on Windows, and the new `gd_host::peak_memory` reads `VmHWM`, `getrusage` or `GetProcessMemoryInfo`. Budget suggestions on macOS and Windows are now capped to the memory available, as on Linux. `gd_host::Schedule` decides which jobs run at once within a memory capacity, and `gd_plugins::build_command` returns the `guidedog build` command for a `BuildRequest`.
+- Add GDS 0020, "Parallel site builds within memory", with Lean proofs that the running editions stay within the capacity unless one runs alone, that every run ends, that a parallel build has the outcome of the sequential build, that two editions never write the same file, and that a catalog several editions write is read whole. `cargo xtask proofs` checks 30 theorems, 17 of them new.
+
 ## 1.0.0-beta.15 - 2026-11-23
 
 We fix a race in the file locks: a command could be told that the plugin registry, a publisher's state or a discussion catalog was busy when no command held its lock. One lock, proved correct in Lean, now serves every command (GDS 0019).

@@ -26,6 +26,7 @@ mod duration;
 mod finish;
 mod limits;
 mod project;
+mod records_lock;
 mod write;
 
 pub use build::build;
@@ -36,6 +37,7 @@ pub use gd_env::{
 };
 pub use limits::{build_limits, content_policy, trusted_policy, untrusted_policy};
 pub use project::{LoadOptions, Project, clean, load, watch_roots};
+pub use records_lock::RECORDS_LOCK;
 
 #[cfg(test)]
 mod tests;

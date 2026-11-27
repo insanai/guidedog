@@ -98,6 +98,9 @@ pub(crate) struct Written {
     pub generation: Generation,
     pub env: Environment,
     pub store: ObjectStore,
+    /// The records folder's lock, held until the commit has ended. Declared last, so a
+    /// generation dropped with it is abandoned before the lock goes.
+    pub records: gd_plugins::files::FileLock,
 }
 
 /// What reading and writing share once the build is prepared.
@@ -127,6 +130,9 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     // record (environment, objects, graphs, fonts) must live there, or the next build
     // would find none of them and read everything again.
     config.build_dir.clone_from(&paths.build_dir);
+    // Held to the end of the commit (`Written::records`): no other build writes this
+    // output or recovers its journal meanwhile.
+    let records = crate::records_lock::lock_records(&paths.build_dir)?;
     log.result.output = paths.out_dir.clone();
     let generation_options = GenerationOptions { all: options.all, budget: &s.budget };
     let mut generation = Generation::begin(paths, generation_options, &mut log.reports)?;
@@ -179,7 +185,7 @@ fn run(s: &Setup<'_>, config: &mut Config, log: &mut Log) -> Result<Written, Pro
     duration::write_durations_json(config, &times, &mut generation)?;
     crate::dependencies::write_dependencies(config, kind, (&env, &tables), &mut generation)?;
     log.result.reached = BuildStage::Written;
-    Ok(Written { generation, env, store: parts.store })
+    Ok(Written { generation, env, store: parts.store, records })
 }
 
 /// Applies the build's confinement to its copy of the configuration before anything is

@@ -43,7 +43,8 @@ fn publish(
     if let Some(problem) = publication_problem(s, &written, reports) {
         return Some(problem);
     }
-    let Written { generation, env, store } = written;
+    // `_records` keeps the records folder locked until the commit has ended.
+    let Written { generation, env, store, records: _records } = written;
     let outcome = generation.commit(CommitRecords { environment: &env, store: &store });
     reports.extend(outcome.reports);
     result.published = outcome.state == CommitState::Published && outcome.problem.is_none();

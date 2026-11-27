@@ -267,6 +267,8 @@ Link across mounts with the ``mount://`` scheme:
 
 The link resolves to the target mount's matching language edition, falling back to its default edition. HTML receives a relative URL (preserving any hosting prefix), while PDFs use the public ``base_url``. Assembly verifies that every ``mount://`` target exists in the current generation, so a stale file from an earlier build cannot satisfy a link to a newly withheld document. If any mount fails or a cross-mount target is missing, the previous published website remains intact.
 
+The editions are built at the same time, each in a child process, as many at once as fit in nine tenths of the memory available (GDS 0020). An edition weighs what it used at its last build, with a quarter more, and an edition heavier than that capacity is built alone. The site and the order of the reports are those of a build of one edition after another, which ``--jobs=1`` asks for. Two builds never write one output folder at once: each holds a lock on its records folder, and a second one stops with ``build.busy``.
+
 Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip cross-mount PDF download links; custom templates can inspect ``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` declares the landing pages, seven manual HTML editions, seven manual PDF books and discussion catalog builds in this format, and ``cargo xtask build-site`` delegates directly to ``guidedog ssg build``.
 
 Pinned themes

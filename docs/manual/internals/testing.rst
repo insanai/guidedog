@@ -28,7 +28,7 @@ test that finds a program missing says so instead of failing obscurely. Every te
 works in a private temporary folder and sets ``GUIDEDOG_CONFIG_DIR`` and ``NO_COLOR``,
 so tests run in parallel and never touch the machine's plugin registry.
 
-``cargo xtask proofs`` checks the Lean proofs of the design records in ``docs/gds/proofs`` (GDS 0019 so far): it builds them with ``lake build``, refuses a proof left open, and reads the axioms each theorem depends on, of which only Lean's standard three may appear. It needs Lean's ``lake`` on ``PATH`` or in ``~/.elan/bin``; the proofs use Lean 4.19 and its core library alone. The Verify workflow does not install Lean, so we run this task by hand when a record's model, its proofs or the code they describe change.
+``cargo xtask proofs`` checks the Lean proofs of the design records in ``docs/gds/proofs`` (GDS 0019 and GDS 0020): it builds them with ``lake build``, refuses a proof left open, and reads the axioms each theorem depends on, of which only Lean's standard three may appear. It needs Lean's ``lake`` on ``PATH`` or in ``~/.elan/bin``; the proofs use Lean 4.19 and its core library alone. The Verify workflow does not install Lean, so we run this task by hand when a record's model, its proofs or the code they describe change.
 
 Which crate tests what
 ----------------------

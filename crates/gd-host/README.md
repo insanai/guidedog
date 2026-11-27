@@ -34,7 +34,8 @@ fn main() {
 | Confinement | `Files` (`new`, `with_ledger`, `with_project`; a `guidedoc::ResourceProvider`), `canonical_roots`, `confined`, `confinement` -> `Confinement`, `containing_root` |
 | Publication | `publish`, `Stage` (`beside`, `path`, `commit`; removed on drop), `write_unsynced`, `sync_all`, `sync_each`, `folders_of`, `remove_stages`, `is_stage_name`, `STAGE_PREFIX` |
 | Folders | `exchange`, `link_file`, `identity` -> `Identity`, `path_type` -> `PathKind`, `list_folder` -> `FolderEntry`, `remove_path` |
-| Budget | `Budget` (`new`, `with_policy`, `join` -> `Unit`, `limit`, `set_limit`, `used`, `peak`, `last_refusal`), `Ledger` (`charge`, `discharge`, `settle`; settles on drop), `Refusal`, `RefusalChoice`, `OnRefusal`, `budget_problem`, `budget_hint`, `budget_advice`, `suggest_budget`, `fitting_budget`, `available_memory`, `AVAILABLE_OVERRIDE`, `limits_within`, `DEFAULT_BUDGET` |
+| Budget | `Budget` (`new`, `with_policy`, `join` -> `Unit`, `limit`, `set_limit`, `used`, `peak`, `last_refusal`), `Ledger` (`charge`, `discharge`, `settle`; settles on drop), `Refusal`, `RefusalChoice`, `OnRefusal`, `budget_problem`, `budget_hint`, `budget_advice`, `suggest_budget`, `fitting_budget`, `available_memory`, `peak_memory`, `AVAILABLE_OVERRIDE`, `limits_within`, `DEFAULT_BUDGET` |
+| Schedule | `Schedule` (`new`, `next`, `may_start`, `start`, `finish`, `is_ended`, `first_failure`, `phase`, `load`, `running_count`), `JobPhase`: which jobs run at once within a memory capacity (GDS 0020) |
 | Interrupts | `catch_interrupts`, `was_interrupted`, `cancel_probe`, `request_interrupt`, `clear_interrupt` |
 | Threads | `run_workers(count, \|i\| ..)`, `run_with_stack(bytes, \|\| ..)`, `WORKER_STACK_BYTES`, `stack_budget_limit`, `default_stack_budget` |
 | Crashes | `install_crash_reporter`, `catch_crash`, `crash_report`, `CRASH_EXIT` (70), `ISSUE_TRACKER` (`GUIDEDOG_ISSUE_TRACKER` at build time) |
@@ -63,12 +64,15 @@ cancelled.
 - **No allocator machinery.** Rust's global allocator aborts on failure instead of
   refusing one allocation, so no library has to survive a refusal and nothing runs
   behind a per-allocation meter. There are no meters, guards, arenas or disk-backed
-  working memory. `available_memory` reads the override or `/proc/meminfo` only, for
-  hints.
+  working memory. `available_memory` reads the override, or the system's report (Linux:
+  `/proc/meminfo` lowered to the control group's room; macOS: `vm_stat`; Windows:
+  `GlobalMemoryStatusEx`), for hints and for `ssg build`'s capacity; `peak_memory`
+  reads `VmHWM`, `getrusage` or `GetProcessMemoryInfo`. The macOS and Windows calls
+  live in `src/sys.rs`.
 - **Plain file operations.** Since allocation cannot fail softly, publication uses plain
   `std::fs` calls (`rename_path` is `std::fs::rename`). `exchange` keeps its foreign
   call (`renameat2`/`renamex_np`), and `Ctrl+C` uses C's `signal`: both in `src/sys.rs`,
-  the only module with `unsafe`.
+  the only module with `unsafe`, beside the memory queries of macOS and Windows.
 - **RAII stages.** Dropping an uncommitted `Stage` removes it; `commit` flushes the
   file, renames, and flushes the folder. Stage names (`.guidedog-stage-` + ten digits +
   extension) are fixed, so `remove_stages` clears what a killed process left.

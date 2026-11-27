@@ -262,7 +262,7 @@ and runs the program's handshake; ``verify_entry`` re-hashes it before use.
 File locks
 ----------
 
-Every command that changes a small piece of state on the machine takes an advisory lock on a lock file first: the registry, a publisher's settings and targets in ``gd-pages``, a discussion catalog, a site's sources and a whole-site build in ``gd-ssg``. They all take it with one function, ``gd_plugins::files::lock_exclusive`` (or ``lock_exclusive_private``, which makes the lock file readable only by its user). It asks once and never waits: a lock that is held is ``LockError::Held``, which each caller reports as its own problem (``plugins.busy``, ``pages.busy``, ``PREFIX.busy``, ``ssg.conflict``, ``ssg.site``).
+Every command that changes a small piece of state on the machine takes an advisory lock on a lock file first: the registry, a publisher's settings and targets in ``gd-pages``, a discussion catalog, a site's sources and a whole-site build in ``gd-ssg``. Every project build also locks its records folder (``build.lock``), so that two builds never write one output at once (GDS 0020); a second build stops with ``build.busy``. They all take it with one function, ``gd_plugins::files::lock_exclusive`` (or ``lock_exclusive_private``, which makes the lock file readable only by its user). It asks once and never waits: a lock that is held is ``LockError::Held``, which each caller reports as its own problem (``plugins.busy``, ``pages.busy``, ``PREFIX.busy``, ``ssg.conflict``, ``ssg.site``).
 
 .. code-block:: rust
 

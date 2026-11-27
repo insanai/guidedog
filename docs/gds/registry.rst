@@ -69,5 +69,8 @@ Discussion registry
    * - 0019
      - :doc:`records/0019-file-locks`
      - committed
+   * - 0020
+     - :doc:`records/0020-parallel-site-builds`
+     - committed
 
 .. gds-generated-end

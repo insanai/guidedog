@@ -25,5 +25,6 @@ Discussion reading order
    records/0017-source-maps-and-capabilities
    records/0018-confinement-and-content-rules
    records/0019-file-locks
+   records/0020-parallel-site-builds
 
 .. gds-generated-end

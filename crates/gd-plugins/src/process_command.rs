@@ -276,24 +276,7 @@ pub fn build_with_program(program: &str, request: &BuildRequest) -> Result<(), P
         .hint("Run the command through guidedog, which builds the project for it.")
         .exit(4));
     }
-    let builder = if request.builder.is_empty() { "html" } else { request.builder.as_str() };
-    let mut command = Command::new(program);
-    command.args(["build", "-b", builder]).arg(&request.project).arg(&request.output);
-    if request.strict {
-        command.arg("-W");
-    }
-    if !request.now.is_empty() {
-        command.arg("--now").arg(&request.now);
-    }
-    if request.preview {
-        command.arg("--preview");
-    }
-    for setting in &request.overrides {
-        command.arg("-D").arg(setting);
-    }
-    if !request.base_url.is_empty() {
-        command.arg("-D").arg(format!("html_baseurl={}", request.base_url));
-    }
+    let mut command = build_command(program, request);
     command.stdin(Stdio::null()).stdout(Stdio::from(std::io::stderr()));
     let shown = request.project.to_string_lossy();
     let status = command.status().map_err(|e| {
@@ -313,6 +296,31 @@ pub fn build_with_program(program: &str, request: &BuildRequest) -> Result<(), P
     .hint("Fix what Guidedog reported, then run the command again.")
     .path(&shown)
     .exit(1))
+}
+
+/// The `guidedog build -b BUILDER PROJECT OUTPUT` that carries out `request`, with its
+/// settings, clock and switches as arguments, and its streams left as the caller sets
+/// them. `program` names the Guidedog program. Borrows both; starts nothing.
+pub fn build_command(program: &str, request: &BuildRequest) -> Command {
+    let builder = if request.builder.is_empty() { "html" } else { request.builder.as_str() };
+    let mut command = Command::new(program);
+    command.args(["build", "-b", builder]).arg(&request.project).arg(&request.output);
+    if request.strict {
+        command.arg("-W");
+    }
+    if !request.now.is_empty() {
+        command.arg("--now").arg(&request.now);
+    }
+    if request.preview {
+        command.arg("--preview");
+    }
+    for setting in &request.overrides {
+        command.arg("-D").arg(setting);
+    }
+    if !request.base_url.is_empty() {
+        command.arg("-D").arg(format!("html_baseurl={}", request.base_url));
+    }
+    command
 }
 
 /// Runs the command `name` of `plugin`, linked or installed; see [`Plugin::run_command`].

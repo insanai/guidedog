@@ -88,8 +88,8 @@ pub use machine::{
 pub use problem::{EXIT_ACCEPTED, EXIT_UNKNOWN, Problem, ProblemData};
 pub use process_build::process_plugin;
 pub use process_command::{
-    COMMAND_FLAG, COMMAND_PROTOCOL_NAME, COMMAND_PROTOCOL_VERSION, build_with_program,
-    serve_command,
+    COMMAND_FLAG, COMMAND_PROTOCOL_NAME, COMMAND_PROTOCOL_VERSION, build_command,
+    build_with_program, serve_command,
 };
 pub use process_publish::{
     DEFAULT_REQUEST_TIMEOUT, HANDSHAKE_TIMEOUT, inspect_program, process_publisher,

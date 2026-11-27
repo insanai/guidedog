@@ -2,6 +2,7 @@
 //! outputs, reserved before it is allocated. A conversion's own memory is bounded by
 //! `guidedoc::Limits` (see `limits_within`), not metered allocation by allocation.
 
+use std::path::Path;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Condvar, Mutex, MutexGuard};
 
@@ -378,16 +379,127 @@ fn round_up(n: usize, step: usize) -> usize {
 }
 
 /// The memory this machine has free, in bytes: the value of [`AVAILABLE_OVERRIDE`] in
-/// MiB when set, else `MemAvailable` from `/proc/meminfo` on Linux; `None` when unknown.
-/// Container (cgroup) limits are not read.
+/// MiB when set, else what the system reports (GDS 0020). On Linux that is
+/// `MemAvailable` from `/proc/meminfo`, lowered to what the process's control group may
+/// still use (`cgroup_room`); on macOS, the free, speculative and inactive pages that
+/// `vm_stat` counts; on Windows, `ullAvailPhys` of `GlobalMemoryStatusEx`. `None` when
+/// the system does not say.
 pub fn available_memory() -> Option<usize> {
     if let Ok(text) = std::env::var(AVAILABLE_OVERRIDE) {
         return text.trim().parse::<usize>().ok().map(|mib| mib.saturating_mul(MIB));
     }
+    system_available()
+}
+
+#[cfg(target_os = "linux")]
+fn system_available() -> Option<usize> {
     let info = std::fs::read_to_string("/proc/meminfo").ok()?;
-    let line = info.lines().find(|l| l.starts_with("MemAvailable:"))?;
-    let kib = line.split_whitespace().nth(1)?.parse::<usize>().ok()?;
+    let system = kib_field(&info, "MemAvailable:")?;
+    let read = |path: &Path| std::fs::read_to_string(path).ok();
+    Some(cgroup_room(&read).map_or(system, |room| system.min(room)))
+}
+
+#[cfg(target_os = "macos")]
+fn system_available() -> Option<usize> {
+    // The program every macOS installs, by its full path, so PATH cannot replace it.
+    let output = std::process::Command::new("/usr/bin/vm_stat").output().ok()?;
+    if !output.status.success() {
+        return None;
+    }
+    vm_stat_available(&String::from_utf8_lossy(&output.stdout))
+}
+
+#[cfg(windows)]
+fn system_available() -> Option<usize> {
+    crate::sys::available_physical().map(|bytes| usize::try_from(bytes).unwrap_or(usize::MAX))
+}
+
+#[cfg(not(any(target_os = "linux", target_os = "macos", windows)))]
+fn system_available() -> Option<usize> {
+    None
+}
+
+/// The peak resident memory of this process so far, in bytes: `VmHWM` from
+/// `/proc/self/status` on Linux, `ru_maxrss` of `getrusage` on macOS, and the peak
+/// working set on Windows; `None` elsewhere or when the system does not say.
+pub fn peak_memory() -> Option<u64> {
+    system_peak()
+}
+
+#[cfg(target_os = "linux")]
+fn system_peak() -> Option<u64> {
+    let status = std::fs::read_to_string("/proc/self/status").ok()?;
+    kib_field(&status, "VmHWM:").map(|bytes| bytes as u64)
+}
+
+#[cfg(target_os = "macos")]
+fn system_peak() -> Option<u64> {
+    crate::sys::peak_resident()
+}
+
+#[cfg(windows)]
+fn system_peak() -> Option<u64> {
+    crate::sys::peak_working_set()
+}
+
+#[cfg(not(any(target_os = "linux", target_os = "macos", windows)))]
+fn system_peak() -> Option<u64> {
+    None
+}
+
+/// The memory `vm_stat`'s report says new processes can use, in bytes: the free,
+/// speculative and inactive pages, times the page size of its first line. Purgeable
+/// pages are left out, since `vm_stat` also counts them among the active and inactive
+/// ones. `None` when the report lacks the page size or the free pages.
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
+fn vm_stat_available(report: &str) -> Option<usize> {
+    let first = report.lines().next()?;
+    let size_text = first.split("page size of ").nth(1)?.split_whitespace().next()?;
+    let page_size = size_text.parse::<usize>().ok()?;
+    let pages = |name: &str| {
+        let line = report.lines().find(|l| l.starts_with(name))?;
+        line[name.len()..].trim().trim_end_matches('.').parse::<usize>().ok()
+    };
+    let free = pages("Pages free:")?;
+    let more = pages("Pages speculative:").unwrap_or(0) + pages("Pages inactive:").unwrap_or(0);
+    Some(free.saturating_add(more).saturating_mul(page_size))
+}
+
+/// The value of the line `name   N kB` of a `/proc` file, in bytes.
+#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
+fn kib_field(text: &str, name: &str) -> Option<usize> {
+    let line = text.lines().find(|l| l.starts_with(name))?;
+    let kib = line[name.len()..].split_whitespace().next()?.parse::<usize>().ok()?;
     Some(kib.saturating_mul(1024))
+}
+
+/// The root of the cgroup v2 hierarchy.
+const CGROUP_ROOT: &str = "/sys/fs/cgroup";
+
+/// What the process's control group (cgroup v2) may still use, in bytes: for the group
+/// and each group above it with a limit, `memory.max` less `memory.current`, the
+/// smallest. `None` when no group has a limit or the files cannot be read (cgroup v1,
+/// other systems). `read` returns a file's text.
+#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
+fn cgroup_room(read: &dyn Fn(&Path) -> Option<String>) -> Option<usize> {
+    let groups = read(Path::new("/proc/self/cgroup"))?;
+    let group = groups.lines().find_map(|l| l.strip_prefix("0::"))?;
+    let root = Path::new(CGROUP_ROOT);
+    let mut dir = root.join(group.trim().trim_start_matches('/'));
+    let mut room: Option<usize> = None;
+    // Each step goes one folder up, so the loop ends at the root.
+    loop {
+        let number = |name: &str| read(&dir.join(name))?.trim().parse::<usize>().ok();
+        // `memory.max` is "max" where there is no limit, which does not parse.
+        if let (Some(max), Some(current)) = (number("memory.max"), number("memory.current")) {
+            let left = max.saturating_sub(current);
+            room = Some(room.map_or(left, |r| r.min(left)));
+        }
+        if dir == root || !dir.pop() || !dir.starts_with(root) {
+            break;
+        }
+    }
+    room
 }
 
 /// `limits` with the byte bounds of one conversion (text pool, output, included
@@ -402,5 +514,70 @@ pub fn limits_within(limits: Limits, budget: usize) -> Limits {
         max_output_bytes: limits.max_output_bytes.min(budget),
         max_included_bytes: limits.max_included_bytes.min(budget),
         ..limits
+    }
+}
+
+#[cfg(test)]
+mod memory_tests {
+    use std::collections::BTreeMap;
+    use std::path::Path;
+
+    use super::{cgroup_room, kib_field, vm_stat_available};
+
+    #[test]
+    fn proc_fields_are_read_in_bytes() {
+        let info = "MemTotal:       16 kB\nMemAvailable:    8 kB\n";
+        assert_eq!(kib_field(info, "MemAvailable:"), Some(8 * 1024));
+        assert_eq!(kib_field("VmHWM:\t  123 kB\n", "VmHWM:"), Some(123 * 1024));
+        assert_eq!(kib_field(info, "VmHWM:"), None);
+    }
+
+    fn files(entries: &[(&str, &str)]) -> impl Fn(&Path) -> Option<String> {
+        let map: BTreeMap<String, String> =
+            entries.iter().map(|(k, v)| (k.to_string(), v.to_string())).collect();
+        move |path: &Path| map.get(path.to_str()?).cloned()
+    }
+
+    #[test]
+    fn a_vm_stat_report_gives_the_free_speculative_and_inactive_pages() {
+        let report = "Mach Virtual Memory Statistics: (page size of 16384 bytes)\n\
+                      Pages free:                               10000.\n\
+                      Pages active:                            500000.\n\
+                      Pages inactive:                           20000.\n\
+                      Pages speculative:                         3000.\n\
+                      Pages purgeable:                           9999.\n";
+        assert_eq!(vm_stat_available(report), Some(33000 * 16384));
+        assert_eq!(vm_stat_available("Pages free: 1.\n"), None, "no page size");
+        assert_eq!(vm_stat_available("(page size of 4096 bytes)\nPages active: 1.\n"), None);
+    }
+
+    #[test]
+    fn the_tightest_group_limit_counts() {
+        let read = files(&[
+            ("/proc/self/cgroup", "0::/a/b\n"),
+            ("/sys/fs/cgroup/a/b/memory.max", "max\n"),
+            ("/sys/fs/cgroup/a/b/memory.current", "100\n"),
+            ("/sys/fs/cgroup/a/memory.max", "1000\n"),
+            ("/sys/fs/cgroup/a/memory.current", "400\n"),
+        ]);
+        assert_eq!(cgroup_room(&read), Some(600));
+    }
+
+    #[test]
+    fn no_limit_and_no_cgroup_v2_give_none() {
+        let unlimited = files(&[
+            ("/proc/self/cgroup", "0::/user.slice\n"),
+            ("/sys/fs/cgroup/user.slice/memory.max", "max\n"),
+            ("/sys/fs/cgroup/user.slice/memory.current", "5\n"),
+        ]);
+        assert_eq!(cgroup_room(&unlimited), None);
+        let v1 = files(&[("/proc/self/cgroup", "4:memory:/docker/x\n")]);
+        assert_eq!(cgroup_room(&v1), None);
+        let namespaced = files(&[
+            ("/proc/self/cgroup", "0::/\n"),
+            ("/sys/fs/cgroup/memory.max", "2000\n"),
+            ("/sys/fs/cgroup/memory.current", "2500\n"),
+        ]);
+        assert_eq!(cgroup_room(&namespaced), Some(0));
     }
 }

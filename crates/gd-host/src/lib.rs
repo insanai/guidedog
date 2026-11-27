@@ -34,6 +34,7 @@ mod folders;
 mod interrupt;
 mod problem;
 mod publish;
+mod schedule;
 mod session;
 // The Ctrl+C handler and the atomic path swap: the crate's only FFI.
 #[allow(unsafe_code)]
@@ -47,7 +48,7 @@ pub use artifact::{
 pub use budget::{
     AVAILABLE_OVERRIDE, Budget, DEFAULT_BUDGET, Ledger, OnRefusal, Refusal, RefusalChoice, Unit,
     available_memory, budget_advice, budget_hint, budget_problem, fitting_budget, limits_within,
-    suggest_budget,
+    peak_memory, suggest_budget,
 };
 pub use confine::{Confinement, Files, canonical_roots, confined, confinement, containing_root};
 pub use crash::{CRASH_EXIT, ISSUE_TRACKER, catch_crash, crash_report, install_crash_reporter};
@@ -67,6 +68,7 @@ pub use publish::{
     STAGE_PREFIX, Stage, folders_of, is_stage_name, publish, remove_stages, sync_all, sync_each,
     write_unsynced,
 };
+pub use schedule::{JobPhase, Schedule};
 pub use session::Session;
 pub use workers::{
     WORKER_STACK_BYTES, default_stack_budget, map_ordered, run_with_stack, run_workers,

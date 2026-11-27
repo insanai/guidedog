@@ -50,7 +50,7 @@ impl Site {
     fn build(&self) -> Result<PathBuf, Problem> {
         let options =
             SiteBuildOptions { now: "2026-10-16T00:00:00Z".into(), ..Default::default() };
-        build_site(&self.0, &options, &mut build)
+        build_site(&self.0, &options, &mut build).map(|built| built.output)
     }
 }
 
@@ -142,7 +142,12 @@ fn overlapping_mounts_and_escaping_sources_are_refused() {
 fn invalid_clock_and_mount_paths_fail_before_publication() {
     let site = Site::new("mounted-invalid");
     let options = SiteBuildOptions { now: "tomorrow".into(), ..Default::default() };
-    assert!(build_site(&site.0, &options, &mut |_| panic!("must not build")).is_err());
+    assert!(
+        build_site(&site.0, &options, &mut |_: &BuildRequest| -> Result<(), Problem> {
+            panic!("must not build")
+        })
+        .is_err()
+    );
     let original = site.read("conf.toml");
     site.put("conf.toml", &original.replace("output = \"manual\"", "output = \"../manual\""));
     assert!(site.build().is_err());
@@ -166,11 +171,12 @@ fn html_only_previews_skip_pdf_mounts_and_unlink_their_cross_mount_downloads() {
         now: "2026-10-16T00:00:00Z".into(),
         ..Default::default()
     };
-    let output = build_site(&site.0, &options, &mut |request| {
+    let output = build_site(&site.0, &options, &mut |request: &BuildRequest| {
         assert_ne!(request.builder, "pdf");
         build(request)
     })
-    .unwrap();
+    .unwrap()
+    .output;
     let html = std::fs::read_to_string(output.join("index.html")).unwrap();
     assert!(html.contains("Download"));
     assert!(!html.contains("example-en.pdf"));

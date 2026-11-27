@@ -18,6 +18,41 @@ pub struct SiteBuildOptions {
     pub preview: bool,
     /// Fixed RFC 3339 clock; empty fixes the clock once at command start.
     pub now: String,
+    /// The most editions built at once (`--jobs`): 0 for one per processor, 1 for one
+    /// after another in this process (GDS 0020).
+    pub jobs: usize,
+    /// The guidedog program that builds editions in child processes; empty builds them
+    /// one after another through [`SiteHost::build`].
+    pub program: String,
+    /// Options every child build receives after its own (colors, report format, quiet).
+    pub child_args: Vec<String>,
+}
+
+/// What a site build needs from its caller: a build of one edition in this process, and
+/// a place for the reports of editions built in child processes.
+pub trait SiteHost {
+    /// Builds one edition in this process, as `guidedog build` does. Fails with the
+    /// problem that stopped the build; the site build then stops and reports it.
+    fn build(&mut self, request: &BuildRequest) -> Result<(), Problem>;
+
+    /// Shows the report of an edition built in a child process; the reports come in the
+    /// order of the editions. Dropped unless the host shows it.
+    fn report(&mut self, _text: &str) {}
+}
+
+impl<F: FnMut(&BuildRequest) -> Result<(), Problem>> SiteHost for F {
+    fn build(&mut self, request: &BuildRequest) -> Result<(), Problem> {
+        self(request)
+    }
+}
+
+/// What a site build did.
+#[derive(Debug, Clone)]
+pub struct SiteBuilt {
+    /// The assembled site.
+    pub output: PathBuf,
+    /// One sentence on how the editions were built: at once, or one at a time and why.
+    pub note: String,
 }
 
 pub(crate) struct Mounted {
@@ -29,13 +64,20 @@ pub(crate) struct Mounted {
     pub manifest: PathBuf,
 }
 
-/// Builds every configured mount through `build` and atomically replaces the assembled site.
-/// A failed build, overlapping output or unsafe source keeps the preceding site intact.
+/// One edition build: what to ask for, and where its output goes into the site.
+pub(crate) struct Job {
+    pub request: BuildRequest,
+    pub mounted: Mounted,
+}
+
+/// Builds every configured mount through `host`, or in child processes as many at once
+/// as fit in memory (GDS 0020), and atomically replaces the assembled site. A failed
+/// build, overlapping output or unsafe source keeps the preceding site intact.
 pub fn build_site(
     root: &Path,
     options: &SiteBuildOptions,
-    build: &mut dyn FnMut(&BuildRequest) -> Result<(), Problem>,
-) -> Result<PathBuf, Problem> {
+    host: &mut dyn SiteHost,
+) -> Result<SiteBuilt, Problem> {
     let config = gd_conf::load_config(root, &Default::default())?.config;
     let root = &config.source_dir;
     let work = config.build_dir.join("ssg-projects");
@@ -47,7 +89,32 @@ pub fn build_site(
         LockError::Io(e) => io_problem(&lock_path, &e),
     })?;
     let now = fixed_clock(&options.now)?;
-    let mut mounted = Vec::new();
+    let jobs = plan(&config, &work, options, &now)?;
+    if jobs.is_empty() {
+        return Err(problem(root, "No mounted projects were selected."));
+    }
+    let note = match crate::parallel::setup(&jobs, &work, options) {
+        Ok(setup) => crate::parallel::run(&jobs, &work, options, &setup, host)?,
+        Err(reason) => {
+            for job in &jobs {
+                host.build(&job.request)?;
+            }
+            format!("Built {} edition(s) one at a time: {reason}.", jobs.len())
+        }
+    };
+    let mounted: Vec<Mounted> = jobs.into_iter().map(|job| job.mounted).collect();
+    let budget = Budget::new(gd_env::BUILD_BUDGET);
+    let output = crate::assemble::publish(&config, options, &mounted, &budget)?;
+    Ok(SiteBuilt { output, note })
+}
+
+/// The editions to build, in the order of the mounts and of their editions.
+fn plan(
+    config: &Config,
+    work: &Path,
+    options: &SiteBuildOptions,
+    now: &str,
+) -> Result<Vec<Job>, Problem> {
     let mounts = if config.site.mounts.is_empty() {
         vec![SiteMount {
             name: "site".into(),
@@ -58,34 +125,30 @@ pub fn build_site(
     } else {
         config.site.mounts.clone()
     };
+    let mut jobs = Vec::new();
     for mount in &mounts {
         if options.no_pdf && matches!(mount.builder.as_str(), "pdf" | "discussion-pdf") {
             continue;
         }
         for edition in editions(mount) {
-            let instance = build_mount(&config, mount, &edition, &work, options, &now, build)?;
-            mounted.push(instance);
+            jobs.push(plan_job(config, mount, &edition, work, options, now)?);
         }
     }
-    if mounted.is_empty() {
-        return Err(problem(root, "No mounted projects were selected."));
-    }
-    crate::assemble::publish(&config, options, &mounted, &Budget::new(gd_env::BUILD_BUDGET))
+    Ok(jobs)
 }
 
 fn editions(mount: &SiteMount) -> Vec<SiteEdition> {
     if mount.editions.is_empty() { vec![SiteEdition::default()] } else { mount.editions.clone() }
 }
 
-fn build_mount(
+fn plan_job(
     config: &Config,
     mount: &SiteMount,
     edition: &SiteEdition,
     work: &Path,
     options: &SiteBuildOptions,
     now: &str,
-    build: &mut dyn FnMut(&BuildRequest) -> Result<(), Problem>,
-) -> Result<Mounted, Problem> {
+) -> Result<Job, Problem> {
     let source = if edition.source.is_empty() { &mount.source } else { &edition.source };
     let source = confined_source(&config.source_dir, source)?;
     let mut edition = edition.clone();
@@ -106,7 +169,7 @@ fn build_mount(
         overrides.push(discussion_books(&source, &mount.prefix)?);
         builder = "pdf".into();
     }
-    build(&BuildRequest {
+    let request = BuildRequest {
         project: source,
         output: built.clone(),
         builder,
@@ -115,7 +178,7 @@ fn build_mount(
         now: now.into(),
         preview: options.preview,
         ..Default::default()
-    })?;
+    };
     let kind = if mount.builder.ends_with("pdf") {
         gd_env::BuilderKind::Pdf
     } else if mount.builder == "dirhtml" {
@@ -124,14 +187,15 @@ fn build_mount(
         gd_env::BuilderKind::Html
     };
     let manifest = gd_outputs::output_paths(config, kind, Some(&built))?.manifest;
-    Ok(Mounted {
+    let mounted = Mounted {
         key,
         output,
         built,
         exclude: mount.exclude.clone(),
         pdf: mount.builder.ends_with("pdf"),
         manifest,
-    })
+    };
+    Ok(Job { request, mounted })
 }
 
 fn overrides(

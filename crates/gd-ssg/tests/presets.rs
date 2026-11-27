@@ -15,7 +15,7 @@ fn all_presets_build_html_collections_and_real_research_pdfs() {
         create_site(&root, preset, "Example", "Ada", "2026-10-16").unwrap();
         let options =
             SiteBuildOptions { now: "2026-10-16T00:00:00Z".into(), ..Default::default() };
-        let output = build_site(&root, &options, &mut |r| {
+        let built = build_site(&root, &options, &mut |r: &gd_plugins::BuildRequest| {
             let load = gd_project::LoadOptions {
                 config: gd_conf::LoadOptions {
                     overrides: r.overrides.clone(),
@@ -41,6 +41,7 @@ fn all_presets_build_html_collections_and_real_research_pdfs() {
             Ok(())
         })
         .unwrap();
+        let output = built.output;
         let index = std::fs::read_to_string(output.join("index.html")).unwrap();
         assert!(index.contains("Example"));
         match preset {

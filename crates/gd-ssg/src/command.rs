@@ -31,7 +31,11 @@ impl BuildPlugin for StaticSite {
             ("publish", "Publish an article", "PATH [--date DATE]"),
             ("status", "List publication states", "[PROJECT]"),
             ("init", "Create a complete static website", "PATH --preset project|journal|research"),
-            ("build", "Build and assemble every mounted project", "[PROJECT] [--out DIR]"),
+            (
+                "build",
+                "Build and assemble every mounted project",
+                "[PROJECT] [--out DIR] [--jobs N]",
+            ),
         ]
         .into_iter()
         .map(|(name, summary, usage)| {
@@ -48,7 +52,14 @@ impl BuildPlugin for StaticSite {
                 }
                 "schedule" => &[("--at", "RFC3339", "Release instant")],
                 "publish" => &[("--date", "DATE", "Publication date")],
-                "build" => &[("--out", "DIR", "Whole-site output directory")],
+                "build" => &[
+                    ("--out", "DIR", "Whole-site output directory"),
+                    (
+                        "--jobs",
+                        "N",
+                        "Editions built at once: auto, or a number (1: one at a time)",
+                    ),
+                ],
                 "init" => &[
                     ("--preset", "NAME", "project, journal or research"),
                     ("--title", "TITLE", "Website title"),
@@ -153,7 +164,7 @@ fn parse(
                     "new" => matches!(key, "--title" | "--template"),
                     "schedule" => key == "--at",
                     "publish" => key == "--date",
-                    "build" => key == "--out",
+                    "build" => matches!(key, "--out" | "--jobs"),
                     "init" => matches!(key, "--preset" | "--title" | "--author"),
                     _ => false,
                 };
@@ -181,14 +192,49 @@ fn build_site(
     root: &Path,
     values: &BTreeMap<String, String>,
 ) -> Result<i32, Problem> {
+    let mut child_args = Vec::new();
+    if ctx.color {
+        child_args.push("--color=always".to_string());
+    }
+    if ctx.json {
+        child_args.push("--diagnostics=json".to_string());
+    }
+    if ctx.quiet {
+        child_args.push("-q".to_string());
+    }
     let options = crate::SiteBuildOptions {
         output: values.get("--out").map(|s| ctx.dir.join(s)),
         no_pdf: values.contains_key("--no-pdf"),
         preview: values.contains_key("--preview"),
         now: values.get("--now").cloned().unwrap_or_default(),
+        jobs: jobs(values.get("--jobs").map(String::as_str))?,
+        program: ctx.host_program.clone(),
+        child_args,
     };
-    let output = crate::build_site(root, &options, &mut |request| {
-        ctx.build_project(request).map_err(|p| {
+    let built = crate::build_site(root, &options, &mut ContextHost(ctx)).map_err(host_problem)?;
+    if !ctx.quiet {
+        ctx.print(&format!("{}\nSite: {}\n", built.note, built.output.display()));
+    }
+    Ok(0)
+}
+
+/// `--jobs`: `auto` (or nothing) is 0, one job per processor; otherwise a positive count.
+fn jobs(value: Option<&str>) -> Result<usize, Problem> {
+    match value {
+        None | Some("auto") => Ok(0),
+        Some(text) => text.parse::<usize>().ok().filter(|&n| n >= 1).ok_or_else(|| {
+            usage(&format!("--jobs takes auto or a positive number, not {text:?}."))
+        }),
+    }
+}
+
+/// The command's context as the site build's host: builds go to guidedog's engine, and
+/// the reports of child builds to standard error.
+struct ContextHost<'a, 'h>(&'a mut CommandContext<'h>);
+
+impl crate::SiteHost for ContextHost<'_, '_> {
+    fn build(&mut self, request: &gd_plugins::BuildRequest) -> Result<(), gd_host::Problem> {
+        self.0.build_project(request).map_err(|p| {
             gd_host::Problem::new(
                 "ssg.mount_build",
                 "MOUNT BUILD FAILED",
@@ -198,12 +244,12 @@ fn build_site(
                 p.exit,
             )
         })
-    })
-    .map_err(host_problem)?;
-    if !ctx.quiet {
-        ctx.print(&format!("Site: {}\n", output.display()));
     }
-    Ok(0)
+
+    fn report(&mut self, text: &str) {
+        self.0.eprint(text);
+        self.0.flush();
+    }
 }
 
 fn command_time(options: &BTreeMap<String, String>) -> Result<SystemTime, Problem> {

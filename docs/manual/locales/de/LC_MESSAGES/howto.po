@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 20:10+0000\n"
+"POT-Creation-Date: 2026-11-27 06:26+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: de\n"
@@ -3939,6 +3939,27 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:270
 msgid ""
+"The editions are built at the same time, each in a child process, as many "
+"at once as fit in nine tenths of the memory available (GDS 0020). An "
+"edition weighs what it used at its last build, with a quarter more, and "
+"an edition heavier than that capacity is built alone. The site and the "
+"order of the reports are those of a build of one edition after another, "
+"which ``--jobs=1`` asks for. Two builds never write one output folder at "
+"once: each holds a lock on its records folder, and a second one stops "
+"with ``build.busy``."
+msgstr ""
+"Die Editionen werden gleichzeitig gebaut, jede in einem Kindprozess, so "
+"viele auf einmal, wie in neun Zehntel des verfügbaren Speichers passen (GDS "
+"0020). Eine Edition wiegt, was sie bei ihrem letzten Build verbraucht hat, "
+"und ein Viertel mehr; eine Edition, die schwerer als diese Kapazität ist, "
+"wird allein gebaut. Die Website und die Reihenfolge der Berichte sind die "
+"eines Builds, der eine Edition nach der anderen baut; ``--jobs=1`` verlangt "
+"ihn. Zwei Builds schreiben nie gleichzeitig in einen Ausgabeordner: Jeder "
+"hält eine Sperre auf seinen Verwaltungsordner, und ein zweiter bricht mit "
+"``build.busy`` ab."
+
+#: ../../howto/static-publishing.rst:272
+msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
 "``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
@@ -3954,11 +3975,11 @@ msgstr ""
 "Handbuch-PDF-Bücher und Diskussionskatalog-Builds in diesem Format, und "
 "``cargo xtask build-site`` delegiert direkt an ``guidedog ssg build``."
 
-#: ../../howto/static-publishing.rst:272
+#: ../../howto/static-publishing.rst:274
 msgid "Pinned themes"
 msgstr "Gepinnte Themes"
 
-#: ../../howto/static-publishing.rst:275
+#: ../../howto/static-publishing.rst:277
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3967,7 +3988,7 @@ msgstr ""
 "portables ``.gdt``-Archiv und installieren es mit einem expliziten "
 "SHA-256-Pin:"
 
-#: ../../howto/static-publishing.rst:282
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3980,7 +4001,7 @@ msgstr ""
 "installierten Theme, und statische Dateien des Projekts überschreiben "
 "statische Dateien des Themes mit demselben relativen Pfad."
 
-#: ../../howto/static-publishing.rst:284
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3997,7 +4018,7 @@ msgstr ""
 "Plattformnamen, symbolische Links, Datei-/Verzeichnisüberlappungen und "
 "ausführbare Hooks werden abgewiesen."
 
-#: ../../howto/static-publishing.rst:286
+#: ../../howto/static-publishing.rst:288
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

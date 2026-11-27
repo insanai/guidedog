@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 20:10+0000\n"
+"POT-Creation-Date: 2026-11-27 06:26+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: ja\n"
@@ -3414,6 +3414,24 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:270
 msgid ""
+"The editions are built at the same time, each in a child process, as many "
+"at once as fit in nine tenths of the memory available (GDS 0020). An "
+"edition weighs what it used at its last build, with a quarter more, and "
+"an edition heavier than that capacity is built alone. The site and the "
+"order of the reports are those of a build of one edition after another, "
+"which ``--jobs=1`` asks for. Two builds never write one output folder at "
+"once: each holds a lock on its records folder, and a second one stops "
+"with ``build.busy``."
+msgstr ""
+"エディションは同時にビルドされます。それぞれ子プロセスで、利用可能なメモリの 10 分の 9 に収まるだけ同時に実行します (GDS "
+"0020)。エディションの重みは前回のビルドで使ったメモリに 4 分の 1 "
+"を加えたもので、その容量より重いエディションは単独でビルドされます。サイトとレポートの順序はエディションを 1 つずつビルドした場合と同じで、 "
+"``--jobs=1`` はその方式を指定します。2 つのビルドが 1 "
+"つの出力フォルダーに同時に書き込むことはありません。各ビルドは記録フォルダーのロックを保持し、2 つ目のビルドは ``build.busy`` "
+"で停止します。"
+
+#: ../../howto/static-publishing.rst:272
+msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
 "``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
@@ -3427,11 +3445,11 @@ msgstr ""
 "書籍、議論カタログのビルドをこの形式で宣言しており、``cargo xtask build-site`` は ``guidedog ssg "
 "build`` に直接処理を委譲します。"
 
-#: ../../howto/static-publishing.rst:272
+#: ../../howto/static-publishing.rst:274
 msgid "Pinned themes"
 msgstr "ピン留めされたテーマ"
 
-#: ../../howto/static-publishing.rst:275
+#: ../../howto/static-publishing.rst:277
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3439,7 +3457,7 @@ msgstr ""
 "``_templates/`` と ``_static/`` を含むディレクトリをポータブルな ``.gdt`` "
 "アーカイブにパッケージ化し、明示的な SHA-256 ピンを指定してインストールします。"
 
-#: ../../howto/static-publishing.rst:282
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3450,7 +3468,7 @@ msgstr ""
 "を設定して検証済みテーマを有効にします。プロジェクトの ``_templates/`` "
 "ファイルはインストールされたテーマより優先され、プロジェクトの静的ファイルは同じ相対パスを持つテーマの静的ファイルを上書きします。"
 
-#: ../../howto/static-publishing.rst:284
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3464,7 +3482,7 @@ msgstr ""
 "ファイル、展開後データ 64 MiB、ディレクトリ階層 32 "
 "レベルに制限されており、パストラバーサル、大文字小文字のエイリアス、予約されたプラットフォーム名、シンボリックリンク、ファイルとディレクトリの重複、実行可能フックは拒否されます。"
 
-#: ../../howto/static-publishing.rst:286
+#: ../../howto/static-publishing.rst:288
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

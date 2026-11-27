@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 20:10+0000\n"
+"POT-Creation-Date: 2026-11-27 06:26+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: hi\n"
@@ -3806,6 +3806,26 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:270
 msgid ""
+"The editions are built at the same time, each in a child process, as many "
+"at once as fit in nine tenths of the memory available (GDS 0020). An "
+"edition weighs what it used at its last build, with a quarter more, and "
+"an edition heavier than that capacity is built alone. The site and the "
+"order of the reports are those of a build of one edition after another, "
+"which ``--jobs=1`` asks for. Two builds never write one output folder at "
+"once: each holds a lock on its records folder, and a second one stops "
+"with ``build.busy``."
+msgstr ""
+"संस्करण एक साथ बनाए जाते हैं, हर एक अपनी चाइल्ड प्रक्रिया में, एक साथ उतने "
+"जितने उपलब्ध मेमोरी के नौ-दसवें हिस्से में समा जाएँ (GDS 0020)। किसी "
+"संस्करण का भार वह मेमोरी है जो उसने अपने पिछले बिल्ड में ली थी, उसमें "
+"एक-चौथाई और जोड़कर; उस क्षमता से भारी संस्करण अकेले बनाया जाता है। साइट और "
+"रिपोर्टों का क्रम वही है जो एक के बाद एक संस्करण बनाने वाले बिल्ड का होता "
+"है, जिसे ``--jobs=1`` माँगता है। दो बिल्ड कभी एक साथ एक ही आउटपुट फ़ोल्डर "
+"में नहीं लिखते: हर बिल्ड अपने रिकॉर्ड फ़ोल्डर पर लॉक रखता है, और दूसरा "
+"``build.busy`` के साथ रुक जाता है।"
+
+#: ../../howto/static-publishing.rst:272
+msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
 "``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
@@ -3820,11 +3840,11 @@ msgstr ""
 "किताबें और चर्चा कैटलॉग build घोषित करती है, तथा ``cargo xtask "
 "build-site`` सीधे ``guidedog ssg build`` को काम सौंपता है।"
 
-#: ../../howto/static-publishing.rst:272
+#: ../../howto/static-publishing.rst:274
 msgid "Pinned themes"
 msgstr "पिन की गई थीम"
 
-#: ../../howto/static-publishing.rst:275
+#: ../../howto/static-publishing.rst:277
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3832,7 +3852,7 @@ msgstr ""
 "``_templates/`` और ``_static/`` वाली डायरेक्टरी को पोर्टेबल ``.gdt`` "
 "आर्काइव में पैक करें और स्पष्ट SHA-256 पिन के साथ इंस्टॉल करें:"
 
-#: ../../howto/static-publishing.rst:282
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3844,7 +3864,7 @@ msgstr ""
 "फ़ाइलें इंस्टॉल की गई थीम से प्राथमिकता पाती हैं, और प्रोजेक्ट की स्टैटिक "
 "फ़ाइलें समान सापेक्ष पाथ वाली थीम स्टैटिक फ़ाइलों को ओवरराइड करती हैं।"
 
-#: ../../howto/static-publishing.rst:284
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3860,7 +3880,7 @@ msgstr ""
 "आरक्षित प्लेटफ़ॉर्म नाम, सिम्लिंक, फ़ाइल/डायरेक्टरी टकराव और "
 "एग्ज़िक्यूटेबल हुक अस्वीकार कर दिए जाते हैं।"
 
-#: ../../howto/static-publishing.rst:286
+#: ../../howto/static-publishing.rst:288
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

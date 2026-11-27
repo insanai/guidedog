@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog Manual 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 20:10+0000\n"
+"POT-Creation-Date: 2026-11-27 06:26+0000\n"
 "PO-Revision-Date: 2026-10-13 04:00+0000\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: zh_CN\n"
@@ -3268,6 +3268,22 @@ msgstr ""
 
 #: ../../howto/static-publishing.rst:270
 msgid ""
+"The editions are built at the same time, each in a child process, as many "
+"at once as fit in nine tenths of the memory available (GDS 0020). An "
+"edition weighs what it used at its last build, with a quarter more, and "
+"an edition heavier than that capacity is built alone. The site and the "
+"order of the reports are those of a build of one edition after another, "
+"which ``--jobs=1`` asks for. Two builds never write one output folder at "
+"once: each holds a lock on its records folder, and a second one stops "
+"with ``build.busy``."
+msgstr ""
+"各版本同时构建，每个版本在一个子进程中，同时构建的数量以可用内存的十分之九能容纳为限 (GDS "
+"0020)。一个版本的权重是它上次构建所用的内存再加四分之一；比该容量更重的版本单独构建。站点和报告的顺序与逐个构建版本时相同， "
+"``--jobs=1`` 即要求这种方式。两个构建绝不会同时写入同一个输出文件夹：每个构建都持有其记录文件夹的锁，第二个构建会以 "
+"``build.busy`` 停止。"
+
+#: ../../howto/static-publishing.rst:272
+msgid ""
 "Pass ``--no-pdf`` to skip PDF mounts during an HTML preview and strip "
 "cross-mount PDF download links; custom templates can inspect "
 "``ssg_no_pdf`` to hide PDF controls. Guidedog's own ``docs/conf.toml`` "
@@ -3280,11 +3296,11 @@ msgstr ""
 "就以这种格式声明了落地页、七种语言的手册 HTML 版本、七种语言的手册 PDF 图书以及讨论目录构建，而 ``cargo xtask "
 "build-site`` 则直接委托给 ``guidedog ssg build`` 执行。"
 
-#: ../../howto/static-publishing.rst:272
+#: ../../howto/static-publishing.rst:274
 msgid "Pinned themes"
 msgstr "固定校验和的主题"
 
-#: ../../howto/static-publishing.rst:275
+#: ../../howto/static-publishing.rst:277
 msgid ""
 "Package a directory containing ``_templates/`` and ``_static/`` into a "
 "portable ``.gdt`` archive and install it with an explicit SHA-256 pin:"
@@ -3292,7 +3308,7 @@ msgstr ""
 "将包含 ``_templates/`` 和 ``_static/`` 的目录打包为可移植的 ``.gdt`` 归档包，并使用显式指定的 "
 "SHA-256 固定值安装："
 
-#: ../../howto/static-publishing.rst:282
+#: ../../howto/static-publishing.rst:284
 msgid ""
 "Replace ``HASH`` with the archive's SHA-256 digest. Enable the verified "
 "theme by setting ``theme = true`` in ``[site]``. Project ``_templates/`` "
@@ -3302,7 +3318,7 @@ msgstr ""
 "请将 ``HASH`` 替换为归档包的 SHA-256 摘要。在 ``[site]`` 中设置 ``theme = true`` "
 "即可启用已校验的主题。项目的 ``_templates/`` 文件优先于已安装的主题，项目的静态文件也会覆盖具有相同相对路径的主题静态文件。"
 
-#: ../../howto/static-publishing.rst:284
+#: ../../howto/static-publishing.rst:286
 msgid ""
 "A version-one ``.gdt`` archive is UTF-8 JSON (``format = 1``) mapping "
 "portable relative paths beneath ``_templates/`` and ``_static/`` to "
@@ -3315,7 +3331,7 @@ msgstr ""
 "``_static/`` 下的可移植相对路径映射为 base64 编码的文件字节。归档包上限为 4,096 个文件、展开后 64 MiB 数据和 "
 "32 层目录深度；路径穿越、大小写别名、平台保留名称、符号链接、文件与目录重叠以及可执行钩子均会被拒绝。"
 
-#: ../../howto/static-publishing.rst:286
+#: ../../howto/static-publishing.rst:288
 msgid ""
 "``guidedog-theme.lock`` records the source URL or path, the archive "
 "SHA-256 and the canonical tree SHA-256 (computed over a versioned domain "

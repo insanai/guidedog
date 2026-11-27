@@ -6,8 +6,8 @@ The built-in pieces Guidedog assembles around the engine.
 
 ```toml
 [dependencies]
-guidedoc-defaults = "1.0.0-beta.15"
-guidedoc = "1.0.0-beta.15"
+guidedoc-defaults = "1.0.0-beta.16"
+guidedoc = "1.0.0-beta.16"
 ```
 
 Every reader and renderer is in one registry, so one call converts:

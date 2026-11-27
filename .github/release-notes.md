@@ -1,13 +1,14 @@
 Guidedog builds documentation websites, dated articles and PDF books from reStructuredText and Markdown.
 
-Version 1.0.0-beta.15 fixes a race in the file locks, and gives every command one lock that is proved correct.
+Version 1.0.0-beta.16 builds the editions of a site at the same time, as many as fit in memory, and publishes the same site as before.
 
-- **No false "busy".** A command could be told that the plugin registry, a publisher's state, a discussion catalog or a site folder was busy when no command held its lock (`plugins.busy`, `pages.busy`, `PREFIX.busy`, `ssg.conflict`, `ssg.site`). On Unix a lock belongs to the open file, and a child process holds a copy of every descriptor until it starts its program; a holder that only closed its lock file had not released the lock while such a copy lived. A holder now unlocks before it closes, which releases the lock for every copy at once.
-- **One lock.** `gd_plugins::files::lock_exclusive` and `lock_exclusive_private`, with `FileLock` and `LockError`, take an advisory lock on a lock file without waiting and release it when the `FileLock` drops. The registry, `gd-pages`, `gd-discussion`, both locks of `gd-ssg` and the example publisher use it. Problem codes, messages, exit statuses and lock file names are unchanged.
-- **No waiting in `lock_catalog`.** `gd_discussion::lock_catalog` reports a lock another command holds at once, as the other commands do; it no longer asks again for 200 ms.
-- **Proofs.** GDS 0019, "File locks", models the lock, the takers, child processes and crashes. It proves mutual exclusion, no false refusal, crash recovery, and that readers see whole files and no update is lost. Lean 4.19 checks the proofs with its core library alone (`docs/gds/proofs`), and `cargo xtask proofs` runs the check. Tests enumerate the same model and reproduce the defect without timing.
+- **Parallel site builds.** `guidedog ssg build` builds each edition (each mount in each language) in a `guidedog build` child process. As many run at once as fit in nine tenths of the memory available and as the processors allow. The Guidedog website, 23 editions with seven PDF books, builds in 13 s instead of 56 to 66 s from an empty build folder, with the same files.
+- **Within memory.** An edition reserves its peak memory at its last build, kept in `_build/ssg-projects/memory.toml`, with a quarter more. An edition heavier than the room is built alone, as before. Linux, macOS and Windows report the memory available and each build's peak; `GUIDEDOG_AVAILABLE_MIB` states it where a system's report misleads.
+- **The sequential outcome.** The first failing edition in plan order is reported, as before, and the editions' reports follow in their order. `--jobs=N` limits the editions at once, and `--jobs=1` builds one after another in the `guidedog` process.
+- **One build per output.** Every project build locks its records folder: a second build of the same output stops with `build.busy` (exit 4) instead of mixing its files with the first. The default layout's builders share that folder, so `guidedog build html` and `guidedog build pdf` of one project no longer run at once.
+- **Proofs.** GDS 0020, "Parallel site builds within memory", proves in Lean that the running editions stay within the room unless one runs alone, that every run ends, that a parallel build has the outcome of the sequential build, that two editions never write the same file, and that a catalog several editions write is read whole. `cargo xtask proofs` checks 30 theorems.
 
-[GDS 0019](https://insanai.github.io/guidedog/discussions/records/0019-file-locks.html), the [plugin internals](https://insanai.github.io/guidedog/manual/internals/plugins.html) and the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.15/CHANGELOG.md) describe the defect, the lock and the proofs.
+[GDS 0020](https://insanai.github.io/guidedog/discussions/records/0020-parallel-site-builds.html), the [command reference](https://insanai.github.io/guidedog/manual/reference/cli.html) and the [changelog](https://github.com/insanai/guidedog/blob/v1.0.0-beta.16/CHANGELOG.md) describe the scheduler, the options and the proofs.
 
 ## Downloads
 
@@ -18,7 +19,7 @@ Version 1.0.0-beta.15 fixes a race in the file locks, and gives every command on
 | `guidedog-macos-arm64.tar.gz` | macOS 12 or later on Apple silicon |
 | `guidedog-macos-amd64.tar.gz` | macOS 12 or later on Intel |
 | `guidedog-windows-amd64.zip` | Windows x86-64, with bundled Graphviz DLLs |
-| `guidedog-1.0.0-beta.15-source.tar.gz` | The source of this release |
+| `guidedog-1.0.0-beta.16-source.tar.gz` | The source of this release |
 | `guidedog.rb` | A Homebrew formula that installs the macOS or Linux archive |
 | `SHA256SUMS` | The SHA-256 checksum of every file above |
 

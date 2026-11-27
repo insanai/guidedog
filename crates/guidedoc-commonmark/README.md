@@ -9,9 +9,9 @@ myst-parser 0.16.1).** Node shapes: `docs/manual/internals/ast.rst`; coverage an
 
 ```toml
 [dependencies]
-guidedoc-commonmark = "1.0.0-beta.15"
-guidedoc = "1.0.0-beta.15"
-guidedoc-html = "1.0.0-beta.15"
+guidedoc-commonmark = "1.0.0-beta.16"
+guidedoc = "1.0.0-beta.16"
+guidedoc-html = "1.0.0-beta.16"
 ```
 
 We convert CommonMark to HTML (MyST works the same way with the reader id `myst`):

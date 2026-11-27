@@ -7,6 +7,8 @@ beside it.
 
 ## Unreleased
 
+## 1.0.0-beta.16 - 2026-11-27
+
 Site builds build their editions at the same time, as many as fit in memory (GDS 0020). The Guidedog website builds in 13 s instead of 56 to 66 s from an empty build folder, and publishes the same files.
 
 - `guidedog ssg build` builds each edition in a `guidedog build` child process, as many at once as fit in nine tenths of the memory available and as the processors allow. An edition weighs its peak memory at its last build, kept in `_build/ssg-projects/memory.toml`, with a quarter more; an edition heavier than the capacity is built alone. A failure stops the start of further editions, and the first failing edition in plan order is reported, as before. Reports follow in the order of the editions. `--jobs=N` limits the editions at once, and `--jobs=1` builds one after another in the `guidedog` process, as before.

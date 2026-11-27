@@ -7,7 +7,7 @@ API over `serde_json` with a validating parser, an HTML-safe writer and Elm-styl
 
 ```toml
 [dependencies]
-gd-json = "1.0.0-beta.15"
+gd-json = "1.0.0-beta.16"
 ```
 
 We parse JSON, read a field and write it back:

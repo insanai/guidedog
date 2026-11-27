@@ -6,7 +6,7 @@ Editable source maps and source-preserving edits for reStructuredText and Markdo
 
 ```toml
 [dependencies]
-guidedoc-edit = "1.0.0-beta.15"
+guidedoc-edit = "1.0.0-beta.16"
 ```
 
 We replace the text of a paragraph inside a list item:

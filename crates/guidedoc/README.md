@@ -10,9 +10,9 @@ registers them.
 
 ```toml
 [dependencies]
-guidedoc = "1.0.0-beta.15"
-guidedoc-commonmark = "1.0.0-beta.15"
-guidedoc-html = "1.0.0-beta.15"
+guidedoc = "1.0.0-beta.16"
+guidedoc-commonmark = "1.0.0-beta.16"
+guidedoc-html = "1.0.0-beta.16"
 ```
 
 The engine converts with the readers and renderers we register; `guidedoc-defaults` registers them all. With only CommonMark and HTML:

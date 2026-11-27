@@ -6,7 +6,7 @@ Sphinx object inventories (`objects.inv`, versions 1 and 2), compressed with `gd
 
 ```toml
 [dependencies]
-gd-inventory = "1.0.0-beta.15"
+gd-inventory = "1.0.0-beta.16"
 ```
 
 We write an inventory and read it back:

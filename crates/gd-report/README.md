@@ -8,7 +8,7 @@ the template engine all print errors the same way.
 
 ```toml
 [dependencies]
-gd-report = "1.0.0-beta.15"
+gd-report = "1.0.0-beta.16"
 ```
 
 We build a report and render it for a terminal:

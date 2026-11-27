@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guidedog 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-23 20:10+0000\n"
+"POT-Creation-Date: 2026-11-27 07:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Guidedog translation contributors\n"
 "Language-Team: Guidedog translation contributors\n"
@@ -158,6 +158,34 @@ msgstr ""
 
 #: ../../releases/1.0.0-beta.15.rst:31
 msgid "`GDS 0019 <https://insanai.github.io/guidedog/discussions/records/0019-file-locks.html>`_ states the model, the theorems and the evidence. The `plugin internals <https://insanai.github.io/guidedog/manual/internals/plugins.html>`_ show how a publisher uses the lock."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:8
+msgid "Guidedog 1.0.0-beta.16"
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:11
+msgid "This release builds the editions of a site at the same time. The Guidedog website, 23 editions with seven PDF books, builds in 13 seconds instead of about a minute, and publishes the same files."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:16
+msgid "``guidedog ssg build`` used to build every mount in every language one after another, and most processors stayed idle. Now each edition is built by a ``guidedog build`` child process, as many at once as fit in nine tenths of the memory available and as the processors allow. An edition reserves the memory it used at its last build, with a quarter more; ``_build/ssg-projects/memory.toml`` keeps these peaks. An edition heavier than the room is built alone, as before, so a build never needs more memory than the sequential build needed. Linux, macOS and Windows report the memory available and each build's peak."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:22
+msgid "The site, the order of the reports and the first failure reported are those of the sequential build. ``--jobs=N`` limits the editions built at once, and ``--jobs=1`` builds them one after another in the ``guidedog`` process."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:25
+msgid "Every project build now locks its records folder, so two builds never write one output at once. A second build of the same output stops with ``build.busy``."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:28
+msgid "GDS 0020 models the schedule and proves in Lean that the running editions stay within the room unless one runs alone, that every run ends, that the outcome is the sequential one, that two editions never write the same file, and that a catalog several editions write is read whole."
+msgstr ""
+
+#: ../../releases/1.0.0-beta.16.rst:30
+msgid "`GDS 0020 <https://insanai.github.io/guidedog/discussions/records/0020-parallel-site-builds.html>`_ states the model, the theorems and the measurements. The `command reference <https://insanai.github.io/guidedog/manual/reference/cli.html>`_ describes ``--jobs`` and ``--peak-memory-file``."
 msgstr ""
 
 #: ../../releases/1.0.0-beta.6.rst:8
